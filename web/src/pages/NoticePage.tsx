@@ -1,8 +1,16 @@
-import React from 'react'
+import Header from '../components/Header'
+import Main from '../components/Main'
+import Footer from '../components/Footer'
 
 const NoticePage = () => {
   return (
-    <div>NoticePage</div>
+    <>
+      <Header/>
+      <Main>
+        <h1>강사진</h1>
+      </Main>
+      <Footer/>
+    </>
   )
 }
 

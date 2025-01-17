@@ -24,8 +24,13 @@ const Header = () => {
           <GrHomeRounded size={20} onClick={ () => navigate(`/`)}/>
         </Right>
       </Wrapper>
+
       <Sidebar isOpen={isSidebarOpen}>
         <CloseButton onClick={toggleSidebar}>×</CloseButton>
+        <ButtonContainer>
+          <SignupButton onClick={ () => navigate(`/signup`)}>회원가입</SignupButton>
+          <LoginButton onClick={ () => navigate(`/login`)}>로그인</LoginButton>
+        </ButtonContainer>
         <MenuContainer>
           <Menu onClick={ () => navigate(`/teachers`)}>강사진</Menu>
           <Menu onClick={ () => navigate(`/courses`)}>강의 조회</Menu>
@@ -118,7 +123,7 @@ const Sidebar = styled.div<SidebarProps>`
   left: ${({ isOpen }) => (isOpen ? '0' : '-300px')};
   width: 300px;
   height: 100%;
-  background-color: #2b2b2b;
+  background-color: #4d3e2c;
   color: white;
   transition: left 0.3s ease;
   box-shadow: ${({ isOpen }) => (isOpen ? '2px 0 5px rgba(0, 0, 0, 0.5)' : 'none')};
@@ -155,5 +160,44 @@ const Menu = styled.div`
 
   &:hover {
     color: #949494;
+  }
+`;
+
+const ButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  margin-top: 70px;
+  gap: 15px;
+`;
+
+const SignupButton = styled.button`
+  width: 40%;
+  height: 40px;
+  color: white;
+  background-color: #4d3a2f;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1.5px solid #7c7c7c;
+
+  &:hover {
+    background-color: #4d3a2f;
+  }
+`;
+
+const LoginButton = styled.button`
+  width: 40%;
+  height: 40px;
+  background-color: none;
+  color: black;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #4d3a2f;
   }
 `;

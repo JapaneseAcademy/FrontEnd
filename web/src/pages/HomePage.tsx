@@ -2,7 +2,6 @@ import Header from '../components/Header'
 import Main from '../components/Main'
 import Footer from '../components/Footer'
 import styled from 'styled-components' 
-import { PiChalkboardTeacherLight } from "react-icons/pi"; 
 import { FcConferenceCall } from "react-icons/fc";
 import { FcAdvertising } from "react-icons/fc";
 import { FcViewDetails } from "react-icons/fc";
@@ -16,7 +15,7 @@ const HomePage = () => {
    <>
       <Header />
       <Main>
-        <HomeBanner>세계 최고의 <br/> 일본어 학원</HomeBanner>
+        <HomeBanner>어쩌구 <br/> 어쩌구저쩌구</HomeBanner>
         <CardsContainer>
           <Card id='teachersCard' onClick={ () => navigate(`/teachers`)}> 
             <FcConferenceCall size={70} />
