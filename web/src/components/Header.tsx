@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
+import { GrHomeRounded } from "react-icons/gr";
+import { IoMenu } from "react-icons/io5";
 
 const Header = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -12,18 +14,21 @@ const Header = () => {
     <>
       <Wrapper>
         <Left>
-          <SidebarToggleButton onClick={toggleSidebar}>☰</SidebarToggleButton>
+          <IoMenu size={30} onClick={toggleSidebar}/>
+          {/* <SidebarToggleButton onClick={toggleSidebar}>☰</SidebarToggleButton> */}
         </Left>
         <Title>예리한 일본어</Title>
-        <Right> </Right>
+        <Right> 
+          <GrHomeRounded size={20}/>
+        </Right>
       </Wrapper>
       <Sidebar isOpen={isSidebarOpen}>
         <CloseButton onClick={toggleSidebar}>×</CloseButton>
         <MenuContainer>
-          <Menu>Home</Menu>
-          <Menu>About</Menu>
-          <Menu>Services</Menu>
-          <Menu>Contact</Menu>
+          <Menu>강사진</Menu>
+          <Menu>강의 조회</Menu>
+          <Menu>공지사항</Menu>
+          <Menu>Q&A</Menu>
         </MenuContainer>
       </Sidebar>
     </>
@@ -38,6 +43,7 @@ const Wrapper = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  padding: 13px;
   border: 1px solid red;
 `;
 
@@ -47,7 +53,7 @@ const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid blue;
+  font-family: 'TTBookendBatangR';
 
   /* desktop 규격 */
   @media screen and (min-width: 1024px) {
@@ -61,7 +67,7 @@ const Title = styled.div`
 
   /* mobile 규격 */
   @media screen and (max-width: 540px) {
-    font-size: 25px;
+    font-size: 20px;
   }
 `;
 
@@ -69,7 +75,6 @@ const Left = styled.div`
   width: 25%;
   height: 100%;
   float: left;
-  border: 1px solid blue;
   display: flex;
   align-items: center;
 `;
@@ -80,12 +85,9 @@ const Right = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  font-size: 0.8rem;
-  border: 1px solid blue;
 `;
 
 const SidebarToggleButton = styled.button`
-
   color: grey;
   border: none;
   padding: 10px 15px;
@@ -98,7 +100,11 @@ const SidebarToggleButton = styled.button`
   }
 `;
 
-const Sidebar = styled.div`
+interface SidebarProps {
+  isOpen: boolean;
+}
+
+const Sidebar = styled.div<SidebarProps>`
   position: fixed;
   top: 0;
   left: ${({ isOpen }) => (isOpen ? '0' : '-300px')};
@@ -133,8 +139,10 @@ const MenuContainer = styled.div`
 
 const Menu = styled.div`
   margin-bottom: 10px;
-  font-size: 20px;
+  font-size: 15px;
   cursor: pointer;
+  border-bottom: 1px solid #7c7c7c;
+  padding: 5px;
 
   &:hover {
     color: #45a049;

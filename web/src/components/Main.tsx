@@ -1,19 +1,21 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { ReactNode } from 'react';
+import styled from 'styled-components';
 
-const Main = () => {
-  return (
-    <Wrapper>
-      Main
-   </Wrapper>
-  )
+interface MainProps {
+  children?: ReactNode; // children을 받도록 설정
 }
 
-export default Main
+const Main: React.FC<MainProps> = ({ children }) => {
+  return <Wrapper>{children}</Wrapper>;
+};
+
+export default Main;
 
 const Wrapper = styled.div`
-   width: 100%;
-   
-   border: 1px solid green;
-`
-
+  width: 100%;
+  border: 1px solid green;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
