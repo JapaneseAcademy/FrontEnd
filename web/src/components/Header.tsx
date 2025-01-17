@@ -21,16 +21,16 @@ const Header = () => {
         </Left>
         <Title>예리한 일본어</Title>
         <Right> 
-          <GrHomeRounded size={20} onClick={navigate}/>
+          <GrHomeRounded size={20} onClick={ () => navigate(`/`)}/>
         </Right>
       </Wrapper>
       <Sidebar isOpen={isSidebarOpen}>
         <CloseButton onClick={toggleSidebar}>×</CloseButton>
         <MenuContainer>
-          <Menu>강사진</Menu>
-          <Menu>강의 조회</Menu>
-          <Menu>공지사항</Menu>
-          <Menu>Q&A</Menu>
+          <Menu onClick={ () => navigate(`/teachers`)}>강사진</Menu>
+          <Menu onClick={ () => navigate(`/courses`)}>강의 조회</Menu>
+          <Menu onClick={ () => navigate(`/notice`)}>공지사항</Menu>
+          <Menu onClick={ () => navigate(`/qna`)}>Q&A</Menu>
         </MenuContainer>
       </Sidebar>
     </>
@@ -46,7 +46,8 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   padding: 13px;
-  border: 1px solid red;
+  /* 그림자로 구분 */
+  box-shadow: 0 0px 10px rgba(80, 80, 80, 0.5);
 `;
 
 const Title = styled.div`
@@ -79,6 +80,15 @@ const Left = styled.div`
   float: left;
   display: flex;
   align-items: center;
+
+  svg { /* 아이콘 스타일 */
+    cursor: pointer; /* 클릭 가능한 커서 */
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: #392a20; /* 호버 시 색상 강조 */
+    }
+  }
 `;
 
 const Right = styled.div`
@@ -87,6 +97,15 @@ const Right = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+
+  svg { /* 아이콘 스타일 */
+    cursor: pointer; /* 클릭 가능한 커서 */
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: #392a20; /* 호버 시 색상 강조 */
+    }
+  }
 `;
 
 interface SidebarProps {
@@ -128,12 +147,13 @@ const MenuContainer = styled.div`
 
 const Menu = styled.div`
   margin-bottom: 10px;
+  margin-top: 10px;
   font-size: 15px;
   cursor: pointer;
   border-bottom: 1px solid #7c7c7c;
   padding: 5px;
 
   &:hover {
-    color: #45a049;
+    color: #949494;
   }
 `;

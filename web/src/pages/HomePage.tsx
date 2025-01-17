@@ -7,27 +7,30 @@ import { FcConferenceCall } from "react-icons/fc";
 import { FcAdvertising } from "react-icons/fc";
 import { FcViewDetails } from "react-icons/fc";
 import { FcDecision } from "react-icons/fc";
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
   return (
    <>
       <Header />
       <Main>
-        <HomeBanner></HomeBanner>
+        <HomeBanner>세계 최고의 <br/> 일본어 학원</HomeBanner>
         <CardsContainer>
-          <Card> 
+          <Card id='teachersCard' onClick={ () => navigate(`/teachers`)}> 
             <FcConferenceCall size={70} />
             <span>강사진</span>
             </Card>
-          <Card>
+          <Card id='coursesCard' onClick={ () => navigate(`/courses`)}>
            <FcViewDetails size={70}/>
             <span>강좌 목록</span>
           </Card>
-          <Card>
+          <Card id='noticeCard' onClick={ () => navigate(`/notice`)}>
             <FcAdvertising size={70} />
             <span>공지사항</span>
           </Card>
-          <Card>
+          <Card id='qnaCard' onClick={ () => navigate(`/qna`)}>
             <FcDecision size={70} />
             <span>Q&A</span>
           </Card>
@@ -52,6 +55,12 @@ const HomeBanner = styled.div`
   background-image: url('/images/1.jpg');
   background-size: cover; /* 이미지가 컨테이너를 채우도록 설정 */
   background-position: center; /* 이미지를 중앙에 배치 */
+  background-blend-mode: overlay; /* 이미지 위에 배경색 블렌딩 */
+  background-color: rgba(0, 0, 0, 0.3); /* 배경색을 흰색으로 설정 */
+
+  font-family: 'SF_HambakSnow';
+  color: #392a20;
+  font-size: 40px;
 `;
 
 const CardsContainer = styled.div`
@@ -60,7 +69,6 @@ const CardsContainer = styled.div`
   gap: 20px; /* 카드 간격 */
   width: 100%;
   max-width: 500px; /* 카드 컨테이너의 최대 너비 */
-  border: 1px solid red;
   padding: 50px;
   justify-content: center;
 `;
