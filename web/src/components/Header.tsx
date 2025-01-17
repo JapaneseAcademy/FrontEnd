@@ -2,9 +2,11 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { GrHomeRounded } from "react-icons/gr";
 import { IoMenu } from "react-icons/io5";
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -19,7 +21,7 @@ const Header = () => {
         </Left>
         <Title>예리한 일본어</Title>
         <Right> 
-          <GrHomeRounded size={20}/>
+          <GrHomeRounded size={20} onClick={navigate}/>
         </Right>
       </Wrapper>
       <Sidebar isOpen={isSidebarOpen}>
@@ -85,19 +87,6 @@ const Right = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-`;
-
-const SidebarToggleButton = styled.button`
-  color: grey;
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-  border-radius: 4px;
-  font-size: 20px;
-
-  &:hover {
-    background-color: #45a049;
-  }
 `;
 
 interface SidebarProps {

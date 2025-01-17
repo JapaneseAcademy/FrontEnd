@@ -24,8 +24,8 @@ const Wrapper = styled.div`
    justify-content: center;
    background-color: #f8f8f8;
    padding: 20px;
-   
-   border: 1px solid blue;
+   padding-top: 30px;
+   padding-bottom: 30px;
    `
 
 const Title = styled.div`
