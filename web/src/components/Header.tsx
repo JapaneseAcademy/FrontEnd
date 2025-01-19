@@ -14,7 +14,7 @@ const Header = () => {
 
   return (
     <>
-      <Wrapper>
+      <FirstRow>
         <Left>
           <IoMenu size={30} onClick={toggleSidebar}/>
           {/* <SidebarToggleButton onClick={toggleSidebar}>☰</SidebarToggleButton> */}
@@ -23,7 +23,13 @@ const Header = () => {
         <Right> 
           <GrHomeRounded size={20} onClick={ () => navigate(`/`)}/>
         </Right>
-      </Wrapper>
+      </FirstRow>
+      <SecondRow>
+        <Navigator>선생님 소개</Navigator>
+        <Navigator>강좌 목록</Navigator>
+        <Navigator>학원 소개</Navigator>
+        <Navigator>Q&A</Navigator>
+      </SecondRow>
 
       <Sidebar isOpen={isSidebarOpen}>
         <CloseButton onClick={toggleSidebar}>×</CloseButton>
@@ -32,7 +38,7 @@ const Header = () => {
           <LoginButton onClick={ () => navigate(`/login`)}>로그인</LoginButton>
         </ButtonContainer>
         <MenuContainer>
-          <Menu onClick={ () => navigate(`/teachers`)}>강사진</Menu>
+          <Menu onClick={ () => navigate(`/teachers`)}>선생님 소개</Menu>
           <Menu onClick={ () => navigate(`/courses`)}>강의 조회</Menu>
           <Menu onClick={ () => navigate(`/notice`)}>공지사항</Menu>
           <Menu onClick={ () => navigate(`/qna`)}>Q&A</Menu>
@@ -44,7 +50,7 @@ const Header = () => {
 
 export default Header;
 
-const Wrapper = styled.div`
+const FirstRow = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -52,7 +58,8 @@ const Wrapper = styled.div`
   align-items: center;
   padding: 13px;
   /* 그림자로 구분 */
-  box-shadow: 0 0px 10px rgba(80, 80, 80, 0.5);
+  /* box-shadow: 0 0px 10px rgba(80, 80, 80, 0.5); */
+  border-bottom: 2px solid #e2e2e2;
 `;
 
 const Title = styled.div`
@@ -112,6 +119,43 @@ const Right = styled.div`
     }
   }
 `;
+
+const SecondRow = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e2e2e2;
+  font-family: 'Pretendard-Regular', sans-serif;
+`;
+
+const Navigator = styled.div`
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 18px;
+
+  /* desktop 규격 */
+  @media screen and (min-width: 1024px) {
+    font-size: 18px;
+  }
+
+  /* tablet 규격 */
+  @media screen and (max-width: 1023px) {
+    font-size: 15px;
+  }
+
+  /* mobile 규격 */
+  @media screen and (max-width: 540px) {
+    font-size: 13px;
+  }
+`;
+
 
 interface SidebarProps {
   isOpen: boolean;
@@ -177,14 +221,14 @@ const SignupButton = styled.button`
   width: 40%;
   height: 40px;
   color: white;
-  background-color: #4d3a2f;
+  background-color: #4d3e2c;
   border: none;
   cursor: pointer;
   border-radius: 5px;
   border: 1.5px solid #7c7c7c;
 
   &:hover {
-    background-color: #4d3a2f;
+    background-color: #392a20;
   }
 `;
 
@@ -198,6 +242,7 @@ const LoginButton = styled.button`
   border-radius: 5px;
 
   &:hover {
-    background-color: #4d3a2f;
+    background-color: #392a20;
+    color: white;
   }
 `;
