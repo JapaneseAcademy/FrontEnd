@@ -2,11 +2,7 @@ import Header from '../components/Header'
 import Main from '../components/Main'
 import Footer from '../components/Footer'
 import styled from 'styled-components' 
-import { FcConferenceCall } from "react-icons/fc";
-import { FcViewDetails } from "react-icons/fc";
 import { useNavigate } from 'react-router-dom';
-import { FcInfo } from "react-icons/fc";
-import { FcHeadset } from "react-icons/fc";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -83,7 +79,15 @@ const HomePage = () => {
             <MoreButton onClick={ () => navigate(`/courses`)}>더보기 &gt;</MoreButton>
           </UpCourses>
           <DownCourses>
-
+            <CourseCard>
+              <CourseImage src='/images/Lecture_Thumbnail.jpg' />
+              <TagContainer>
+                <Tag>New</Tag>
+                <Tag>자체교재</Tag>
+              </TagContainer>
+              <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>예리한 기초 일본어 1코스</span>
+              <span id='course_description' style={{fontSize:'12px', color:'#a0a0a0'}}>기초를 탄탄히 하자!</span>
+            </CourseCard>
           </DownCourses>
         </CoursesContainer>
 
@@ -265,41 +269,73 @@ const DownCourses = styled.div`
 `;
 
 
-
-
-
-const CardsContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2열 고정 */
-  gap: 20px; /* 카드 간격 */
-  width: 100%;
-  max-width: 500px; /* 카드 컨테이너의 최대 너비 */
-  padding: 50px;
-  justify-content: center;
-`;
-
-const Card = styled.div`
+const CourseCard = styled.div`
   cursor: pointer;
-  height: 100%;
-  aspect-ratio: 1/1; /* 가로세로 비율 1:1 */
+  width: 300px;
+  height: 300px;
+
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #f8f8f8;
-  border-radius: 20px;
-  gap: 15px;
-  font-family: 'TTBookendBatangR';
-  font-weight: 700;
-  /* border: 1px solid #c6c6c6; */
-
-  /* 그림자 추가 */
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1), /* 일반 그림자 */
-              0 1px 3px rgba(0, 0, 0, 0.06); /* 가벼운 그림자 */
-
-  /* 호버 시 그림자 강조 */
-  transition: box-shadow 0.3s ease;
-  &:hover {
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* 호버 상태에서 더 강한 그림자 */
-  }
 `;
+
+const CourseImage = styled.img`
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 7px;
+`;
+
+const TagContainer = styled.div`
+  display: flex;
+  gap: 5px;
+  margin-bottom: 5px;
+`;
+const Tag = styled.div`
+  padding: 3px;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  background-color: #392a20;
+  border-radius: 5px;
+`;
+
+
+
+
+
+// const CardsContainer = styled.div`
+//   display: grid;
+//   grid-template-columns: repeat(2, 1fr); /* 2열 고정 */
+//   gap: 20px; /* 카드 간격 */
+//   width: 100%;
+//   max-width: 500px; /* 카드 컨테이너의 최대 너비 */
+//   padding: 50px;
+//   justify-content: center;
+// `;
+
+// const Card = styled.div`
+//   cursor: pointer;
+//   height: 100%;
+//   aspect-ratio: 1/1; /* 가로세로 비율 1:1 */
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   background-color: #f8f8f8;
+//   border-radius: 20px;
+//   gap: 15px;
+//   font-family: 'TTBookendBatangR';
+//   font-weight: 700;
+//   /* border: 1px solid #c6c6c6; */
+
+//   /* 그림자 추가 */
+//   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1), /* 일반 그림자 */
+//               0 1px 3px rgba(0, 0, 0, 0.06); /* 가벼운 그림자 */
+
+//   /* 호버 시 그림자 강조 */
+//   transition: box-shadow 0.3s ease;
+//   &:hover {
+//     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* 호버 상태에서 더 강한 그림자 */
+//   }
+// `;

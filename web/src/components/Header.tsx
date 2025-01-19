@@ -19,16 +19,16 @@ const Header = () => {
           <IoMenu size={30} onClick={toggleSidebar}/>
           {/* <SidebarToggleButton onClick={toggleSidebar}>☰</SidebarToggleButton> */}
         </Left>
-        <Title>예리한 일본어</Title>
+        <Title onClick={() => navigate('/')}>예리한 일본어</Title>
         <Right> 
           <GrHomeRounded size={20} onClick={ () => navigate(`/`)}/>
         </Right>
       </FirstRow>
       <SecondRow>
-        <Navigator>선생님 소개</Navigator>
-        <Navigator>강좌 목록</Navigator>
-        <Navigator>학원 소개</Navigator>
-        <Navigator>Q&A</Navigator>
+        <Navigator onClick={() => navigate('/teachers')}>선생님 소개</Navigator>
+        <Navigator onClick={() => navigate(`/courses`)}>강좌 목록</Navigator>
+        <Navigator onClick={() => navigate(`/introduction`)}>학원 소개</Navigator>
+        <Navigator onClick={() => navigate(`/qna`)}>Q&A</Navigator>
       </SecondRow>
 
       <Sidebar isOpen={isSidebarOpen}>
@@ -40,7 +40,7 @@ const Header = () => {
         <MenuContainer>
           <Menu onClick={ () => navigate(`/teachers`)}>선생님 소개</Menu>
           <Menu onClick={ () => navigate(`/courses`)}>강의 조회</Menu>
-          <Menu onClick={ () => navigate(`/notice`)}>공지사항</Menu>
+          <Menu onClick={ () => navigate(`/introduction`)}>학원 소개</Menu>
           <Menu onClick={ () => navigate(`/qna`)}>Q&A</Menu>
         </MenuContainer>
       </Sidebar>
@@ -78,6 +78,8 @@ const Title = styled.div`
   justify-content: center;
   align-items: center;
   font-family: 'TTBookendBatangR';
+  cursor: pointer;
+  font-size: 35px;
 
   /* desktop 규격 */
   @media screen and (min-width: 1024px) {
@@ -154,6 +156,7 @@ const Navigator = styled.div`
   justify-content: space-around;
   align-items: center;
   font-size: 18px;
+  cursor: pointer;
 
   /* desktop 규격 */
   @media screen and (min-width: 1024px) {
