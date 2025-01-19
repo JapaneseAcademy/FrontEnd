@@ -87,6 +87,27 @@ const HomePage = () => {
               </TagContainer>
               <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>예리한 기초 일본어 1코스</span>
               <span id='course_description' style={{fontSize:'12px', color:'#a0a0a0'}}>기초를 탄탄히 하자!</span>
+              <span id='course_price' style={{fontSize:'14px', fontWeight:'700', marginTop:'5px'}}>100,000 원</span>
+            </CourseCard>
+            <CourseCard>
+              <CourseImage src='/images/Lecture_Thumbnail.jpg' />
+              <TagContainer>
+                <Tag>New</Tag>
+                <Tag>자체교재</Tag>
+              </TagContainer>
+              <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>예리한 기초 일본어 1코스</span>
+              <span id='course_description' style={{fontSize:'12px', color:'#a0a0a0'}}>기초를 탄탄히 하자!</span>
+              <span id='course_price' style={{fontSize:'14px', fontWeight:'700', marginTop:'5px'}}>100,000 원</span>
+            </CourseCard>
+            <CourseCard>
+              <CourseImage src='/images/Lecture_Thumbnail.jpg' />
+              <TagContainer>
+                <Tag>New</Tag>
+                <Tag>자체교재</Tag>
+              </TagContainer>
+              <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>예리한 기초 일본어 1코스</span>
+              <span id='course_description' style={{fontSize:'12px', color:'#a0a0a0'}}>기초를 탄탄히 하자!</span>
+              <span id='course_price' style={{fontSize:'14px', fontWeight:'700', marginTop:'5px'}}>100,000 원</span>
             </CourseCard>
           </DownCourses>
         </CoursesContainer>
@@ -263,19 +284,43 @@ const UpCourses = styled.div`
 `;
 
 const DownCourses = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3열 고정 */
-  gap: 20px; /* 카드 간격 */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap; /* 줄바꿈 방지 */
+  overflow-x: auto; /* 가로 스크롤 활성화 */
+  gap: 20px; /* 카드 간 간격 */
+  padding-bottom: 10px;
+
+  /* 스크롤바 스타일 (선택 사항) */
+  &::-webkit-scrollbar {
+    height: 8px; /* 스크롤바 높이 */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #c6c6c6; /* 스크롤바 색상 */
+    border-radius: 4px; /* 둥근 모서리 */
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* 스크롤바 배경 */
+  }
+
 `;
 
 
 const CourseCard = styled.div`
   cursor: pointer;
-  width: 300px;
-  height: 300px;
 
   display: flex;
   flex-direction: column;
+  width: 300px; /* 고정 너비 */
+  height: 300px; /* 고정 높이 */
+  flex-shrink: 0; /* 너비가 줄어들지 않도록 설정 */
+  /* border: 1px solid #e2e2e2;
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px;
+  gap: 10px; */
 `;
 
 const CourseImage = styled.img`
@@ -292,8 +337,8 @@ const TagContainer = styled.div`
   margin-bottom: 5px;
 `;
 const Tag = styled.div`
-  padding: 3px;
-  font-size: 12px;
+  padding: 4px;
+  font-size: 11px;
   font-weight: 700;
   color: white;
   background-color: #392a20;
