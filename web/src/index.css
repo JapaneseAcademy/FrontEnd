@@ -5,6 +5,7 @@ html, body, #root {
   height: 100%;
   /* overflow: hidden; */
   box-sizing: border-box; /* 기본적으로 box-sizing 설정 */
+  font-family: 'Pretendard-Regular', sans-serif;
 }
 
 *,

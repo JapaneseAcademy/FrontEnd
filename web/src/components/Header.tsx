@@ -53,6 +53,7 @@ export default Header;
 const FirstRow = styled.div`
   width: 100%;
   display: flex;
+  height: 55px;
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -60,6 +61,14 @@ const FirstRow = styled.div`
   /* 그림자로 구분 */
   /* box-shadow: 0 0px 10px rgba(80, 80, 80, 0.5); */
   border-bottom: 2px solid #e2e2e2;
+
+  /* 스크롤해도 상단에 고정 */
+  position: fixed;
+  top: 0;
+  background-color: white;
+  z-index: 1000;
+
+  
 `;
 
 const Title = styled.div`
@@ -131,6 +140,12 @@ const SecondRow = styled.div`
   padding-bottom: 15px;
   border-bottom: 1px solid #e2e2e2;
   font-family: 'Pretendard-Regular', sans-serif;
+
+  /* FirstRow와 겹치지 않도록 여백 추가 */
+  margin-top: 55px;
+  /* 그림자로 구분 */
+  /* box-shadow: 0 0px 10px rgba(80, 80, 80, 0.5); */
+  background-color: white;
 `;
 
 const Navigator = styled.div`

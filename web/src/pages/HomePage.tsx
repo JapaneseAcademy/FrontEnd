@@ -12,7 +12,7 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   return (
-   <>
+  <>
       <Header />
       <Main>
         <HomeBanner>
@@ -31,13 +31,69 @@ const HomePage = () => {
             </DownDescription>
           </Description>
         </HomeBanner>
-        <CardsContainer>
+
+        <ReviewsContainer>
+          <UpReview>
+            <Title>수강 후기</Title>
+            <MoreButton onClick={ () => navigate(`/reviews`)}>더보기 &gt;</MoreButton>
+          </UpReview>
+          <DownReview>
+            <ReviewCard>
+              <span id='review_course' style={{fontSize:'14px', borderBottom:'1px solid #e2e2e2', paddingBottom:'5px'}}>수강 과목</span>
+              <span id='review_title' style={{fontSize:'16px', fontWeight:'1500'}}>수강후기입니다.</span>
+              <span id='review_content' style={{fontSize:'14px'}}>안녕하세요^^ 너무 잘 가르쳐주세요. 완전 짱입니다! 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ</span>
+              <span id='review_id' style={{fontSize:'12px', color:'#a0a0a0'}}>japane***</span>
+            </ReviewCard>
+            <ReviewCard>
+              <span id='review_course' style={{fontSize:'14px', borderBottom:'1px solid #e2e2e2', paddingBottom:'5px'}}>수강 과목</span>
+              <span id='review_title' style={{fontSize:'16px', fontWeight:'1500'}}>수강후기입니다.</span>
+              <span id='review_content' style={{fontSize:'14px'}}>안녕하세요^^ 너무 잘 가르쳐주세요. 완전 짱입니다! 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ</span>
+              <span id='review_id' style={{fontSize:'12px', color:'#a0a0a0'}}>japane***</span>
+            </ReviewCard>
+            <ReviewCard>
+              <span id='review_course' style={{fontSize:'14px', borderBottom:'1px solid #e2e2e2', paddingBottom:'5px'}}>수강 과목</span>
+              <span id='review_title' style={{fontSize:'16px', fontWeight:'1500'}}>수강후기입니다.</span>
+              <span id='review_content' style={{fontSize:'14px'}}>안녕하세요^^ 너무 잘 가르쳐주세요. 완전 짱입니다! 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ</span>
+              <span id='review_id' style={{fontSize:'12px', color:'#a0a0a0'}}>japane***</span>
+            </ReviewCard>
+            <ReviewCard>
+              <span id='review_course' style={{fontSize:'14px', borderBottom:'1px solid #e2e2e2', paddingBottom:'5px'}}>수강 과목</span>
+              <span id='review_title' style={{fontSize:'16px', fontWeight:'1500'}}>수강후기입니다.</span>
+              <span id='review_content' style={{fontSize:'14px'}}>안녕하세요^^ 너무 잘 가르쳐주세요. 완전 짱입니다! 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ</span>
+              <span id='review_id' style={{fontSize:'12px', color:'#a0a0a0'}}>japane***</span>
+            </ReviewCard>
+            <ReviewCard>
+              <span id='review_course' style={{fontSize:'14px', borderBottom:'1px solid #e2e2e2', paddingBottom:'5px'}}>수강 과목</span>
+              <span id='review_title' style={{fontSize:'16px', fontWeight:'1500'}}>수강후기입니다.</span>
+              <span id='review_content' style={{fontSize:'14px'}}>안녕하세요^^ 너무 잘 가르쳐주세요. 완전 짱입니다! 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ</span>
+              <span id='review_id' style={{fontSize:'12px', color:'#a0a0a0'}}>japane***</span>
+            </ReviewCard>
+            <ReviewCard>
+              <span id='review_course' style={{fontSize:'14px', borderBottom:'1px solid #e2e2e2', paddingBottom:'5px'}}>수강 과목</span>
+              <span id='review_title' style={{fontSize:'16px', fontWeight:'1500'}}>수강후기입니다.</span>
+              <span id='review_content' style={{fontSize:'14px'}}>안녕하세요^^ 너무 잘 가르쳐주세요. 완전 짱입니다! 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ</span>
+              <span id='review_id' style={{fontSize:'12px', color:'#a0a0a0'}}>japane***</span>
+            </ReviewCard>
+          </DownReview>
+        </ReviewsContainer>
+
+        <CoursesContainer>
+          <UpCourses>
+            <Title>인기 강좌</Title>
+            <MoreButton onClick={ () => navigate(`/courses`)}>더보기 &gt;</MoreButton>
+          </UpCourses>
+          <DownCourses>
+
+          </DownCourses>
+        </CoursesContainer>
+
+        {/* <CardsContainer>
           <Card id='teachersCard' onClick={ () => navigate(`/teachers`)}> 
             <FcConferenceCall size={70} />
             <span>선생님 소개</span>
             </Card>
           <Card id='coursesCard' onClick={ () => navigate(`/courses`)}>
-           <FcViewDetails size={70}/>
+            <FcViewDetails size={70}/>
             <span>강좌 목록</span>
           </Card>
           <Card id='qnaCard' onClick={ () => navigate(`/qna`)}>
@@ -48,7 +104,7 @@ const HomePage = () => {
             <FcInfo size={70} />
             <span>마이 페이지</span>
           </Card>
-        </CardsContainer>
+        </CardsContainer> */}
       </Main>
       <Footer />
     </>
@@ -64,7 +120,7 @@ const HomeBanner = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   margin-top: 20px;
   padding-left: 30px;
   padding-right: 30px;
@@ -104,6 +160,113 @@ const DownDescription = styled.div`
   font-size: 10px;
   font-family: 'Pretendard-regular';
 `;
+
+const ReviewsContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 20px;
+  background-color: #f8f8f8;
+  border-top: 1px solid #e2e2e2;
+  border-bottom: 1px solid #e2e2e2;
+  gap: 15px;
+  margin-bottom: 40px;
+`;
+
+const UpReview = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const Title = styled.div`
+  font-size: 18px;
+  font-weight: 700;
+  font-family: 'Pretendard-regular';
+`;
+
+const MoreButton = styled.div`
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'Pretendard-regular';
+  color: #a0a0a0;
+  cursor: pointer;
+`;
+
+const DownReview = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap; /* 줄바꿈 방지 */
+  overflow-x: auto; /* 가로 스크롤 활성화 */
+  gap: 20px; /* 카드 간 간격 */
+  padding-bottom: 10px;
+
+  /* 스크롤바 스타일 (선택 사항) */
+  &::-webkit-scrollbar {
+    height: 8px; /* 스크롤바 높이 */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #c6c6c6; /* 스크롤바 색상 */
+    border-radius: 4px; /* 둥근 모서리 */
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* 스크롤바 배경 */
+  }
+`;
+
+const ReviewCard = styled.div`
+  width: 300px; /* 고정 너비 */
+  height: 200px; /* 고정 높이 */
+  flex-shrink: 0; /* 너비가 줄어들지 않도록 설정 */
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e2e2e2;
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px;
+  gap: 10px;
+
+  #review_content {
+    font-size: 14px;
+    overflow: hidden; /* 넘치는 텍스트 숨김 */
+    display: -webkit-box; /* Flexbox와 비슷한 WebKit 기반 레이아웃 */
+    -webkit-line-clamp: 3; /* 최대 3줄까지만 표시 */
+    -webkit-box-orient: vertical; /* 블록 방향으로 텍스트 정렬 */
+    text-overflow: ellipsis; /* 넘치는 텍스트를 "..." 처리 */
+    line-height: 1.5; /* 줄 간격 조정 */
+    max-height: calc(1.5em * 3); /* 3줄 높이 제한 */
+  }
+`;
+
+const CoursesContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 20px;
+  background-color: #f8f8f8;
+  border-top: 1px solid #e2e2e2;
+  border-bottom: 1px solid #e2e2e2;
+  gap: 15px;
+  margin-bottom: 40px;
+`;
+
+const UpCourses = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const DownCourses = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3열 고정 */
+  gap: 20px; /* 카드 간격 */
+`;
+
+
+
+
 
 const CardsContainer = styled.div`
   display: grid;
