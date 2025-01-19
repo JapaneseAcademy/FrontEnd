@@ -75,7 +75,7 @@ const HomePage = () => {
 
         <CoursesContainer>
           <UpCourses>
-            <Title>인기 강좌</Title>
+            <Title>강좌 목록</Title>
             <MoreButton onClick={ () => navigate(`/courses`)}>더보기 &gt;</MoreButton>
           </UpCourses>
           <DownCourses>
@@ -123,7 +123,7 @@ const HomePage = () => {
           </Card>
           <Card id='qnaCard' onClick={ () => navigate(`/qna`)}>
             <FcHeadset size={70} />
-            <span>Q&A</span>
+            <span>상담 문의</span>
           </Card>
           <Card id='myPageCard' onClick={ () => navigate(`/mypage`)}>
             <FcInfo size={70} />
