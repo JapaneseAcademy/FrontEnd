@@ -109,7 +109,7 @@ const Left = styled.div`
     transition: color 0.3s ease;
 
     &:hover {
-      color: #392a20; /* 호버 시 색상 강조 */
+      color: #929292; /* 호버 시 색상 강조 */
     }
   }
 `;
@@ -126,7 +126,7 @@ const Right = styled.div`
     transition: color 0.3s ease;
 
     &:hover {
-      color: #392a20; /* 호버 시 색상 강조 */
+      color: #929292; /* 호버 시 색상 강조 */
     }
   }
 `;
