@@ -157,6 +157,14 @@ const Navigator = styled.div`
   font-size: 18px;
   cursor: pointer;
 
+  /* 호버 시 색상 강조 */
+  &:hover {
+    color: #7c7c7c;
+    /*밑으로 들어가는 입체 효과*/
+    transform: translateY(2px);
+    transition : transform 0.3s ease;
+  }
+
   /* desktop 규격 */
   @media screen and (min-width: 1024px) {
     font-size: 18px;
