@@ -26,7 +26,6 @@ const Wrapper = styled.div`
    padding: 20px;
    padding-top: 30px;
    padding-bottom: 30px;
-   font-family: 'Pretendard-regular';
    `
 
 const Title = styled.div`

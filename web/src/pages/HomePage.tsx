@@ -1,7 +1,7 @@
 import Header from '../components/Header'
 import Main from '../components/Main'
 import Footer from '../components/Footer'
-import styled from 'styled-components' 
+import styled, {keyframes} from 'styled-components' 
 import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
@@ -15,8 +15,8 @@ const HomePage = () => {
           <ProfileImage src='/images/ProfileImageEx.jpeg' />
           <Description>
             <UpDescription>
-              <span style={{fontSize:'12px', fontWeight:'400', color:'#a0a0a0', fontFamily:'Pretendard-regular', paddingBottom:'10px'}}>어쩌구 저쩌구</span>
-              <span style={{fontSize:'25px'}}>어쩌구 저쩌구! <br/> 어쩌구 저쩌구 오예</span>
+              <span style={{fontSize:'12px', fontWeight:'400', color:'#a0a0a0', paddingBottom:'10px'}}>日本語を勉強しましょう！</span>
+              <span style={{fontSize:'25px', fontWeight:'800',  fontFamily: 'SF_HambakSnow'}}>어쩌구 저쩌구! <br/> 어쩌구 저쩌구 오예</span>
             </UpDescription>
             <DownDescription>
               - 가나다라마 바사
@@ -28,6 +28,52 @@ const HomePage = () => {
           </Description>
         </HomeBanner>
 
+        <Ment>
+          <span style={{fontSize:'16px', fontWeight:'400'}}>
+            일본어 공부가 힘들다면</span>
+          <span style={{fontSize:'18px'}}>
+            <span style={{fontSize:'20px', textDecoration:'underline', fontWeight: 'bold'}}>예리 센세</span>와 함께 하세요!</span>
+        </Ment>
+
+        <CoursesContainer>
+          <UpCourses>
+            <Title>강좌 목록</Title>
+            <MoreButton onClick={ () => navigate(`/courses`)}>더보기 &gt;</MoreButton>
+          </UpCourses>
+          <DownCourses>
+            <CourseCard>
+              <CourseImage src='/images/Lecture_Thumbnail.jpg' />
+              <TagContainer>
+                <Tag>New</Tag>
+                <Tag>자체교재</Tag>
+              </TagContainer>
+              <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>예리한 기초 일본어 1코스</span>
+              <span id='course_description' style={{fontSize:'12px', color:'#a0a0a0'}}>기초를 탄탄히 하자!</span>
+              <span id='course_price' style={{fontSize:'14px', fontWeight:'600', marginTop:'5px'}}>100,000 원</span>
+            </CourseCard>
+            <CourseCard>
+              <CourseImage src='/images/Lecture_Thumbnail.jpg' />
+              <TagContainer>
+                <Tag>New</Tag>
+                <Tag>자체교재</Tag>
+              </TagContainer>
+              <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>예리한 기초 일본어 1코스</span>
+              <span id='course_description' style={{fontSize:'12px', color:'#a0a0a0'}}>기초를 탄탄히 하자!</span>
+              <span id='course_price' style={{fontSize:'14px', fontWeight:'600', marginTop:'5px'}}>100,000 원</span>
+            </CourseCard>
+            <CourseCard>
+              <CourseImage src='/images/Lecture_Thumbnail.jpg' />
+              <TagContainer>
+                <Tag>New</Tag>
+                <Tag>자체교재</Tag>
+              </TagContainer>
+              <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>예리한 기초 일본어 1코스</span>
+              <span id='course_description' style={{fontSize:'12px', color:'#a0a0a0'}}>기초를 탄탄히 하자!</span>
+              <span id='course_price' style={{fontSize:'14px', fontWeight:'600', marginTop:'5px'}}>100,000 원</span>
+            </CourseCard>
+          </DownCourses>
+        </CoursesContainer>
+
         <ReviewsContainer>
           <UpReview>
             <Title>수강 후기</Title>
@@ -35,26 +81,26 @@ const HomePage = () => {
           </UpReview>
           <DownReview>
             <ReviewCard>
-              <span id='review_course' style={{fontSize:'14px', borderBottom:'1px solid #e2e2e2', paddingBottom:'5px'}}>수강 과목</span>
-              <span id='review_title' style={{fontSize:'16px', fontWeight:'1500'}}>수강후기입니다.</span>
+              <span id='review_course' style={{fontSize:'14px', borderBottom:'1px solid #e2e2e2', paddingBottom:'5px'}}>기초 일본어 초급반</span>
+              <span id='review_title' style={{fontSize:'16px', fontWeight:'500'}}>수강후기입니다.</span>
               <span id='review_content' style={{fontSize:'14px'}}>안녕하세요^^ 너무 잘 가르쳐주세요. 완전 짱입니다! 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ</span>
               <span id='review_id' style={{fontSize:'12px', color:'#a0a0a0'}}>japane***</span>
             </ReviewCard>
             <ReviewCard>
               <span id='review_course' style={{fontSize:'14px', borderBottom:'1px solid #e2e2e2', paddingBottom:'5px'}}>수강 과목</span>
-              <span id='review_title' style={{fontSize:'16px', fontWeight:'1500'}}>수강후기입니다.</span>
+              <span id='review_title' style={{fontSize:'16px', fontWeight:'500'}}>수강후기입니다.</span>
               <span id='review_content' style={{fontSize:'14px'}}>안녕하세요^^ 너무 잘 가르쳐주세요. 완전 짱입니다! 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ</span>
               <span id='review_id' style={{fontSize:'12px', color:'#a0a0a0'}}>japane***</span>
             </ReviewCard>
             <ReviewCard>
               <span id='review_course' style={{fontSize:'14px', borderBottom:'1px solid #e2e2e2', paddingBottom:'5px'}}>수강 과목</span>
-              <span id='review_title' style={{fontSize:'16px', fontWeight:'1500'}}>수강후기입니다.</span>
+              <span id='review_title' style={{fontSize:'16px', fontWeight:'500'}}>수강후기입니다.</span>
               <span id='review_content' style={{fontSize:'14px'}}>안녕하세요^^ 너무 잘 가르쳐주세요. 완전 짱입니다! 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ</span>
               <span id='review_id' style={{fontSize:'12px', color:'#a0a0a0'}}>japane***</span>
             </ReviewCard>
             <ReviewCard>
               <span id='review_course' style={{fontSize:'14px', borderBottom:'1px solid #e2e2e2', paddingBottom:'5px'}}>수강 과목</span>
-              <span id='review_title' style={{fontSize:'16px', fontWeight:'1500'}}>수강후기입니다.</span>
+              <span id='review_title' style={{fontSize:'16px', fontWeight:'500'}}>수강후기입니다.</span>
               <span id='review_content' style={{fontSize:'14px'}}>안녕하세요^^ 너무 잘 가르쳐주세요. 완전 짱입니다! 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ</span>
               <span id='review_id' style={{fontSize:'12px', color:'#a0a0a0'}}>japane***</span>
             </ReviewCard>
@@ -72,46 +118,6 @@ const HomePage = () => {
             </ReviewCard>
           </DownReview>
         </ReviewsContainer>
-
-        <CoursesContainer>
-          <UpCourses>
-            <Title>강좌 목록</Title>
-            <MoreButton onClick={ () => navigate(`/courses`)}>더보기 &gt;</MoreButton>
-          </UpCourses>
-          <DownCourses>
-            <CourseCard>
-              <CourseImage src='/images/Lecture_Thumbnail.jpg' />
-              <TagContainer>
-                <Tag>New</Tag>
-                <Tag>자체교재</Tag>
-              </TagContainer>
-              <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>예리한 기초 일본어 1코스</span>
-              <span id='course_description' style={{fontSize:'12px', color:'#a0a0a0'}}>기초를 탄탄히 하자!</span>
-              <span id='course_price' style={{fontSize:'14px', fontWeight:'700', marginTop:'5px'}}>100,000 원</span>
-            </CourseCard>
-            <CourseCard>
-              <CourseImage src='/images/Lecture_Thumbnail.jpg' />
-              <TagContainer>
-                <Tag>New</Tag>
-                <Tag>자체교재</Tag>
-              </TagContainer>
-              <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>예리한 기초 일본어 1코스</span>
-              <span id='course_description' style={{fontSize:'12px', color:'#a0a0a0'}}>기초를 탄탄히 하자!</span>
-              <span id='course_price' style={{fontSize:'14px', fontWeight:'700', marginTop:'5px'}}>100,000 원</span>
-            </CourseCard>
-            <CourseCard>
-              <CourseImage src='/images/Lecture_Thumbnail.jpg' />
-              <TagContainer>
-                <Tag>New</Tag>
-                <Tag>자체교재</Tag>
-              </TagContainer>
-              <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>예리한 기초 일본어 1코스</span>
-              <span id='course_description' style={{fontSize:'12px', color:'#a0a0a0'}}>기초를 탄탄히 하자!</span>
-              <span id='course_price' style={{fontSize:'14px', fontWeight:'700', marginTop:'5px'}}>100,000 원</span>
-            </CourseCard>
-          </DownCourses>
-        </CoursesContainer>
-
         {/* <CardsContainer>
           <Card id='teachersCard' onClick={ () => navigate(`/teachers`)}> 
             <FcConferenceCall size={70} />
@@ -138,6 +144,18 @@ const HomePage = () => {
 
 export default HomePage
 
+/* 아래에서 위로 올라오는 애니메이션 정의(재사용 가능) */
+const fadeInUp = keyframes`
+  from {
+    transform: translateY(20px); /* 아래에서 시작 */
+    opacity: 0; /* 투명하게 시작 */
+  }
+  to {
+    transform: translateY(0); /* 제자리로 */
+    opacity: 1; /* 완전히 표시 */
+  }
+`;
+
 const HomeBanner = styled.div`
   width: 100%;
   height: 270px;
@@ -145,7 +163,7 @@ const HomeBanner = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   margin-top: 20px;
   padding-left: 30px;
   padding-right: 30px;
@@ -157,8 +175,9 @@ const HomeBanner = styled.div`
   background-blend-mode: overlay; 
   background-color: rgba(0, 0, 0, 0.3); */
 
-  font-family: 'SF_HambakSnow';
   color: #392a20;
+
+  animation: ${fadeInUp} 0.8s ease-out;
 `;
 
 const ProfileImage = styled.img`
@@ -183,8 +202,27 @@ const UpDescription = styled.div`
 
 const DownDescription = styled.div`
   font-size: 10px;
-  font-family: 'Pretendard-regular';
 `;
+
+
+const Ment = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 20px;
+  background-color: #ffffff;
+  color: #5c3d28;
+  font-family: 'Pretendard';
+  gap: 5px;
+  margin-bottom: 30px;
+
+  /* 애니메이션 적용 */
+  animation: ${fadeInUp} 0.8s ease-out;
+`;
+
+
 
 const ReviewsContainer = styled.div`
   width: 100%;
@@ -206,14 +244,12 @@ const UpReview = styled.div`
 
 const Title = styled.div`
   font-size: 18px;
-  font-weight: 700;
-  font-family: 'Pretendard-regular';
+  font-weight: 600;
 `;
 
 const MoreButton = styled.div`
   font-size: 13px;
   font-weight: 500;
-  font-family: 'Pretendard-regular';
   color: #a0a0a0;
   cursor: pointer;
 `;
@@ -339,7 +375,7 @@ const TagContainer = styled.div`
 const Tag = styled.div`
   padding: 4px;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 600;
   color: white;
   background-color: #392a20;
   border-radius: 5px;

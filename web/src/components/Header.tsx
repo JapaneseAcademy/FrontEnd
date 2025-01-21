@@ -27,7 +27,7 @@ const Header = () => {
       <SecondRow>
         <Navigator onClick={() => navigate('/teachers')}>선생님 소개</Navigator>
         <Navigator onClick={() => navigate(`/courses`)}>강좌 목록</Navigator>
-        <Navigator onClick={() => navigate(`/introduction`)}>학원 소개</Navigator>
+        <Navigator onClick={() => navigate(`/introduction`)}>학원 안내</Navigator>
         <Navigator onClick={() => navigate(`/qna`)}>상담 문의</Navigator>
       </SecondRow>
 
@@ -40,7 +40,7 @@ const Header = () => {
         <MenuContainer>
           <Menu onClick={ () => navigate(`/teachers`)}>선생님 소개</Menu>
           <Menu onClick={ () => navigate(`/courses`)}>강의 조회</Menu>
-          <Menu onClick={ () => navigate(`/introduction`)}>학원 소개</Menu>
+          <Menu onClick={ () => navigate(`/introduction`)}>학원 안내</Menu>
           <Menu onClick={ () => navigate(`/qna`)}>상담 문의</Menu>
         </MenuContainer>
       </Sidebar>
@@ -141,7 +141,6 @@ const SecondRow = styled.div`
   padding-top: 15px;
   padding-bottom: 15px;
   border-bottom: 1px solid #e2e2e2;
-  font-family: 'Pretendard-Regular', sans-serif;
 
   /* FirstRow와 겹치지 않도록 여백 추가 */
   margin-top: 55px;

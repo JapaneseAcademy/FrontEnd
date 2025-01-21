@@ -16,13 +16,17 @@ const QnAPage = () => {
         <Banner>
           {/* <BannerImage src='images/hiragana.png'/> */}
           <BannerText>
-            올림피아드를 거친 수많은 학생의 
+            올림피아드를 거친 수많은 
             <br/>
-            데이터를 기반으로
+            학생의 데이터를 기반으로
             <br/>
             <span style={{fontWeight:'900'}}>AI가 체계적으로 </span>비교 분석합니다. 
             <br/>             <br/>
-            수강생의 실력과 특성을 세심하게 파악한 후 수준에 맞는 클럽과 반을
+            수강생의 실력과 특성을 
+            <br/> 
+            세심하게 파악한 후 
+            <br/> 
+            수준에 맞는 클럽과 반을
             <br/> 
             배정합니다. 
           </BannerText>
@@ -64,6 +68,7 @@ const Banner = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
+  height: 400px;
   font-size: 20px;
   padding: 40px;
   margin-top: 30px;
@@ -80,9 +85,14 @@ const Banner = styled.div`
 // `
 
 const BannerText = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   font-size: 20px;
   font-weight: 300;
   line-height: 1.5;
+  height: 100%;
 ` 
 
 const Content = styled.div`

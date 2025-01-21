@@ -7,6 +7,7 @@ import CoursesPage from './pages/CoursesPage'
 import QnAPage from './pages/QnAPage'
 import MyPage from './pages/MyPage'
 import IntroductionPage from './pages/IntroductionPage'
+import TestPage from './pages/TestPage'
 
 function App() {
 
@@ -20,6 +21,8 @@ function App() {
         <Route path="/introduction" element={<IntroductionPage/>} />
 
         <Route path="*" element={<div>Not Found</div>} />
+
+        <Route path='/test' element={<TestPage/>} />
       </Routes>
   )
 }
