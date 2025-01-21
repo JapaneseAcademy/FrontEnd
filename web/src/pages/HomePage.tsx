@@ -3,6 +3,7 @@ import Main from '../components/Main'
 import Footer from '../components/Footer'
 import styled, {keyframes} from 'styled-components' 
 import { useNavigate } from 'react-router-dom';
+import Youtube from '../components/Youtube';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -34,6 +35,8 @@ const HomePage = () => {
           <span style={{fontSize:'18px'}}>
             <span style={{fontSize:'20px', textDecoration:'underline', fontWeight: 'bold'}}>예리 센세</span>와 함께 하세요!</span>
         </Ment>
+
+        <Youtube />
 
         <CoursesContainer>
           <UpCourses>
