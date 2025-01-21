@@ -20,7 +20,7 @@ const QnAPage = () => {
             <br/>
             학생의 데이터를 기반으로
             <br/>
-            <span style={{fontWeight:'900'}}>AI가 체계적으로 </span>비교 분석합니다. 
+            <span style={{fontWeight:'650'}}>AI가 체계적으로 </span>비교 분석합니다. 
             <br/>             <br/>
             수강생의 실력과 특성을 
             <br/> 

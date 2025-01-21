@@ -28,7 +28,7 @@ const IntroductionPage = () => {
             </BuildingIcon>
             <AddressText>
               <Subtitle>주소</Subtitle>
-              <Text>서울 중구 인현동1가 136-20 2층 207호</Text>
+              <Text>서울 중구 인현동1가 136-20 <br/> 2층 207호</Text>
             </AddressText>
           </AddressContainer>
           <Title>오시는 길 안내</Title>
