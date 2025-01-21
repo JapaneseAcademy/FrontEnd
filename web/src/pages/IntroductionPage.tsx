@@ -141,7 +141,3 @@ const AddressText = styled.div`
   flex-direction: column;
 `
 
-const Address = styled.div`
-  font-size: 16px;
-  margin: 5px 0;
-`
