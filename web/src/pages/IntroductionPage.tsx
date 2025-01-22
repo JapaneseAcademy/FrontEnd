@@ -3,6 +3,8 @@ import Header from "../components/Header"
 import Main from "../components/Main"
 import styled, { keyframes } from "styled-components"
 import { PiBuildingOfficeLight } from "react-icons/pi";
+import { PiSubwayLight } from "react-icons/pi";
+import { PiBusLight } from "react-icons/pi";
 
 const IntroductionPage = () => {
   const handleLocationClick = () => {
@@ -14,25 +16,52 @@ const IntroductionPage = () => {
 
 
   return (
-    
-    
+  
     <>
       <Header />
       <Main>
         <Banner>학원 안내</Banner>
         <Content>
           <Title>학원 위치 안내</Title>
-          <AddressContainer>
-            <BuildingIcon>
-              <PiBuildingOfficeLight style={{padding:'10px'}}></PiBuildingOfficeLight>
-            </BuildingIcon>
-            <AddressText>
-              <Subtitle>주소</Subtitle>
-              <Text>서울 중구 인현동1가 136-20 <br/> 2층 207호</Text>
-            </AddressText>
-          </AddressContainer>
+
+          <LocationContainer id='locationContainer'>
+            <Location>
+              <IconCircle>
+                <PiBuildingOfficeLight style={{padding:'10px'}}></PiBuildingOfficeLight>
+              </IconCircle>
+              <LocationText>
+                <Subtitle>주소</Subtitle>
+                <Text>서울 중구 인현동1가 136-20 <br/> 2층 207호</Text>
+              </LocationText>
+            </Location>
+            <Location>
+              <IconCircle>
+                <PiSubwayLight style={{padding:'10px'}}></PiSubwayLight>
+              </IconCircle>
+              <LocationText>
+                <Subtitle>지하철 이용 시</Subtitle>
+                <Text>
+                  <LocationTextRow><span>2</span>| 을지로3가역, 을지로4가역 </LocationTextRow>
+                  <LocationTextRow><span>3</span>| 충무로역 </LocationTextRow>
+                  <LocationTextRow><span>4</span>| 명동역 </LocationTextRow>
+                  <LocationTextRow><span>5</span>| 을지로4가역 </LocationTextRow>
+                </Text>
+              </LocationText>
+            </Location>
+            <Location>
+              <IconCircle>
+                <PiBusLight style={{padding:'10px'}}></PiBusLight>
+              </IconCircle>
+              <LocationText>
+                <Subtitle>버스 이용 시</Subtitle>
+                <Text>서울 중구 인현동1가 136-20 <br/> 2층 207호</Text>
+              </LocationText>
+            </Location>
+          </LocationContainer>
+
           <Title>오시는 길 안내</Title>
-          <LocationImage onClick={handleLocationClick}></LocationImage>
+          <PathImage onClick={handleLocationClick}></PathImage>
+
         </Content>
       </Main>
       <Footer />
@@ -98,15 +127,35 @@ const Title = styled.div`
 const Subtitle = styled.div`
   font-size: 19px;
   font-weight: 500;
-  margin: 10px 0;
 `
 
 const Text = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
   font-size: 16px;
   margin: 5px 0;
+  gap: 10px;
 `
 
-const LocationImage = styled.div`
+const LocationTextRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-left: 20px;
+  span {
+    width: 20px;
+    height: 20px;
+    background-color: #f8f8f8;
+    padding: 5px;
+    border-radius: 50%;
+  }
+`
+
+
+const PathImage = styled.div`
   background-image: url('/images/location.png');
   cursor: pointer;
   background-size: cover;
@@ -116,15 +165,22 @@ const LocationImage = styled.div`
   margin: 20px 0;
 `
 
-const AddressContainer = styled.div`
+const LocationContainer = styled.div`
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  margin-top: 30px;
+  gap: 40px;
   margin-bottom: 80px;
 `
 
-const BuildingIcon = styled.div`
+const Location = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+`
+
+const IconCircle = styled.div`
   width: 70px;
   height: 70px;
   font-size: 60px;
@@ -136,7 +192,7 @@ const BuildingIcon = styled.div`
   align-items: center;
 `
 
-const AddressText = styled.div`
+const LocationText = styled.div`
   display: flex;
   flex-direction: column;
 `

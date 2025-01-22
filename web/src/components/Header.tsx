@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { GrHomeRounded } from "react-icons/gr";
 import { IoMenu } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
+import { getKakaoCode } from '../apis/loginAPI';
 
 const Header = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -35,7 +36,7 @@ const Header = () => {
         <CloseButton onClick={toggleSidebar}>×</CloseButton>
         <ButtonContainer>
           <SignupButton onClick={ () => navigate(`/signup`)}>회원가입</SignupButton>
-          <LoginButton onClick={ () => navigate(`/login`)}>로그인</LoginButton>
+          <LoginButton onClick={getKakaoCode}>로그인</LoginButton>
         </ButtonContainer>
         <MenuContainer>
           <Menu onClick={ () => navigate(`/teachers`)}>선생님 소개</Menu>

@@ -4,9 +4,25 @@ import Footer from '../components/Footer'
 import styled, {keyframes} from 'styled-components' 
 import { useNavigate } from 'react-router-dom';
 import Youtube from '../components/Youtube';
+import { useEffect } from 'react';
+import { login } from '../apis/loginAPI';
 
 const HomePage = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // 화면 맨 위로 이동
+    
+    // 카카오에서 code 받아온 후의 처리
+    const url = new URL(window.location.href);
+    const code = url.searchParams.get('code');
+    console.log('code:', code);
+    // code가 있고, localStorage에 토큰이 없으면 로그인 요청
+    if (code && !localStorage.getItem('token')) {
+      login(code);
+    }
+  }
+  , []);
 
   return (
   <>
