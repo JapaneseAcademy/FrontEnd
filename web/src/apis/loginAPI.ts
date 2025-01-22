@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const REDIRECT_URI = "http://localhost:5173";
-const REST_API_KEY = "9418bc955573195b97f867ebaba95fbb";
-const KAKAO_LOGIN_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+const REST_API_KEY = import.meta.env.VITE_REST_API_KEY;
+const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;
+const KAKAO_LOGIN_URL = `${import.meta.env.VITE_KAKAO_AUTH_URL}?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
 export const getKakaoCode = () => {
    window.location.href = KAKAO_LOGIN_URL;
