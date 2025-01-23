@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 export const getTest = async () => {
-   return await axios.get('http://jpacademy.r-e.kr:8080/api/v1/test/cors');
+   return await axios.get('https://jpacademy.r-e.kr/api/v1/test/cors');
    }
 
 export const postTest = async () => {
    try{
-      const response = await axios.post('http://jpacademy.r-e.kr:8080/api/v1/test/cors?message=hello', {
+      const response = await axios.post('https://jpacademy.r-e.kr/api/v1/test/cors?message=hello', {
 
       });
       console.log(response);

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { getTest, postTest } from "../apis/apiTest";
-import { getKakaoCode, login } from "../apis/loginAPI";
+import { getKakaoCode, register } from "../apis/loginAPI";
 
 const TestPage = () => {
    const mapRef = useRef<HTMLDivElement | null>(null); // 맵 컨테이너 참조
@@ -50,6 +50,7 @@ const TestPage = () => {
          <div id="map" ref={mapRef} style={{ width: "500px", height: "400px" }}></div>
 
          <button onClick={handleLoginClick}>login</button>
+         <button onClick={() => register("kakao_3889727808")}>register</button>
       </>
    );
 };
