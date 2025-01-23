@@ -11,32 +11,45 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import FloatingKakaoBtn from './components/FloatingKakaoBtn';
 import AdminPage from './pages/AdminPage';
+import StudentsList from './components/adminComponents/StudentsList';
+import CoursesList from './components/adminComponents/CoursesList';
+import SendMessages from './components/adminComponents/SendMessages';
+import ChangeYoutube from './components/adminComponents/ChangeYoutube';
+import ChangeHomeBanner from './components/adminComponents/ChangeHomeBanner';
 
 function App() {
-  const location = useLocation(); // 현재 경로 가져오기
+  const location = useLocation();
 
-  // AdminPage일 때 Header와 Footer를 숨김
-  const isAdminPage = location.pathname === '/admin';
+  // AdminPage 경로를 포함한 모든 하위 경로에서도 Header와 Footer 숨김
+  const isAdminPage = location.pathname.startsWith('/admin');
 
   return (
     <>
-      {!isAdminPage && <Header />} {/* Header 조건부 렌더링 */}
+      {!isAdminPage && <Header />}
       <Routes>
+        {/* 메인 라우트 */}
         <Route path="/" element={<HomePage />} />
         <Route path="/teachers" element={<TeachersPage />} />
         <Route path="/courses" element={<CoursesPage />} />
         <Route path="/qna" element={<QnAPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/introduction" element={<IntroductionPage />} />
-
-        <Route path="/admin" element={<AdminPage />} />
-
-        <Route path="*" element={<div>Not Found</div>} />
-
         <Route path="/test" element={<TestPage />} />
+
+        {/* Admin 라우트 */}
+        <Route path="/admin" element={<AdminPage />}>
+          <Route path="student" element={<StudentsList />} />
+          <Route path="message" element={<SendMessages/>} />
+          <Route path="course" element={<CoursesList />} />
+          <Route path="youtube" element={<ChangeYoutube/>} />
+          <Route path="banner" element={<ChangeHomeBanner/>} />
+        </Route>
+
+        {/* Not Found */}
+        <Route path="*" element={<div>Not Found</div>} />
       </Routes>
-      {!isAdminPage && <Footer />} {/* Footer 조건부 렌더링 */}
-      {!isAdminPage && <FloatingKakaoBtn />} {/* FloatingKakaoBtn도 조건부 렌더링 */}
+      {!isAdminPage && <Footer />}
+      {!isAdminPage && <FloatingKakaoBtn />}
     </>
   );
 }
