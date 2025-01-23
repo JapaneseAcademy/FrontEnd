@@ -8,10 +8,14 @@ import QnAPage from './pages/QnAPage'
 import MyPage from './pages/MyPage'
 import IntroductionPage from './pages/IntroductionPage'
 import TestPage from './pages/TestPage'
+import Header from './components/Header'
+import Footer from './components/Footer'
 
 function App() {
 
   return (
+    <>
+      <Header/>
       <Routes>
         <Route path="/" element={<HomePage/>} />
         <Route path="/teachers" element={<TeachersPage/>} />
@@ -24,6 +28,8 @@ function App() {
 
         <Route path='/test' element={<TestPage/>} />
       </Routes>
+      <Footer/>
+    </>
   )
 }
 

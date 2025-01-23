@@ -26,7 +26,7 @@ const HomePage = () => {
 
   return (
   <>
-      <Header />
+      {/* <Header /> */}
       <Main>
         <HomeBanner>
           <ProfileImage src='/images/ProfileImageEx.jpeg' />
@@ -156,7 +156,7 @@ const HomePage = () => {
           </Card>
         </CardsContainer> */}
       </Main>
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }

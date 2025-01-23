@@ -13,7 +13,7 @@ const QnAPage = () => {
 
   return (
     <>
-      <Header/>
+      {/* <Header/> */}
       <Main>
         <Banner>
           {/* <BannerImage src='images/hiragana.png'/> */}
@@ -52,7 +52,7 @@ const QnAPage = () => {
           </ContentButton>
         </Content>
       </Main>
-      <Footer/>
+      {/* <Footer/> */}
   </>
   )
 }

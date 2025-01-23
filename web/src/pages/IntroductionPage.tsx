@@ -18,7 +18,7 @@ const IntroductionPage = () => {
   return (
   
     <>
-      <Header />
+      {/* <Header /> */}
       <Main>
         <Banner>학원 안내</Banner>
         <Content>
@@ -64,7 +64,7 @@ const IntroductionPage = () => {
 
         </Content>
       </Main>
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }

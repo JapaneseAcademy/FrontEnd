@@ -6,11 +6,11 @@ import Main from "../components/Main"
 const TeachersPage = () => {
   return (
     <>
-      <Header/>
+      {/* <Header/> */}
       <Main>
         <Title>선생님 소개</Title>
       </Main>
-      <Footer/>
+      {/* <Footer/> */}
     </>
   )
 }

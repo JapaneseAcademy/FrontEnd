@@ -5,11 +5,11 @@ import Footer from '../components/Footer'
 const CoursesPage = () => {
   return (
     <>
-      <Header/>
+      {/* <Header/> */}
       <Main>
         <h1>강사진</h1>
       </Main>
-      <Footer/>
+      {/* <Footer/> */}
     </>
   )
 }
