@@ -8,8 +8,8 @@ const FloatingKakaoBtn = () => {
    };
 
    return (
-      <Button onClick={handleClick}>kakao
-         {/* <img src="/path/to/kakao-icon.png" alt="카카오톡 문의" /> */}
+      <Button onClick={handleClick}>
+         <img src="/images/kakaotalk1.png" alt="카카오톡 문의" />
       </Button>
    );
    };
@@ -19,13 +19,13 @@ export default FloatingKakaoBtn;
 // Styled Component
 const Button = styled.div`
   position: fixed;
-  bottom: 20px;
+  bottom: 30px;
   right: 20px;
-  width: 60px;
-  height: 60px;
+  width: 55px;
+  height: 55px;
   background-color: #ffde00;
   border-radius: 50%;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 6px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -33,8 +33,8 @@ const Button = styled.div`
   z-index: 1000; /* 다른 요소보다 위에 위치 */
 
   img {
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
   }
 
   &:hover {

@@ -10,6 +10,7 @@ import IntroductionPage from './pages/IntroductionPage'
 import TestPage from './pages/TestPage'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import FloatingKakaoBtn from './components/FloatingKakaoBtn'
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
         <Route path='/test' element={<TestPage/>} />
       </Routes>
       <Footer/>
+      <FloatingKakaoBtn/>
     </>
   )
 }
