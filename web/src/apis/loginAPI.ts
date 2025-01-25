@@ -22,6 +22,10 @@ try {
       );
 
       console.log(response.data);
+
+      // 로그인 성공 시 토큰 저장
+      localStorage.setItem("accessToken", response.data.token.accessToken);
+      localStorage.setItem("refreshToken", response.data.token.refreshToken);
    }
    catch (error) {
      //에러 설명 출력
@@ -29,12 +33,13 @@ try {
          // AxiosError 타입인 경우에만 response를 안전하게 접근
          console.log(error);
          console.log(error.response?.data);
-     } else {
-         // AxiosError가 아닌 다른 에러 처리
-         console.error("Unexpected error:", error);
-     }
+      } else {
+            // AxiosError가 아닌 다른 에러 처리
+            console.error("Unexpected error:", error);
+      }
    }
 }
+
 
 export const register = async (kakaoID: string) => {
    console.log("-- 회원가입 함수 호출 --");

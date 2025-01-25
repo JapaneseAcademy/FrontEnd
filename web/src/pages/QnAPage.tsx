@@ -13,7 +13,6 @@ const QnAPage = () => {
 
   return (
     <>
-      {/* <Header/> */}
       <Main>
         <Banner>
           {/* <BannerImage src='images/hiragana.png'/> */}
@@ -37,22 +36,29 @@ const QnAPage = () => {
         <Line/>
 
         <Content>
+          <ContentTitle>자주 묻는 질문</ContentTitle>
           <ContentText>
-            상담 문의는 아래 카카오톡으로 부탁드립니다.
-            <span>
-              [ 상담 가능 시간 ]
-              <br/>
-              평일 10:00 ~ 17:00
-              <br/>
-              주말 10:00 ~ 15:00
-            </span>
-          </ContentText>
-          <ContentButton>
-            <Button onClick={handleKakaoBtnClick}>카카오톡 문의하기</Button>
-          </ContentButton>
+            <span style={{fontWeight:'bold'}}>Q. 수강료는 얼마인가요?</span>
+            <br/>
+            A. 수강료는 1회당 100,000원입니다.
+            <br/>
+            <br/>
+            <span style={{fontWeight:'bold'}}>Q. 수업 시간은 어떻게 되나요?</span>
+            <br/>
+            A. 수업 시간은 매주 토요일 10:00~12:00입니다.
+            <br/>
+            <br/>
+            <span style={{fontWeight:'bold'}}>Q. 수업 장소는 어디인가요?</span>
+            <br/>
+            A. 수업 장소는 서울시 강남구 역삼동 123-456번지 1층입니다.
+            <br/>
+            <br/>
+            <span style={{fontWeight:'bold'}}>Q. 수업은 어떤 내용으로 진행되나요?</span>
+            <br/>
+            A. 수업은 기초부터 차근차근 진행되며, 수준에 따라 맞춤형 수업이 진행됩니다.
+            </ContentText>
         </Content>
       </Main>
-      {/* <Footer/> */}
   </>
   )
 }
@@ -75,6 +81,7 @@ const Banner = styled.div`
   padding: 40px;
   margin-top: 30px;
   color: #ffffff;
+  margin-bottom: 50px;
 
   /* 아래쪽에만 그림자 */
   box-shadow: 0 10px 10px rgba(80, 80, 80, 0.5);
@@ -97,15 +104,24 @@ const BannerText = styled.div`
   height: 100%;
 ` 
 
+
+const Line = styled.div`
+  width: 90%;
+  height: 1px;
+  background-color: #ababab;
+  /* margin-top: 50px;
+  margin-bottom: 50px; */
+`
+
 const Content = styled.div`
-  width: 100%;
-  height: 300px;
+  width: 90%;
+  /* height: 300px; */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px;
   background-color: #ffffff;
+  margin-top: 50px;
 `
 
 const ContentText = styled.div`
@@ -123,30 +139,9 @@ const ContentText = styled.div`
   }
 `
 
-const ContentButton = styled.div`
-  margin-top: 20px;
+const ContentTitle = styled.div`
+  font-size: 30px;
+  font-weight: 500;
+  margin-bottom: 20px;
 `
 
-const Button = styled.button`
-  height: 40px;
-  color: white;
-  background-color: #4d3e2c;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  padding-left: 15px;
-  padding-right: 15px;
-
-  &:hover {
-    background-color: #392a20;
-  }
-`
-
-
-
-const Line = styled.div`
-  width: 90%;
-  height: 1px;
-  background-color: #636363;
-  margin-top: 50px;
-`

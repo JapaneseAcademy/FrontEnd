@@ -29,7 +29,7 @@ const Header = () => {
         <Navigator onClick={() => navigate('/teachers')}>선생님 소개</Navigator>
         <Navigator onClick={() => navigate(`/courses`)}>강좌 목록</Navigator>
         <Navigator onClick={() => navigate(`/introduction`)}>학원 안내</Navigator>
-        <Navigator onClick={() => navigate(`/qna`)}>상담 문의</Navigator>
+        <Navigator onClick={() => navigate(`/qna`)}>FAQ</Navigator>
       </SecondRow>
 
       <Sidebar isOpen={isSidebarOpen}>
@@ -42,7 +42,7 @@ const Header = () => {
           <Menu onClick={ () => navigate(`/teachers`)}>선생님 소개</Menu>
           <Menu onClick={ () => navigate(`/courses`)}>강의 조회</Menu>
           <Menu onClick={ () => navigate(`/introduction`)}>학원 안내</Menu>
-          <Menu onClick={ () => navigate(`/qna`)}>상담 문의</Menu>
+          <Menu onClick={ () => navigate(`/qna`)}>FAQ</Menu>
         </MenuContainer>
       </Sidebar>
     </>

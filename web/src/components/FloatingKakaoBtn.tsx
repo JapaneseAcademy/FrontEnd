@@ -23,7 +23,7 @@ const Button = styled.div`
   right: 20px;
   width: 55px;
   height: 55px;
-  background-color: #ffde00;
+  background-color: #ffe434;
   border-radius: 50%;
   box-shadow: 2px 6px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
@@ -39,7 +39,7 @@ const Button = styled.div`
 
   &:hover {
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-    transform: scale(1.1);
+    transform: scale(1.05);
     transition: all 0.3s ease;
   }
 `;
