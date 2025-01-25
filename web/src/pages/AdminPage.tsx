@@ -58,8 +58,9 @@ const Wrapper = styled.div`
    justify-content: center;
    align-items: center;
    flex-direction: row;
-
+   background-color: #f7f7f7;
    width: 100%;
+   height: 100%;
 `
 
 const Sidebar = styled.div`
@@ -69,7 +70,7 @@ const Sidebar = styled.div`
    justify-content: flex-start;
    background-color: #ffffff;
    width: 20%;
-   height: 100vh;
+   height: 100%;
    border-right: 1px solid #e1e1e1;
 `
 
@@ -152,7 +153,10 @@ const Items = styled.div`
 
 
 const Main = styled.div`
-   background-color: #f7f7f7;
    width: 80%;
-   height: 100vh;
+   height: 100%;
+   padding-top: 20px;
+   padding-bottom: 20px;
+   padding-left: 10px;
+   padding-right: 10px;
 `
