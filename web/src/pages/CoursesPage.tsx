@@ -6,6 +6,10 @@ import Course from '../components/Course';
 const CoursesPage = () => {
   const navigate = useNavigate();
 
+  const handleCourseClick = (courseId: number) => {
+    navigate(`/courses/${courseId}`);
+  }
+
   return (
     <>
       <Main>
@@ -16,6 +20,22 @@ const CoursesPage = () => {
 
           <CoursesContainer>
             <Course 
+              Id={1}
+              ImgUrl='/images/courseBanner/courseBanner1.png'
+              Title="원샷반"
+              Price="130,000원"/>
+            <Course 
+              Id={2}
+              ImgUrl='/images/courseBanner/courseBanner1.png'
+              Title="원샷반"
+              Price="130,000원"/>
+            <Course 
+              Id={3}
+              ImgUrl='/images/courseBanner/courseBanner1.png'
+              Title="원샷반"
+              Price="130,000원"/>
+            <Course 
+              Id={4}
               ImgUrl='/images/courseBanner/courseBanner1.png'
               Title="원샷반"
               Price="130,000원"/>
