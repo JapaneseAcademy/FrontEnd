@@ -25,6 +25,7 @@ const IntroductionPage = () => {
           <Title>학원 위치 안내</Title>
 
           <LocationContainer id='locationContainer'>
+
             <Location>
               <IconCircle>
                 <PiBuildingOfficeLight style={{padding:'10px'}}></PiBuildingOfficeLight>
@@ -34,33 +35,37 @@ const IntroductionPage = () => {
                 <Text>서울 중구 인현동1가 136-20 <br/> 2층 207호</Text>
               </LocationText>
             </Location>
+
             <Location>
               <IconCircle>
                 <PiSubwayLight style={{padding:'10px'}}></PiSubwayLight>
               </IconCircle>
               <LocationText>
                 <Subtitle>지하철 이용 시</Subtitle>
-                <Text>
-                  <LocationTextRow><span>2</span>| 을지로3가역, 을지로4가역 </LocationTextRow>
-                  <LocationTextRow><span>3</span>| 충무로역 </LocationTextRow>
-                  <LocationTextRow><span>4</span>| 명동역 </LocationTextRow>
-                  <LocationTextRow><span>5</span>| 을지로4가역 </LocationTextRow>
+                <Text id='stations'>
+                  <LocationTextRow><span>2호선</span>| 을지로3가역, 을지로4가역 </LocationTextRow>
+                  <LocationTextRow><span>3호선</span>| 충무로역 </LocationTextRow>
+                  <LocationTextRow><span>4호선</span>| 명동역 </LocationTextRow>
+                  <LocationTextRow><span>5호선</span>| 을지로4가역 </LocationTextRow>
                 </Text>
               </LocationText>
             </Location>
+
             <Location>
               <IconCircle>
                 <PiBusLight style={{padding:'10px'}}></PiBusLight>
               </IconCircle>
               <LocationText>
                 <Subtitle>버스 이용 시</Subtitle>
-                <Text>서울 중구 인현동1가 136-20 <br/> 2층 207호</Text>
+                <Text>국가위원위, 안중근활동터 / 초동정류장</Text>
               </LocationText>
             </Location>
+
           </LocationContainer>
 
           <Title>오시는 길 안내</Title>
           <PathImage onClick={handleLocationClick}></PathImage>
+          <div id="instruction">위 이미지를 클릭하시면 네이버 지도로 이동합니다.</div>
 
         </Content>
       </Main>
@@ -110,6 +115,14 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  /* 애니메이션 적용 */
+  /* animation: ${fadeInUp} 0.8s ease-out; */
+
+  #instruction {
+    font-size: 14px;
+    color: #7d7d7d;
+  }
 `
 
 const Title = styled.div`
@@ -139,20 +152,6 @@ const Text = styled.div`
   gap: 10px;
 `
 
-const LocationTextRow = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 10px;
-  margin-left: 20px;
-  span {
-    width: 20px;
-    height: 20px;
-    background-color: #f8f8f8;
-    padding: 5px;
-    border-radius: 50%;
-  }
-`
 
 
 const PathImage = styled.div`
@@ -177,6 +176,7 @@ const LocationContainer = styled.div`
 const Location = styled.div`
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   width: 100%;
 `
 
@@ -193,7 +193,19 @@ const IconCircle = styled.div`
 `
 
 const LocationText = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 `
 
+const LocationTextRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  span {
+    font-weight: 600;
+  }
+`
