@@ -37,17 +37,17 @@ const KakaoMap = ({ latitude, longitude, level = 3, style, markers = [] }: Kakao
 
    // 지도 초기화 함수
    const initMap = () => {
-      if (mapRef.current && window.kakao && window.kakao.maps) {
+      if (mapRef.current && window.Kakao && window.Kakao.maps) {
          const options = {
-            center: new window.kakao.maps.LatLng(latitude, longitude),
+            center: new window.Kakao.maps.LatLng(latitude, longitude),
             level,
          };
-         const map = new window.kakao.maps.Map(mapRef.current, options);
+         const map = new window.Kakao.maps.Map(mapRef.current, options);
 
          // 마커 추가
          markers.forEach((marker) => {
-            const markerPosition = new window.kakao.maps.LatLng(marker.latitude, marker.longitude);
-            const kakaoMarker = new window.kakao.maps.Marker({
+            const markerPosition = new window.Kakao.maps.LatLng(marker.latitude, marker.longitude);
+            const kakaoMarker = new window.Kakao.maps.Marker({
                position: markerPosition,
                title: marker.title,
             });

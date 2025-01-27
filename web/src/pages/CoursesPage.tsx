@@ -1,17 +1,22 @@
-import Header from '../components/Header'
 import Main from '../components/Main'
-import Footer from '../components/Footer'
+import styled from 'styled-components'
 
 const CoursesPage = () => {
   return (
     <>
-      {/* <Header/> */}
       <Main>
-        <h1>강사진</h1>
+        <Title>
+          예리 쌤과 일본어를 배워보세요!
+        </Title>
       </Main>
-      {/* <Footer/> */}
     </>
   )
 }
 
 export default CoursesPage
+
+const Title = styled.div`
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+`

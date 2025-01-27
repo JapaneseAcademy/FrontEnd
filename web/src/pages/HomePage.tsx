@@ -1,6 +1,4 @@
-import Header from '../components/Header'
 import Main from '../components/Main'
-import Footer from '../components/Footer'
 import styled, {keyframes} from 'styled-components' 
 import { useNavigate } from 'react-router-dom';
 import Youtube from '../components/Youtube';

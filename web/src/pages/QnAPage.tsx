@@ -1,15 +1,12 @@
-import Header from '../components/Header'
 import Main from '../components/Main'
-import Footer from '../components/Footer'
 import styled from 'styled-components'
 
 const QnAPage = () => {
-  const KAKAO_CHANNEL_URL = import.meta.env.VITE_KAKAO_CHANNEL_URL;
+  // const KAKAO_CHANNEL_URL = import.meta.env.VITE_KAKAO_CHANNEL_URL;
 
-  const handleKakaoBtnClick = () => {
-    window.open(KAKAO_CHANNEL_URL, "_blank");
-    // 제대로된 오픈채팅방 넣기
-  }
+  // const handleKakaoBtnClick = () => {
+  //   window.open(KAKAO_CHANNEL_URL, "_blank");
+  // }
 
   return (
     <>
