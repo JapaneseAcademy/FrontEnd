@@ -16,6 +16,7 @@ import CoursesList from './components/adminComponents/CoursesList';
 import SendMessages from './components/adminComponents/SendMessages';
 import ChangeYoutube from './components/adminComponents/ChangeYoutube';
 import ChangeHomeBanner from './components/adminComponents/ChangeHomeBanner';
+import CourseDetailPage from './pages/CourseDetailPage';
 
 function App() {
   const location = useLocation();
@@ -35,6 +36,7 @@ function App() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/introduction" element={<IntroductionPage />} />
         <Route path="/test" element={<TestPage />} />
+        <Route path="/courses/:courseId" element={<CourseDetailPage />} />
 
         {/* Admin 라우트 */}
         <Route path="/admin" element={<AdminPage />}>
