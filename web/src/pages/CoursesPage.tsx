@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Main from "../components/Main";
 import styled from "styled-components";
 import Course from "../components/Course";
 
 const CoursesPage = () => {
-  const navigate = useNavigate();
 
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
   const coursesPerPage = 5; // 페이지당 표시할 코스 개수
