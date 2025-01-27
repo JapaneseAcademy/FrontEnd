@@ -35,8 +35,8 @@ const Header = () => {
       <Sidebar isOpen={isSidebarOpen}>
         <CloseButton onClick={toggleSidebar}>×</CloseButton>
         <ButtonContainer>
-          <SignupButton onClick={ () => navigate(`/signup`)}>회원가입</SignupButton>
-          <LoginButton onClick={getKakaoCode}>로그인</LoginButton>
+          {/* <SignupButton onClick={ () => navigate(`/signup`)}>회원가입</SignupButton> */}
+          <LoginButton onClick={getKakaoCode}>카카오로 시작하기</LoginButton>
         </ButtonContainer>
         <MenuContainer>
           <Menu onClick={ () => navigate(`/teachers`)}>선생님 소개</Menu>
@@ -243,29 +243,32 @@ const ButtonContainer = styled.div`
   gap: 15px;
 `;
 
-const SignupButton = styled.button`
-  width: 40%;
-  height: 40px;
-  color: white;
-  background-color: #4d3e2c;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  border: 1.5px solid #7c7c7c;
+// const SignupButton = styled.button`
+//   width: 40%;
+//   height: 40px;
+//   color: white;
+//   background-color: #4d3e2c;
+//   border: none;
+//   cursor: pointer;
+//   border-radius: 5px;
+//   border: 1.5px solid #7c7c7c;
 
-  &:hover {
-    background-color: #392a20;
-  }
-`;
+//   &:hover {
+//     background-color: #392a20;
+//   }
+// `;
 
 const LoginButton = styled.button`
-  width: 40%;
-  height: 40px;
+  width: 80%;
+  height: 50px;
   background-color: none;
   color: black;
   border: none;
   cursor: pointer;
   border-radius: 5px;
+  background-color: #ffe100;
+  font-size: 16px;
+  font-weight: 500;
 
   &:hover {
     background-color: #392a20;

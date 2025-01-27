@@ -79,9 +79,6 @@ const Banner = styled.div`
   margin-top: 30px;
   color: #ffffff;
   margin-bottom: 50px;
-
-  /* 아래쪽에만 그림자 */
-  box-shadow: 0 10px 10px rgba(80, 80, 80, 0.5);
   
 `
 
