@@ -1,7 +1,11 @@
+import { useNavigate } from 'react-router-dom';
 import Main from '../components/Main'
 import styled from 'styled-components'
+import Course from '../components/Course';
 
 const CoursesPage = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <Main>
@@ -11,41 +15,10 @@ const CoursesPage = () => {
           </Title>
 
           <CoursesContainer>
-            <Course>
-              <CourseImage src="/images/courseBanner/courseBanner1.png" />
-              <CourseTitle>일본어 초급</CourseTitle>
-              <CoursePrice>
-                130,000원
-              </CoursePrice>
-            </Course>
-            <Course>
-              <CourseImage src="/images/courseBanner/courseBanner1.png" />
-              <CourseTitle>일본어 초급</CourseTitle>
-              <CoursePrice>
-                130,000원
-              </CoursePrice>
-            </Course>
-            <Course>
-              <CourseImage src="/images/courseBanner/courseBanner1.png" />
-              <CourseTitle>일본어 초급</CourseTitle>
-              <CoursePrice>
-                130,000원
-              </CoursePrice>
-            </Course>
-            <Course>
-              <CourseImage src="/images/courseBanner/courseBanner1.png" />
-              <CourseTitle>일본어 초급</CourseTitle>
-              <CoursePrice>
-                130,000원
-              </CoursePrice>
-            </Course>
-            <Course>
-              <CourseImage src="/images/courseBanner/courseBanner1.png" />
-              <CourseTitle>일본어 초급</CourseTitle>
-              <CoursePrice>
-                130,000원
-              </CoursePrice>
-            </Course>
+            <Course 
+              ImgUrl='/images/courseBanner/courseBanner1.png'
+              Title="원샷반"
+              Price="130,000원"/>
           </CoursesContainer>
 
         </Wrapper>
@@ -80,25 +53,3 @@ const CoursesContainer = styled.div`
   justify-content: center;
   gap: 70px; // 각 코스 사이의 간격
 `
-
-const Course = styled.div`
-  width: 100%;
-
-`
-
-const CourseImage = styled.img`
-  width: 100%;
-  border-radius: 10px;
-`
-
-const CourseTitle = styled.div`
-  font-size: 20px;
-  font-weight: 500;
-  margin-top: 20px;
-`
-
-const CoursePrice = styled.div`
-  font-size: 16px;
-  margin-top: 10px;
-`
-
