@@ -42,7 +42,7 @@ const IntroductionPage = () => {
               <LocationText>
                 <Subtitle>지하철 이용 시</Subtitle>
                 <Text id='stations'>
-                  <LocationTextRow><span>2호선</span>| 을지로3가역, 을지로4가역 </LocationTextRow>
+                  <LocationTextRow><span>2호선</span>| 을지로3가역 <br/> | 을지로4가역 </LocationTextRow>
                   <LocationTextRow><span>3호선</span>| 충무로역 </LocationTextRow>
                   <LocationTextRow><span>4호선</span>| 명동역 </LocationTextRow>
                   <LocationTextRow><span>5호선</span>| 을지로4가역 </LocationTextRow>

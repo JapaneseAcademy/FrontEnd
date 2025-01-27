@@ -65,7 +65,7 @@ const Wrapper = styled.div`
 `
 
 const Title = styled.div`
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 500;
   margin-bottom: 40px;
   margin-top: 40px;
