@@ -40,6 +40,7 @@ const Wrapper = styled.div`
 
 const CourseImage = styled.img`
    width: 100%;
+   aspect-ratio: 1/1;
 `;
 
 const CourseTitle = styled.div`
