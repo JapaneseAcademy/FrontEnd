@@ -1,8 +1,16 @@
 import styled from "styled-components"
-import { STUDENTS_LIST } from "../../constants/studentsList"
+import { STUDENTS_LIST } from "../../constants/studentsList" //임시로 만든 데이터 사용
 import FilterContainer from "./etc/FilterContainer"
+import { useState } from "react"
 
-const StudentsList = () => {
+const Out_StudentsList = () => {
+  const [selectedStudentId, setSelectedStudentId] = useState<number | null>(null)
+
+   // 선택한 학생의 데이터 가져오기
+  const selectedStudent = STUDENTS_LIST.find(student => student.id === selectedStudentId);
+
+
+
   return (
     <Wrapper>
       <StudentListContainer>
@@ -18,17 +26,16 @@ const StudentsList = () => {
           </TableHeader>
           <TableBody>
             {STUDENTS_LIST.map((student) => (
-              <TableRow key={student.id}>
+              <TableRow 
+                key={student.id} 
+                onClick={() => setSelectedStudentId(student.id)}
+                isSelected={selectedStudentId === student.id} 
+              >
                 <TableItem>{student.name}</TableItem>
                 <TableItem>{student.birth}</TableItem>
                 <TableItem>{student.class}</TableItem>
               </TableRow>
             ))}
-            <TableRow>
-              <TableItem>김예리</TableItem>
-              <TableItem>1999.02.02</TableItem>
-              <TableItem>기초 일본어 1반</TableItem>
-            </TableRow>
           </TableBody>
         </StudentsTable>
       </StudentListContainer>
@@ -36,23 +43,23 @@ const StudentsList = () => {
       <StudentDetailContainer>
         <DetailRow>
           <DetailTitle>이름</DetailTitle>
-          <DetailContent>김예리</DetailContent>
+          <DetailContent>{selectedStudent?.name}</DetailContent>
         </DetailRow>
         <DetailRow>
         <DetailTitle>생년월일</DetailTitle>
-          <DetailContent>2000.00.00</DetailContent>
+          <DetailContent>{selectedStudent?.birth}</DetailContent>
         </DetailRow>
         <DetailRow>
           <DetailTitle>전화번호</DetailTitle>
-          <DetailContent>010-1234-5678</DetailContent>
+          <DetailContent>{selectedStudent?.phone}</DetailContent>
         </DetailRow>
         <DetailRow>
           <DetailTitle>수강현황</DetailTitle>
-          <DetailContent>기초 일본어 1반</DetailContent>
+          <DetailContent>{selectedStudent?.class}</DetailContent>
         </DetailRow>
         <DetailRow>
           <DetailTitle>주소</DetailTitle>
-          <DetailContent>서울시 동작구 흑석로 84 중앙대학교 310관</DetailContent>
+          <DetailContent></DetailContent>
         </DetailRow>
         <DetailRow>
           <DetailTitle>특이사항</DetailTitle>
@@ -68,7 +75,7 @@ const StudentsList = () => {
   )
 }
 
-export default StudentsList
+export default Out_StudentsList
 
 const Wrapper = styled.div`
   width: 100%;
@@ -162,7 +169,7 @@ const TableBody = styled.div`
   overflow-y: scroll;
   height: 100%;
 ` 
-const TableRow = styled.div`
+const TableRow = styled.div<{ isSelected: boolean }>`
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -173,11 +180,13 @@ const TableRow = styled.div`
   padding-bottom: 9px;
   border-bottom: 1px solid #e1e1e1;
   cursor: pointer;
-
+  background-color: ${({ isSelected }) => (isSelected ? "#e6f7ff" : "transparent")}; 
+  
   &:hover {
-    background-color: #f1f1f1;
+    background-color: ${({ isSelected }) => (isSelected ? "#cceeff" : "#f1f1f1")}; 
   }
-`
+`;
+
 const TableItem = styled.div`
   width: 30%;
   display: flex;

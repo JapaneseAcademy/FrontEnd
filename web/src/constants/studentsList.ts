@@ -4,14 +4,14 @@ export const STUDENTS_LIST = [
       id: 1,
       name: '김철수',
       phone: '010-1234-5678',
-      birth: '1999.01.01',
+      birth: '1999.01.02',
       class: '기초 일본어 1반'
    },
    {
       id: 2,
       name: '김영희',
       phone: '010-1234-5678',
-      birth: '1999.01.01',
+      birth: '1999.01.03',
       class: '기초 일본어 2반'
    },
    {

@@ -11,11 +11,11 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import FloatingKakaoBtn from './components/FloatingKakaoBtn';
 import AdminPage from './pages/AdminPage';
-import StudentsList from './components/adminComponents/StudentsList';
-import CoursesList from './components/adminComponents/CoursesList';
-import SendMessages from './components/adminComponents/SendMessages';
-import ChangeYoutube from './components/adminComponents/ChangeYoutube';
-import ChangeHomeBanner from './components/adminComponents/ChangeHomeBanner';
+import StudentsList from './components/adminComponents/Out_StudentsList';
+import CoursesList from './components/adminComponents/Out_CoursesList';
+import SendMessages from './components/adminComponents/Out_SendMessages';
+import ChangeYoutube from './components/adminComponents/Out_ChangeYoutube';
+import ChangeHomeBanner from './components/adminComponents/Out_ChangeHomeBanner';
 import CourseDetailPage from './pages/CourseDetailPage';
 
 function App() {
