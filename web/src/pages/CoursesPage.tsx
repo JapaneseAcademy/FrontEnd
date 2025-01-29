@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Main from "../components/Main";
 import styled from "styled-components";
 import Course from "../components/Course";
 
 const CoursesPage = () => {
+    useEffect(() => {
+      // 페이지 로드 시 상단으로 이동
+      window.scrollTo(0, 0);
+    }, []);
 
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
   const coursesPerPage = 5; // 페이지당 표시할 코스 개수
@@ -87,6 +91,8 @@ const Title = styled.div`
   margin-top: 40px;
   width: 100%;
   color: #402900;
+  border-bottom: 1px solid #402900;
+  padding-bottom: 20px;
 `;
 
 const CoursesContainer = styled.div`

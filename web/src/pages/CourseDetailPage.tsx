@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const CourseDetailPage = () => {
@@ -7,6 +7,11 @@ const CourseDetailPage = () => {
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
   };
+
+  useEffect(() => {
+    // 페이지 로드 시 상단으로 이동
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
@@ -29,6 +34,23 @@ const CourseDetailPage = () => {
             수강후기
           </Option>
         </OptionContainer>
+
+        <CourseDetailContainer>
+          <CourseDetailContent selected={selectedOption === "detail"}>
+            <CourseDetailImage src="/images/courseDetail/course-detail-1.png" alt="Course Image" />
+            <CourseDetailImage src="/images/courseDetail/course-detail-2.png" alt="Course Image" />
+            <CourseDetailImage src="/images/courseDetail/course-detail-3.png" alt="Course Image" />
+            <CourseDetailImage src="/images/courseDetail/course-detail-4.png" alt="Course Image" />
+          </CourseDetailContent>
+          <CourseDetailContent selected={selectedOption === "review"}>
+            <h2>수강후기</h2>
+            <p>
+              이 강의는 기초문법과 회화를 동시에 학습할 수 있는 강의입니다. 이 강의는 기초문법과
+              회화를 동시에 학습할 수 있는 강의입니다. 이 강의는 기초문법과 회화를 동시에 학습할
+              수 있는 강의입니다. 이 강의는 기초문법과 회화를 동시에 학습할 수 있는 강의입니다.
+            </p>
+          </CourseDetailContent>
+        </CourseDetailContainer>
       </Wrapper>
 
       {/* 하단 고정 버튼 */}
@@ -139,4 +161,32 @@ const Option = styled.div<{ selected: boolean }>`
   &:first-child {
     border-right: 1px solid #d3d3d3;
   }
+`;
+
+
+const CourseDetailContainer = styled.div`
+  width: 90%;
+  margin-top: 20px;
+`;
+
+const CourseDetailContent = styled.div<{ selected: boolean }>`
+  display: ${({ selected }) => (selected ? "block" : "none")};
+  margin-top: 20px;
+
+  h2 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  p {
+    font-size: 16px;
+    margin-top: 10px;
+  }
+`;
+
+const CourseDetailImage = styled.img`
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  object-fit: cover;
 `;
