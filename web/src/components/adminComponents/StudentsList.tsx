@@ -13,7 +13,7 @@ const StudentsList = () => {
           <TableHeader>
             <TableHeaderItem id='name'>이름</TableHeaderItem>
             <TableHeaderItem id='birth'>생년월일</TableHeaderItem>
-            <TableHeaderItem id='class'>수강 현황</TableHeaderItem>
+            <TableHeaderItem id='class'>수강현황</TableHeaderItem>
 
           </TableHeader>
           <TableBody>
@@ -47,7 +47,7 @@ const StudentsList = () => {
           <DetailContent>010-1234-5678</DetailContent>
         </DetailRow>
         <DetailRow>
-          <DetailTitle>수강 현황</DetailTitle>
+          <DetailTitle>수강현황</DetailTitle>
           <DetailContent>기초 일본어 1반</DetailContent>
         </DetailRow>
         <DetailRow>
@@ -58,6 +58,11 @@ const StudentsList = () => {
           <DetailTitle>특이사항</DetailTitle>
           <DetailInput></DetailInput>
         </DetailRow>
+
+        <ButtonsContainer>
+          <Button>수정</Button>
+          <Button>삭제</Button>
+        </ButtonsContainer>
       </StudentDetailContainer>
     </Wrapper>
   )
@@ -66,6 +71,7 @@ const StudentsList = () => {
 export default StudentsList
 
 const Wrapper = styled.div`
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: row;
@@ -96,6 +102,7 @@ const Title = styled.div`
   padding-bottom: 15px;
   border-bottom: 1px solid #e1e1e1;
   font-weight: bold;
+  font-size: 1.5rem;
 `
 
 const StudentsTable = styled.div`
@@ -116,7 +123,7 @@ const TableHeader = styled.div`
   justify-content: space-between;
   padding: 10px;
   background-color: #d7d7d7;
-  font-size: 0.7rem;
+  font-size: 1rem;
   font-weight: 500;
 `
 const TableHeaderItem = styled.div`
@@ -149,7 +156,7 @@ const TableBody = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  font-size: 0.7rem;
+  font-size: 0.9rem;
 
   //넘어가면 스크롤 가능하도록
   overflow-y: scroll;
@@ -224,13 +231,13 @@ const DetailRow = styled.div`
 const DetailTitle = styled.div`
   width: 20%;
   font-weight: bold;
-  font-size: 0.7rem;
+  font-size: 1rem;
 `
 
 const DetailContent = styled.div`
-  font-size: 0.7rem;
+  font-size: 0.9rem;
   border: 1px solid #e1e1e1;
-  padding: 5px;
+  padding: 10px;
   width: 80%;
   border-radius: 5px;
 `
@@ -239,6 +246,29 @@ const DetailInput = styled.input`
   width: 80%;
   padding: 5px;
   border-radius: 5px;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   border: 1px solid #e1e1e1;
+`
+
+const ButtonsContainer = styled.div`
+  width: 85%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+`
+
+const Button = styled.button`
+  width: 80px;
+  height: 30px;
+  background-color: #d7d7d7;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #636363;
+    color: #ffffff;
+  }
 `

@@ -34,7 +34,7 @@ const CourseDropdown = styled.select`
    padding: 5px;
    border-radius: 5px;
    //글씨 크기
-   font-size: 0.7rem;
+   font-size: 0.8rem;
 
    //hover
    &:hover {
@@ -47,7 +47,7 @@ const SearchInput = styled.input`
    height: 30px;
    padding: 5px;
    border-radius: 5px;
-   font-size: 0.7rem;
+   font-size: 0.8rem;
 
 
    &:hover {
@@ -60,7 +60,7 @@ const OrderOption = styled.select`
    height: 30px;
    padding: 5px;
    border-radius: 5px;
-   font-size: 0.7rem;
+   font-size: 0.8rem;
 
    &:hover {
       background-color: #f1f1f1;
