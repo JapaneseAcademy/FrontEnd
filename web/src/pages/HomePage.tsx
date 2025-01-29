@@ -25,7 +25,7 @@ const HomePage = () => {
   return (
   <>
       <Main>
-        {/* <HomeBanner>
+        <HomeBanner>
           <ProfileImage src='/images/ProfileImageEx.jpeg' />
           <Description>
             <UpDescription>
@@ -47,7 +47,7 @@ const HomePage = () => {
             일본어 공부가 힘들다면</span>
           <span style={{fontSize:'18px'}}>
             <span style={{fontSize:'20px', textDecoration:'underline', fontWeight: 'bold'}}>예리 센세</span>와 함께 하세요!</span>
-        </Ment> */}
+        </Ment>
 
         <Banner>
           <div>지금까지 이런 센세는 없었다</div>
