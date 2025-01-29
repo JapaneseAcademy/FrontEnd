@@ -233,14 +233,6 @@ const DetailContent = styled.div`
   border-radius: 5px;
 `
 
-const DetailInput = styled.input`
-  width: 80%;
-  padding: 5px;
-  border-radius: 5px;
-  font-size: 0.8rem;
-  border: 1px solid #e1e1e1;
-`
-
 const ButtonsContainer = styled.div`
   width: 85%;
   display: flex;
