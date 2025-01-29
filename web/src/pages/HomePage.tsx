@@ -24,9 +24,8 @@ const HomePage = () => {
 
   return (
   <>
-      {/* <Header /> */}
       <Main>
-        <HomeBanner>
+        {/* <HomeBanner>
           <ProfileImage src='/images/ProfileImageEx.jpeg' />
           <Description>
             <UpDescription>
@@ -48,7 +47,12 @@ const HomePage = () => {
             일본어 공부가 힘들다면</span>
           <span style={{fontSize:'18px'}}>
             <span style={{fontSize:'20px', textDecoration:'underline', fontWeight: 'bold'}}>예리 센세</span>와 함께 하세요!</span>
-        </Ment>
+        </Ment> */}
+
+        <Banner>
+          <div>지금까지 이런 센세는 없었다</div>
+          <div>국내파 멀티링구얼 <br/> '진짜 학습자'!</div>
+        </Banner>
 
         <Youtube />
 
@@ -135,26 +139,8 @@ const HomePage = () => {
             </ReviewCard>
           </DownReview>
         </ReviewsContainer>
-        {/* <CardsContainer>
-          <Card id='teachersCard' onClick={ () => navigate(`/teachers`)}> 
-            <FcConferenceCall size={70} />
-            <span>선생님 소개</span>
-            </Card>
-          <Card id='coursesCard' onClick={ () => navigate(`/courses`)}>
-            <FcViewDetails size={70}/>
-            <span>강좌 목록</span>
-          </Card>
-          <Card id='qnaCard' onClick={ () => navigate(`/qna`)}>
-            <FcHeadset size={70} />
-            <span>상담 문의</span>
-          </Card>
-          <Card id='myPageCard' onClick={ () => navigate(`/mypage`)}>
-            <FcInfo size={70} />
-            <span>마이 페이지</span>
-          </Card>
-        </CardsContainer> */}
+
       </Main>
-      {/* <Footer /> */}
     </>
   )
 }
@@ -399,41 +385,20 @@ const Tag = styled.div`
 `;
 
 
+////////////////////////////////////////
 
+const Banner = styled.div`
+  width: 100%;
+  height: 200px;
+  background-color: #392a20;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  animation: ${fadeInUp} 0.8s ease-out;
+`;
 
-
-// const CardsContainer = styled.div`
-//   display: grid;
-//   grid-template-columns: repeat(2, 1fr); /* 2열 고정 */
-//   gap: 20px; /* 카드 간격 */
-//   width: 100%;
-//   max-width: 500px; /* 카드 컨테이너의 최대 너비 */
-//   padding: 50px;
-//   justify-content: center;
-// `;
-
-// const Card = styled.div`
-//   cursor: pointer;
-//   height: 100%;
-//   aspect-ratio: 1/1; /* 가로세로 비율 1:1 */
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   align-items: center;
-//   background-color: #f8f8f8;
-//   border-radius: 20px;
-//   gap: 15px;
-//   font-family: 'TTBookendBatangR';
-//   font-weight: 700;
-//   /* border: 1px solid #c6c6c6; */
-
-//   /* 그림자 추가 */
-//   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1), /* 일반 그림자 */
-//               0 1px 3px rgba(0, 0, 0, 0.06); /* 가벼운 그림자 */
-
-//   /* 호버 시 그림자 강조 */
-//   transition: box-shadow 0.3s ease;
-//   &:hover {
-//     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* 호버 상태에서 더 강한 그림자 */
-//   }
-// `;
