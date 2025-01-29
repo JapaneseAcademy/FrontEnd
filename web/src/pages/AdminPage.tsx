@@ -9,12 +9,12 @@ const AdminPage = () => {
 
    return (
    <Wrapper>
-      <Sidebar>
+      <Sidebar id='sidebar'>
          <Company>
             <CompanyLogo/>
             <CompanyTitle>
-               <span style={{fontSize:'1rem', fontWeight:'bold'}}>예리한 일본어</span>
-               <span style={{fontSize:'0.7rem', color:'#5d5d5d'}}>관리자용</span>
+               <span style={{fontSize:'1.2rem', fontWeight:'bold'}}>예리한 일본어</span>
+               <span style={{fontSize:'0.8rem', color:'#5d5d5d'}}>관리자용</span>
             </CompanyTitle>
          </Company>
 
@@ -44,9 +44,9 @@ const AdminPage = () => {
          </CategoryContainer>
       </Sidebar>
 
-      <Main>
+      <Content>
          <Outlet/>
-      </Main>
+      </Content>
    </Wrapper>
   )
 }
@@ -69,10 +69,12 @@ const Sidebar = styled.div`
    align-items: center;
    justify-content: flex-start;
    background-color: #ffffff;
-   width: 20%;
+   width: 250px;
    height: 100%;
    border-right: 1px solid #e1e1e1;
+   flex-shrink: 0; /* 사이드바 크기가 줄어들지 않도록 설정 */
 `
+
 
 const Company = styled.div`
    width: 85%;
@@ -125,12 +127,14 @@ const CategoryTitle = styled.div`
    flex-direction: row;
    align-items: center;
    gap: 5px;
-   font-size: 0.8rem;
+   font-size: 1rem;
    font-weight: 500;
+   margin-bottom: 10px;
 `
 
 const CategoryItem = styled.div`
-   font-size: 0.7rem;
+
+   font-size: 0.9rem;
    cursor: pointer;
    color: #676767;
 
@@ -151,12 +155,12 @@ const Items = styled.div`
 `
 
 
-
-const Main = styled.div`
-   width: 80%;
+const Content = styled.div`
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   width: 100%;
    height: 100%;
-   padding-top: 20px;
-   padding-bottom: 20px;
-   padding-left: 10px;
-   padding-right: 10px;
+   padding: 20px;
 `

@@ -56,45 +56,6 @@ const HomePage = () => {
 
         <Youtube />
 
-        <CoursesContainer>
-          <UpCourses>
-            <Title>강좌 목록</Title>
-            <MoreButton onClick={ () => navigate(`/courses`)}>더보기 &gt;</MoreButton>
-          </UpCourses>
-          <DownCourses>
-            <CourseCard>
-              <CourseImage src='/images/Lecture_Thumbnail.jpg' />
-              <TagContainer>
-                <Tag>New</Tag>
-                <Tag>자체교재</Tag>
-              </TagContainer>
-              <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>예리한 기초 일본어 1코스</span>
-              <span id='course_description' style={{fontSize:'12px', color:'#a0a0a0'}}>기초를 탄탄히 하자!</span>
-              <span id='course_price' style={{fontSize:'14px', fontWeight:'600', marginTop:'5px'}}>100,000 원</span>
-            </CourseCard>
-            <CourseCard>
-              <CourseImage src='/images/Lecture_Thumbnail.jpg' />
-              <TagContainer>
-                <Tag>New</Tag>
-                <Tag>자체교재</Tag>
-              </TagContainer>
-              <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>예리한 기초 일본어 1코스</span>
-              <span id='course_description' style={{fontSize:'12px', color:'#a0a0a0'}}>기초를 탄탄히 하자!</span>
-              <span id='course_price' style={{fontSize:'14px', fontWeight:'600', marginTop:'5px'}}>100,000 원</span>
-            </CourseCard>
-            <CourseCard>
-              <CourseImage src='/images/Lecture_Thumbnail.jpg' />
-              <TagContainer>
-                <Tag>New</Tag>
-                <Tag>자체교재</Tag>
-              </TagContainer>
-              <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>예리한 기초 일본어 1코스</span>
-              <span id='course_description' style={{fontSize:'12px', color:'#a0a0a0'}}>기초를 탄탄히 하자!</span>
-              <span id='course_price' style={{fontSize:'14px', fontWeight:'600', marginTop:'5px'}}>100,000 원</span>
-            </CourseCard>
-          </DownCourses>
-        </CoursesContainer>
-
         <ReviewsContainer>
           <UpReview>
             <Title>수강 후기</Title>
@@ -139,6 +100,45 @@ const HomePage = () => {
             </ReviewCard>
           </DownReview>
         </ReviewsContainer>
+
+        <CoursesContainer>
+          <UpCourses>
+            <Title>강좌 목록</Title>
+            <MoreButton onClick={ () => navigate(`/courses`)}>더보기 &gt;</MoreButton>
+          </UpCourses>
+          <DownCourses>
+            <CourseCard>
+              <CourseImage src='/images/Lecture_Thumbnail.jpg' />
+              <TagContainer>
+                <Tag>New</Tag>
+                <Tag>자체교재</Tag>
+              </TagContainer>
+              <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>예리한 기초 일본어 1코스</span>
+              <span id='course_description' style={{fontSize:'12px', color:'#a0a0a0'}}>기초를 탄탄히 하자!</span>
+              <span id='course_price' style={{fontSize:'14px', fontWeight:'600', marginTop:'5px'}}>100,000 원</span>
+            </CourseCard>
+            <CourseCard>
+              <CourseImage src='/images/Lecture_Thumbnail.jpg' />
+              <TagContainer>
+                <Tag>New</Tag>
+                <Tag>자체교재</Tag>
+              </TagContainer>
+              <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>예리한 기초 일본어 1코스</span>
+              <span id='course_description' style={{fontSize:'12px', color:'#a0a0a0'}}>기초를 탄탄히 하자!</span>
+              <span id='course_price' style={{fontSize:'14px', fontWeight:'600', marginTop:'5px'}}>100,000 원</span>
+            </CourseCard>
+            <CourseCard>
+              <CourseImage src='/images/Lecture_Thumbnail.jpg' />
+              <TagContainer>
+                <Tag>New</Tag>
+                <Tag>자체교재</Tag>
+              </TagContainer>
+              <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>예리한 기초 일본어 1코스</span>
+              <span id='course_description' style={{fontSize:'12px', color:'#a0a0a0'}}>기초를 탄탄히 하자!</span>
+              <span id='course_price' style={{fontSize:'14px', fontWeight:'600', marginTop:'5px'}}>100,000 원</span>
+            </CourseCard>
+          </DownCourses>
+        </CoursesContainer>
 
       </Main>
     </>
