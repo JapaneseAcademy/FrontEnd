@@ -18,6 +18,10 @@ const Course = ({ Id, ImgUrl, Title, Price }: CourseProps) => {
    return (
       <Wrapper onClick={handleCourseClick}>
          <CourseImage src={ImgUrl} alt={Title} />
+         <CourseTagContainer>
+            <CourseTag>일본어</CourseTag>
+            <CourseTag>회화</CourseTag>
+         </CourseTagContainer>
          <CourseTitle>{Title}</CourseTitle>
          <CoursePrice>{Price}</CoursePrice>
       </Wrapper>
@@ -46,10 +50,25 @@ const CourseImage = styled.img`
 const CourseTitle = styled.div`
    font-size: 20px;
    font-weight: 500;
-   margin-top: 20px;
+   margin-top: 10px;
 `;
 
 const CoursePrice = styled.div`
    font-size: 16px;
+   margin-top: 5px;
+`;
+
+const CourseTagContainer = styled.div`
+   display: flex;
+   gap: 5px;
    margin-top: 10px;
+`;
+
+const CourseTag = styled.div`
+  padding: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: white;
+  background-color: #392a20;
+  border-radius: 5px;
 `;
