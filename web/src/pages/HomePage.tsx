@@ -9,7 +9,7 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    window.scrollTo(0, 0); // 화면 맨 위로 이동
+    // window.scrollTo(0, 0); // 화면 맨 위로 이동 -> 나중에 개발 다 하고 활성화
     
     // 카카오에서 code 받아온 후의 처리
     const url = new URL(window.location.href);
@@ -26,11 +26,11 @@ const HomePage = () => {
   <>
       <Main>
         <HomeBanner>
-          <ProfileImage src='/images/ProfileImageEx.jpeg' />
+          <ProfileImage src='/images/yeri/profile1.png' />
           <Description>
             <UpDescription>
-              <span style={{fontSize:'12px', fontWeight:'400', color:'#a0a0a0', paddingBottom:'10px'}}>日本語を勉強しましょう！</span>
-              <span style={{fontSize:'25px', fontWeight:'800',  fontFamily: 'SF_HambakSnow'}}>어쩌구 저쩌구! <br/> 어쩌구 저쩌구 오예</span>
+              <span style={{fontSize:'12px', fontWeight:'400', color:'#a0a0a0', paddingBottom:'10px'}}>지금까지 이런 센세는 없었다</span>
+              <span style={{fontSize:'22px', fontWeight:'800',  fontFamily: 'SF_HambakSnow'}}>국내파 멀티링구얼 <br/> '진짜 학습자'!</span>
             </UpDescription>
             <DownDescription>
               - 가나다라마 바사
@@ -48,11 +48,11 @@ const HomePage = () => {
           <span style={{fontSize:'18px'}}>
             <span style={{fontSize:'20px', textDecoration:'underline', fontWeight: 'bold'}}>예리 센세</span>와 함께 하세요!</span>
         </Ment>
-
+{/* 
         <Banner>
           <div>지금까지 이런 센세는 없었다</div>
           <div>국내파 멀티링구얼 <br/> '진짜 학습자'!</div>
-        </Banner>
+        </Banner> */}
 
         <Youtube />
 
@@ -108,9 +108,9 @@ const HomePage = () => {
           </UpCourses>
           <DownCourses>
             <CourseCard>
-              <CourseImage src='/images/Lecture_Thumbnail.jpg' />
+              <CourseImage src='/images/courseBanner/courseBanner1.png' />
               <TagContainer>
-                <Tag>New</Tag>
+                <Tag>실시간</Tag>
                 <Tag>자체교재</Tag>
               </TagContainer>
               <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>예리한 기초 일본어 1코스</span>
@@ -118,9 +118,9 @@ const HomePage = () => {
               <span id='course_price' style={{fontSize:'14px', fontWeight:'600', marginTop:'5px'}}>100,000 원</span>
             </CourseCard>
             <CourseCard>
-              <CourseImage src='/images/Lecture_Thumbnail.jpg' />
+              <CourseImage src='/images/courseBanner/courseBanner1.png' />
               <TagContainer>
-                <Tag>New</Tag>
+                <Tag>현강</Tag>
                 <Tag>자체교재</Tag>
               </TagContainer>
               <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>예리한 기초 일본어 1코스</span>
@@ -128,9 +128,9 @@ const HomePage = () => {
               <span id='course_price' style={{fontSize:'14px', fontWeight:'600', marginTop:'5px'}}>100,000 원</span>
             </CourseCard>
             <CourseCard>
-              <CourseImage src='/images/Lecture_Thumbnail.jpg' />
+              <CourseImage src='/images/courseBanner/courseBanner1.png' />
               <TagContainer>
-                <Tag>New</Tag>
+                <Tag>동영상</Tag>
                 <Tag>자체교재</Tag>
               </TagContainer>
               <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>예리한 기초 일본어 1코스</span>
@@ -188,7 +188,8 @@ const ProfileImage = styled.img`
   height: 200px;
   border-radius: 50%;
   object-fit: cover;
-  border: 5px solid #f8f8f8;
+  border: 3px solid #f8f8f8;
+  background-color: #f8f8f8;
 `;
 
 const Description = styled.div`
@@ -353,7 +354,7 @@ const CourseCard = styled.div`
   display: flex;
   flex-direction: column;
   width: 300px; /* 고정 너비 */
-  height: 300px; /* 고정 높이 */
+
   flex-shrink: 0; /* 너비가 줄어들지 않도록 설정 */
   /* border: 1px solid #e2e2e2;
   background-color: white;
@@ -364,7 +365,7 @@ const CourseCard = styled.div`
 
 const CourseImage = styled.img`
   width: 100%;
-  height: 200px;
+  /* height: 200px; */
   object-fit: cover;
   border-radius: 5px;
   margin-bottom: 7px;
@@ -387,18 +388,18 @@ const Tag = styled.div`
 
 ////////////////////////////////////////
 
-const Banner = styled.div`
-  width: 100%;
-  height: 200px;
-  background-color: #392a20;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 30px;
-  animation: ${fadeInUp} 0.8s ease-out;
-`;
+// const Banner = styled.div`
+//   width: 100%;
+//   height: 200px;
+//   background-color: #392a20;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   color: white;
+//   font-size: 20px;
+//   font-weight: 600;
+//   margin-bottom: 30px;
+//   animation: ${fadeInUp} 0.8s ease-out;
+// `;
 
