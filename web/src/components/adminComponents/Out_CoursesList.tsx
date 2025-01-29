@@ -4,7 +4,7 @@ import FilterContainer from "./etc/FilterContainer"
 import { useState } from "react"
 
 const Out_CoursesList = () => {
-  const [selectedCourseId, setSelectedCourseId] = useState<number | null>(null)
+  const [selectedCourseId, setSelectedCourseId] = useState<number | null>(1)
 
    // 선택한 학생의 데이터 가져오기
   const selectedCourse = COURSES_LIST.find(student => student.id === selectedCourseId);
@@ -46,6 +46,14 @@ const Out_CoursesList = () => {
         <DetailRow>
           <DetailTitle>수업 이름</DetailTitle>
           <DetailContent>{selectedCourse?.name}</DetailContent>
+        </DetailRow>
+        <DetailRow>
+        <DetailTitle>이미지</DetailTitle>
+          <DetailContent><CourseImage src="/images/courseBanner/courseBanner1.png"/></DetailContent>
+        </DetailRow>
+        <DetailRow>
+        <DetailTitle>설명</DetailTitle>
+          <DetailContent>{selectedCourse?.description}</DetailContent>
         </DetailRow>
         <DetailRow>
         <DetailTitle>요일</DetailTitle>
@@ -213,8 +221,6 @@ const DetailRow = styled.div`
   justify-content: flex-start;
   gap: 10px;
   margin-bottom: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
 `
 
 const DetailTitle = styled.div`
@@ -260,4 +266,10 @@ const Button = styled.button`
     background-color: #636363;
     color: #ffffff;
   }
+`
+
+const CourseImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `

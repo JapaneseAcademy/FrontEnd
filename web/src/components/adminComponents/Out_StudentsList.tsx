@@ -4,7 +4,7 @@ import FilterContainer from "./etc/FilterContainer"
 import { useState } from "react"
 
 const Out_StudentsList = () => {
-  const [selectedStudentId, setSelectedStudentId] = useState<number | null>(null)
+  const [selectedStudentId, setSelectedStudentId] = useState<number | null>(1)
 
    // 선택한 학생의 데이터 가져오기
   const selectedStudent = STUDENTS_LIST.find(student => student.id === selectedStudentId);
@@ -41,6 +41,10 @@ const Out_StudentsList = () => {
       </StudentListContainer>
 
       <StudentDetailContainer>
+      <DetailRow>
+          <DetailTitle>사진</DetailTitle>
+          <DetailContent><StudentPhoto src="/images/studentPhotos/student_photo.jpg"/></DetailContent>
+        </DetailRow>
         <DetailRow>
           <DetailTitle>이름</DetailTitle>
           <DetailContent>{selectedStudent?.name}</DetailContent>
@@ -233,8 +237,6 @@ const DetailRow = styled.div`
   justify-content: flex-start;
   gap: 10px;
   margin-bottom: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
 `
 
 const DetailTitle = styled.div`
@@ -280,4 +282,10 @@ const Button = styled.button`
     background-color: #636363;
     color: #ffffff;
   }
+`
+
+const StudentPhoto = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `
