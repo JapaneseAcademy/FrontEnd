@@ -1,7 +1,9 @@
 
 const Out_SendMessages = () => {
+
+
   return (
-    <div>SendMessages</div>
+    <button>Out_SendMessages</button>
   )
 }
 

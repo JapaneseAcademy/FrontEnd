@@ -44,7 +44,7 @@ const Out_CoursesList = () => {
 
       <StudentDetailContainer>
         <DetailRow>
-          <DetailTitle>수업 이름</DetailTitle>
+          <DetailTitle>수업이름</DetailTitle>
           <DetailContent>{selectedCourse?.name}</DetailContent>
         </DetailRow>
         <DetailRow>
@@ -70,10 +70,6 @@ const Out_CoursesList = () => {
         <DetailRow>
           <DetailTitle>수강료</DetailTitle>
           <DetailContent>{selectedCourse?.price}</DetailContent>
-        </DetailRow>
-        <DetailRow>
-          <DetailTitle>특이사항</DetailTitle>
-          <DetailInput></DetailInput>
         </DetailRow>
 
         <ButtonsContainer>
