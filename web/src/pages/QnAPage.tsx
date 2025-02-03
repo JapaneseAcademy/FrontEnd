@@ -1,12 +1,13 @@
+import { useState } from 'react'
 import Main from '../components/Main'
 import styled from 'styled-components'
 
 const QnAPage = () => {
-  // const KAKAO_CHANNEL_URL = import.meta.env.VITE_KAKAO_CHANNEL_URL;
+  const [selectedCategory, setSelectedCategory] = useState('course')
 
-  // const handleKakaoBtnClick = () => {
-  //   window.open(KAKAO_CHANNEL_URL, "_blank");
-  // }
+  const handleCategoryChange = (e: any) => {
+    setSelectedCategory(e.target.value)
+  }
 
   return (
     <>
@@ -14,45 +15,64 @@ const QnAPage = () => {
         <Banner>
           {/* <BannerImage src='images/hiragana.png'/> */}
           <BannerText>
-            올림피아드를 거친 수많은 
+            자주 묻는 질문을 모아놨어요. 
             <br/>
-            학생의 데이터를 기반으로
-            <br/>
-            <span style={{fontWeight:'650'}}>AI가 체계적으로 </span>비교 분석합니다. 
-            <br/>             <br/>
-            수강생의 실력과 특성을 
-            <br/> 
-            세심하게 파악한 후 
-            <br/> 
-            수준에 맞는 클럽과 반을
-            <br/> 
-            배정합니다. 
+            궁금한 점이 있으시다면 아래 내용을 참고해주세요.
           </BannerText>
         </Banner>
 
         <Line/>
 
         <Content>
-          <ContentTitle>자주 묻는 질문</ContentTitle>
-          <ContentText>
-            <span style={{fontWeight:'bold'}}>Q. 수강료는 얼마인가요?</span>
-            <br/>
-            A. 수강료는 1회당 100,000원입니다.
-            <br/>
-            <br/>
-            <span style={{fontWeight:'bold'}}>Q. 수업 시간은 어떻게 되나요?</span>
-            <br/>
-            A. 수업 시간은 매주 토요일 10:00~12:00입니다.
-            <br/>
-            <br/>
-            <span style={{fontWeight:'bold'}}>Q. 수업 장소는 어디인가요?</span>
-            <br/>
-            A. 수업 장소는 서울시 강남구 역삼동 123-456번지 1층입니다.
-            <br/>
-            <br/>
-            <span style={{fontWeight:'bold'}}>Q. 수업은 어떤 내용으로 진행되나요?</span>
-            <br/>
-            A. 수업은 기초부터 차근차근 진행되며, 수준에 따라 맞춤형 수업이 진행됩니다.
+          <ContentTitle>FAQ</ContentTitle>
+            <ContentText>
+              <CategoryDropdown value={selectedCategory} onChange={handleCategoryChange}>
+                <option value="course">수강일정</option>
+                <option value="refund">환불규정</option>
+                <option value="apply">수강신청</option>
+                <option value="payment">결제</option>
+                <option value="consult">상담가능시간</option>
+              </CategoryDropdown>
+              <AnswerContainer id="course" style={{display: selectedCategory === 'course' ? 'flex' : 'none'}}>
+                <Question>Q. [수강일정] 개강일과 종강일이 언제인가요?</Question>
+                <Answer>A. 개강일은 1월 1일, 종강일은 12월 31일입니다.</Answer>
+                <Question>Q. [수강일정] 개강일과 종강일이 언제인가요?</Question>
+                <Answer>A. 개강일은 1월 1일, 종강일은 12월 31일입니다.</Answer>
+                <Question>Q. [수강일정] 개강일과 종강일이 언제인가요?</Question>
+                <Answer>A. 개강일은 1월 1일, 종강일은 12월 31일입니다.</Answer>
+              </AnswerContainer>
+              <AnswerContainer id="refund" style={{display: selectedCategory === 'refund' ? 'flex' : 'none'}}>
+                <Question>Q. [환불규정] 환불이 가능한 경우가 있나요?</Question>
+                <Answer>A. 환불은 개강일 이전까지만 가능합니다.</Answer>
+                <Question>Q. [환불규정] 환불이 가능한 경우가 있나요?</Question>
+                <Answer>A. 환불은 개강일 이전까지만 가능합니다.</Answer>
+                <Question>Q. [환불규정] 환불이 가능한 경우가 있나요?</Question>
+                <Answer>A. 환불은 개강일 이전까지만 가능합니다.</Answer>
+              </AnswerContainer>
+              <AnswerContainer id="apply" style={{display: selectedCategory === 'apply' ? 'flex' : 'none'}}>
+                <Question>Q. [수강신청] 수강신청은 어떻게 하나요?</Question>
+                <Answer>A. 홈페이지에서 수강신청을 하실 수 있습니다.</Answer>
+                <Question>Q. [수강신청] 수강신청은 어떻게 하나요?</Question>
+                <Answer>A. 홈페이지에서 수강신청을 하실 수 있습니다.</Answer>
+                <Question>Q. [수강신청] 수강신청은 어떻게 하나요?</Question>
+                <Answer>A. 홈페이지에서 수강신청을 하실 수 있습니다.</Answer>
+              </AnswerContainer>
+              <AnswerContainer id="payment" style={{display: selectedCategory === 'payment' ? 'flex' : 'none'}}>
+                <Question>Q. [결제] 결제는 어떻게 하나요?</Question>
+                <Answer>A. 카드결제와 계좌이체가 가능합니다.</Answer>
+                <Question>Q. [결제] 결제는 어떻게 하나요?</Question>
+                <Answer>A. 카드결제와 계좌이체가 가능합니다.</Answer>
+                <Question>Q. [결제] 결제는 어떻게 하나요?</Question>
+                <Answer>A. 카드결제와 계좌이체가 가능합니다.</Answer>
+              </AnswerContainer>
+              <AnswerContainer id="consult" style={{display: selectedCategory === 'consult' ? 'flex' : 'none'}}>
+                <Question>Q. [상담가능시간] 상담이 가능한 시간이 언제인가요?</Question>
+                <Answer>A. 평일 9시~18시까지 상담이 가능합니다.</Answer>
+                <Question>Q. [상담가능시간] 상담이 가능한 시간이 언제인가요?</Question>
+                <Answer>A. 평일 9시~18시까지 상담이 가능합니다.</Answer>
+                <Question>Q. [상담가능시간] 상담이 가능한 시간이 언제인가요?</Question>
+                <Answer>A. 평일 9시~18시까지 상담이 가능합니다.</Answer>
+              </AnswerContainer>
             </ContentText>
         </Content>
       </Main>
@@ -73,7 +93,7 @@ const Banner = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  height: 400px;
+  height: 300px;
   font-size: 20px;
   padding: 40px;
   margin-top: 30px;
@@ -119,6 +139,7 @@ const Content = styled.div`
 `
 
 const ContentText = styled.div`
+  width: 100%;
   font-size: 15px;
   display: flex;
   flex-direction: column;
@@ -137,5 +158,41 @@ const ContentTitle = styled.div`
   font-size: 30px;
   font-weight: 500;
   margin-bottom: 20px;
+`
+
+const CategoryDropdown = styled.select`
+  width: 150px;
+  height: 35px;
+  padding: 5px;
+  text-align: center;
+  font-size: 15px;
+  border: 1px solid #ababab;
+  margin-bottom: 30px;
+`
+
+
+const AnswerContainer = styled.div`
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+
+`
+
+const Question = styled.div`
+  width: 100%;
+  font-size: 16px;
+  margin-bottom: 10px;
+  border-top: 1px solid #ababab;
+  border-bottom: 1px solid #ababab;
+  padding: 10px 0;
+`
+
+const Answer = styled.div`
+  width: 100%;
+  font-size: 13px;
+  margin-bottom: 30px;
 `
 
