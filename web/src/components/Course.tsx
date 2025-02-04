@@ -64,6 +64,6 @@ const CourseTag = styled.div`
   font-size: 11px;
   font-weight: 600;
   color: white;
-  background-color: #392a20;
+  background-color: #2a2a2a;
   border-radius: 5px;
 `;

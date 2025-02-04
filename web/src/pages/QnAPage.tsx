@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Main from '../components/Main'
-import styled from 'styled-components'
+import styled, {keyframes} from 'styled-components'
 
 const QnAPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('course')
@@ -13,7 +13,6 @@ const QnAPage = () => {
     <>
       <Main>
         <Banner>
-          {/* <BannerImage src='images/hiragana.png'/> */}
           <BannerText>
             자주 묻는 질문을 모아놨어요. 
             <br/>
@@ -82,6 +81,18 @@ const QnAPage = () => {
 
 export default QnAPage
 
+/* 아래에서 위로 올라오는 애니메이션 정의(재사용 가능) */
+const fadeInUp = keyframes`
+  from {
+    transform: translateY(20px); /* 아래에서 시작 */
+    opacity: 0; /* 투명하게 시작 */
+  }
+  to {
+    transform: translateY(0); /* 제자리로 */
+    opacity: 1; /* 완전히 표시 */
+  }
+`;
+
 const Banner = styled.div`
   width: 100%;
   background-image: url('/images/1.jpg');
@@ -96,16 +107,12 @@ const Banner = styled.div`
   height: 300px;
   font-size: 20px;
   padding: 40px;
-  margin-top: 30px;
   color: #ffffff;
   margin-bottom: 50px;
   
+  /* 애니메이션 적용 */
+  animation: ${fadeInUp} 0.8s ease-out;
 `
-
-// const BannerImage = styled.img`
-//   width: 40%;
-//   margin-bottom: 10px;
-// `
 
 const BannerText = styled.div`
   display: flex;
@@ -168,6 +175,10 @@ const CategoryDropdown = styled.select`
   font-size: 15px;
   border: 1px solid #ababab;
   margin-bottom: 30px;
+
+  &:hover {
+    background-color: #f1f1f1;
+  }
 `
 
 

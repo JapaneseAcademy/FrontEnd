@@ -25,7 +25,8 @@ const HomePage = () => {
   return (
   <>
       <Main>
-        <HomeBanner>
+        <MainBanner src='/images/main-banner.png' />
+        {/* <HomeBanner>
           <ProfileImage src='/images/yeri/profile1.png' />
           <Description>
             <UpDescription>
@@ -40,7 +41,7 @@ const HomePage = () => {
               - 아무말 아무말 렐렐레
             </DownDescription>
           </Description>
-        </HomeBanner>
+        </HomeBanner> */}
 
         <Ment>
           <span style={{fontSize:'16px', fontWeight:'400'}}>
@@ -159,6 +160,16 @@ const fadeInUp = keyframes`
   }
 `;
 
+const MainBanner = styled.img`
+  width: 100%;
+  object-fit: cover;
+  margin-bottom: 30px;
+  margin-top: 20px;
+
+  /* 애니메이션 적용 */
+  animation: ${fadeInUp} 0.8s ease-out;
+`;
+
 const HomeBanner = styled.div`
   width: 100%;
   height: 270px;
@@ -217,7 +228,6 @@ const Ment = styled.div`
   justify-content: center;
   padding: 20px 20px;
   background-color: #ffffff;
-  color: #5c3d28;
   font-family: 'Pretendard';
   gap: 5px;
   margin-bottom: 30px;
@@ -381,7 +391,7 @@ const Tag = styled.div`
   font-size: 11px;
   font-weight: 600;
   color: white;
-  background-color: #392a20;
+  background-color: #2a2a2a;
   border-radius: 5px;
 `;
 

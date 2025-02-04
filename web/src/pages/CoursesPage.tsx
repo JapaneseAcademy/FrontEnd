@@ -6,13 +6,13 @@ import Course from "../components/Course";
 const CoursesPage = () => {
     useEffect(() => {
       // 페이지 로드 시 상단으로 이동
-      window.scrollTo(0, 0);
+      // window.scrollTo(0, 0);
     }, []);
 
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
   const coursesPerPage = 5; // 페이지당 표시할 코스 개수
 
-  // 모든 코스 데이터
+  // 강의 데이터 샘플
   const courses = [
     { Id: 1, ImgUrl: "/images/courseBanner/courseBanner1.png", Title: "원샷반", Price: "130,000원" },
     { Id: 2, ImgUrl: "/images/courseBanner/courseBanner1.png", Title: "초급반", Price: "150,000원" },
@@ -22,6 +22,11 @@ const CoursesPage = () => {
     { Id: 6, ImgUrl: "/images/courseBanner/courseBanner1.png", Title: "회화반", Price: "180,000원" },
     { Id: 7, ImgUrl: "/images/courseBanner/courseBanner1.png", Title: "문법반", Price: "120,000원" },
     { Id: 8, ImgUrl: "/images/courseBanner/courseBanner1.png", Title: "JLPT반", Price: "140,000원" },
+    { Id: 9, ImgUrl: "/images/courseBanner/courseBanner1.png", Title: "N1반", Price: "190,000원" },
+    { Id: 10, ImgUrl: "/images/courseBanner/courseBanner1.png", Title: "N2반", Price: "160,000원" },
+    { Id: 11, ImgUrl: "/images/courseBanner/courseBanner1.png", Title: "N3반", Price: "130,000원" },
+    { Id: 12, ImgUrl: "/images/courseBanner/courseBanner1.png", Title: "N4반", Price: "110,000원" },
+    { Id: 13, ImgUrl: "/images/courseBanner/courseBanner1.png", Title: "N5반", Price: "90,000원" },
   ];
 
   // 현재 페이지에 표시할 코스 계산
@@ -32,7 +37,8 @@ const CoursesPage = () => {
   // 페이지 변경 핸들러
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
-    window.scrollTo({ top: 0, behavior: 'smooth' }); // 페이지 최상단으로 스크롤, 부드럽게 이동
+    // window.scrollTo({ top: 0, behavior: 'smooth' }); // 페이지 최상단으로 스크롤, 부드럽게 이동
+    window.scrollTo(0, 0);
   };
 
   // 전체 페이지 수 계산
@@ -111,7 +117,7 @@ const Pagination = styled.div`
 `;
 
 const PageButton = styled.button<{ isActive: boolean }>`
-  padding: 10px 15px;
+  padding: 7px 12px;
   font-size: 16px;
   border: none;
   border-radius: 5px;

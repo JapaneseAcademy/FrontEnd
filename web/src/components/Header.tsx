@@ -193,7 +193,7 @@ const Sidebar = styled.div<SidebarProps>`
   left: ${({ isOpen }) => (isOpen ? '0' : '-300px')};
   width: 300px;
   height: 100%;
-  background-color: #4d3e2c;
+  background-color: #353535;
   color: white;
   transition: left 0.3s ease;
   box-shadow: ${({ isOpen }) => (isOpen ? '2px 0 5px rgba(0, 0, 0, 0.5)' : 'none')};
@@ -271,7 +271,7 @@ const LoginButton = styled.button`
   font-weight: 500;
 
   &:hover {
-    background-color: #392a20;
+    background-color: #767676;
     color: white;
   }
 `;
