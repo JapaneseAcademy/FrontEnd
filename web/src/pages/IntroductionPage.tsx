@@ -3,7 +3,6 @@ import styled, { keyframes } from "styled-components"
 import { PiBuildingOfficeLight } from "react-icons/pi";
 import { PiSubwayLight } from "react-icons/pi";
 import { PiBusLight } from "react-icons/pi";
-import KakaoMap from "../components/KakaoMap";
 
 const IntroductionPage = () => {
   const handleLocationClick = () => {

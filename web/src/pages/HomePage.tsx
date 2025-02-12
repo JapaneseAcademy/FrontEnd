@@ -60,7 +60,7 @@ const HomePage = () => {
         <ReviewsContainer>
           <UpReview>
             <Title>수강 후기</Title>
-            <MoreButton onClick={ () => navigate(`/reviews`)}>더보기 &gt;</MoreButton>
+            {/* <MoreButton onClick={ () => navigate(`/reviews`)}>더보기 &gt;</MoreButton> */}
           </UpReview>
           <DownReview>
             <ReviewCard>
@@ -170,54 +170,54 @@ const MainBanner = styled.img`
   animation: ${fadeInUp} 0.8s ease-out;
 `;
 
-const HomeBanner = styled.div`
-  width: 100%;
-  height: 270px;
-  background-color: #efdecb;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-  margin-top: 20px;
-  padding-left: 30px;
-  padding-right: 30px;
+// const HomeBanner = styled.div`
+//   width: 100%;
+//   height: 270px;
+//   background-color: #efdecb;
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   margin-bottom: 30px;
+//   margin-top: 20px;
+//   padding-left: 30px;
+//   padding-right: 30px;
 
-  /* 배경 이미지 삽입 */
-  /* background-image: url('/images/1.jpg');
-  background-size: cover;
-  background-position: center; 
-  background-blend-mode: overlay; 
-  background-color: rgba(0, 0, 0, 0.3); */
+//   /* 배경 이미지 삽입 */
+//   /* background-image: url('/images/1.jpg');
+//   background-size: cover;
+//   background-position: center; 
+//   background-blend-mode: overlay; 
+//   background-color: rgba(0, 0, 0, 0.3); */
 
-  color: #392a20;
+//   color: #392a20;
 
-  animation: ${fadeInUp} 0.8s ease-out;
-`;
+//   animation: ${fadeInUp} 0.8s ease-out;
+// `;
 
-const ProfileImage = styled.img`
-  width: 150px;
-  height: 200px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #f8f8f8;
-  background-color: #f8f8f8;
-`;
+// const ProfileImage = styled.img`
+//   width: 150px;
+//   height: 200px;
+//   border-radius: 50%;
+//   object-fit: cover;
+//   border: 3px solid #f8f8f8;
+//   background-color: #f8f8f8;
+// `;
 
-const Description = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-left: 20px;
-`;
+// const Description = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   gap: 10px;
+//   margin-left: 20px;
+// `;
 
-const UpDescription = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+// const UpDescription = styled.div`
+//   display: flex;
+//   flex-direction: column;
+// `;
 
-const DownDescription = styled.div`
-  font-size: 10px;
-`;
+// const DownDescription = styled.div`
+//   font-size: 10px;
+// `;
 
 
 const Ment = styled.div`

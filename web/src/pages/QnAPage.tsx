@@ -26,21 +26,39 @@ const QnAPage = () => {
           <ContentTitle>FAQ</ContentTitle>
             <ContentText>
               <CategoryDropdown value={selectedCategory} onChange={handleCategoryChange}>
-                <option value="course">수강일정</option>
-                <option value="refund">환불규정</option>
+                <option value="course">수강문의</option>
+                <option value="refund">변경/환불</option>
                 <option value="apply">수강신청</option>
-                <option value="payment">결제</option>
-                <option value="consult">상담가능시간</option>
+                <option value="payment">결제 및 교재 구매</option>
+                <option value="consult">방문 및 상담</option>
               </CategoryDropdown>
               <AnswerContainer id="course" style={{display: selectedCategory === 'course' ? 'flex' : 'none'}}>
                 <Question>Q. [수강일정] 개강일과 종강일이 언제인가요?</Question>
-                <Answer>A. 개강일은 1월 1일, 종강일은 12월 31일입니다.</Answer>
-                <Question>Q. [수강일정] 개강일과 종강일이 언제인가요?</Question>
-                <Answer>A. 개강일은 1월 1일, 종강일은 12월 31일입니다.</Answer>
-                <Question>Q. [수강일정] 개강일과 종강일이 언제인가요?</Question>
-                <Answer>A. 개강일은 1월 1일, 종강일은 12월 31일입니다.</Answer>
+                <Answer>A. 매월 다릅니다! 다음달 수강신청 기간에 날짜가 함께 공지됩니다. </Answer>
+                <Question>Q. [강의유형] 실시간 온라인이나 녹화본 수업이 무엇인가요? </Question>
+                <Answer>
+                  A. 두 가지 모두 시공간적인 제약에서 벗어났으나, 일반 인터넷강의보다 훨씬 현장감 있는 강의 유형입니다. <br/><br/>
+                  <span>실시간 온라인</span> <br/> 현장강의 수강생들과 함께 정해진 시간에 온라인으로 들어와 수강. 똑같이 발표 및 듣기 참여 가능. 줌링크는 매월 첫 수업일 전달드립니다. <br/><br/>
+                  <span>VOD녹화본 수업</span> <br/> 현장강의를 그대로 녹화해서 보내드리는 수업. 당일 수업 후 보내드리며 보내드린 7일 간 무제한 수강 가능한 강의! 개강일을 놓쳤어도 당연히 등록 가능합니다.
+                </Answer>
+                <Question>Q. 출석확인증 발급은 어떻게 하나요?</Question>
+                <Answer>A. 필요하신 분은 카카오 문의, 혹은 직접 말씀해주시면 환불 가능 기간이 지난 후 발급해드리겠습니다.</Answer>
               </AnswerContainer>
               <AnswerContainer id="refund" style={{display: selectedCategory === 'refund' ? 'flex' : 'none'}}>
+                <Answer>
+                저희 ‘예리한 일본어’는, 기초문법+회화 원샷반의 경우 2인~10인 이하, <br/>
+                회화반의 경우 3인~10인 이하로 제한하여 운영하고 있습니다. <br/>
+                등록일 이후 결제순으로 마감이 진행되고 있기 때고 3인 미만인 경우 폐강이 됩니다. <br/><br/>
+
+                - 결석 2회는 영상도 무료 제공 되니, 본인 스케줄을 꼭 확인 후 수강신청 해주시길 바랍니다!<br/><br/>
+
+                <span style={{fontWeight:'bold'}}>[수강신청 인원이 3인일 경우 개강 전 환불 규정] </span><br/>
+                수강인원이 2인이 되면 폐강 되므로 수업 시작시간 기준 72시간 이내에는 환불이 불가합니다. <br/>
+                수강인원이 3인 이상이면 아래를 참고해주세요! <br/><br/>
+
+                - 1회차 수업 시작시간 기준 72시간 이전: 100% 환불<br/>
+                - 1회차 수업 시작시간 기준 72시간 이내: 환불 불가
+                </Answer>
                 <Question>Q. [환불규정] 환불이 가능한 경우가 있나요?</Question>
                 <Answer>A. 환불은 개강일 이전까지만 가능합니다.</Answer>
                 <Question>Q. [환불규정] 환불이 가능한 경우가 있나요?</Question>
@@ -152,7 +170,7 @@ const ContentText = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
+  /* text-align: center; */
 
   span {
     font-size: 13px;
@@ -204,6 +222,14 @@ const Question = styled.div`
 const Answer = styled.div`
   width: 100%;
   font-size: 13px;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
+  //왼쪽 정렬
+  text-align: left;
+
+  span {
+    font-weight: 600;
+    font-size: 14px;
+    color: #000000;
+  }
 `
 
