@@ -67,28 +67,52 @@ const QnAPage = () => {
                 <Answer>A. 환불은 개강일 이전까지만 가능합니다.</Answer>
               </AnswerContainer>
               <AnswerContainer id="apply" style={{display: selectedCategory === 'apply' ? 'flex' : 'none'}}>
-                <Question>Q. [수강신청] 수강신청은 어떻게 하나요?</Question>
-                <Answer>A. 홈페이지에서 수강신청을 하실 수 있습니다.</Answer>
-                <Question>Q. [수강신청] 수강신청은 어떻게 하나요?</Question>
-                <Answer>A. 홈페이지에서 수강신청을 하실 수 있습니다.</Answer>
-                <Question>Q. [수강신청] 수강신청은 어떻게 하나요?</Question>
-                <Answer>A. 홈페이지에서 수강신청을 하실 수 있습니다.</Answer>
+                <Question>Q. 수강신청은 언제 하나요? </Question>
+                <Answer>
+                  A. 현장강의의 경우 인원이 마감되지 않은 경우 언제든 가능합니다만,  <br/>
+                  지난 강의의 제공에 대해서는 별도의 영상신청이 필요합니다.  <br/>
+                  이 부분은 문의 주세요! 녹화본 수업은 365일 상시입니다! ^^
+                </Answer>
+                <Question>Q. 방문 수강신청 및 상담은 몇시에 가능한가요? </Question>
+                <Answer>
+                  A. 선생님의 수업시간은 매월 바뀌는 관계로, 정해진 시간을 안내해 드리기가 어렵습니다. <br/>
+                  미리 문의주시고 오시면 감사하겠습니다! <br/>
+                  (홈페이지 우측 하단 카카오 문의 or 카카오 'yells77' 친구추가)
+                </Answer>
+                <Question>Q. 강의 시간표를 확인하고 싶어요! </Question>
+                <Answer>
+                  A. ‘예리한 일본어’는 현장강의 베이스의 학원이기 때문에, 매월 시간표가 변경됩니다.  <br/>
+                  익월 수강시간표는 해당 홈페이지 수강과목 캘린더와, 등록기간에 학원 카카오 계정 프로필과 인스타그램에서 확인하실 수 있습니다.
+                </Answer>
               </AnswerContainer>
               <AnswerContainer id="payment" style={{display: selectedCategory === 'payment' ? 'flex' : 'none'}}>
-                <Question>Q. [결제] 결제는 어떻게 하나요?</Question>
-                <Answer>A. 카드결제와 계좌이체가 가능합니다.</Answer>
-                <Question>Q. [결제] 결제는 어떻게 하나요?</Question>
-                <Answer>A. 카드결제와 계좌이체가 가능합니다.</Answer>
-                <Question>Q. [결제] 결제는 어떻게 하나요?</Question>
-                <Answer>A. 카드결제와 계좌이체가 가능합니다.</Answer>
+                <Question>Q. 교재는 어떤 것을 사용하나요? </Question>
+                <Answer>
+                  <span style={{fontWeight:'bold'}}>원샷반</span> <br/> 약 2년 이상 파*다 어학원에서도 함께 사용했던 예리센세의 자체교재로 수업이 진행됩니다. <br/> <br/>
+                  <span style={{fontWeight:'bold'}}>회화반</span> <br/> 교재를 사용하지 않고 매주 다양한 프린트가 자료로 나갑니다.
+                </Answer>
+                <Question>Q. 교재는 어떻게 구매하나요? </Question>
+                <Answer>
+                  A. ‘수강생’만 현장 구매 가능하며, <br/>
+                  온라인 수강생 배송은 따로 문의 주시면 구매 폼을 전달해드리겠습니다.
+                </Answer>
+                <Question>Q. 개강일보다 늦게 수강신청을 하면 전액 결제가 되나요? </Question>
+                <Answer>
+                  A.  <br/>
+                  <span style={{fontWeight:'bold'}}>지나간 수업에 대한 영상 제공을 받지 않는 경우 </span> → 지나간 수업일만큼 할인적용  <br/>
+                  <span style={{fontWeight:'bold'}}>지나간 수업에 대한 영상을 그대로 제공받는 경우 </span> → 전액 결제
+                </Answer>
+                <Question>Q. 결제수단은 어떻게 되나요? </Question>
+                <Answer>
+                  A. 무통장입금, 카드 결제 가능합니다. 
+                </Answer>
               </AnswerContainer>
               <AnswerContainer id="consult" style={{display: selectedCategory === 'consult' ? 'flex' : 'none'}}>
-                <Question>Q. [상담가능시간] 상담이 가능한 시간이 언제인가요?</Question>
-                <Answer>A. 평일 9시~18시까지 상담이 가능합니다.</Answer>
-                <Question>Q. [상담가능시간] 상담이 가능한 시간이 언제인가요?</Question>
-                <Answer>A. 평일 9시~18시까지 상담이 가능합니다.</Answer>
-                <Question>Q. [상담가능시간] 상담이 가능한 시간이 언제인가요?</Question>
-                <Answer>A. 평일 9시~18시까지 상담이 가능합니다.</Answer>
+                <Question>[온라인 문의]</Question>
+                <Answer>A. 카카오톡 yells77 혹은 홈페이지 우측 하단에 있는 카카오 버튼을 눌러주시면 언제든 문의를 남겨두실 수 있습니다!</Answer>
+                <Question>[오프라인 문의 및 상담]</Question>
+                <Answer>A. 월~토 근무 중이며 매달 시간표에 따라 상이합니다. 방문 시 사전 연락 주시면 감사하겠습니다! </Answer>
+
               </AnswerContainer>
             </ContentText>
         </Content>
@@ -212,7 +236,7 @@ const AnswerContainer = styled.div`
 
 const Question = styled.div`
   width: 100%;
-  font-size: 16px;
+  font-size: 15px;
   margin-bottom: 10px;
   border-top: 1px solid #ababab;
   border-bottom: 1px solid #ababab;
