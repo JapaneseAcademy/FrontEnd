@@ -17,7 +17,7 @@ const HomePage = () => {
     console.log('code:', code);
     // code가 있고, localStorage에 토큰이 없으면 로그인 요청
     if (code && !localStorage.getItem('token')) {
-      login(code);
+      login(code, navigate);
     }
   }
   , []);
