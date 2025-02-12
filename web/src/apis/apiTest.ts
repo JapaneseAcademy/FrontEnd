@@ -1,12 +1,9 @@
 import axios from 'axios';
-
-export const getTest = async () => {
-   return await axios.get('https://jpacademy.r-e.kr/api/v1/test/cors');
-   }
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const postTest = async () => {
    try{
-      const response = await axios.post('https://jpacademy.r-e.kr/api/v1/test/cors?message=hello', {
+      const response = await axios.post(`${BASE_URL}/`, {
 
       });
       console.log(response);
@@ -14,3 +11,4 @@ export const postTest = async () => {
       console.error(error);
    }
 }
+

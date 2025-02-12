@@ -337,9 +337,3 @@ const Button = styled.button`
     color: #ffffff;
   }
 `
-
-const StudentPhoto = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`
