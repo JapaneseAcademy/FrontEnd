@@ -18,7 +18,6 @@ const TestPage = () => {
          <button onClick={handlePostClick}>postTest</button>
 
          <button onClick={handleLoginClick}>login</button>
-         <button onClick={() => register("kakao_3889727808")}>register</button>
 
          <button onClick={() => getCourses()}>getCourses</button>
       </>

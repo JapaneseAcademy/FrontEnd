@@ -25,8 +25,8 @@ const TeachersPage = () => {
       <SNSButtons>
         {/* <SNSButton src="/images/snsButtons/kakaotalk1.png" alt="Kakao-Logo" />
         <SNSButton src="/images/snsButtons/instagram.png" alt="Instagram-Logo" /> */}
-        <RiKakaoTalkFill size={50} style={{cursor:'pointer'}} onClick={()=>handleSnsClick("kakao")}/>
-        <RiInstagramLine size={50} style={{cursor:'pointer'}} onClick={()=>handleSnsClick("instagram")}/>
+        <RiKakaoTalkFill size={40} style={{cursor:'pointer'}} onClick={()=>handleSnsClick("kakao")}/>
+        <RiInstagramLine size={40} style={{cursor:'pointer'}} onClick={()=>handleSnsClick("instagram")}/>
       </SNSButtons>
       </Main>
     </>
@@ -46,7 +46,8 @@ const Title = styled.div`
   font-weight: 500;
   margin-top: 40px;
   margin-bottom: 10px;
-  color: #333;
+  color: #ff592f;
+  /* color: rgb(234, 111, 80); */
 `;
 
 const SubTitle = styled.div`
@@ -58,6 +59,26 @@ const SubTitle = styled.div`
 
 const SNSButtons = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 30px;
+  border-radius: 10px;
+  padding: 10px 20px;
+  /* background-color: #f5f5f5; */
+  background-color: rgb(253, 242, 225);
+  color: #333;
+  justify-content: center;
+  align-items: center;
+
+  border: 5px solid #ffffff;
+
+  //그림자
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  /* -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0 0 5px rgba(0,0,0,0.1); */
+
+  //hover
+  transition: 0.3s;
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 

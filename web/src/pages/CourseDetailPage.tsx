@@ -136,6 +136,7 @@ const CourseImage = styled.img`
 const CourseTitle = styled.div`
   width: 90%;
   font-size: 18px;
+  font-weight: 500;
 `;
 
 const CoursePrice = styled.div`

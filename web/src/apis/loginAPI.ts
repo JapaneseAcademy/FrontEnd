@@ -47,20 +47,27 @@ export const login = async (code: string, navigate: (path: string) => void) => {
 }
 
 
-export const register = async (kakaoID: string) => {
-   console.log("-- 회원가입 함수 호출 --");
+export const register = async (kakaoID: string, name: string, phone: string, birth: string) => {
+   console.log("-- register 함수 호출 --");
 
    try {
       const response = await axios.post(
          `${BASE_URL}/api/v1/auth/members`,
          {
-            loginId : kakaoID, // 임시 값
-            name : "수쨩테스트",
-            phone : "01012345678",
-            birth : "2000-11-30"
+            loginId : "kakao_123456781", 
+            name : name,
+            phone : phone,
+            birth : birth
          },
       );
       console.log(response.data);
+
+      //토큰 저장
+      localStorage.setItem("accessToken", response.data.token.accessToken);
+      localStorage.setItem("refreshToken", response.data.token.refreshToken);
+
+      //메인페이지로 이동
+      window.location.href = "/";
    }
    catch (error) {
       if (axios.isAxiosError(error)) {
