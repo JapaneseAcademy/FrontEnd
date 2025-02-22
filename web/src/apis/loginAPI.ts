@@ -21,11 +21,12 @@ export const login = async (code: string, navigate: (path: string) => void) => {
       );
 
       console.log(response.data);
+      const kakaoID = response.data.loginId;
 
       //1. 첫 로그인일시 회원가입 페이지로 redirect
       if (response.data.requiresSignUp) {
          console.log("첫로그인!!!");
-         navigate("/register");
+         navigate("/register?kakaoID=" + kakaoID);
       }
       //2. 기존 회원일 경우 토큰 저장
       else {
@@ -47,14 +48,16 @@ export const login = async (code: string, navigate: (path: string) => void) => {
 }
 
 
-export const register = async (kakaoID: string, name: string, phone: string, birth: string) => {
+export const register = async (name: string, phone: string, birth: string) => {
    console.log("-- register 함수 호출 --");
+   //쿼리 파라미터에서 kakaoID 받아오기
+   const kakaoId = new URLSearchParams(window.location.search).get("kakaoID");
 
    try {
       const response = await axios.post(
          `${BASE_URL}/api/v1/auth/members`,
          {
-            loginId : kakaoID,
+            loginId : kakaoId,
             name : name,
             phone : phone,
             birth : birth
@@ -66,10 +69,13 @@ export const register = async (kakaoID: string, name: string, phone: string, bir
       localStorage.setItem("accessToken", response.data.token.accessToken);
       localStorage.setItem("refreshToken", response.data.token.refreshToken);
 
+      alert("회원가입이 완료되었습니다! 다시 로그인해주세요.");
+
       //메인페이지로 이동
       window.location.href = "/";
    }
    catch (error) {
+      alert("회원가입에 실패했습니다. 다시 시도해주세요.");
       if (axios.isAxiosError(error)) {
          console.log(error.response?.data);
       } else {

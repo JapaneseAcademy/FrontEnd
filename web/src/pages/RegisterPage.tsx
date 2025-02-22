@@ -53,9 +53,8 @@ const RegisterPage = () => {
       }
 
       //등록
-      alert('등록되었습니다!');
       console.log(name, year, month, day, phone);
-      register('kakaoID', name, phone, `${year}-${month}-${day}`)
+      register(name, phone, `${year}-${month}-${day}`)
    }
 
 
