@@ -52,7 +52,7 @@ const CourseDetailPage = () => {
   return (
     <>
       <Wrapper>
-        <CourseImage src="/images/courseBanner/courseBanner1.png" alt="Course Image" />
+        <CourseImage src="/images/courseBanner/course-banner-oneshot1.png" alt="Course Image" />
         <CourseTitle>[기초문법+회화] 원샷반</CourseTitle>
         <CoursePrice>130,000원</CoursePrice>
 

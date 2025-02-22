@@ -14,19 +14,13 @@ const CoursesPage = () => {
 
   // 강의 데이터 샘플
   const courses = [
-    { Id: 1, ImgUrl: "/images/courseBanner/courseBanner1.png", Title: "원샷반", Price: "130,000원" },
-    { Id: 2, ImgUrl: "/images/courseBanner/courseBanner1.png", Title: "초급반", Price: "150,000원" },
-    { Id: 3, ImgUrl: "/images/courseBanner/courseBanner1.png", Title: "중급반", Price: "170,000원" },
-    { Id: 4, ImgUrl: "/images/courseBanner/courseBanner1.png", Title: "고급반", Price: "200,000원" },
-    { Id: 5, ImgUrl: "/images/courseBanner/courseBanner1.png", Title: "입문반", Price: "100,000원" },
-    { Id: 6, ImgUrl: "/images/courseBanner/courseBanner1.png", Title: "회화반", Price: "180,000원" },
-    { Id: 7, ImgUrl: "/images/courseBanner/courseBanner1.png", Title: "문법반", Price: "120,000원" },
-    { Id: 8, ImgUrl: "/images/courseBanner/courseBanner1.png", Title: "JLPT반", Price: "140,000원" },
-    { Id: 9, ImgUrl: "/images/courseBanner/courseBanner1.png", Title: "N1반", Price: "190,000원" },
-    { Id: 10, ImgUrl: "/images/courseBanner/courseBanner1.png", Title: "N2반", Price: "160,000원" },
-    { Id: 11, ImgUrl: "/images/courseBanner/courseBanner1.png", Title: "N3반", Price: "130,000원" },
-    { Id: 12, ImgUrl: "/images/courseBanner/courseBanner1.png", Title: "N4반", Price: "110,000원" },
-    { Id: 13, ImgUrl: "/images/courseBanner/courseBanner1.png", Title: "N5반", Price: "90,000원" },
+    { Id: 1, ImgUrl: "/images/courseBanner/course-banner-oneshot1.png", Title: "원샷반", Price: "130,000원" },
+    { Id: 2, ImgUrl: "/images/courseBanner/course-banner-oneshot2.png", Title: "초급반", Price: "150,000원" },
+    { Id: 3, ImgUrl: "/images/courseBanner/course-banner-oneshot3.png", Title: "중급반", Price: "170,000원" },
+    { Id: 4, ImgUrl: "/images/courseBanner/course-banner-pocket.png", Title: "고급반", Price: "200,000원" },
+    { Id: 5, ImgUrl: "/images/courseBanner/course-banner-reading.png", Title: "입문반", Price: "100,000원" },
+    { Id: 6, ImgUrl: "/images/courseBanner/course-banner-refill.png", Title: "회화반", Price: "180,000원" },
+    { Id: 7, ImgUrl: "/images/courseBanner/course-banner-secret.png", Title: "문법반", Price: "120,000원" },
   ];
 
   // 현재 페이지에 표시할 코스 계산
@@ -106,7 +100,7 @@ const CoursesContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 70px; // 각 코스 사이의 간격
+  gap: 50px; // 각 코스 사이의 간격
 `;
 
 const Pagination = styled.div`
