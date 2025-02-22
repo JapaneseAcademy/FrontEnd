@@ -54,7 +54,7 @@ export const register = async (kakaoID: string, name: string, phone: string, bir
       const response = await axios.post(
          `${BASE_URL}/api/v1/auth/members`,
          {
-            loginId : "kakao_123456781", 
+            loginId : kakaoID,
             name : name,
             phone : phone,
             birth : birth

@@ -1,6 +1,6 @@
 import { postTest } from "../apis/apiTest";
 import { getCourses } from "../apis/courseAPI";
-import { getKakaoCode, register } from "../apis/loginAPI";
+import { getKakaoCode } from "../apis/loginAPI";
 
 const TestPage = () => {
 
