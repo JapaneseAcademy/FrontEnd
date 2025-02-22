@@ -78,7 +78,7 @@ const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'TTBookendBatangR';
+  font-family: 'Pretendard';
   cursor: pointer;
   font-size: 35px;
 

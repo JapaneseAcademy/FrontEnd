@@ -20,7 +20,7 @@ const HomePage = () => {
       login(code, navigate);
     }
   }
-  , []);
+  , );
 
   return (
   <>
@@ -109,32 +109,32 @@ const HomePage = () => {
           </UpCourses>
           <DownCourses>
             <CourseCard>
-              <CourseImage src='/images/courseBanner/courseBanner1.png' />
+              <CourseImage src='/images/courseBanner/course-banner-oneshot1.png' />
               <TagContainer>
                 <Tag>실시간</Tag>
                 <Tag>자체교재</Tag>
               </TagContainer>
-              <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>예리한 기초 일본어 1코스</span>
+              <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>기초문법+회화 원샷반 1</span>
               <span id='course_description' style={{fontSize:'12px', color:'#a0a0a0'}}>기초를 탄탄히 하자!</span>
               <span id='course_price' style={{fontSize:'14px', fontWeight:'600', marginTop:'5px'}}>100,000 원</span>
             </CourseCard>
             <CourseCard>
-              <CourseImage src='/images/courseBanner/courseBanner1.png' />
+              <CourseImage src='/images/courseBanner/course-banner-secret.png' />
               <TagContainer>
                 <Tag>현강</Tag>
                 <Tag>자체교재</Tag>
               </TagContainer>
-              <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>예리한 기초 일본어 1코스</span>
+              <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>고수들의 회화비밀</span>
               <span id='course_description' style={{fontSize:'12px', color:'#a0a0a0'}}>기초를 탄탄히 하자!</span>
               <span id='course_price' style={{fontSize:'14px', fontWeight:'600', marginTop:'5px'}}>100,000 원</span>
             </CourseCard>
             <CourseCard>
-              <CourseImage src='/images/courseBanner/courseBanner1.png' />
+              <CourseImage src='/images/courseBanner/course-banner-refill.png' />
               <TagContainer>
                 <Tag>동영상</Tag>
                 <Tag>자체교재</Tag>
               </TagContainer>
-              <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>예리한 기초 일본어 1코스</span>
+              <span id='course_title' style={{fontSize:'16px', fontWeight:'500'}}>점심시간 회화 무한리필</span>
               <span id='course_description' style={{fontSize:'12px', color:'#a0a0a0'}}>기초를 탄탄히 하자!</span>
               <span id='course_price' style={{fontSize:'14px', fontWeight:'600', marginTop:'5px'}}>100,000 원</span>
             </CourseCard>
@@ -164,7 +164,7 @@ const MainBanner = styled.img`
   width: 100%;
   object-fit: cover;
   margin-bottom: 30px;
-  margin-top: 20px;
+  margin-top: 30px;
 
   /* 애니메이션 적용 */
   animation: ${fadeInUp} 0.8s ease-out;

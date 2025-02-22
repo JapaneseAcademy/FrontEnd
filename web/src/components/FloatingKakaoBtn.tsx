@@ -9,7 +9,7 @@ const FloatingKakaoBtn = () => {
 
    return (
       <Button onClick={handleClick}>
-         <img src="/images/kakaotalk1.png" alt="카카오톡 문의" />
+         <img src="/images/snsButtons/kakaotalk1.png" alt="카카오톡 문의" />
       </Button>
    );
    };
