@@ -6,9 +6,10 @@ interface CourseProps {
    ImgUrl: string;
    Title: string;
    Price: string;
+   Tags: string[];
 }
 
-const Course = ({ Id, ImgUrl, Title, Price }: CourseProps) => {
+const Course = ({ Id, ImgUrl, Title, Price, Tags }: CourseProps) => {
    const navigate = useNavigate();
 
    const handleCourseClick = () => {
@@ -19,10 +20,12 @@ const Course = ({ Id, ImgUrl, Title, Price }: CourseProps) => {
       <Wrapper onClick={handleCourseClick}>
          <CourseImage src={ImgUrl} alt={Title} />
          <CourseTagContainer>
-            <CourseTag>일본어</CourseTag>
-            <CourseTag>회화</CourseTag>
+            {Tags.map((tag) => (
+               <CourseTag key={tag}>{tag}</CourseTag>
+            ))}
          </CourseTagContainer>
          <CourseTitle>{Title}</CourseTitle>
+         <CourseTime>월,화 17:00-19:00</CourseTime>
          <CoursePrice>{Price}</CoursePrice>
       </Wrapper>
    );
@@ -48,6 +51,12 @@ const CourseTitle = styled.div`
    margin-top: 10px;
 `;
 
+const CourseTime = styled.div`
+   font-size: 14px;
+   margin-top: 3px;
+   color: #333;
+`;
+
 const CoursePrice = styled.div`
    font-size: 16px;
    margin-top: 5px;
@@ -60,10 +69,10 @@ const CourseTagContainer = styled.div`
 `;
 
 const CourseTag = styled.div`
-  padding: 5px;
-  font-size: 11px;
-  font-weight: 600;
-  color: white;
-  background-color: #2a2a2a;
-  border-radius: 5px;
+   padding: 5px;
+   font-size: 11px;
+   font-weight: 600;
+   color: white;
+   background-color: #ff8255;
+   border-radius: 5px;
 `;

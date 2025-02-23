@@ -9,7 +9,8 @@ export const getCourses = async () => {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`
          }
       });
-      console.log(response.data);
+      // console.log(response.data);
+      return response.data;
    }
    catch(error){
       console.error(error);

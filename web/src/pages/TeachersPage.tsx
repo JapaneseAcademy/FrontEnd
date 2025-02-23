@@ -1,5 +1,5 @@
 import Main from "../components/Main"
-import styled from "styled-components"
+import styled, { keyframes } from "styled-components"
 import { RiInstagramLine, RiKakaoTalkFill } from "react-icons/ri";
 
 const TeachersPage = () => {
@@ -35,10 +35,25 @@ const TeachersPage = () => {
 
 export default TeachersPage
 
+/* 아래에서 위로 올라오는 애니메이션 정의(재사용 가능) */
+const fadeInUp = keyframes`
+  from {
+    transform: translateY(20px); /* 아래에서 시작 */
+    opacity: 0; /* 투명하게 시작 */
+  }
+  to {
+    transform: translateY(0); /* 제자리로 */
+    opacity: 1; /* 완전히 표시 */
+  }
+`;
+
 const TeacherBanner = styled.img`
   width: 100%;
   object-fit: cover;
   object-position: center;
+  margin-top: 20px;
+
+  animation: ${fadeInUp} 0.8s ease-out;
 `;
 
 const Title = styled.div`
@@ -46,8 +61,8 @@ const Title = styled.div`
   font-weight: 500;
   margin-top: 40px;
   margin-bottom: 10px;
-  color: #ff592f;
-  /* color: rgb(234, 111, 80); */
+  /* color: #ff7452; */
+  color: #402900;
 `;
 
 const SubTitle = styled.div`
@@ -64,7 +79,7 @@ const SNSButtons = styled.div`
   padding: 10px 20px;
   /* background-color: #f5f5f5; */
   background-color: rgb(253, 242, 225);
-  color: #333;
+  color: #3c2400;
   justify-content: center;
   align-items: center;
 
