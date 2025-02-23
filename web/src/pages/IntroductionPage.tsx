@@ -110,7 +110,6 @@ const Banner = styled.div`
   align-items: center;
   font-size: 30px;
   color: #ffffff;
-  font-family: 'TTBookendBatangR';
   /* font-weight: bold; */
   
     /* 애니메이션 적용 */
@@ -157,6 +156,7 @@ const Text = styled.div`
   font-size: 16px;
   margin: 5px 0;
   gap: 10px;
+  margin-top: 10px;
 `
 
 

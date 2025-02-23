@@ -13,7 +13,7 @@ const CourseDetailPage = () => {
 
 
   const reviewTexts = [
-    "수업이 너무 재밌어요! 선생님도 친절하시고, 함께 공부하니까 더 즐거워요.",
+    "수업이 너무 재밌어요! 선생님도 친절하시고, 함께 공부하니까 더 즐거워요. 어쩌구저쩌구 텍스트가 넘어간다. 어쩌구저쩌구 텍스트가 넘어간다. 어쩌구저쩌구 텍스트가 넘어간다.",
     "강의가 체계적이고 이해하기 쉬워요. 강력 추천합니다!",
     "처음엔 어려웠는데 선생님 설명 덕분에 일본어가 재미있어졌어요!",
     "수업 분위기가 좋아서 부담 없이 공부할 수 있었어요!",
@@ -83,14 +83,18 @@ const CourseDetailPage = () => {
             <ReviewContainer>
               {currentReviews.map((review) => (
                 <Reviewcard key={review.id}>
-                  <ReviewImage src="/images/review-example.jpg" />
-                  <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: "10px" }}>
+                  <ReviewImage src="/images/3.jpg" />
+                  <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: "5px" }}>
                     <UserAndDate>
-                      <ReviewUser>{review.user}</ReviewUser>
-                      <ReviewDate>{review.date}</ReviewDate>
+                      <ReviewCourse>원샷반1</ReviewCourse>
                     </UserAndDate>
+                    <ReviewTitle>세계 최고의 일본어 강의!</ReviewTitle>
                     <ReviewText>{review.text}</ReviewText>
-                  </div>
+                    <UserAndDate>
+                      <ReviewCourse>{review.date}</ReviewCourse>
+                      <ReviewCourse>sb31******</ReviewCourse>
+                    </UserAndDate>                  
+                    </div>
                 </Reviewcard>
               ))}
             </ReviewContainer>
@@ -105,13 +109,15 @@ const CourseDetailPage = () => {
             </Pagination>
           </CourseDetailContent>
         </CourseDetailContainer>
-      </Wrapper>
 
-      {/* 하단 고정 버튼 */}
+              {/* 하단 고정 버튼 */}
       <FixedButtonContainer>
         <CartButton id="cart_btn">장바구니</CartButton>
         <BuyButton id="buy_btn">구매하기</BuyButton>
       </FixedButtonContainer>
+      </Wrapper>
+
+
     </>
   );
 };
@@ -124,7 +130,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-bottom: 80px; /* 고정 버튼 위로 내용이 가리지 않도록 여백 추가 */
+  
 `;
 
 const CourseImage = styled.img`
@@ -272,14 +278,25 @@ const ReviewImage = styled.img`
   
 `;
 
-const ReviewUser = styled.div`
-  font-size: 14px;
+
+const ReviewCourse = styled.div`
+  font-size: 12px;
   color: #707070;
 `;
 
-const ReviewDate = styled.div`
-  font-size: 12px;
-  color: #707070;
+const ReviewTitle = styled.div`
+  font-size: 16px;
+  font-weight: 500;
+  width: 100%;
+  display: flex;
+  margin-bottom: 5px;
+
+  span {
+    font-size: 12px;
+    color: #707070;
+    font-weight: 300;
+    margin-left: auto;
+  }
 `;
 
 const ReviewText = styled.div`
@@ -293,6 +310,7 @@ const ReviewText = styled.div`
 
   // 높이가 정해진 경우, 넘치는 텍스트를 숨김
   -webkit-box-orient: vertical;
+
   height: 60px;
   line-height: 20px;
 
