@@ -8,6 +8,20 @@ import { login } from '../apis/loginAPI';
 const HomePage = () => {
   const navigate = useNavigate();
 
+  //리뷰 더미데이터
+  const bestReviews = [
+    { Id: 1, CourseTitle: '원샷반1', ReviewTitle: '세계 최고의 일본어 강의!', ReviewText: '안녕하세요^^ 너무 잘 가르쳐주세요. 완전 짱입니다! 단기간에 일본어 전문가가 됐어요 ㅎㅎ 지금 당장 일본 나가서 살아도 될 것 같아요~ 웅헤헤헷 리뷰쓰기 재밌당',
+      Reviewer: 'japanese***', ReviewDate: '2021-09-01'},
+    { Id: 2, CourseTitle: '원샷반2', ReviewTitle: '일본어 공부의 시작!', ReviewText: '안녕하세요^^ 너무 잘 가르쳐주세요. 완전 짱입니다! 단기간에 일본어 전문가가 됐어요 ㅎㅎ 지금 당장 일본 나가서 살아도 될 것 같아요~',
+      Reviewer: 'japanese***', ReviewDate: '2021-09-01' },
+    { Id: 3, CourseTitle: '원샷반3', ReviewTitle: '일본어 공부의 시작!', ReviewText: '안녕하세요^^ 너무 잘 가르쳐주세요. 완전 짱입니다! 단기간에 일본어 전문가가 됐어요 ㅎㅎ 지금 당장 일본 나가서 살아도 될 것 같아요~',
+      Reviewer: 'japanese***', ReviewDate: '2021-09-01' },
+    { Id: 4, CourseTitle: '원샷반4', ReviewTitle: '일본어 공부의 시작!', ReviewText: '안녕하세요^^ 너무 잘 가르쳐주세요. 완전 짱입니다! 단기간에 일본어 전문가가 됐어요 ㅎㅎ 지금 당장 일본 나가서 살아도 될 것 같아요~', 
+      Reviewer: 'japanese***', ReviewDate: '2021-09-01' },
+    { Id: 5, CourseTitle: '원샷반5', ReviewTitle: '일본어 공부의 시작!', ReviewText: '안녕하세요^^ 너무 잘 가르쳐주세요. 완전 짱입니다! 단기간에 일본어 전문가가 됐어요 ㅎㅎ 지금 당장 일본 나가서 살아도 될 것 같아요~',
+      Reviewer: 'japanese***', ReviewDate: '2021-09-01' },
+  ]
+
   useEffect(() => {
     // window.scrollTo(0, 0); // 화면 맨 위로 이동 -> 나중에 개발 다 하고 활성화
     
@@ -26,22 +40,6 @@ const HomePage = () => {
   <>
       <Main>
         <MainBanner src='/images/main-banner.png' />
-        {/* <HomeBanner>
-          <ProfileImage src='/images/yeri/profile1.png' />
-          <Description>
-            <UpDescription>
-              <span style={{fontSize:'12px', fontWeight:'400', color:'#a0a0a0', paddingBottom:'10px'}}>지금까지 이런 센세는 없었다</span>
-              <span style={{fontSize:'22px', fontWeight:'800',  fontFamily: 'SF_HambakSnow'}}>국내파 멀티링구얼 <br/> '진짜 학습자'!</span>
-            </UpDescription>
-            <DownDescription>
-              - 가나다라마 바사
-              <br/>
-              - 아자차 카타파하
-              <br/>
-              - 아무말 아무말 렐렐레
-            </DownDescription>
-          </Description>
-        </HomeBanner> */}
 
         <Ment>
           <span style={{fontSize:'16px', fontWeight:'400'}}>
@@ -49,56 +47,29 @@ const HomePage = () => {
           <span style={{fontSize:'18px'}}>
             <span style={{fontSize:'20px', textDecoration:'underline', fontWeight: 'bold'}}>예리 센세</span>와 함께 하세요!</span>
         </Ment>
-{/* 
-        <Banner>
-          <div>지금까지 이런 센세는 없었다</div>
-          <div>국내파 멀티링구얼 <br/> '진짜 학습자'!</div>
-        </Banner> */}
 
         <Youtube />
 
         <ReviewsContainer>
           <UpReview>
             <Title>수강 후기</Title>
-            {/* <MoreButton onClick={ () => navigate(`/reviews`)}>더보기 &gt;</MoreButton> */}
           </UpReview>
           <DownReview>
-            <ReviewCard>
-              <span id='review_course' style={{fontSize:'14px', borderBottom:'1px solid #e2e2e2', paddingBottom:'5px'}}>기초 일본어 초급반</span>
-              <span id='review_title' style={{fontSize:'16px', fontWeight:'500'}}>일이삼사오육칠팔구십일이삼가우</span>
-              <span id='review_content' style={{fontSize:'14px'}}>안녕하세요^^ 너무 잘 가르쳐주세요. 완전 짱입니다! 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ</span>
-              <span id='review_id' style={{fontSize:'12px', color:'#a0a0a0'}}>japane***</span>
-            </ReviewCard>
-            <ReviewCard>
-              <span id='review_course' style={{fontSize:'14px', borderBottom:'1px solid #e2e2e2', paddingBottom:'5px'}}>수강 과목</span>
-              <span id='review_title' style={{fontSize:'16px', fontWeight:'500'}}>수강후기입니다.</span>
-              <span id='review_content' style={{fontSize:'14px'}}>안녕하세요^^ 너무 잘 가르쳐주세요. 완전 짱입니다! 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ</span>
-              <span id='review_id' style={{fontSize:'12px', color:'#a0a0a0'}}>japane***</span>
-            </ReviewCard>
-            <ReviewCard>
-              <span id='review_course' style={{fontSize:'14px', borderBottom:'1px solid #e2e2e2', paddingBottom:'5px'}}>수강 과목</span>
-              <span id='review_title' style={{fontSize:'16px', fontWeight:'500'}}>수강후기입니다.</span>
-              <span id='review_content' style={{fontSize:'14px'}}>안녕하세요^^ 너무 잘 가르쳐주세요. 완전 짱입니다! 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ</span>
-              <span id='review_id' style={{fontSize:'12px', color:'#a0a0a0'}}>japane***</span>
-            </ReviewCard>
-            <ReviewCard>
-              <span id='review_course' style={{fontSize:'14px', borderBottom:'1px solid #e2e2e2', paddingBottom:'5px'}}>수강 과목</span>
-              <span id='review_title' style={{fontSize:'16px', fontWeight:'500'}}>수강후기입니다.</span>
-              <span id='review_content' style={{fontSize:'14px'}}>안녕하세요^^ 너무 잘 가르쳐주세요. 완전 짱입니다! 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ</span>
-              <span id='review_id' style={{fontSize:'12px', color:'#a0a0a0'}}>japane***</span>
-            </ReviewCard>
-            <ReviewCard>
-              <span id='review_course' style={{fontSize:'14px', borderBottom:'1px solid #e2e2e2', paddingBottom:'5px'}}>수강 과목</span>
-              <span id='review_title' style={{fontSize:'16px', fontWeight:'1500'}}>수강후기입니다.</span>
-              <span id='review_content' style={{fontSize:'14px'}}>안녕하세요^^ 너무 잘 가르쳐주세요. 완전 짱입니다! 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ</span>
-              <span id='review_id' style={{fontSize:'12px', color:'#a0a0a0'}}>japane***</span>
-            </ReviewCard>
-            <ReviewCard>
-              <span id='review_course' style={{fontSize:'14px', borderBottom:'1px solid #e2e2e2', paddingBottom:'5px'}}>수강 과목</span>
-              <span id='review_title' style={{fontSize:'16px', fontWeight:'1500'}}>수강후기입니다.</span>
-              <span id='review_content' style={{fontSize:'14px'}}>안녕하세요^^ 너무 잘 가르쳐주세요. 완전 짱입니다! 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ</span>
-              <span id='review_id' style={{fontSize:'12px', color:'#a0a0a0'}}>japane***</span>
-            </ReviewCard>
+            {bestReviews.map((review) => (
+              <ReviewCard key={review.Id}>
+                <span id='review_course' style={{color:'#777777', fontSize:'14px', borderBottom:'1px solid #e2e2e2', paddingBottom:'5px'}}>{review.CourseTitle}</span>
+                <span id='review_title' style={{fontSize:'16px', fontWeight:'500'}}>{review.ReviewTitle}</span>
+                <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+                  <img id='review-image1' src='/images/3.jpg' style={{width:'47%', aspectRatio:'1/1', objectFit:'cover', borderRadius:'5px', marginTop:'10px'}} />
+                  <img id='review-image2' src='/images/japanese.jpg' style={{width:'47%', aspectRatio:'1/1', objectFit:'cover', borderRadius:'5px', marginTop:'10px'}} />
+                </div>
+                <span id='review_content' style={{fontSize:'14px'}}>{review.ReviewText}</span>
+                <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+                  <span id='review_date' style={{fontSize:'12px', color:'#a0a0a0'}}>{review.ReviewDate}</span>
+                  <span id='review_id' style={{fontSize:'12px', color:'#a0a0a0'}}>{review.Reviewer}</span>
+                </div>
+              </ReviewCard>
+            ))}
           </DownReview>
         </ReviewsContainer>
 
@@ -170,54 +141,6 @@ const MainBanner = styled.img`
   animation: ${fadeInUp} 0.8s ease-out;
 `;
 
-// const HomeBanner = styled.div`
-//   width: 100%;
-//   height: 270px;
-//   background-color: #efdecb;
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-//   margin-bottom: 30px;
-//   margin-top: 20px;
-//   padding-left: 30px;
-//   padding-right: 30px;
-
-//   /* 배경 이미지 삽입 */
-//   /* background-image: url('/images/1.jpg');
-//   background-size: cover;
-//   background-position: center; 
-//   background-blend-mode: overlay; 
-//   background-color: rgba(0, 0, 0, 0.3); */
-
-//   color: #392a20;
-
-//   animation: ${fadeInUp} 0.8s ease-out;
-// `;
-
-// const ProfileImage = styled.img`
-//   width: 150px;
-//   height: 200px;
-//   border-radius: 50%;
-//   object-fit: cover;
-//   border: 3px solid #f8f8f8;
-//   background-color: #f8f8f8;
-// `;
-
-// const Description = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   gap: 10px;
-//   margin-left: 20px;
-// `;
-
-// const UpDescription = styled.div`
-//   display: flex;
-//   flex-direction: column;
-// `;
-
-// const DownDescription = styled.div`
-//   font-size: 10px;
-// `;
 
 
 const Ment = styled.div`
@@ -293,7 +216,7 @@ const DownReview = styled.div`
 
 const ReviewCard = styled.div`
   width: 300px; /* 고정 너비 */
-  height: 200px; /* 고정 높이 */
+  height: 310px; /* 고정 높이 */
   flex-shrink: 0; /* 너비가 줄어들지 않도록 설정 */
   display: flex;
   flex-direction: column;
@@ -366,11 +289,6 @@ const CourseCard = styled.div`
   width: 300px; /* 고정 너비 */
 
   flex-shrink: 0; /* 너비가 줄어들지 않도록 설정 */
-  /* border: 1px solid #e2e2e2;
-  background-color: white;
-  border-radius: 5px;
-  padding: 20px;
-  gap: 10px; */
 `;
 
 const CourseImage = styled.img`
@@ -394,22 +312,4 @@ const Tag = styled.div`
   background-color: #ff8255;
   border-radius: 5px;
 `;
-
-
-////////////////////////////////////////
-
-// const Banner = styled.div`
-//   width: 100%;
-//   height: 200px;
-//   background-color: #392a20;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   align-items: center;
-//   color: white;
-//   font-size: 20px;
-//   font-weight: 600;
-//   margin-bottom: 30px;
-//   animation: ${fadeInUp} 0.8s ease-out;
-// `;
 
