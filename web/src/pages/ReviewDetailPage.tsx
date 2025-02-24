@@ -1,6 +1,10 @@
 import styled from "styled-components"
 
 const ReviewDetailPage = () => {
+   const handleBackButton = () => {
+      window.history.back();
+   }
+
    return (
       <Wrapper>
          <ReviewContainer>
@@ -25,7 +29,7 @@ const ReviewDetailPage = () => {
                   </ReviewText>
             </ReviewContents>
          </ReviewContainer>
-         <BackButton>뒤로 가기</BackButton>
+         <BackButton onClick={handleBackButton}>뒤로 가기</BackButton>
       </Wrapper>
    )
 }
@@ -68,7 +72,7 @@ const NameAndDate = styled.div`
 
 const SmallText = styled.div`
    font-size: 13px;
-   color: #707070;
+   color: #979797;
 `
 
 const ReviewContents = styled.div`
