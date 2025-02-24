@@ -55,6 +55,30 @@ const CourseDetailPage = () => {
         <CourseImage src="/images/courseBanner/course-banner-oneshot1.png" alt="Course Image" />
         <CourseTitle>[기초문법+회화] 원샷반</CourseTitle>
         <CoursePrice>130,000원</CoursePrice>
+        <DropDownContainer>
+          <Dropdown>
+            <DropDownTitle>요일</DropDownTitle>
+            <DropDownContent>
+              <option>월수금</option>
+              <option>화목토</option>
+          </DropDownContent>
+        </Dropdown>
+        <Dropdown>
+          <DropDownTitle>시간</DropDownTitle>
+          <DropDownContent>
+            <option>10:00 ~ 11:30</option>
+            <option>14:00 ~ 15:30</option>
+          </DropDownContent>
+        </Dropdown>
+        <Dropdown>
+          <DropDownTitle>유형</DropDownTitle>
+          <DropDownContent>
+            <option>동영상</option>
+            <option>현장 강의</option>
+            <option>실시간 온라인</option>
+          </DropDownContent>
+        </Dropdown>
+        </DropDownContainer>
 
         <OptionContainer>
           <Option
@@ -197,7 +221,7 @@ const OptionContainer = styled.div`
   width: 90%;
   display: flex;
   height: 50px;
-  margin-top: 60px;
+  margin-top: 30px;
   border: 1px solid #d3d3d3;
 `;
 
@@ -232,7 +256,7 @@ const CourseDetailContainer = styled.div`
 
 const CourseDetailContent = styled.div<{ selected: boolean }>`
   display: ${({ selected }) => (selected ? "block" : "none")};
-  margin-top: 20px;
+  margin-top: 10px;
 
   h2 {
     font-size: 18px;
@@ -345,3 +369,46 @@ const PageButton = styled.button<{ active: boolean }>`
     color: #fff;
   }
 `;
+
+///dropdown
+const DropDownContainer = styled.div`
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 25px;
+`;
+
+const Dropdown = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 10px;
+  width: 100%;
+  gap: 30px;
+`;
+
+const DropDownTitle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 5px;
+`;
+
+const DropDownContent = styled.select`
+  width: 220px;
+  height: 30px;
+  text-align: center;
+  font-size: 12px;
+  border: 1px solid #ababab;
+  border-radius: 20px;
+  padding: 5px;
+
+  &:hover {
+    background-color: #f1f1f1;
+  }
+`;
+
