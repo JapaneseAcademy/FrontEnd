@@ -216,7 +216,7 @@ const DownReview = styled.div`
 
 const ReviewCard = styled.div`
   width: 300px; /* 고정 너비 */
-  height: 330px; /* 고정 높이 */
+  height: 340px; /* 고정 높이 */
   flex-shrink: 0; /* 너비가 줄어들지 않도록 설정 */
   display: flex;
   flex-direction: column;
