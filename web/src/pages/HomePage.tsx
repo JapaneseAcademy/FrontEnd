@@ -65,7 +65,7 @@ const HomePage = () => {
           <DownReview>
             <ReviewCard>
               <span id='review_course' style={{fontSize:'14px', borderBottom:'1px solid #e2e2e2', paddingBottom:'5px'}}>기초 일본어 초급반</span>
-              <span id='review_title' style={{fontSize:'16px', fontWeight:'500'}}>수강후기입니다.</span>
+              <span id='review_title' style={{fontSize:'16px', fontWeight:'500'}}>일이삼사오육칠팔구십일이삼가우</span>
               <span id='review_content' style={{fontSize:'14px'}}>안녕하세요^^ 너무 잘 가르쳐주세요. 완전 짱입니다! 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ 단기간에 일본어 전문가가 됐어요 ㅎㅎ</span>
               <span id='review_id' style={{fontSize:'12px', color:'#a0a0a0'}}>japane***</span>
             </ReviewCard>
@@ -391,7 +391,7 @@ const Tag = styled.div`
   font-size: 11px;
   font-weight: 600;
   color: white;
-  background-color: #2a2a2a;
+  background-color: #ff8255;
   border-radius: 5px;
 `;
 

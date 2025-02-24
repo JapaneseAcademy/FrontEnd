@@ -13,6 +13,11 @@ const Header = () => {
     setSidebarOpen(!isSidebarOpen);
   };
 
+  const closeSidebar = () => {
+    setSidebarOpen(false);
+  };
+  
+
   return (
     <>
       <FirstRow>
@@ -32,17 +37,20 @@ const Header = () => {
         <Navigator onClick={() => navigate(`/qna`)}>FAQ</Navigator>
       </SecondRow>
 
-      <Sidebar isOpen={isSidebarOpen}>
+      {/* 사이드바 오픈 시 오버레이 렌더링 */}
+      {isSidebarOpen && <Overlay onClick={closeSidebar} />}
+
+      <Sidebar isOpen={isSidebarOpen} onClick={(e) => e.stopPropagation()}>        
         <CloseButton onClick={toggleSidebar}>×</CloseButton>
         <ButtonContainer>
           {/* <SignupButton onClick={ () => navigate(`/signup`)}>회원가입</SignupButton> */}
-          <LoginButton onClick={getKakaoCode}>카카오로 시작하기</LoginButton>
+          <LoginButton onClick={() => { getKakaoCode(); closeSidebar(); }}>카카오로 시작하기</LoginButton>
         </ButtonContainer>
         <MenuContainer>
-          <Menu onClick={ () => navigate(`/teachers`)}>선생님 소개</Menu>
-          <Menu onClick={ () => navigate(`/courses`)}>강의 조회</Menu>
-          <Menu onClick={ () => navigate(`/introduction`)}>학원 안내</Menu>
-          <Menu onClick={ () => navigate(`/qna`)}>FAQ</Menu>
+          <Menu onClick={() => { navigate(`/teachers`); closeSidebar(); }}>선생님 소개</Menu>
+          <Menu onClick={() => { navigate(`/courses`); closeSidebar(); }}>강의 조회</Menu>
+          <Menu onClick={() => { navigate(`/introduction`); closeSidebar(); }}>학원 안내</Menu>
+          <Menu onClick={() => { navigate(`/qna`); closeSidebar(); }}>FAQ</Menu>
         </MenuContainer>
       </Sidebar>
     </>
@@ -50,6 +58,17 @@ const Header = () => {
 };
 
 export default Header;
+
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 900;
+`;
+
 
 const FirstRow = styled.div`
   width: 100%;
@@ -230,6 +249,9 @@ const Menu = styled.div`
 
   &:hover {
     color: #949494;
+    //오른쪽으로 살짝 이동하는 효과
+    transform: translateX(5px);
+    transition : transform 0.3s ease;
   }
 `;
 
@@ -269,9 +291,11 @@ const LoginButton = styled.button`
   background-color: #ffe100;
   font-size: 16px;
   font-weight: 500;
+  
 
   &:hover {
     background-color: #767676;
     color: white;
+    
   }
 `;

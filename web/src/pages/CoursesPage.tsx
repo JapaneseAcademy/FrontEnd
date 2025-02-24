@@ -58,9 +58,9 @@ const CoursesPage = () => {
 
   // 강의 데이터 샘플
   const courses_example = [
-    { Id: 1, ImgUrl: "/images/courseBanner/course-banner-oneshot1.png", Title: "원샷반1", Price: "130,000원", Tags: ["온라인", "녹화본제", "오프라인"] },
-    { Id: 2, ImgUrl: "/images/courseBanner/course-banner-oneshot2.png", Title: "원샷반2", Price: "150,000원", Tags: ["온라인", "녹화본제", "오프라인"] },
-    { Id: 3, ImgUrl: "/images/courseBanner/course-banner-oneshot3.png", Title: "원샷반3", Price: "170,000원", Tags: ["온라인", "녹화본제", "오프라인"] },
+    { Id: 1, ImgUrl: "/images/courseBanner/course-banner-oneshot1.png", Title: "원샷반1", Price: "130,000원", Tags: ["온라인", "녹화본", "오프라인"] },
+    { Id: 2, ImgUrl: "/images/courseBanner/course-banner-oneshot2.png", Title: "원샷반2", Price: "150,000원", Tags: ["온라인", "녹화본", "오프라인"] },
+    { Id: 3, ImgUrl: "/images/courseBanner/course-banner-oneshot3.png", Title: "원샷반3", Price: "170,000원", Tags: ["온라인", "녹화본", "오프라인"] },
     { Id: 4, ImgUrl: "/images/courseBanner/course-banner-pocket.png", Title: "회화포켓", Price: "200,000원", Tags: ["온라인", "녹화본", "오프라인"] },
     { Id: 5, ImgUrl: "/images/courseBanner/course-banner-reading.png", Title: "원서읽기", Price: "100,000원", Tags: ["온라인"] },
     { Id: 6, ImgUrl: "/images/courseBanner/course-banner-refill.png", Title: "회화 무한리필", Price: "180,000원", Tags: ["온라인", "녹화본", "오프라인"] },
