@@ -1,7 +1,13 @@
 import { IoMdContact } from "react-icons/io"
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 
 const MyPage = () => {
+  const navigate = useNavigate();
+
+  const handleEditClick = () => {
+    navigate('/mypage/edit')
+  }
 
   //내 수강 내역 임시 데이터
   const myCourse = [
@@ -37,7 +43,7 @@ const MyPage = () => {
 
   return (
     <Wrapper>
-      <Header>마이페이지 <span>내 정보 수정</span></Header>
+      <Header>마이페이지 <span onClick={handleEditClick}>내 정보 수정</span></Header>
       <ProfileContainer>
         <IoMdContact size={80} color="white"/>
         <br/>
@@ -90,6 +96,10 @@ const Header = styled.div`
     color: #7c7c7c;
     text-decoration: underline;
     cursor: pointer;
+
+    &:hover {
+      color: #ff8255;
+    }
   }
 `
 

@@ -19,6 +19,7 @@ import ChangeHomeBanner from './components/adminComponents/Out_ChangeHomeBanner'
 import CourseDetailPage from './pages/CourseDetailPage';
 import RegisterPage from './pages/RegisterPage';
 import ReviewDetailPage from './pages/ReviewDetailPage';
+import EditMyPage from './pages/EditMyPage';
 
 function App() {
   const location = useLocation();
@@ -35,12 +36,14 @@ function App() {
         <Route path="/teachers" element={<TeachersPage />} />
         <Route path="/courses" element={<CoursesPage />} />
         <Route path="/qna" element={<QnAPage />} />
-        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/mypage" element={<MyPage />}></Route>
         <Route path="/introduction" element={<IntroductionPage />} />
         <Route path="/test" element={<TestPage />} />
         <Route path="/courses/:courseId" element={<CourseDetailPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/review" element={<ReviewDetailPage />} />
+        <Route path="/mypage/edit" element={<EditMyPage />}></Route>
+
 
         {/* Admin 라우트 */}
         <Route path="/admin" element={<AdminPage />}>
