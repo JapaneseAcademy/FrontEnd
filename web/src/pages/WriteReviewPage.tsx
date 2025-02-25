@@ -8,6 +8,7 @@ const MAX_PHOTOS = 3;
 const WriteReviewPage = () => {
    const [photos, setPhotos] = useState<File[]>([]);
    const [previewUrls, setPreviewUrls] = useState<string[]>([]);
+   const [reviewTitle, setReviewTitle] = useState<string>('');
    const [reviewText, setReviewText] = useState<string>('');
    const navigate = useNavigate();
    const courseId = useParams().courseId;
@@ -15,11 +16,12 @@ const WriteReviewPage = () => {
    const handleSubmit = () => {
       try {
          console.log("📸 업로드된 사진 목록:", photos);
+         console.log("📝 작성한 제목:", reviewTitle);
          console.log("📝 작성한 리뷰:", reviewText);
 
-         //reviewText가 비어있을 경우
-         if (reviewText === '') {
-            alert('리뷰를 작성해주세요.');
+         //reviewTitle과 reviewText가 비어있을 경우 alert
+         if (reviewTitle === '' || reviewText === '') {
+            alert('리뷰 제목과 내용을 모두 입력해주세요.');
             return;
          }
       
@@ -89,8 +91,9 @@ const WriteReviewPage = () => {
 
          <Container id='text'>
             <Title>리뷰 작성</Title>
+            <TitleInput placeholder="리뷰 제목을 작성해주세요(최대 30자)" value={reviewTitle} onChange={(e) => setReviewTitle(e.target.value)} />
             <ReviewInput
-               placeholder="리뷰를 작성해주세요."
+               placeholder="리뷰를 작성해주세요(최대 500자)"
                value={reviewText}
                onChange={(e) => setReviewText(e.target.value)} 
             />
@@ -176,6 +179,17 @@ const PhotoPreview = styled.img`
    object-fit: cover;
    border-radius: 7px;
    border: 1px solid #e2e2e2;
+`;
+
+const TitleInput = styled.input`
+   width: 100%;
+   height: 45px;
+   border: 1px solid #e2e2e2;
+   padding: 15px;
+   font-size: 13px;
+   font-weight: 400;
+   border-radius: 7px;
+   margin-bottom: 15px;
 `;
 
 const ReviewInput = styled.textarea`
