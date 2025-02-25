@@ -1,15 +1,22 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const CourseDetailPage = () => {
   const [selectedOption, setSelectedOption] = useState("detail");
   const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 5; // ✅ 한 페이지당 리뷰 개수
+  const navigate = useNavigate();
+
+  const handleReviewClick = (reviewId: string) => {
+    navigate(`/review?reviewId=${reviewId}`);
+  }
 
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
     setCurrentPage(1); // ✅ 탭을 변경하면 첫 페이지로 리셋
   };
+  
 
 
   const reviewTexts = [
@@ -106,7 +113,7 @@ const CourseDetailPage = () => {
           <CourseDetailContent id='course_review_container' selected={selectedOption === "review"}>
             <ReviewContainer>
               {currentReviews.map((review) => (
-                <Reviewcard key={review.id}>
+                <Reviewcard key={review.id} onClick={()=>handleReviewClick(review.id.toString())}>
                   <ReviewImage src="/images/3.jpg" />
                   <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: "5px" }}>
                     <UserAndDate>
@@ -292,6 +299,12 @@ const Reviewcard = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    background-color: #f9f9f9;
+  }
 `;
 
 const ReviewImage = styled.img`
