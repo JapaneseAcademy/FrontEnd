@@ -216,7 +216,7 @@ const Sidebar = styled.div<SidebarProps>`
   color: white;
   transition: left 0.3s ease;
   box-shadow: ${({ isOpen }) => (isOpen ? '2px 0 5px rgba(0, 0, 0, 0.5)' : 'none')};
-  z-index: 1000;
+  z-index: 9999;
 `;
 
 const CloseButton = styled.button`

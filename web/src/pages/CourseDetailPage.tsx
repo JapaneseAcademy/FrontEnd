@@ -187,7 +187,7 @@ const FixedButtonContainer = styled.div`
   background-color: #fff; /* 버튼 배경 */
   padding: 10px 0;
   box-shadow: 0px -4px 15px rgba(0, 0, 0, 0.05);
-  z-index: 1000; /* 버튼이 항상 위에 보이도록 설정 */
+  z-index: 1000; 
 `;
 
 const CartButton = styled.button`
