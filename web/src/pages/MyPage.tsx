@@ -1,8 +1,11 @@
+import { useEffect, useState } from "react";
 import { IoMdContact } from "react-icons/io"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
+import { getUserInfo } from "../apis/userAPI";
 
 const MyPage = () => {
+  const [name, setName] = useState<string>('');
   const navigate = useNavigate();
 
   const handleEditClick = () => {
@@ -40,6 +43,16 @@ const MyPage = () => {
     },
   ]
 
+  useEffect(() => {
+    //마이페이지 진입 시, 스크롤을 맨 위로 이동
+    window.scrollTo(0, 0);
+
+    //이름 세팅
+    getUserInfo().then((data) => {
+      setName(data.name);
+    })
+  }
+  , [])
 
   return (
     <Wrapper>
@@ -48,7 +61,7 @@ const MyPage = () => {
         <IoMdContact size={80} color="white"/>
         <br/>
         <GreetingText>
-          <span style={{fontSize:'18px', textDecoration:'underline', fontWeight:'500'}}>김똥개</span> 님, こんにちは !</GreetingText>
+          <span style={{fontSize:'18px', textDecoration:'underline', fontWeight:'500'}}>{name}</span> 님, こんにちは !</GreetingText>
       </ProfileContainer>
 
       <MyCoursesContainer>
