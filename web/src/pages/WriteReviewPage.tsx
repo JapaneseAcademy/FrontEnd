@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { HiOutlinePlusCircle } from "react-icons/hi2";
 import { useNavigate, useParams } from "react-router-dom";
@@ -81,6 +81,20 @@ const WriteReviewPage = () => {
       setPreviewUrls((prev) => [...prev, ...newPreviewUrls]);
    };
 
+   useEffect(() => {
+      // 불필요한 URL 객체 해제(메모리 누수 방지)
+      return () => {
+         previewUrls.forEach((url) => URL.revokeObjectURL(url));
+      };
+   }
+   , [previewUrls]);
+
+   useEffect(() => {
+      //창 열릴 때 맨 위로 이동
+      window.scrollTo(0, 0);
+   }
+   , []);
+   
    return (
       <Wrapper>
          <Container id='photo-upload'>
