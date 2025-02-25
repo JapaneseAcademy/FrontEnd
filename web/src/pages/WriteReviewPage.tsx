@@ -4,6 +4,8 @@ import { HiOutlinePlusCircle } from "react-icons/hi2";
 import { useNavigate, useParams } from "react-router-dom";
 
 const MAX_PHOTOS = 3;
+const MAX_TITLE_LENGTH = 30;
+const MAX_TEXT_LENGTH = 500;
 
 const WriteReviewPage = () => {
    const [photos, setPhotos] = useState<File[]>([]);
@@ -12,6 +14,17 @@ const WriteReviewPage = () => {
    const [reviewText, setReviewText] = useState<string>('');
    const navigate = useNavigate();
    const courseId = useParams().courseId;
+
+   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value.slice(0, MAX_TITLE_LENGTH);
+      setReviewTitle(value);
+   };
+   
+   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      const value = e.target.value.slice(0, MAX_TEXT_LENGTH);
+      setReviewText(value);
+   };
+
 
    const handleSubmit = () => {
       try {
@@ -91,11 +104,11 @@ const WriteReviewPage = () => {
 
          <Container id='text'>
             <Title>리뷰 작성</Title>
-            <TitleInput placeholder="리뷰 제목을 작성해주세요(최대 30자)" value={reviewTitle} onChange={(e) => setReviewTitle(e.target.value)} />
+            <TitleInput placeholder="리뷰 제목을 작성해주세요(최대 30자)" value={reviewTitle} onChange={handleTitleChange}/>
             <ReviewInput
                placeholder="리뷰를 작성해주세요(최대 500자)"
                value={reviewText}
-               onChange={(e) => setReviewText(e.target.value)} 
+               onChange={handleTextChange} 
             />
          </Container>
 
@@ -194,7 +207,7 @@ const TitleInput = styled.input`
 
 const ReviewInput = styled.textarea`
    width: 100%;
-   height: 300px;
+   height: 350px;
    border: 1px solid #e2e2e2;
    padding: 15px;
    font-size: 13px;
