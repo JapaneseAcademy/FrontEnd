@@ -12,6 +12,7 @@ const WriteReviewPage = () => {
    const [previewUrls, setPreviewUrls] = useState<string[]>([]);
    const [reviewTitle, setReviewTitle] = useState<string>('');
    const [reviewText, setReviewText] = useState<string>('');
+   const [isAnonymous, setIsAnonymous] = useState<boolean>(false);
    const navigate = useNavigate();
    const courseId = useParams().courseId;
 
@@ -26,33 +27,40 @@ const WriteReviewPage = () => {
    };
 
 
+   const handleAnonymousChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setIsAnonymous(e.target.checked);
+   };
+   
    const handleSubmit = () => {
       try {
          console.log("📸 업로드된 사진 목록:", photos);
          console.log("📝 작성한 제목:", reviewTitle);
          console.log("📝 작성한 리뷰:", reviewText);
-
-         //reviewTitle과 reviewText가 비어있을 경우 alert
+         console.log("🙈 익명 여부:", isAnonymous ? "익명" : "실명");
+   
+         // reviewTitle과 reviewText가 비어있을 경우 alert
          if (reviewTitle === '' || reviewText === '') {
             alert('리뷰 제목과 내용을 모두 입력해주세요.');
             return;
          }
       
          alert("리뷰가 등록되었습니다!"); // 실제 API 연동 시 변경 가능
-
+   
          // 입력값 초기화
          setPhotos([]);
          setPreviewUrls([]);
+         setReviewTitle("");
          setReviewText("");
-
+         setIsAnonymous(false); // ✅ 익명 상태 초기화
+   
          // 해당 리뷰를 작성한 courseDetail 페이지로 이동
          navigate(`/courses/${courseId}`);
       } catch (error) {
          console.error("리뷰 등록 중 오류 발생:", error);
          alert("리뷰 등록에 실패했습니다. 다시 시도해주세요.");
       }
-   
-   };   
+   };
+
 
    // 파일 선택 이벤트 핸들러
    const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,6 +119,16 @@ const WriteReviewPage = () => {
                onChange={handleTextChange} 
             />
          </Container>
+
+         <AnonymousCheckbox>
+            익명으로 표시
+            <input 
+               type="checkbox" 
+               id="anonymous"  
+               checked={isAnonymous} 
+               onChange={handleAnonymousChange} 
+            />
+         </AnonymousCheckbox>
 
          <SubmitButton onClick={handleSubmit}>리뷰 등록</SubmitButton>
       </Wrapper>
@@ -215,6 +233,23 @@ const ReviewInput = styled.textarea`
    border-radius: 7px;
    font-family: 'Pretendard';
    resize: none;
+`;
+
+const AnonymousCheckbox = styled.div`
+   width: 90%;
+   display: flex;
+   align-items: center;
+   justify-content: flex-end;
+   margin-top: 15px;
+   font-size: 13px;
+   color: #595959;
+
+   input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+
+   }
 `;
 
 const SubmitButton = styled.div`
