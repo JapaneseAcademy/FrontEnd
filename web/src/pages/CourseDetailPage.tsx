@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { HiOutlinePencilSquare } from "react-icons/hi2";
 
@@ -8,6 +8,7 @@ const CourseDetailPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 5; // ✅ 한 페이지당 리뷰 개수
   const navigate = useNavigate();
+  const courseId = useParams().courseId;
 
   const handleReviewClick = (reviewId: string) => {
     navigate(`/review?reviewId=${reviewId}`);
@@ -18,7 +19,9 @@ const CourseDetailPage = () => {
     setCurrentPage(1); // ✅ 탭을 변경하면 첫 페이지로 리셋
   };
   
-
+  const handleReviewWriteClick = () => {
+    navigate('writeReview');
+  }
 
   const reviewTexts = [
     "수업이 너무 재밌어요! 선생님도 친절하시고, 함께 공부하니까 더 즐거워요. 어쩌구저쩌구 텍스트가 넘어간다. 어쩌구저쩌구 텍스트가 넘어간다. 어쩌구저쩌구 텍스트가 넘어간다.",
@@ -54,8 +57,10 @@ const CourseDetailPage = () => {
 
   useEffect(() => {
     // 페이지 로드 시 상단으로 이동
-    // window.scrollTo(0, 0); // 완성 시에 활성화. 개발할때는 불편해서
-  }, []);
+    // window.scrollTo(0, 0); // 완성 시에 활성화. 개발할때는 불편해서 {todo}
+    console.log("courseId:", courseId);
+    
+  }, [courseId]);
 
   return (
     <>
@@ -113,7 +118,7 @@ const CourseDetailPage = () => {
           </CourseDetailContent>
 
           <CourseDetailContent id='course_review_container' selected={selectedOption === "review"}>
-            <WriteReviewBtn>
+            <WriteReviewBtn onClick={handleReviewWriteClick}>
               <HiOutlinePencilSquare size={15} style={{ marginRight: "5px" }} />
               수강 후기 작성하기
               </WriteReviewBtn>
@@ -263,8 +268,11 @@ const Option = styled.div<{ selected: boolean }>`
 
 
 const CourseDetailContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 90%;
-  margin-top: 20px;
+  margin-top: 10px;
 `;
 
 const CourseDetailContent = styled.div<{ selected: boolean }>`

@@ -20,6 +20,7 @@ import CourseDetailPage from './pages/CourseDetailPage';
 import RegisterPage from './pages/RegisterPage';
 import ReviewDetailPage from './pages/ReviewDetailPage';
 import EditMyPage from './pages/EditMyPage';
+import WriteReviewPage from './pages/WriteReviewPage';
 
 function App() {
   const location = useLocation();
@@ -43,6 +44,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/review" element={<ReviewDetailPage />} />
         <Route path="/mypage/edit" element={<EditMyPage />}></Route>
+        <Route path="/courses/:courseId/writeReview" element={<WriteReviewPage />} />
 
 
         {/* Admin 라우트 */}
