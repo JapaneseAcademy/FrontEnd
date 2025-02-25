@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { HiOutlinePencilSquare } from "react-icons/hi2";
 
 const CourseDetailPage = () => {
   const [selectedOption, setSelectedOption] = useState("detail");
@@ -102,6 +103,7 @@ const CourseDetailPage = () => {
           </Option>
         </OptionContainer>
 
+
         <CourseDetailContainer id='course_detail_container'>
           <CourseDetailContent selected={selectedOption === "detail"}>
             <CourseDetailImage src="/images/courseDetail/course-detail-1.png" alt="Course Image" />
@@ -111,6 +113,10 @@ const CourseDetailPage = () => {
           </CourseDetailContent>
 
           <CourseDetailContent id='course_review_container' selected={selectedOption === "review"}>
+            <WriteReviewBtn>
+              <HiOutlinePencilSquare size={15} style={{ marginRight: "5px" }} />
+              수강 후기 작성하기
+              </WriteReviewBtn>
             <ReviewContainer>
               {currentReviews.map((review) => (
                 <Reviewcard key={review.id} onClick={()=>handleReviewClick(review.id.toString())}>
@@ -212,7 +218,7 @@ const FixedButtonContainer = styled.div`
 
 const BuyButton = styled.button`
   width: 90%;
-  background-color: #402900;
+  background-color: #ff8255;
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -220,7 +226,7 @@ const BuyButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: #301d00;
+    background-color: #d76d47;
   }
 `;
 
@@ -229,7 +235,7 @@ const OptionContainer = styled.div`
   display: flex;
   height: 50px;
   margin-top: 30px;
-  border: 1px solid #d3d3d3;
+  border: 1px solid #e1e1e1;
 `;
 
 const Option = styled.div<{ selected: boolean }>`
@@ -262,6 +268,9 @@ const CourseDetailContainer = styled.div`
 `;
 
 const CourseDetailContent = styled.div<{ selected: boolean }>`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   display: ${({ selected }) => (selected ? "block" : "none")};
   margin-top: 10px;
 
@@ -284,23 +293,30 @@ const CourseDetailImage = styled.img`
 `;
 
 const ReviewContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
   margin-top: 20px;
-  border: 1px solid #d3d3d3;
-
-  // 리뷰 카드 사이의 border, 맨 밑에는 border 없음
-  & > div:not(:last-child) {
-    border-bottom: 1px solid #d3d3d3;
-  }
+  border: 1px solid #e1e1e1;
 
 `;
 
 const Reviewcard = styled.div`
-  padding: 15px 20px;
+  width: 90%;
+  padding: 15px 0;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
   cursor: pointer;
   transition: 0.2s;
+  border-bottom: 1px solid #e1e1e1;
+
+  //마지막 카드에는 border-bottom 없애기
+  &:last-child {
+    border-bottom: none;
+  }
 
   &:hover {
     background-color: #f9f9f9;
@@ -370,15 +386,20 @@ const Pagination = styled.div`
 `;
 
 const PageButton = styled.button<{ active: boolean }>`
-  padding: 5px 10px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 14px;
   cursor: pointer;
-  border: 1px solid ${({ active }) => (active ? "#402900" : "#ccc")};
-  background-color: ${({ active }) => (active ? "#402900" : "#fff")};
+  border: 1px solid ${({ active }) => (active ? "#ff8255" : "#e1e1e1")};
+  background-color: ${({ active }) => (active ? "#ff8255" : "#fff")};
   color: ${({ active }) => (active ? "#fff" : "#000")};
 
   &:hover {
-    background-color: #301d00;
+    background-color: #f1f1f1;
+    border: 1px solid #f1f1f1;
     color: #fff;
   }
 `;
@@ -416,7 +437,7 @@ const DropDownContent = styled.select`
   height: 30px;
   text-align: center;
   font-size: 12px;
-  border: 1px solid #ababab;
+  border: 1px solid #e1e1e1;
   border-radius: 20px;
   padding: 5px;
 
@@ -425,3 +446,23 @@ const DropDownContent = styled.select`
   }
 `;
 
+
+///수강후기 작성하기 버튼
+const WriteReviewBtn = styled.button`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: #7f7f7f; */
+  background-color: none;
+  color: #333;
+  border: none;
+  padding: 10px 20px;
+  font-size: 13px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #232323;
+    color: #fff;
+  }
+`;
