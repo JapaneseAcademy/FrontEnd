@@ -143,8 +143,8 @@ const CourseDetailPage = () => {
 
               {/* 하단 고정 버튼 */}
       <FixedButtonContainer>
-        <CartButton id="cart_btn">장바구니</CartButton>
-        <BuyButton id="buy_btn">구매하기</BuyButton>
+        {/* <CartButton id="cart_btn">장바구니</CartButton> */}
+        <BuyButton id="buy_btn">신청하기</BuyButton>
       </FixedButtonContainer>
       </Wrapper>
 
@@ -197,26 +197,26 @@ const FixedButtonContainer = styled.div`
   z-index: 1000; 
 `;
 
-const CartButton = styled.button`
-  width: 45%;
-  background-color: #ffffff;
-  border: 1px solid #d3d3d3;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
+// const CartButton = styled.button`
+//   width: 45%;
+//   background-color: #ffffff;
+//   border: 1px solid #d3d3d3;
+//   padding: 10px 20px;
+//   font-size: 16px;
+//   cursor: pointer;
 
-  &:hover {
-    background-color: #e0e0e0;
-  }
-`;
+//   &:hover {
+//     background-color: #e0e0e0;
+//   }
+// `;
 
 const BuyButton = styled.button`
-  width: 45%;
+  width: 90%;
   background-color: #402900;
   color: #fff;
   border: none;
   padding: 10px 20px;
-  font-size: 16px;
+  font-size: 15px;
   cursor: pointer;
 
   &:hover {
