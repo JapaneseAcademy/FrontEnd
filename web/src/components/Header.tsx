@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { GrHomeRounded } from "react-icons/gr";
 import { IoMenu } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 import { getKakaoCode } from '../apis/loginAPI';
+import { IoMdContact } from "react-icons/io"
 
 const Header = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
 
   const toggleSidebar = () => {
@@ -17,6 +19,12 @@ const Header = () => {
     setSidebarOpen(false);
   };
   
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    if(token) {
+      setIsLogin(true);
+    }
+  }, []);
 
   return (
     <>
@@ -43,8 +51,10 @@ const Header = () => {
       <Sidebar isOpen={isSidebarOpen} onClick={(e) => e.stopPropagation()}>        
         <CloseButton onClick={toggleSidebar}>×</CloseButton>
         <ButtonContainer>
-          {/* <SignupButton onClick={ () => navigate(`/signup`)}>회원가입</SignupButton> */}
-          <LoginButton onClick={() => { getKakaoCode(); closeSidebar(); }}>카카오로 시작하기</LoginButton>
+          {isLogin 
+            ? <MypageButton onClick={() => { navigate(`/mypage`); closeSidebar(); }}>
+              <IoMdContact size={30} style={{marginRight: '10px'}}/>마이페이지</MypageButton>
+            : <LoginButton onClick={() => { getKakaoCode(); closeSidebar(); }}>카카오로 시작하기</LoginButton> }
         </ButtonContainer>
         <MenuContainer>
           <Menu onClick={() => { navigate(`/teachers`); closeSidebar(); }}>선생님 소개</Menu>
@@ -265,20 +275,6 @@ const ButtonContainer = styled.div`
   gap: 15px;
 `;
 
-// const SignupButton = styled.button`
-//   width: 40%;
-//   height: 40px;
-//   color: white;
-//   background-color: #4d3e2c;
-//   border: none;
-//   cursor: pointer;
-//   border-radius: 5px;
-//   border: 1.5px solid #7c7c7c;
-
-//   &:hover {
-//     background-color: #392a20;
-//   }
-// `;
 
 const LoginButton = styled.button`
   width: 80%;
@@ -297,5 +293,26 @@ const LoginButton = styled.button`
     background-color: #767676;
     color: white;
     
+  }
+`;
+
+const MypageButton = styled.button`
+  width: 80%;
+  height: 50px;
+  background-color: none;
+  color: black;
+  border: none; 
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: #767676;
+    color: white;
   }
 `;
