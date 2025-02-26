@@ -52,8 +52,12 @@ const Header = () => {
         <CloseButton onClick={toggleSidebar}>×</CloseButton>
         <ButtonContainer>
           {isLogin 
-            ? <MypageButton onClick={() => { navigate(`/mypage`); closeSidebar(); }}>
+            ? 
+            <>
+            <MypageButton onClick={() => { navigate(`/mypage`); closeSidebar(); }}>
               <IoMdContact size={30} style={{marginRight: '10px'}}/>마이페이지</MypageButton>
+              <LogoutButton onClick={() => { localStorage.removeItem('accessToken'); setIsLogin(false); closeSidebar(); }}>로그아웃</LogoutButton>
+            </>
             : <LoginButton onClick={() => { getKakaoCode(); closeSidebar(); }}>카카오로 시작하기</LoginButton> }
         </ButtonContainer>
         <MenuContainer>
@@ -227,6 +231,11 @@ const Sidebar = styled.div<SidebarProps>`
   transition: left 0.3s ease;
   box-shadow: ${({ isOpen }) => (isOpen ? '2px 0 5px rgba(0, 0, 0, 0.5)' : 'none')};
   z-index: 9999;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
 `;
 
 const CloseButton = styled.button`
@@ -245,11 +254,16 @@ const CloseButton = styled.button`
 `;
 
 const MenuContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 20px;
-  margin-top: 40px;
+  margin-top: 20px;
 `;
 
 const Menu = styled.div`
+  width: 100%;
   margin-bottom: 10px;
   margin-top: 10px;
   font-size: 15px;
@@ -266,7 +280,7 @@ const Menu = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  width: 100%;
+  width: 90%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -316,3 +330,22 @@ const MypageButton = styled.button`
     color: white;
   }
 `;
+
+//////로그아웃 버튼//////
+const LogoutButton = styled.div`
+  width: 20%;
+  color: #bbbbbb;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: underline;
+
+  &:hover {
+    color: white;
+  }
+`
