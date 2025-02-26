@@ -4,9 +4,24 @@ import styled from "styled-components";
 import { HiOutlinePencilSquare } from "react-icons/hi2";
 import { getCourseReviewsByPage } from "../apis/reviewAPI";
 
+type Review = {
+  reviewId: string;
+
+  reviewImage: string;
+  reviewCourse: string;
+  reviewTitle: string;
+  reviewText: string;
+  reviewDate: string;
+  reviewName: string;
+  isAnonymous: boolean;
+}
+
+
 const CourseDetailPage = () => {
   const [selectedOption, setSelectedOption] = useState("detail");
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentReviews, setCurrentReviews] = useState<Review[]>([]);
+
   const reviewsPerPage = 5; // ✅ 한 페이지당 리뷰 개수
   const navigate = useNavigate();
   const courseId = String(useParams().courseId);
@@ -62,7 +77,10 @@ const CourseDetailPage = () => {
     console.log("courseId:", courseId); //확인용
 
     //강의별 후기 API 호출(페이지 1은 미리 세팅)
-    getCourseReviewsByPage(courseId, "1");
+    getCourseReviewsByPage(courseId, "1").then((data) => {
+      console.log(data);
+    }
+    );
     
   }, [courseId]);
 
