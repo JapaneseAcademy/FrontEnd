@@ -3,13 +3,14 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 
 export const getCourses = async () => {
+   console.log("[ getCourses ]");
    try{
       const response = await axios.get(`${BASE_URL}/api/v1/courses`, {
          headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`
          }
       });
-      // console.log(response.data);
+      console.log(response.data);
       return response.data;
    }
    catch(error){

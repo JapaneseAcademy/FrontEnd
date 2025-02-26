@@ -2,11 +2,22 @@ import { useEffect, useState } from "react";
 import { IoMdContact } from "react-icons/io"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import { getUserInfo } from "../apis/userAPI";
+import { getEnrollments, getUserInfo } from "../apis/userAPI";
+
+type Enrollment = {
+  enrollmentId: string;
+  courseTitle: string;
+  paymentDate: string;
+  courseType: string;
+  price: string;
+  paymentMethod: string;
+  courseImage: string;
+}
 
 const MyPage = () => {
   const [name, setName] = useState<string>('');
   const navigate = useNavigate();
+  const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
 
   const handleEditClick = () => {
     navigate('/mypage/edit')
@@ -50,6 +61,23 @@ const MyPage = () => {
     //이름 세팅
     getUserInfo().then((data) => {
       setName(data.name);
+    })
+
+    //강의 수강 내역 세팅
+    getEnrollments().then((data) => {
+      data.forEach((enrollment: any) => {
+        const newEnrollment: Enrollment = {
+          enrollmentId: enrollment.enrollmentId,
+          courseTitle: enrollment.courseTitle,
+          paymentDate: enrollment.paymentAt,
+          courseType: enrollment.category,
+          price: enrollment.paymentAmount,
+          paymentMethod: enrollment.paymentMethod, //만들어달라고 해야함
+          courseImage: enrollment.course.image //만들어달라고 해야함
+        }
+        setEnrollments((prev) => [...prev, newEnrollment]);
+      }
+      )
     })
   }
   , [])

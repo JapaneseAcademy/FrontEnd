@@ -17,3 +17,20 @@ export const getUserInfo = async () => {
       console.error(error);
    }
 };
+
+export const getEnrollments = async () => {
+   console.log("[ getEnrollments ]");
+   try {
+      const res = await axios.get(`${BASE_URL}/api/v1/enrollments`,
+      {
+         headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+         }
+      }
+      );
+      console.log(res.data);
+      return res.data;
+   } catch (error) {
+      console.error(error);
+   }
+}

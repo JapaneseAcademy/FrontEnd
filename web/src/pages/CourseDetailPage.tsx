@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { HiOutlinePencilSquare } from "react-icons/hi2";
+import { getCourseReviewsByPage } from "../apis/reviewAPI";
 
 const CourseDetailPage = () => {
   const [selectedOption, setSelectedOption] = useState("detail");
   const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 5; // ✅ 한 페이지당 리뷰 개수
   const navigate = useNavigate();
-  const courseId = useParams().courseId;
+  const courseId = String(useParams().courseId);
 
   const handleReviewClick = (reviewId: string) => {
     navigate(`/review?reviewId=${reviewId}`);
@@ -58,7 +59,10 @@ const CourseDetailPage = () => {
   useEffect(() => {
     // 페이지 로드 시 상단으로 이동
     // window.scrollTo(0, 0); // 완성 시에 활성화. 개발할때는 불편해서 {todo}
-    console.log("courseId:", courseId);
+    console.log("courseId:", courseId); //확인용
+
+    //강의별 후기 API 호출(페이지 1은 미리 세팅)
+    getCourseReviewsByPage(courseId, "1");
     
   }, [courseId]);
 
