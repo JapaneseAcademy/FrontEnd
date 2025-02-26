@@ -4,17 +4,17 @@ import styled from "styled-components";
 import { HiOutlinePencilSquare } from "react-icons/hi2";
 import { getCourseReviewsByPage } from "../apis/reviewAPI";
 
-type Review = {
-  reviewId: string;
+// type Review = {
+//   reviewId: string;
 
-  reviewImage: string;
-  reviewCourse: string;
-  reviewTitle: string;
-  reviewText: string;
-  reviewDate: string;
-  reviewName: string;
-  isAnonymous: boolean;
-}
+//   reviewImage: string;
+//   reviewCourse: string;
+//   reviewTitle: string;
+//   reviewText: string;
+//   reviewDate: string;
+//   reviewName: string;
+//   isAnonymous: boolean;
+// }
 
 
 const CourseDetailPage = () => {

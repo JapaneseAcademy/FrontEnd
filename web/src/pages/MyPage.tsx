@@ -57,6 +57,8 @@ const MyPage = () => {
   useEffect(() => {
     //마이페이지 진입 시, 스크롤을 맨 위로 이동
     window.scrollTo(0, 0);
+    
+    console.log(enrollments); // 그냥 배포용으로 사용
 
     //이름 세팅
     getUserInfo().then((data) => {
@@ -80,7 +82,7 @@ const MyPage = () => {
       )
     })
   }
-  , [])
+  , [enrollments])
 
   return (
     <Wrapper>
