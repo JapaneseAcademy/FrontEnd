@@ -38,17 +38,6 @@ const CoursesPage = () => {
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
   const coursesPerPage = 3; // 페이지당 표시할 코스 개수
 
-  // 강의 데이터 샘플
-  const courses_example = [
-    { Id: 1, ImgUrl: "/images/courseBanner/course-banner-oneshot1.png", Title: "원샷반1", Price: "130,000원", Tags: ["온라인", "녹화본", "오프라인"] },
-    { Id: 2, ImgUrl: "/images/courseBanner/course-banner-oneshot2.png", Title: "원샷반2", Price: "150,000원", Tags: ["온라인", "녹화본", "오프라인"] },
-    { Id: 3, ImgUrl: "/images/courseBanner/course-banner-oneshot3.png", Title: "원샷반3", Price: "170,000원", Tags: ["온라인", "녹화본", "오프라인"] },
-    { Id: 4, ImgUrl: "/images/courseBanner/course-banner-pocket.png", Title: "회화포켓", Price: "200,000원", Tags: ["온라인", "녹화본", "오프라인"] },
-    { Id: 5, ImgUrl: "/images/courseBanner/course-banner-reading.png", Title: "원서읽기", Price: "100,000원", Tags: ["온라인"] },
-    { Id: 6, ImgUrl: "/images/courseBanner/course-banner-refill.png", Title: "회화 무한리필", Price: "180,000원", Tags: ["온라인", "녹화본", "오프라인"] },
-    { Id: 7, ImgUrl: "/images/courseBanner/course-banner-secret.png", Title: "회화비밀", Price: "120,000원", Tags: ["온라인", "녹화본", "오프라인"] },
-  ];
-
   // 현재 페이지에 표시할 코스 계산
   const startIndex = (currentPage - 1) * coursesPerPage;
   const endIndex = startIndex + coursesPerPage;
@@ -62,8 +51,7 @@ const CoursesPage = () => {
   };
 
   // 전체 페이지 수 계산
-  const totalPages = Math.ceil(courses_example.length / coursesPerPage);
-
+  const totalPages = Math.ceil(courses.length / coursesPerPage);
   return (
     <>
       <Main>
