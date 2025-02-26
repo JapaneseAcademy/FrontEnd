@@ -2,30 +2,34 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 interface CourseProps {
-   courseId: number;
-   ImgUrl: string;
-   Title: string;
-   Price: string;
+   courseId: string;
+   courseImage: string;
+   courseTitle: string;
+   courseCost: number;
    Tags: string[];
 }
 
-const Course = ({ courseId, ImgUrl, Title, Price, Tags }: CourseProps) => {
+const Course = ({ courseId, courseImage, courseTitle, courseCost, Tags }: CourseProps) => {
    const navigate = useNavigate();
 
    const handleCourseClick = () => {
       navigate(`/courses/${courseId}`); // 해당 Course의 ID로 이동
    };
 
+   //가격에 1000원 단위로 콤마 추가
+   const stringCost = courseCost.toString();
+   const formattedCost = stringCost.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
    return (
       <Wrapper onClick={handleCourseClick}>
-         <CourseImage src={ImgUrl} alt={Title} />
+         <CourseImage src={courseImage} alt={courseTitle} />
          <CourseTagContainer>
             {Tags.map((tag) => (
                <CourseTag key={tag}>{tag}</CourseTag>
             ))}
          </CourseTagContainer>
-         <CourseTitle>{Title}</CourseTitle>
-         <CoursePrice>{Price}</CoursePrice>
+         <CourseTitle>{courseTitle}</CourseTitle>
+         <CoursePrice>{formattedCost}원</CoursePrice>
       </Wrapper>
    );
 };
@@ -45,7 +49,7 @@ const CourseImage = styled.img`
 `;
 
 const CourseTitle = styled.div`
-   font-size: 20px;
+   font-size: 19px;
    font-weight: 500;
    margin-top: 10px;
 `;

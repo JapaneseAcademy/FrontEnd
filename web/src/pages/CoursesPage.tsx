@@ -52,7 +52,7 @@ const CoursesPage = () => {
   // 현재 페이지에 표시할 코스 계산
   const startIndex = (currentPage - 1) * coursesPerPage;
   const endIndex = startIndex + coursesPerPage;
-  const currentCourses = courses_example.slice(startIndex, endIndex);
+  const currentCourses = courses.slice(startIndex, endIndex);
 
   // 페이지 변경 핸들러
   const handlePageChange = (pageNumber: number) => {
@@ -71,26 +71,16 @@ const CoursesPage = () => {
           <Title>예리 센세와 함께 일본어를 배워보세요!</Title>
 
           <CoursesContainer>
-            {currentCourses.map((course) => (
-              <Course
-                key={course.Id}
-                courseId={course.Id}
-                ImgUrl={course.ImgUrl}
-                Title={course.Title}
-                Price={course.Price}
-                Tags={course.Tags}
-              />
-            ))}
-            {/* {courses.map((course) => (
+            {currentCourses.map((course: course) => (
               <Course
                 key={course.courseId}
-                Id={course.courseId}
-                ImgUrl={course.courseImages[0].imageUrl}
-                Title={course.courseTitle}
-                Price={course.courseCost.toString()}
-                Tags={course.courseTags}
+                courseId={course.courseId}
+                courseImage={course.courseImage}
+                courseTitle={course.courseTitle}
+                courseCost={course.courseCost}
+                Tags={course.tags}
               />
-            ))} */}
+            ))}
           </CoursesContainer>
 
           {/* 페이지네이션 */}
