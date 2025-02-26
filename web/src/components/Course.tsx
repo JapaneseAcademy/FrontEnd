@@ -2,18 +2,18 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 interface CourseProps {
-   Id: number;
+   courseId: number;
    ImgUrl: string;
    Title: string;
    Price: string;
    Tags: string[];
 }
 
-const Course = ({ Id, ImgUrl, Title, Price, Tags }: CourseProps) => {
+const Course = ({ courseId, ImgUrl, Title, Price, Tags }: CourseProps) => {
    const navigate = useNavigate();
 
    const handleCourseClick = () => {
-      navigate(`/courses/${Id}`); // 해당 Course의 ID로 이동
+      navigate(`/courses/${courseId}`); // 해당 Course의 ID로 이동
    };
 
    return (
@@ -25,7 +25,6 @@ const Course = ({ Id, ImgUrl, Title, Price, Tags }: CourseProps) => {
             ))}
          </CourseTagContainer>
          <CourseTitle>{Title}</CourseTitle>
-         <CourseTime>월,화 17:00-19:00</CourseTime>
          <CoursePrice>{Price}</CoursePrice>
       </Wrapper>
    );
@@ -49,12 +48,6 @@ const CourseTitle = styled.div`
    font-size: 20px;
    font-weight: 500;
    margin-top: 10px;
-`;
-
-const CourseTime = styled.div`
-   font-size: 14px;
-   margin-top: 3px;
-   color: #333;
 `;
 
 const CoursePrice = styled.div`

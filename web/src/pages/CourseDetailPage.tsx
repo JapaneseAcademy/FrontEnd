@@ -20,7 +20,7 @@ type Review = {
 const CourseDetailPage = () => {
   const [selectedOption, setSelectedOption] = useState("detail");
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentReviews, setCurrentReviews] = useState<Review[]>([]);
+  // const [currentReviews, setCurrentReviews] = useState<Review[]>([]);
 
   const reviewsPerPage = 5; // ✅ 한 페이지당 리뷰 개수
   const navigate = useNavigate();

@@ -5,11 +5,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const getCourses = async () => {
    console.log("[ getCourses ]");
    try{
-      const response = await axios.get(`${BASE_URL}/api/v1/courses`, {
-         headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-         }
-      });
+      const response = await axios.get(`${BASE_URL}/api/v1/courses`);
       console.log(response.data);
       return response.data;
    }
@@ -19,12 +15,9 @@ export const getCourses = async () => {
 }
 
 export const getCourseDetail = async (courseId: number) => {
+   console.log("[ getCourseDetail ]");
    try {
-      const response = await axios.get(`${BASE_URL}/api/v1/courses/${courseId}`, {
-         headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-         }
-      });
+      const response = await axios.get(`${BASE_URL}/api/v1/courses/${courseId}`);
       console.log(response.data);
    }
    catch (error){

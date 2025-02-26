@@ -3,53 +3,35 @@ import Main from "../components/Main";
 import styled from "styled-components";
 import Course from "../components/Course";
 import { getCourses } from "../apis/courseAPI";
-import { courseType } from "../types/types";
-import { formatCourseResponse } from "../utils/formatCourseResponse";
 
-// export const courseType = {
-//   courseId: 0,
-//   courseTitle: "",
-//   courseCost: 0,
-//   courseStartDate: "",
-//   courseEndDate: "",
-//   courseImages: [""],
-//   courseTags: [""],
-//   courseTimetables: [
-//      {
-//         weekday: "",
-//         startTime: "",
-//         endTime: ""
-//      }
-//   ]
-// };
+type course = {
+  courseId: string;
+  courseImage: string;
+  tags: string[];
+  courseTitle: string;
+  courseCost: number;
+}
 
 const CoursesPage = () => {
-  const [courses, setCourses] = useState<courseType[]>([]);
+  const [courses, setCourses] = useState<course[]>([]);
 
   useEffect(() => {
-    // 페이지 로드 시 상단으로 이동
-    // window.scrollTo(0, 0); todo
-
-    // 강의 데이터 불러오기
-    const fetchData = async () => {
-      try {
-        const data = await getCourses();
-        console.log(data);
-
-        //response 가공
-        const formattedData = formatCourseResponse(data);
-
-        setCourses(formattedData);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchData();
+    getCourses().then((data) => {
+      const formattedCourses = data.map((course: any) => ({
+        courseId: course.id,
+        courseImage: course.descriptions[0],
+        tags: course.tags,
+        courseTitle: course.title,
+        courseCost: course.cost
+      }));
+  
+      setCourses(formattedCourses); // ✅ 한 번에 전체 데이터 세팅
+    });
   }, []);
+  
 
   useEffect(() => {
-    console.log(courses);
+    console.log("세팅 후:", courses);
   }
   , [courses]);
 
@@ -92,7 +74,7 @@ const CoursesPage = () => {
             {currentCourses.map((course) => (
               <Course
                 key={course.Id}
-                Id={course.Id}
+                courseId={course.Id}
                 ImgUrl={course.ImgUrl}
                 Title={course.Title}
                 Price={course.Price}
