@@ -16,9 +16,11 @@ const AdminYoutube = ({ youtubeId }: AdminYoutubeProps) => {
 export default AdminYoutube
 
 const Wrapper = styled.div`
-   width: 60%;
+   width: 70%;
    height: 100%;
    display: flex;
    justify-content: center;
    align-items: center;
+   border: 1px solid #dbdbdb;
+   padding: 20px;
 `
