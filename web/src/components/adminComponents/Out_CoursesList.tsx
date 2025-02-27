@@ -1,23 +1,65 @@
 import styled from "styled-components"
-import { COURSES_LIST } from "../../constants/coursesList"
 import FilterContainer from "./etc/FilterContainer"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { getCourses } from "../../apis/courseAPI"
+
+// type courseBlock = {
+//   day: string;
+//   time: string;
+// }
+
+type Course = {
+  courseId: string;
+  courseTitle: string;
+  courseMainImage: string;
+  courseImages: string[];
+  // courseBlocks: courseBlock[]; {todo: api 수정되면 추가}
+  coursePrice: number;
+  studentsNum: number;
+  
+  isOnline: boolean;
+  isLive: boolean;
+  isRecorded: boolean;
+}
 
 const Out_CoursesList = () => {
-  const [selectedCourseId, setSelectedCourseId] = useState<number | null>(1)
+  const [selectedCourseId, setSelectedCourseId] = useState<string>("1");
+  const [courses, setCourses] = useState<Course[]>([])
 
-   // 선택한 학생의 데이터 가져오기
-  const selectedCourse = COURSES_LIST.find(student => student.id === selectedCourseId);
+  // 선택한 수업의 데이터 가져오기(임시)
+  const selectedCourse = courses.find(course => course.courseId == selectedCourseId);
 
+  useEffect(() => {
+    //강의 목록 전체 조회 api
+    getCourses().then((data) => {
+      const formattedCourses = data.map((course: any) => ({
+        courseId: course.id,
+        courseTitle: course.title,
+        courseMainImage: course.descriptions[0],
+        courseImages: course.descriptions,
+        // courseBlocks: course.blocks,
+        coursePrice: course.cost,
+        studentsNum: 11, //{todo: 임시}
 
+        isOnline: course.isOnline,
+        isLive: course.isLive,
+        isRecorded: course.isRecorded
+      }));
+      setCourses(formattedCourses);
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log("세팅 후:", courses);
+  }, [courses]);
 
   return (
     <Wrapper>
-      <StudentListContainer id-="student-list-container"> 
+      <CourseListContainer id-="course-list-container"> 
         <Title>수업 목록</Title>
         <FilterContainer/>
         {/* 학생 목록 표 */}
-        <StudentsTable id='students-table'>
+        <CoursesTable id='courses-table'>
           <TableHeader>
             <TableHeaderItem id='courseName'>수업 이름</TableHeaderItem>
             <TableHeaderItem id='day'>요일</TableHeaderItem>
@@ -26,42 +68,46 @@ const Out_CoursesList = () => {
 
           </TableHeader>
           <TableBody>
-            {COURSES_LIST.map((student) => (
+            {courses.map((course) => (
               <TableRow 
-                key={student.id} 
-                onClick={() => setSelectedCourseId(student.id)}
-                isSelected={selectedCourseId === student.id} 
+                key={course.courseId} 
+                onClick={() => setSelectedCourseId(course.courseId)}
+                isSelected={selectedCourseId == course.courseId} 
               >
-                <TableItem>{student.name}</TableItem>
-                <TableItem>{student.day}</TableItem>
-                <TableItem>{student.time}</TableItem>
+                <TableItem>{course.courseTitle}</TableItem>
+                <TableItem>화, 수</TableItem> 
+                <TableItem>13:00 - 15:00</TableItem>
                 <TableItem>11</TableItem>
               </TableRow>
             ))}
           </TableBody>
-        </StudentsTable>
-      </StudentListContainer>
+        </CoursesTable>
+      </CourseListContainer>
 
-      <StudentDetailContainer>
+      <CourseDetailContainer>
         <DetailRow>
           <DetailTitle>수업이름</DetailTitle>
-          <DetailContent>{selectedCourse?.name}</DetailContent>
+          <DetailContent>{selectedCourse?.courseTitle}</DetailContent>
         </DetailRow>
         <DetailRow>
-        <DetailTitle>이미지</DetailTitle>
-          <DetailContent><CourseImage src="/images/courseBanner/courseBanner1.png"/></DetailContent>
+          <DetailTitle>썸네일 이미지</DetailTitle>
+          <DetailContent><CourseImage src={selectedCourse?.courseMainImage}/></DetailContent>
         </DetailRow>
         <DetailRow>
-        <DetailTitle>설명</DetailTitle>
-          <DetailContent>{selectedCourse?.description}</DetailContent>
+        <DetailTitle>상세 이미지</DetailTitle>
+          <DetailContent>
+            {selectedCourse?.courseImages.map((image, index) => (
+              <CourseImage key={index} src={image}/>
+            ))}
+          </DetailContent>
         </DetailRow>
         <DetailRow>
         <DetailTitle>요일</DetailTitle>
-          <DetailContent>{selectedCourse?.day}</DetailContent>
+          <DetailContent>화요일, 수요일</DetailContent>
         </DetailRow>
         <DetailRow>
           <DetailTitle>시간</DetailTitle>
-          <DetailContent>{selectedCourse?.time}</DetailContent>
+          <DetailContent>13:00 - 15:00</DetailContent>
         </DetailRow>
         <DetailRow>
           <DetailTitle>학생 수</DetailTitle>
@@ -69,14 +115,14 @@ const Out_CoursesList = () => {
         </DetailRow>
         <DetailRow>
           <DetailTitle>수강료</DetailTitle>
-          <DetailContent>{selectedCourse?.price}</DetailContent>
+          <DetailContent>{selectedCourse?.coursePrice}</DetailContent>
         </DetailRow>
 
         <ButtonsContainer>
           <Button>수정</Button>
           <Button>삭제</Button>
         </ButtonsContainer>
-      </StudentDetailContainer>
+      </CourseDetailContainer>
     </Wrapper>
   )
 }
@@ -93,7 +139,7 @@ const Wrapper = styled.div`
   gap: 10px;
 `
 
-const StudentListContainer = styled.div`
+const CourseListContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -118,7 +164,7 @@ const Title = styled.div`
   font-size: 1.5rem;
 `
 
-const StudentsTable = styled.div`
+const CoursesTable = styled.div`
   width: 90%;
   display: flex;
   height: 78%;
@@ -196,7 +242,7 @@ const TableItem = styled.div`
 
 
 
-const StudentDetailContainer = styled.div`
+const CourseDetailContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -205,8 +251,12 @@ const StudentDetailContainer = styled.div`
   width: 40%;
   height: 100%;
   border-right: 1px solid #e1e1e1;
-  padding-top: 10px;
+  padding-top: 20px;
   padding-bottom: 10px;
+
+  //넘어가면 스크롤 가능하도록
+  overflow-y: scroll;
+  height: 100%;
 `
 
 const DetailRow = styled.div`
@@ -257,7 +307,7 @@ const Button = styled.button`
 `
 
 const CourseImage = styled.img`
-  width: 100%;
-  height: 100%;
+  width: 200px; 
+  height: 200px;
   object-fit: cover;
 `
