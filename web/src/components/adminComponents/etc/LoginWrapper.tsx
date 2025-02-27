@@ -9,7 +9,7 @@ const LoginWrapper = ({ onLoginSuccess }: LoginWrapperProps) => {
    // 아직 관리자 토큰인지 검증하는 api 완성 안 돼서, 
    // 일단 로그인 버튼 클릭만 하면 관리자 인증되는 걸로 설정
    const handleLogin = () => {
-      // 관리자 토큰 발급
+      // {todo: 관리자 토큰 검증 api 호출}
       onLoginSuccess();
    }
 

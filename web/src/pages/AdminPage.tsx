@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { FaRegUser } from "react-icons/fa";
 import { FaRegFileVideo } from "react-icons/fa";
-import { MdOutlineDesktopWindows } from "react-icons/md";
+import { MdOutlineDesktopWindows, MdOutlineRateReview } from "react-icons/md";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import LoginWrapper from "../components/adminComponents/etc/LoginWrapper";
@@ -10,6 +10,7 @@ const AdminPage = () => {
    const [isAdminLogin, setIsAdminLogin] = useState(false);
    const navigate = useNavigate();
 
+   // 로그인 성공 시에는 그냥 이걸 호출하면 됨(loginWrapper에서 props로 받아서)
    const handleLoginSuccess = () => {
       setIsAdminLogin(true);
    }
@@ -46,6 +47,13 @@ const AdminPage = () => {
                      <CategoryTitle><FaRegFileVideo/>수업 관리</CategoryTitle>
                      <Items>
                         <CategoryItem onClick={()=>navigate('course')}>- 수업 목록</CategoryItem>
+                     </Items>
+                  </Category>
+                  <Category>
+                     <CategoryTitle><MdOutlineRateReview/>후기 관리</CategoryTitle>
+                     <Items>
+                        <CategoryItem onClick={()=>navigate('banner')}>- 메인 리뷰 설정</CategoryItem>
+                        <CategoryItem onClick={()=>navigate('youtube')}>- 강의별 베스트 리뷰 설정</CategoryItem>
                      </Items>
                   </Category>
                   <Category>
