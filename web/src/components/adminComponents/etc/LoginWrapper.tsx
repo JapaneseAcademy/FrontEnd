@@ -1,12 +1,24 @@
 import styled from "styled-components"
 
-const LoginWrapper = () => {
+interface LoginWrapperProps {
+   onLoginSuccess: () => void;
+}
+
+const LoginWrapper = ({ onLoginSuccess }: LoginWrapperProps) => {
+
+   // 아직 관리자 토큰인지 검증하는 api 완성 안 돼서, 
+   // 일단 로그인 버튼 클릭만 하면 관리자 인증되는 걸로 설정
+   const handleLogin = () => {
+      // 관리자 토큰 발급
+      onLoginSuccess();
+   }
+
    return (
       <Wrapper>
          <LoginContainer>
             <span>예리한 일본어</span>
             <LoginTitle>관리자 로그인</LoginTitle>
-            <KakaoLoginButton>카카오 로그인</KakaoLoginButton>
+            <KakaoLoginButton onClick={handleLogin}>카카오 로그인</KakaoLoginButton>
          </LoginContainer>
       </Wrapper>
    )
