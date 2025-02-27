@@ -3,52 +3,63 @@ import { FaRegUser } from "react-icons/fa";
 import { FaRegFileVideo } from "react-icons/fa";
 import { MdOutlineDesktopWindows } from "react-icons/md";
 import { Outlet, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import LoginWrapper from "../components/adminComponents/etc/LoginWrapper";
 
 const AdminPage = () => {
+   const [isAdminLogin, setIsAdminLogin] = useState(false);
    const navigate = useNavigate();
+
+   useEffect(() => {
+
+   })
 
    return (
    <Wrapper id='admin-page-wrapper'>
-      <Sidebar id='sidebar'>
-         <Company>
-            <CompanyLogo/>
-            <CompanyTitle>
-               <span style={{fontSize:'1.2rem', fontWeight:'bold'}}>예리한 일본어</span>
-               <span style={{fontSize:'0.8rem', color:'#5d5d5d'}}>관리자용</span>
-            </CompanyTitle>
-         </Company>
+      {/* <AfterLogin>
+         <Sidebar id='sidebar'>
+            <Company>
+               <CompanyLogo/>
+               <CompanyTitle>
+                  <span style={{fontSize:'1.2rem', fontWeight:'bold'}}>예리한 일본어</span>
+                  <span style={{fontSize:'0.8rem', color:'#5d5d5d'}}>관리자용</span>
+               </CompanyTitle>
+            </Company>
 
-         <CategoryContainer>
-            <Category>
-               <CategoryTitle><FaRegUser/>학생 관리</CategoryTitle>
-               <Items>
-                  <CategoryItem onClick={()=>navigate('student')}>- 학생 목록</CategoryItem>
-                  <CategoryItem onClick={()=>navigate('message')}>- 문자 발송</CategoryItem>
-               </Items>
-            </Category>
-            <Category>
-               <CategoryTitle><FaRegFileVideo/>수업 관리</CategoryTitle>
-               <Items>
-                  <CategoryItem onClick={()=>navigate('course')}>- 수업 목록</CategoryItem>
-               </Items>
-            </Category>
-            <Category>
-               <CategoryTitle><MdOutlineDesktopWindows/>홈페이지 관리</CategoryTitle>
-               <Items>
-                  <CategoryItem onClick={()=>navigate('banner')}>- 홈 배너 변경</CategoryItem>
-                  <CategoryItem onClick={()=>navigate('youtube')}>- 대표 유튜브 영상 변경</CategoryItem>
-               </Items>
-            </Category>
-            <div style={{fontSize:'10px', color:'#b3b3b3'}}>문의 : burittodance@naver.com</div>
+            <CategoryContainer>
+               <Category>
+                  <CategoryTitle><FaRegUser/>학생 관리</CategoryTitle>
+                  <Items>
+                     <CategoryItem onClick={()=>navigate('student')}>- 학생 목록</CategoryItem>
+                     <CategoryItem onClick={()=>navigate('message')}>- 문자 발송</CategoryItem>
+                  </Items>
+               </Category>
+               <Category>
+                  <CategoryTitle><FaRegFileVideo/>수업 관리</CategoryTitle>
+                  <Items>
+                     <CategoryItem onClick={()=>navigate('course')}>- 수업 목록</CategoryItem>
+                  </Items>
+               </Category>
+               <Category>
+                  <CategoryTitle><MdOutlineDesktopWindows/>홈페이지 관리</CategoryTitle>
+                  <Items>
+                     <CategoryItem onClick={()=>navigate('banner')}>- 홈 배너 변경</CategoryItem>
+                     <CategoryItem onClick={()=>navigate('youtube')}>- 대표 유튜브 영상 변경</CategoryItem>
+                  </Items>
+               </Category>
+               <div style={{fontSize:'10px', color:'#b3b3b3'}}>문의 : burittodance@naver.com</div>
 
-         </CategoryContainer>
-      </Sidebar>
+            </CategoryContainer>
+         </Sidebar>
 
-      <Content>
-         <Outlet/>
-      </Content>
+         <Content>
+            <Outlet/>
+         </Content>
+      </AfterLogin> */}
+
+         <LoginWrapper/>
    </Wrapper>
-  )
+   )
 }
 
 export default AdminPage
@@ -164,3 +175,12 @@ const Content = styled.div`
    height: 100%;
    padding: 20px;
 `
+
+////
+const AfterLogin = styled.div`
+   display: flex;
+   flex-direction: row;
+   width: 100%;
+   height: 100%;
+`
+
