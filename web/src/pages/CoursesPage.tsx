@@ -3,6 +3,7 @@ import Main from "../components/Main";
 import styled from "styled-components";
 import Course from "../components/Course";
 import { getCourses } from "../apis/courseAPI";
+import { convertTags } from "../utils/utils";
 
 type course = {
   courseId: string;
@@ -20,7 +21,7 @@ const CoursesPage = () => {
       const formattedCourses = data.map((course: any) => ({
         courseId: course.id,
         courseImage: course.descriptions[0],
-        tags: course.tags,
+        tags: convertTags(course.isLive, course.isOnline, course.isRecorded),
         courseTitle: course.title,
         courseCost: course.cost
       }));

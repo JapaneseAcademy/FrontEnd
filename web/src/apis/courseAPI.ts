@@ -19,6 +19,7 @@ export const getCourseDetail = async (courseId: number) => {
    try {
       const response = await axios.get(`${BASE_URL}/api/v1/courses/${courseId}`);
       console.log(response.data);
+      return response.data;
    }
    catch (error){
       console.error(error);

@@ -83,3 +83,4 @@ export const register = async (name: string, phone: string, birth: string) => {
       }
    }
 }
+

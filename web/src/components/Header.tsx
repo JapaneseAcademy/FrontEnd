@@ -19,6 +19,15 @@ const Header = () => {
     setSidebarOpen(false);
   };
   
+  const logoutTemp = () => {
+    if(confirm('로그아웃 하시겠습니까?')) {
+      localStorage.removeItem('accessToken');
+      setIsLogin(false);
+    }
+    // 화면 새로고침
+    window.location.reload();
+  };
+
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
     if(token) {
@@ -56,7 +65,7 @@ const Header = () => {
             <>
             <MypageButton onClick={() => { navigate(`/mypage`); closeSidebar(); }}>
               <IoMdContact size={30} style={{marginRight: '10px'}}/>마이페이지</MypageButton>
-              <LogoutButton onClick={() => { localStorage.removeItem('accessToken'); setIsLogin(false); closeSidebar(); }}>로그아웃</LogoutButton>
+              <LogoutButton onClick={logoutTemp}>로그아웃</LogoutButton>
             </>
             : <LoginButton onClick={() => { getKakaoCode(); closeSidebar(); }}>카카오로 시작하기</LoginButton> }
         </ButtonContainer>

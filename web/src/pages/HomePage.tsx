@@ -30,11 +30,11 @@ const HomePage = () => {
     const code = url.searchParams.get('code');
     console.log('code:', code);
     // code가 있고, localStorage에 토큰이 없으면 로그인 요청
-    if (code && !localStorage.getItem('token')) {
+    if (code && !localStorage.getItem('accessToken')) {
       login(code, navigate);
     }
-  }
-  , );
+  }, );
+
 
   return (
   <>

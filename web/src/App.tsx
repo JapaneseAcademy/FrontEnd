@@ -45,7 +45,7 @@ function App() {
         <Route path="/review" element={<ReviewDetailPage />} />
         <Route path="/mypage/edit" element={<EditMyPage />}></Route>
         <Route path="/courses/:courseId/writeReview" element={<WriteReviewPage />} />
-
+      
 
         {/* Admin 라우트 */}
         <Route path="/admin" element={<AdminPage />}>
