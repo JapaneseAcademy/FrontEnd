@@ -2,7 +2,7 @@
 export const convertTags = (isLive: boolean, isOnline: boolean, isRecorded: boolean) => {
    const tags = [];
    if (isLive) tags.push("온라인");
-   if (isOnline) tags.push("녹화본");
+   if (isOnline) tags.push("동영상");
    if (isRecorded) tags.push("현장강의");
    return tags;
 };

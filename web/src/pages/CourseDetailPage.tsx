@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { HiOutlinePencilSquare } from "react-icons/hi2";
 import { getCourseReviewsByPage } from "../apis/reviewAPI";
+import { getCourseDetail } from "../apis/courseAPI";
+import { convertTags } from "../utils/utils";
 
 // type Review = {
 //   reviewId: string;
@@ -20,6 +22,7 @@ import { getCourseReviewsByPage } from "../apis/reviewAPI";
 const CourseDetailPage = () => {
   const [selectedOption, setSelectedOption] = useState("detail");
   const [currentPage, setCurrentPage] = useState(1);
+  const [courseTypes, setCourseTypes] = useState<string[]>([]);
   // const [currentReviews, setCurrentReviews] = useState<Review[]>([]);
 
   const reviewsPerPage = 5; // ✅ 한 페이지당 리뷰 개수
@@ -38,6 +41,7 @@ const CourseDetailPage = () => {
   const handleReviewWriteClick = () => {
     navigate('writeReview');
   }
+
 
   const reviewTexts = [
     "수업이 너무 재밌어요! 선생님도 친절하시고, 함께 공부하니까 더 즐거워요. 어쩌구저쩌구 텍스트가 넘어간다. 어쩌구저쩌구 텍스트가 넘어간다. 어쩌구저쩌구 텍스트가 넘어간다.",
@@ -74,15 +78,27 @@ const CourseDetailPage = () => {
   useEffect(() => {
     // 페이지 로드 시 상단으로 이동
     // window.scrollTo(0, 0); // 완성 시에 활성화. 개발할때는 불편해서 {todo}
-    console.log("courseId:", courseId); //확인용
 
-    //강의별 후기 API 호출(페이지 1은 미리 세팅)
-    getCourseReviewsByPage(courseId, "1").then((data) => {
+    //1) 강의 상세정보 API 호출
+    getCourseDetail(courseId).then((data) => {
+      //{todo: 요일 드롭다운 세팅}
+      //{todo: 시간 드롭다운 세팅}
+      setCourseTypes(convertTags(data.isLive, data.isOnline, data.isRecorded));
+    });
+
+
+    //2) 강의별 후기 API 호출(페이지 1은 미리 세팅)
+    getCourseReviewsByPage(courseId, "1").then((data) => { //{todo: 페이지 수 정확하게}
       console.log(data);
     }
     );
     
   }, [courseId]);
+
+  useEffect(() => {
+    console.log("courseTypes:", courseTypes);
+  }
+  , [courseTypes]);
 
   return (
     <>
@@ -107,10 +123,10 @@ const CourseDetailPage = () => {
         </Dropdown>
         <Dropdown>
           <DropDownTitle>유형</DropDownTitle>
-          <DropDownContent>
-            <option>동영상</option>
-            <option>현장 강의</option>
-            <option>실시간 온라인</option>
+          <DropDownContent onChange={(e) => console.log(e.target.value)}>
+            {courseTypes.map((type) => (
+              <option key={type}>{type}</option>
+            ))}
           </DropDownContent>
         </Dropdown>
         </DropDownContainer>

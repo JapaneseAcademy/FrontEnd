@@ -8,7 +8,7 @@ const AdminPage = () => {
    const navigate = useNavigate();
 
    return (
-   <Wrapper>
+   <Wrapper id='admin-page-wrapper'>
       <Sidebar id='sidebar'>
          <Company>
             <CompanyLogo/>

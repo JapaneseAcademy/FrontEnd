@@ -36,8 +36,8 @@ const Out_StudentsList = () => {
   };
 
   return (
-    <Wrapper>
-      <StudentListContainer>
+    <Wrapper id='admin-students-list-wrapper'>
+      <StudentListContainer id="student-list-container">
         <Title>
           학생 목록
           <PlusButton>+</PlusButton>
@@ -226,6 +226,10 @@ const TableBody = styled.div`
   //넘어가면 스크롤 가능하도록
   overflow-y: scroll;
   height: 100%;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
 ` 
 const TableRow = styled.div<{ isSelected: boolean }>`
   width: 100%;

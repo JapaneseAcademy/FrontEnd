@@ -14,7 +14,7 @@ export const getCourses = async () => {
    }
 }
 
-export const getCourseDetail = async (courseId: number) => {
+export const getCourseDetail = async (courseId: string) => {
    console.log("[ getCourseDetail ]");
    try {
       const response = await axios.get(`${BASE_URL}/api/v1/courses/${courseId}`);
