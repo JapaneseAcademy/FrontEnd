@@ -37,6 +37,7 @@ const Out_StudentsList = () => {
 
   return (
     <Wrapper id='admin-students-list-wrapper'>
+
       <StudentListContainer id="student-list-container">
         <Title>
           학생 목록
@@ -68,7 +69,7 @@ const Out_StudentsList = () => {
         </StudentsTable>
       </StudentListContainer>
 
-      <StudentDetailContainer>
+      <StudentDetailContainer id="student-detail-container">
         <DetailRow>
           <DetailTitle>이름</DetailTitle>
           {isEditing ? (
@@ -173,7 +174,7 @@ const PlusButton = styled.button`
 const StudentsTable = styled.div`
   width: 90%;
   display: flex;
-  height: 50%;
+  height: 80%;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
@@ -226,10 +227,6 @@ const TableBody = styled.div`
   //넘어가면 스크롤 가능하도록
   overflow-y: scroll;
   height: 100%;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  -ms-overflow-style: none;
 ` 
 const TableRow = styled.div<{ isSelected: boolean }>`
   width: 100%;
@@ -283,8 +280,9 @@ const StudentDetailContainer = styled.div`
   width: 40%;
   height: 100%;
   border-right: 1px solid #e1e1e1;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  gap: 40px;
 `
 
 const DetailRow = styled.div`
@@ -294,7 +292,6 @@ const DetailRow = styled.div`
   align-items: center;
   justify-content: flex-start;
   gap: 10px;
-  margin-bottom: 20px;
 `
 
 const DetailTitle = styled.div`

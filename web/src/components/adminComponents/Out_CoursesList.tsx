@@ -13,11 +13,11 @@ const Out_CoursesList = () => {
 
   return (
     <Wrapper>
-      <StudentListContainer>
+      <StudentListContainer id-="student-list-container"> 
         <Title>수업 목록</Title>
-        <FilterContainer />
+        <FilterContainer/>
         {/* 학생 목록 표 */}
-        <StudentsTable>
+        <StudentsTable id='students-table'>
           <TableHeader>
             <TableHeaderItem id='courseName'>수업 이름</TableHeaderItem>
             <TableHeaderItem id='day'>요일</TableHeaderItem>
@@ -121,7 +121,7 @@ const Title = styled.div`
 const StudentsTable = styled.div`
   width: 90%;
   display: flex;
-  height: 50%;
+  height: 78%;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;

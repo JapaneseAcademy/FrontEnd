@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 const FilterContainer = () => {
   return (
-    <Wrapper>
+    <Wrapper id="filter-container-wrapper">
       <CourseDropdown>
          <option value="all">클래스</option>
          <option value="japanese">기초 회화 1반</option>
