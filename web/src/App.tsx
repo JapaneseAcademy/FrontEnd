@@ -15,7 +15,6 @@ import StudentsList from './components/adminComponents/Out_StudentsList';
 import CoursesList from './components/adminComponents/Out_CoursesList';
 import SendMessages from './components/adminComponents/Out_SendMessages';
 import ChangeYoutube from './components/adminComponents/Out_ChangeYoutube';
-import ChangeHomeBanner from './components/adminComponents/Out_ChangeHomeBanner';
 import CourseDetailPage from './pages/CourseDetailPage';
 import RegisterPage from './pages/RegisterPage';
 import ReviewDetailPage from './pages/ReviewDetailPage';
@@ -53,7 +52,6 @@ function App() {
           <Route path="message" element={<SendMessages/>} />
           <Route path="course" element={<CoursesList />} />
           <Route path="youtube" element={<ChangeYoutube/>} />
-          <Route path="banner" element={<ChangeHomeBanner/>} />
         </Route>
 
         {/* Not Found */}

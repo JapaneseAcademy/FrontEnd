@@ -90,7 +90,7 @@ const Out_CoursesList = () => {
           <DetailContent>{selectedCourse?.courseTitle}</DetailContent>
         </DetailRow>
         <DetailRow>
-          <DetailTitle>썸네일 이미지</DetailTitle>
+          <DetailTitle>썸네일</DetailTitle>
           <DetailContent><CourseImage src={selectedCourse?.courseMainImage}/></DetailContent>
         </DetailRow>
         <DetailRow>
@@ -273,6 +273,7 @@ const DetailTitle = styled.div`
   width: 20%;
   font-weight: bold;
   font-size: 1rem;
+  align-self: flex-start;
 `
 
 const DetailContent = styled.div`

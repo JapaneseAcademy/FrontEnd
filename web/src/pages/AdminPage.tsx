@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import LoginWrapper from "../components/adminComponents/etc/LoginWrapper";
 
 const AdminPage = () => {
-   const [isAdminLogin, setIsAdminLogin] = useState(false);
+   const [isAdminLogin, setIsAdminLogin] = useState(true);
    const navigate = useNavigate();
 
    // 로그인 성공 시에는 그냥 이걸 호출하면 됨(loginWrapper에서 props로 받아서)
@@ -59,7 +59,6 @@ const AdminPage = () => {
                   <Category>
                      <CategoryTitle><MdOutlineDesktopWindows/>홈페이지 관리</CategoryTitle>
                      <Items>
-                        <CategoryItem onClick={()=>navigate('banner')}>- 홈 배너 변경</CategoryItem>
                         <CategoryItem onClick={()=>navigate('youtube')}>- 대표 유튜브 영상 변경</CategoryItem>
                      </Items>
                   </Category>
