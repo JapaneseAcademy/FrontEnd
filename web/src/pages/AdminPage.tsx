@@ -8,11 +8,18 @@ import LoginWrapper from "../components/adminComponents/etc/LoginWrapper";
 
 const AdminPage = () => {
    const [isAdminLogin, setIsAdminLogin] = useState(true);
+   const [selectedItem, setSelectedItem] = useState<string>('student');
+
    const navigate = useNavigate();
 
    // 로그인 성공 시에는 그냥 이걸 호출하면 됨(loginWrapper에서 props로 받아서)
    const handleLoginSuccess = () => {
       setIsAdminLogin(true);
+   }
+
+   const handleItemClick = (path: string) => {
+      navigate(path);
+      setSelectedItem(path);
    }
 
    useEffect(() => {
@@ -39,27 +46,27 @@ const AdminPage = () => {
                   <Category>
                      <CategoryTitle><FaRegUser/>학생 관리</CategoryTitle>
                      <Items>
-                        <CategoryItem onClick={()=>navigate('student')}>- 학생 목록</CategoryItem>
-                        <CategoryItem onClick={()=>navigate('message')}>- 문자 발송</CategoryItem>
+                        <CategoryItem isSelected={selectedItem === 'student'} onClick={() => handleItemClick('student')}>- 학생 목록</CategoryItem>
+                        <CategoryItem isSelected={selectedItem === 'message'} onClick={() => handleItemClick('message')}>- 문자 발송</CategoryItem>
                      </Items>
                   </Category>
                   <Category>
                      <CategoryTitle><FaRegFileVideo/>수업 관리</CategoryTitle>
                      <Items>
-                        <CategoryItem onClick={()=>navigate('course')}>- 수업 목록</CategoryItem>
+                        <CategoryItem isSelected={selectedItem === 'course'} onClick={() => handleItemClick('course')}>- 수업 목록</CategoryItem>
                      </Items>
                   </Category>
                   <Category>
                      <CategoryTitle><MdOutlineRateReview/>후기 관리</CategoryTitle>
                      <Items>
-                        <CategoryItem onClick={()=>navigate('banner')}>- 메인 리뷰 설정</CategoryItem>
-                        <CategoryItem onClick={()=>navigate('youtube')}>- 강의별 베스트 리뷰 설정</CategoryItem>
+                        <CategoryItem isSelected={selectedItem === 'review'} onClick={() => handleItemClick('review')}>- 메인 리뷰 설정</CategoryItem>
+                        <CategoryItem isSelected={selectedItem === 'courseReview'} onClick={() => handleItemClick('courseReview')}>- 강의별 베스트 리뷰 설정</CategoryItem>
                      </Items>
                   </Category>
                   <Category>
                      <CategoryTitle><MdOutlineDesktopWindows/>홈페이지 관리</CategoryTitle>
                      <Items>
-                        <CategoryItem onClick={()=>navigate('youtube')}>- 대표 유튜브 영상 변경</CategoryItem>
+                        <CategoryItem isSelected={selectedItem === 'youtube'} onClick={() => handleItemClick('youtube')}>- 대표 유튜브 영상 변경</CategoryItem>
                      </Items>
                   </Category>
                   <div style={{fontSize:'10px', color:'#b3b3b3'}}>문의 : burittodance@naver.com</div>
@@ -139,6 +146,7 @@ const CategoryContainer = styled.div`
 `
 
 const Category = styled.div`
+   width: 100%;
    display: flex;
    flex-direction: column;
    justify-content: flex-start;
@@ -158,24 +166,26 @@ const CategoryTitle = styled.div`
    font-weight: 500;
    margin-bottom: 10px;
 `
-
-const CategoryItem = styled.div`
-
+const CategoryItem = styled.div<{ isSelected: boolean }>`
    font-size: 0.9rem;
    cursor: pointer;
-   color: #676767;
+   color: ${({ isSelected }) => (isSelected ? "#333" : "#676767")};
+   font-weight: ${({ isSelected }) => (isSelected ? "500" : "normal")};
+   padding: 5px 10px;
+   border-radius: 4px;
+   background-color: ${({ isSelected }) => (isSelected ? "#eaeaea" : "transparent")};
 
    &:hover {
       color: #333;
-      /* 위로 조금 올라가는 효과 */
       transform: translateX(2px);
    }
    &:active {
       color: #000;
    }
-`
+`;
 
 const Items = styled.div`
+   width: 100%;
    display: flex;
    flex-direction: column;
    gap: 10px;

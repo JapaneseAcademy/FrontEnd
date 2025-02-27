@@ -26,7 +26,7 @@ const Out_ChangeYoutube = () => {
     <Wrapper>
       <AdminYoutube youtubeId={youtubeId}/>
       <YoutubeFormContainer>
-        <Input type="text" placeholder="유튜브 영상의 ID를 입력하세요." onChange={handleYoutubeIdChange}/>
+        <Input value="8cFNCYoUsuk" type="text" placeholder="유튜브 영상의 ID를 입력하세요." onChange={handleYoutubeIdChange}/>
         <Notice>
           *유튜브 영상의 ID는 영상 URL에서 'v=' 뒤에 있는 문자열입니다.<br/>
           ID 입력 후 변경하려는 영상이 왼쪽에 정상적으로 나오지 않는다면 ID를 다시 확인해주세요. <br/>
