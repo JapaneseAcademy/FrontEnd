@@ -20,6 +20,8 @@ import RegisterPage from './pages/RegisterPage';
 import ReviewDetailPage from './pages/ReviewDetailPage';
 import EditMyPage from './pages/EditMyPage';
 import WriteReviewPage from './pages/WriteReviewPage';
+import Out_MainBestReviews from './components/adminComponents/Out_MainBestReviews';
+import Out_CourseBestReviews from './components/adminComponents/Out_CourseBestReviews';
 
 function App() {
   const location = useLocation();
@@ -52,7 +54,8 @@ function App() {
           <Route path="message" element={<SendMessages/>} />
           <Route path="course" element={<CoursesList />} />
           <Route path="course" element={<CoursesList />} />
-          <Route path="course" element={<CoursesList />} />
+          <Route path="mainReviews" element={<Out_MainBestReviews />} />
+          <Route path="courseReviews" element={<Out_CourseBestReviews />} />
           <Route path="youtube" element={<ChangeYoutube/>} />
         </Route>
 

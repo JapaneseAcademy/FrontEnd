@@ -34,10 +34,10 @@ const AdminPage = () => {
          setSelectedItem('message');
       } else if (location.pathname === '/admin/course') {
          setSelectedItem('course');
-      } else if (location.pathname === '/admin/review') {
-         setSelectedItem('review');
-      } else if (location.pathname === '/admin/courseReview') {
-         setSelectedItem('courseReview');
+      } else if (location.pathname === '/admin/mainReviews') {
+         setSelectedItem('mainReviews');
+      } else if (location.pathname === '/admin/courseReviews') {
+         setSelectedItem('courseReviews');
       } else if (location.pathname === '/admin/youtube') {
          setSelectedItem('youtube');
       }
@@ -74,8 +74,8 @@ const AdminPage = () => {
                   <Category>
                      <CategoryTitle><MdOutlineRateReview/>후기 관리</CategoryTitle>
                      <Items>
-                        <CategoryItem isSelected={selectedItem === 'review'} onClick={() => handleItemClick('review')}>- 메인 리뷰 설정</CategoryItem>
-                        <CategoryItem isSelected={selectedItem === 'courseReview'} onClick={() => handleItemClick('courseReview')}>- 강의별 베스트 리뷰 설정</CategoryItem>
+                        <CategoryItem isSelected={selectedItem === 'mainReviews'} onClick={() => handleItemClick('mainReviews')}>- 메인 리뷰 설정</CategoryItem>
+                        <CategoryItem isSelected={selectedItem === 'courseReviews'} onClick={() => handleItemClick('courseReviews')}>- 강의별 베스트 리뷰 설정</CategoryItem>
                      </Items>
                   </Category>
                   <Category>
