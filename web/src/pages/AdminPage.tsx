@@ -2,12 +2,13 @@ import styled from "styled-components"
 import { FaRegUser } from "react-icons/fa";
 import { FaRegFileVideo } from "react-icons/fa";
 import { MdOutlineDesktopWindows, MdOutlineRateReview } from "react-icons/md";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import LoginWrapper from "../components/adminComponents/etc/LoginWrapper";
 
 const AdminPage = () => {
    const [isAdminLogin, setIsAdminLogin] = useState(true);
+   const location = useLocation();
    const [selectedItem, setSelectedItem] = useState<string>('student');
 
    const navigate = useNavigate();
@@ -26,8 +27,22 @@ const AdminPage = () => {
       //{todo: localstorage에 토큰이 있으면, 그 토큰을 백으로 보내서 관리자 토큰인지 확인.
                // 만약 관리자 토큰이면 setIsAdminLogin(true)로 설정}
 
-      //임시로 
-   })
+      //selectedItem에 따라서 해당 페이지로 이동
+      if (location.pathname === '/admin/student') {
+         setSelectedItem('student');
+      } else if (location.pathname === '/admin/message') {
+         setSelectedItem('message');
+      } else if (location.pathname === '/admin/course') {
+         setSelectedItem('course');
+      } else if (location.pathname === '/admin/review') {
+         setSelectedItem('review');
+      } else if (location.pathname === '/admin/courseReview') {
+         setSelectedItem('courseReview');
+      } else if (location.pathname === '/admin/youtube') {
+         setSelectedItem('youtube');
+      }
+   }, [location.pathname])
+
 
    return (
    <Wrapper id='admin-page-wrapper'>
