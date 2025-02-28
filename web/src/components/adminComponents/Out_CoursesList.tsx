@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import FilterContainer from "./etc/FilterContainer"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { getCourses } from "../../apis/courseAPI"
 import { FiPlus } from "react-icons/fi"
 
@@ -29,6 +29,10 @@ const Out_CoursesList = () => {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [editedCourse, setEditedCourse] = useState<Course | null>(null);
 
+  //사진 첨부 관련
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const detailImageInputRef = useRef<HTMLInputElement | null>(null);
+
   // 선택한 수업의 데이터 가져오기(임시)
   const selectedCourse = courses.find(course => course.courseId == selectedCourseId);
 
@@ -56,16 +60,35 @@ const Out_CoursesList = () => {
       return { ...prev, courseImages: prev.courseImages.filter((_, i) => i !== index) };
     });
   };
+
+  const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = URL.createObjectURL(e.target.files[0]);
+      setEditedCourse(prev => prev ? { ...prev, courseMainImage: file } : null);
+    }
+  };
+
+  const handleAddDetailImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      if (editedCourse?.courseImages.length === 10) {
+        alert("상세 이미지는 최대 10개까지만 추가할 수 있습니다.");
+        return;
+      }
+      const file = URL.createObjectURL(e.target.files[0]);
+      setEditedCourse(prev => prev ? { ...prev, courseImages: [...prev.courseImages, file] } : null);
+    }
+  };
   
 
   useEffect(() => {
     //강의 목록 전체 조회 api
     getCourses().then((data) => {
-      const formattedCourses = data.map((course: any) => ({
+      const courseInfos = data.courseInfos;
+      const formattedCourses = courseInfos.map((course: any) => ({
         courseId: course.courseId,
         courseTitle: course.title,
         courseMainImage: course.mainImageUrl,
-        courseImages: course.descriptions,
+        courseImages: [course.mainImageUrl, course.mainImageUrl, course.mainImageUrl], // {todo: 임시}  
         // courseBlocks: course.blocks,
         coursePrice: course.cost,
         studentsNum: 11, //{todo: 임시}
@@ -122,7 +145,7 @@ const Out_CoursesList = () => {
                 <Input
                   type="text"
                   name="courseTitle"
-                  value={editedCourse?.courseTitle}
+                  value={editedCourse?.courseTitle || ""}
                   onChange={handleEditChange}
                 />
               </DetailContent>
@@ -131,7 +154,13 @@ const Out_CoursesList = () => {
               <DetailTitle>썸네일</DetailTitle>
               <DetailContent>
                 <CourseImage src={editedCourse?.courseMainImage}/>
-                <PlusButton>변경</PlusButton>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  style={{ display: "none" }}
+                  onChange={handleThumbnailChange}
+                />
+                <PlusButton onClick={() => fileInputRef.current?.click()}>변경</PlusButton>
               </DetailContent>
             </DetailRow>
             <DetailRow>
@@ -145,7 +174,14 @@ const Out_CoursesList = () => {
                   </ImageWrapper>
                 ))}
               </Images>
-                <PlusButton><FiPlus /></PlusButton>
+              <input 
+                  type="file" 
+                  ref={detailImageInputRef} 
+                  style={{ display: "none" }} 
+                  accept="image/*"
+                  onChange={handleAddDetailImage}
+              />
+                <PlusButton onClick={() => detailImageInputRef.current?.click()}><FiPlus /></PlusButton>
               </DetailContent>
             </DetailRow>
             <DetailRow>
