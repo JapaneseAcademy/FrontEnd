@@ -32,6 +32,9 @@ const Out_StudentsList = () => {
       selectedStudent.phone = editedStudent.phone;
       selectedStudent.class = editedStudent.class;
     }
+
+    //{todo: 서버에 저장하는 로직 추가(api호출)}
+    console.log("저장되었습니다.", selectedStudent); //확인용
     setIsEditing(false);
   };
 
@@ -303,17 +306,19 @@ const DetailTitle = styled.div`
 const DetailContent = styled.div`
   font-size: 0.9rem;
   border: 1px solid #e1e1e1;
+  background-color: #f7f7f7;
   padding: 10px;
   width: 80%;
   border-radius: 5px;
 `
 
 const DetailInput = styled.input`
-  width: 80%;
-  padding: 5px;
-  border-radius: 5px;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   border: 1px solid #e1e1e1;
+  padding: 10px;
+  width: 80%;
+  font-family: 'Pretendard';
+  border-radius: 5px;
 `
 
 const ButtonsContainer = styled.div`

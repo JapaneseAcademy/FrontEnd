@@ -51,6 +51,8 @@ function App() {
           <Route path="student" element={<StudentsList />} />
           <Route path="message" element={<SendMessages/>} />
           <Route path="course" element={<CoursesList />} />
+          <Route path="course" element={<CoursesList />} />
+          <Route path="course" element={<CoursesList />} />
           <Route path="youtube" element={<ChangeYoutube/>} />
         </Route>
 
