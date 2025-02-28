@@ -18,9 +18,10 @@ const CoursesPage = () => {
 
   useEffect(() => {
     getCourses().then((data) => {
-      const formattedCourses = data.map((course: any) => ({
-        courseId: course.id,
-        courseImage: course.descriptions[0],
+      const courseInfos = data.courseInfos;
+      const formattedCourses = courseInfos.map((course: any) => ({
+        courseId: course.courseId,
+        courseImage: course.mainImageUrl,
         tags: convertTags(course.isLive, course.isOnline, course.isRecorded),
         courseTitle: course.title,
         courseCost: course.cost

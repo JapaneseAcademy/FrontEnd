@@ -2,6 +2,7 @@ import styled from "styled-components"
 import FilterContainer from "./etc/FilterContainer"
 import { useEffect, useState } from "react"
 import { getCourses } from "../../apis/courseAPI"
+import { FiPlus } from "react-icons/fi"
 
 // type courseBlock = {
 //   day: string;
@@ -25,17 +26,45 @@ type Course = {
 const Out_CoursesList = () => {
   const [selectedCourseId, setSelectedCourseId] = useState<string>("1");
   const [courses, setCourses] = useState<Course[]>([])
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
+  const [editedCourse, setEditedCourse] = useState<Course | null>(null);
 
   // 선택한 수업의 데이터 가져오기(임시)
   const selectedCourse = courses.find(course => course.courseId == selectedCourseId);
+
+  const handleEditClick = () => {
+    setIsEditMode(true);
+    if (selectedCourse) {
+      setEditedCourse({ ...selectedCourse });
+    }
+  };
+
+  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (!editedCourse) return;
+    const { name, value } = e.target;
+    setEditedCourse(prev => prev ? { ...prev, [name]: value } : null);
+  };
+  
+  const handleEditComplete = () => {
+    console.log("수정 완료된 값:", editedCourse);
+    setIsEditMode(false);
+  };
+
+  const handleDeleteImage = (index: number) => {
+    setEditedCourse((prev) => {
+      if (!prev) return null;
+      return { ...prev, courseImages: prev.courseImages.filter((_, i) => i !== index) };
+    });
+  };
+  
 
   useEffect(() => {
     //강의 목록 전체 조회 api
     getCourses().then((data) => {
       const formattedCourses = data.map((course: any) => ({
-        courseId: course.id,
+        courseId: course.courseId,
         courseTitle: course.title,
-        courseMainImage: course.descriptions[0],
+        courseMainImage: course.mainImageUrl,
         courseImages: course.descriptions,
         // courseBlocks: course.blocks,
         coursePrice: course.cost,
@@ -85,43 +114,123 @@ const Out_CoursesList = () => {
       </CourseListContainer>
 
       <CourseDetailContainer>
-        <DetailRow>
-          <DetailTitle>수업이름</DetailTitle>
-          <DetailContent>{selectedCourse?.courseTitle}</DetailContent>
-        </DetailRow>
-        <DetailRow>
-          <DetailTitle>썸네일</DetailTitle>
-          <DetailContent><CourseImage src={selectedCourse?.courseMainImage}/></DetailContent>
-        </DetailRow>
-        <DetailRow>
-        <DetailTitle>상세 이미지</DetailTitle>
-          <DetailContent>
-            {selectedCourse?.courseImages.map((image, index) => (
-              <CourseImage key={index} src={image}/>
-            ))}
-          </DetailContent>
-        </DetailRow>
-        <DetailRow>
-        <DetailTitle>요일</DetailTitle>
-          <DetailContent>화요일, 수요일</DetailContent>
-        </DetailRow>
-        <DetailRow>
-          <DetailTitle>시간</DetailTitle>
-          <DetailContent>13:00 - 15:00</DetailContent>
-        </DetailRow>
-        <DetailRow>
-          <DetailTitle>학생 수</DetailTitle>
-          <DetailContent>11</DetailContent>
-        </DetailRow>
-        <DetailRow>
-          <DetailTitle>수강료</DetailTitle>
-          <DetailContent>{selectedCourse?.coursePrice}</DetailContent>
-        </DetailRow>
+        { isEditMode ? (
+          <>
+            <DetailRow>
+              <DetailTitle>수업이름</DetailTitle>
+              <DetailContent>
+                <Input
+                  type="text"
+                  name="courseTitle"
+                  value={editedCourse?.courseTitle}
+                  onChange={handleEditChange}
+                />
+              </DetailContent>
+            </DetailRow>
+            <DetailRow>
+              <DetailTitle>썸네일</DetailTitle>
+              <DetailContent>
+                <CourseImage src={editedCourse?.courseMainImage}/>
+                <PlusButton>변경</PlusButton>
+              </DetailContent>
+            </DetailRow>
+            <DetailRow>
+              <DetailTitle>상세 이미지</DetailTitle>
+              <DetailContent>
+              <Images>
+                {editedCourse?.courseImages.map((image, index) => (
+                  <ImageWrapper key={index}>
+                    <CourseImage src={image} />
+                    <DeleteImageButton onClick={() => handleDeleteImage(index)}>x</DeleteImageButton>
+                  </ImageWrapper>
+                ))}
+              </Images>
+                <PlusButton><FiPlus /></PlusButton>
+              </DetailContent>
+            </DetailRow>
+            <DetailRow>
+              <DetailTitle>요일</DetailTitle>
+              <DetailContent>
+                <Input
+                  type="text"
+                  name="courseBlocks"
+                  value="화요일, 수요일(hard)"
+                  onChange={handleEditChange}
+                />
+              </DetailContent>
+            </DetailRow>
+            <DetailRow>
+              <DetailTitle>시간</DetailTitle>
+              <DetailContent>
+                <Input
+                  type="text"
+                  name="courseBlocks"
+                  value="13:00 - 15:00(hard)"
+                  onChange={handleEditChange}
+                />
+              </DetailContent>
+            </DetailRow>
+            <DetailRow>
+              <DetailTitle>학생 수</DetailTitle>
+              <DetailContent>
+                {selectedCourse?.studentsNum}
+              </DetailContent>
+            </DetailRow>
+            <DetailRow>
+              <DetailTitle>수강료</DetailTitle>
+              <DetailContent>
+                <Input
+                  type="text"
+                  name="coursePrice"
+                  value={editedCourse?.coursePrice}
+                  onChange={handleEditChange}
+                />
+              </DetailContent>
+            </DetailRow>
+            <ButtonsContainer>
+              <Button onClick={handleEditComplete}>완료</Button>
+            </ButtonsContainer>
+          </>
+        ) : (
+          <>
+            <DetailRow>
+              <DetailTitle>수업이름</DetailTitle>
+              <DetailContent>{selectedCourse?.courseTitle}</DetailContent>
+            </DetailRow>
+            <DetailRow>
+              <DetailTitle>썸네일</DetailTitle>
+              <DetailContent><CourseImage src={selectedCourse?.courseMainImage}/></DetailContent>
+            </DetailRow>
+            <DetailRow>
+              <DetailTitle>상세 이미지</DetailTitle>
+              <DetailContent>
+                {selectedCourse?.courseImages.map((image, index) => (
+                  <CourseImage key={index} src={image}/>
+                ))}
+              </DetailContent>
+            </DetailRow>
+            <DetailRow>
+              <DetailTitle>요일</DetailTitle>
+              <DetailContent>화요일, 수요일</DetailContent>
+            </DetailRow>
+            <DetailRow> 
+              <DetailTitle>시간</DetailTitle>
+              <DetailContent>13:00 - 15:00</DetailContent>
+            </DetailRow>
+            <DetailRow>
+              <DetailTitle>학생 수</DetailTitle>
+              <DetailContent>{selectedCourse?.studentsNum}</DetailContent>
+            </DetailRow>
+            <DetailRow>
+              <DetailTitle>수강료</DetailTitle>
+              <DetailContent>{selectedCourse?.coursePrice}</DetailContent>
+            </DetailRow>
+            <ButtonsContainer>
+              <Button onClick={handleEditClick}>수정</Button>
+            </ButtonsContainer>
+          </>
+        )}
 
-        <ButtonsContainer>
-          <Button>수정</Button>
-          <Button>삭제</Button>
-        </ButtonsContainer>
       </CourseDetailContainer>
     </Wrapper>
   )
@@ -291,6 +400,7 @@ const ButtonsContainer = styled.div`
   align-items: center;
   justify-content: flex-end;
   gap: 10px;
+  margin-bottom: 20px;
 `
 
 const Button = styled.button`
@@ -307,8 +417,93 @@ const Button = styled.button`
   }
 `
 
-const CourseImage = styled.img`
-  width: 200px; 
-  height: 200px;
-  object-fit: cover;
+// const CourseImage = styled.img`
+//   width: 45%; 
+//   /* height: 200px; */
+//   object-fit: cover;
+//   object-position: center;
+// `
+
+//Editmode 일 때
+const Input = styled.input`
+  width: 100%;
+  height: 30px;
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 0.9rem;
+  outline: none;
+  box-sizing: border-box;
 `
+
+const PlusButton = styled.button`
+  justify-self: flex-end    ;
+  width: 30px;
+  height: 30px;
+  background-color: #d7d7d7;
+  margin-top: 10px;
+  border: none; 
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+
+  &:hover {
+    background-color: #636363;
+    color: #ffffff;
+  }
+`
+
+
+////
+const Images = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+  box-sizing: border-box;
+`;
+
+const ImageWrapper = styled.div`
+  position: relative;  /* ✅ 개별 이미지의 부모 요소를 기준으로 absolute 배치 */
+  display: inline-block;
+`;
+
+const CourseImage = styled.img`
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 5px;
+`;
+
+const DeleteImageButton = styled.button`
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 24px;
+  height: 24px;
+  background-color: rgba(230, 73, 73, 0.7);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: white;
+  font-weight: bold;
+
+  &:hover 
+  {
+    background-color: rgba(230, 73, 73, 1);
+  }
+`;
