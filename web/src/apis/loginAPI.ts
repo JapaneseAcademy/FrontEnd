@@ -84,3 +84,32 @@ export const register = async (name: string, phone: string, birth: string) => {
    }
 }
 
+export const editUser = async (name: string, phone: string, birth: string) => {
+   console.log("-- editUser 함수 호출 --");
+   try {
+      const response = await axios.patch(
+         `${BASE_URL}/api/v1/members/profile`,
+         {
+            name : name,
+            phone : phone,
+            birth : birth
+         },
+         {
+            headers: {
+               Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            }
+         }
+      );
+      console.log(response.data);
+      alert("회원 정보 수정이 완료되었습니다.");
+      window.location.href = "/mypage";
+   }
+   catch (error) {
+      alert("회원 정보 수정에 실패했습니다. 다시 시도해주세요.");
+      if (axios.isAxiosError(error)) {
+         console.log(error.response?.data);
+      } else {
+         console.error("Unexpected error:", error);
+      }
+   }
+}

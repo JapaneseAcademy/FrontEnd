@@ -3,7 +3,7 @@ const Out_SendMessages = () => {
 
 
   return (
-    <button>Out_SendMessages</button>
+    <div>준비중입니다.</div>
   )
 }
 
