@@ -1,13 +1,13 @@
 import styled from "styled-components";
-import FilterContainer from "./etc/FilterContainer";
 import { useState } from "react";
 import { REVIEWS_DATA } from "../../constants/example";
+import ReviewFilter from "./filters/ReviewFilter.tsx";
 
-const Out_StudentsList = () => {
+const Out_ReviewsList = () => {
 const [selectedReviewId, setSelectedStudentId] = useState<number | null>(1);
 const [currentPage, setCurrentPage] = useState(1);
 const [currentGroup, setCurrentGroup] = useState(1); // 페이지 그룹 추가
-const ItemsPerPage = 8;
+const ItemsPerPage = 10;
 const PagesPerGroup = 10; // 한 그룹당 10개의 페이지
 
 // 선택한 학생의 데이터 가져오기
@@ -31,13 +31,13 @@ const pageNumbers = Array.from(
 
 
 return (
-   <Wrapper id='admin-students-list-wrapper'>
+   <Wrapper id='admin-reviews-list-wrapper'>
 
-      <StudentListContainer id="student-list-container">
+      <StudentListContainer id="reviews-list-container">
       <Title>
          리뷰 목록
       </Title>
-      <FilterContainer />
+      <ReviewFilter />
       <ReviewsTable>
          <TableHeader>
             <TableHeaderItem>강의명</TableHeaderItem>
@@ -92,7 +92,7 @@ return (
 
       </StudentListContainer>
 
-      <StudentDetailContainer id="student-detail-container">
+      <StudentDetailContainer id="reviews-detail-container">
       <DetailRow>
          <DetailTitle>강의명</DetailTitle>
          <DetailContent>{selectedReview?.courseTitle}</DetailContent>
@@ -118,7 +118,7 @@ return (
 );
 };
 
-export default Out_StudentsList;
+export default Out_ReviewsList;
 
 // 스타일링 코드 (생략 가능)
 
@@ -244,33 +244,33 @@ background-color: ${({ isSelected }) => (isSelected ? "#e6f7ff" : "transparent")
 `;
 
 const TableItem = styled.div`
-  width: 30%;
-  display: -webkit-box;
-  -webkit-line-clamp: 2; /* 최대 2줄까지 표시 */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  word-break: break-word;
-  line-height: 1.4rem; /* 줄 높이 설정 */
-  max-height: calc(1.4rem * 2); /* 최대 2줄까지만 표시 */
+   width: 30%;
+   display: -webkit-box;
+   -webkit-line-clamp: 2; /* 최대 2줄까지 표시 */
+   -webkit-box-orient: vertical;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   word-break: break-word;
+   line-height: 1.4rem; /* 줄 높이 설정 */
+   max-height: calc(1.4rem * 2); /* 최대 2줄까지만 표시 */
 
-  &:nth-child(1) {
-    width: 20%;
-    border-right: 1px solid #e1e1e1;
-  }
-  &:nth-child(2) {
-    width: 20%;
-    border-right: 1px solid #e1e1e1;
-  }
-  &:nth-child(3) {
-    width: 40%;
-    border-right: 1px solid #e1e1e1;
-  }
-  &:nth-child(4) {
-    width: 20%;
-  }
+   &:nth-child(1) {
+      width: 20%;
+      border-right: 1px solid #e1e1e1;
+   }
+   &:nth-child(2) {
+      width: 20%;
+      border-right: 1px solid #e1e1e1;
+   }
+   &:nth-child(3) {
+      width: 40%;
+      border-right: 1px solid #e1e1e1;
+   }
+   &:nth-child(4) {
+      width: 20%;
+   }
 
-  padding: 5px;
+   padding: 5px;
 `;
 
 

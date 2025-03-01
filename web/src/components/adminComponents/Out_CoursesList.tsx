@@ -1,8 +1,8 @@
 import styled from "styled-components"
-import FilterContainer from "./etc/FilterContainer"
 import { useEffect, useRef, useState } from "react"
 import { getCourses } from "../../apis/courseAPI"
 import { FiPlus } from "react-icons/fi"
+import CourseFilter from "./filters/CourseFilter.tsx"
 
 // type courseBlock = {
 //   day: string;
@@ -109,7 +109,7 @@ const Out_CoursesList = () => {
     <Wrapper>
       <CourseListContainer id-="course-list-container"> 
         <Title>수업 목록</Title>
-        <FilterContainer/>
+        <CourseFilter />
         {/* 학생 목록 표 */}
         <CoursesTable id='courses-table'>
           <TableHeader>

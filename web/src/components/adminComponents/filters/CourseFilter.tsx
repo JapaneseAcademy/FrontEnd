@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-const FilterContainer = () => {
+const CourseFilter = () => {
   return (
     <Wrapper id="filter-container-wrapper">
       <CourseDropdown>
@@ -18,7 +18,7 @@ const FilterContainer = () => {
   )
 }
 
-export default FilterContainer
+export default CourseFilter
 
 const Wrapper = styled.div`
    width: 90%;  

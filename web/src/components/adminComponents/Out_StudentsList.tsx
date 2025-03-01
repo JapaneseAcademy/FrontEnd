@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { STUDENTS_LIST } from "../../constants/studentsList";
-import FilterContainer from "./etc/FilterContainer";
 import { useState } from "react";
+import StudentFilter from "./filters/StudentFilter.tsx";
 
 const Out_StudentsList = () => {
   const [selectedStudentId, setSelectedStudentId] = useState<number | null>(1);
@@ -46,7 +46,7 @@ const Out_StudentsList = () => {
           학생 목록
           <PlusButton>+</PlusButton>
         </Title>
-        <FilterContainer />
+        <StudentFilter />
         <StudentsTable>
           <TableHeader>
             <TableHeaderItem>이름</TableHeaderItem>
