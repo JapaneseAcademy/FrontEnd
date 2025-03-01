@@ -3,11 +3,21 @@ import { useState } from "react";
 import { REVIEWS_DATA } from "../../constants/example";
 import ReviewFilter from "./filters/ReviewFilter.tsx";
 
+type Review = {
+   reviewId: number;
+
+   courseTitle: string;
+   reviewTitle: string;
+   reviewText: string;
+   date: string;
+};
+
 const Out_ReviewsList = () => {
 const [selectedReviewId, setSelectedStudentId] = useState<number | null>(1);
 const [currentPage, setCurrentPage] = useState(1);
 const [currentGroup, setCurrentGroup] = useState(1); // 페이지 그룹 추가
-const ItemsPerPage = 10;
+const [currentReviews, setCurrentReviews] = useState(REVIEWS_DATA);
+const ItemsPerPage = 8;
 const PagesPerGroup = 10; // 한 그룹당 10개의 페이지
 
 // 선택한 학생의 데이터 가져오기
@@ -92,10 +102,18 @@ return (
 
       </StudentListContainer>
 
-      <StudentDetailContainer id="reviews-detail-container">
+      <ReviewsDetailContainer id="reviews-detail-container">
       <DetailRow>
          <DetailTitle>강의명</DetailTitle>
          <DetailContent>{selectedReview?.courseTitle}</DetailContent>
+      </DetailRow>
+      <DetailRow>
+         <DetailTitle>작성자</DetailTitle>
+         <DetailContent>todo</DetailContent>
+      </DetailRow>
+      <DetailRow>
+         <DetailTitle>작성일</DetailTitle>
+         <DetailContent>{selectedReview?.date}</DetailContent>
       </DetailRow>
       <DetailRow>
          <DetailTitle>제목</DetailTitle>
@@ -106,14 +124,18 @@ return (
          <DetailContent>{selectedReview?.reviewText}</DetailContent>
       </DetailRow>
       <DetailRow>
-         <DetailTitle>작성일</DetailTitle>
-         <DetailContent>{selectedReview?.date}</DetailContent>
+         <DetailTitle>사진</DetailTitle>
+         <DetailContent>
+         {selectedReview?.images.map((image, index) => (
+            <ReviewImage key={index} src={image} alt={`review-${index}`} />
+         ))}
+         </DetailContent>
       </DetailRow>
 
       <ButtonsContainer>
 
       </ButtonsContainer>
-      </StudentDetailContainer>
+      </ReviewsDetailContainer>
    </Wrapper>
 );
 };
@@ -191,11 +213,11 @@ justify-content: center;
 //id에 따라서 width 조절
 width: 30%;
 &:nth-child(1) {
-   width: 20%;
+   width: 10%;
    border-right: 1px solid #e1e1e1;
 }
 &:nth-child(2) {
-   width: 20%;
+   width: 30%;
    border-right: 1px solid #e1e1e1;
 }
 &:nth-child(3) {
@@ -255,11 +277,11 @@ const TableItem = styled.div`
    max-height: calc(1.4rem * 2); /* 최대 2줄까지만 표시 */
 
    &:nth-child(1) {
-      width: 20%;
+      width: 10%;
       border-right: 1px solid #e1e1e1;
    }
    &:nth-child(2) {
-      width: 20%;
+      width: 30%;
       border-right: 1px solid #e1e1e1;
    }
    &:nth-child(3) {
@@ -275,7 +297,7 @@ const TableItem = styled.div`
 
 
 
-const StudentDetailContainer = styled.div`
+const ReviewsDetailContainer = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -286,7 +308,11 @@ height: 100%;
 border-right: 1px solid #e1e1e1;
 padding-top: 20px;
 padding-bottom: 20px;
-gap: 40px;
+gap: 20px;
+
+//스크롤바
+overflow-y: auto;
+
 `
 
 const DetailRow = styled.div`
@@ -308,10 +334,18 @@ const DetailContent = styled.div`
 font-size: 0.9rem;
 border: 1px solid #e1e1e1;
 background-color: #f7f7f7;
-padding: 10px;
+padding: 5px;
 width: 80%;
 border-radius: 5px;
 `
+
+const ReviewImage = styled.img`
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 5px;
+`;
 
 
 
