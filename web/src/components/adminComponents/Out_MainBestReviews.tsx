@@ -5,11 +5,28 @@ import { REVIEWS_DATA } from "../../constants/example";
 
 const Out_StudentsList = () => {
 const [selectedReviewId, setSelectedStudentId] = useState<number | null>(1);
-
+const [currentPage, setCurrentPage] = useState(1);
+const [currentGroup, setCurrentGroup] = useState(1); // 페이지 그룹 추가
+const ItemsPerPage = 8;
+const PagesPerGroup = 10; // 한 그룹당 10개의 페이지
 
 // 선택한 학생의 데이터 가져오기
 const selectedReview = REVIEWS_DATA.find(
    (review) => review.reviewId === selectedReviewId
+);
+
+ // 페이지네이션 계산
+const totalPages = Math.ceil(REVIEWS_DATA.length / ItemsPerPage);
+const startIndex = (currentPage - 1) * ItemsPerPage;
+const endIndex = startIndex + ItemsPerPage;
+const paginatedReviews = REVIEWS_DATA.slice(startIndex, endIndex);
+
+  // 현재 페이지 그룹 계산
+  const startPage = (currentGroup - 1) * PagesPerGroup + 1;
+const endPage = Math.min(startPage + PagesPerGroup - 1, totalPages);
+const pageNumbers = Array.from(
+   { length: endPage - startPage + 1 },
+   (_, i) => startPage + i
 );
 
 
@@ -24,39 +41,61 @@ return (
       <ReviewsTable>
          <TableHeader>
             <TableHeaderItem>강의명</TableHeaderItem>
-            <TableHeaderItem>작성자</TableHeaderItem>
             <TableHeaderItem>제목</TableHeaderItem>
             <TableHeaderItem>내용</TableHeaderItem>
             <TableHeaderItem>작성일</TableHeaderItem>
          </TableHeader>
-         <TableBody>
-            {REVIEWS_DATA.map((review) => (
-            <TableRow
-               key={review.reviewId}
-               onClick={() => {
-                  setSelectedStudentId(review.reviewId);
-               }}
-               isSelected={selectedReviewId === review.reviewId}
-            >
-               <TableItem>{review.courseTitle}</TableItem>
-               <TableItem>{review.name}</TableItem>
-               <TableItem>{review.reviewTitle}</TableItem>
-               <TableItem>{review.reviewText}</TableItem>
-               <TableItem>{review.date}</TableItem>
-            </TableRow>
+         <TableBody id="review-table-body">
+            {paginatedReviews.map((review) => (
+               <TableRow id='review-row'
+                  key={review.reviewId}
+                  isSelected={review.reviewId === selectedReviewId}
+                  onClick={() => setSelectedStudentId(review.reviewId)}
+               >
+                  <TableItem>{review.courseTitle}</TableItem>
+                  <TableItem>{review.reviewTitle}</TableItem>
+                  <TableItem>{review.reviewText}</TableItem>
+                  <TableItem>{review.date}</TableItem>
+               </TableRow>
             ))}
          </TableBody>
       </ReviewsTable>
+
+      {/* 페이지네이션 */}
+      <Pagination>
+         <PageButton
+         disabled={currentGroup === 1}
+         onClick={() => setCurrentGroup((prev) => Math.max(prev - 1, 1))}
+         >
+         이전
+         </PageButton>
+         {pageNumbers.map((page) => (
+         <PageNumber
+            key={page}
+            onClick={() => setCurrentPage(page)}
+            active={currentPage === page}
+         >
+            {page}
+         </PageNumber>
+         ))}
+         <PageButton
+         disabled={endPage === totalPages}
+         onClick={() =>
+            setCurrentGroup((prev) =>
+               Math.min(prev + 1, Math.ceil(totalPages / PagesPerGroup))
+            )
+         }
+         >
+         다음
+         </PageButton>
+      </Pagination>
+
       </StudentListContainer>
 
       <StudentDetailContainer id="student-detail-container">
       <DetailRow>
          <DetailTitle>강의명</DetailTitle>
          <DetailContent>{selectedReview?.courseTitle}</DetailContent>
-      </DetailRow>
-      <DetailRow>
-         <DetailTitle>작성자</DetailTitle>
-         <DetailContent>{selectedReview?.name}</DetailContent>
       </DetailRow>
       <DetailRow>
          <DetailTitle>제목</DetailTitle>
@@ -125,7 +164,6 @@ font-size: 1.5rem;
 const ReviewsTable = styled.div`
 width: 90%;
 display: flex;
-height: 80%;
 flex-direction: column;
 align-items: center;
 justify-content: flex-start;
@@ -138,7 +176,7 @@ display: flex;
 flex-direction: row;
 align-items: center;
 justify-content: space-between;
-padding: 10px;
+padding: 10px 0;
 background-color: #d7d7d7;
 font-size: 1rem;
 font-weight: 500;
@@ -161,16 +199,11 @@ width: 30%;
    border-right: 1px solid #e1e1e1;
 }
 &:nth-child(3) {
-   width: 30%;
+   width: 40%;
    border-right: 1px solid #e1e1e1;
 }
 &:nth-child(4) {
-   width: 50%;
-   border-right: 1px solid #e1e1e1;
-
-}
-&:nth-child(5) {
-   width: 10%;
+   width: 20%;
 }
 `
 
@@ -182,9 +215,9 @@ align-items: center;
 justify-content: flex-start;
 font-size: 0.9rem;
 
-//넘어가면 스크롤 가능하도록
-overflow-y: scroll;
+
 height: 100%;
+
 ` 
 const TableRow = styled.div<{ isSelected: boolean }>`
 width: 100%;
@@ -192,53 +225,53 @@ display: flex;
 flex-direction: row;
 align-items: center;
 justify-content: space-between;
-padding-left: 10px;
-padding-top: 9px;
-padding-bottom: 9px;
+padding-top: 4px;
+padding-bottom: 4px;
 border-bottom: 1px solid #e1e1e1;
 cursor: pointer;
+font-size: 0.9rem;
 background-color: ${({ isSelected }) => (isSelected ? "#e6f7ff" : "transparent")}; 
 
 &:hover {
    background-color: ${({ isSelected }) => (isSelected ? "#cceeff" : "#f1f1f1")}; 
 }
 
+//마지막 요소는 border-bottom 없애기
+&:last-child {
+   border-bottom: none;
+}
 
 `;
 
 const TableItem = styled.div`
-width: 30%;
-display: flex;
-flex-direction: row;
-align-items: center;
-justify-content: center;
+  width: 30%;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* 최대 2줄까지 표시 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  line-height: 1.4rem; /* 줄 높이 설정 */
+  max-height: calc(1.4rem * 2); /* 최대 2줄까지만 표시 */
 
-   //id에 따라서 width 조절
-   width: 30%;
-&:nth-child(1) {
-   width: 20%;
-   border-right: 1px solid #e1e1e1;
-}
-&:nth-child(2) {
-   width: 20%;
-   border-right: 1px solid #e1e1e1;
-}
-&:nth-child(3) {
-   width: 30%;
-   border-right: 1px solid #e1e1e1;
-}
-&:nth-child(4) {
-   width: 50%;
-   border-right: 1px solid #e1e1e1;
+  &:nth-child(1) {
+    width: 20%;
+    border-right: 1px solid #e1e1e1;
+  }
+  &:nth-child(2) {
+    width: 20%;
+    border-right: 1px solid #e1e1e1;
+  }
+  &:nth-child(3) {
+    width: 40%;
+    border-right: 1px solid #e1e1e1;
+  }
+  &:nth-child(4) {
+    width: 20%;
+  }
 
-}
-&:nth-child(5) {
-   width: 10%;
-}
-
-max-width: 200px;
-
-`
+  padding: 5px;
+`;
 
 
 
@@ -289,4 +322,49 @@ flex-direction: row;
 align-items: center;
 justify-content: flex-end;
 gap: 10px;
+`
+
+
+//페이지네이션
+const Pagination = styled.div`
+width: 100%;
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+gap: 10px;
+margin-top: 20px;
+`
+
+const PageButton = styled.button`
+width: 40px;
+height: 25px;
+font-size: 12px;
+border: 1px solid #e1e1e1;
+background-color: #ffffff;
+cursor: pointer;
+&:hover {
+   background-color: #f1f1f1;
+}
+&:disabled {
+   background-color: #e1e1e1;
+   cursor: not-allowed;
+}
+
+`
+
+const PageNumber = styled.div<{ active: boolean }>`
+width: 25px;
+height: 25px;
+font-size: 12px;
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+cursor: pointer;  
+background-color: ${({ active }) => (active ? "#e6f7ff" : "transparent")};
+border: 1px solid #e1e1e1;
+&:hover {
+   background-color: ${({ active }) => (active ? "#cceeff" : "#f1f1f1")};
+}
 `
