@@ -22,7 +22,7 @@ const ReviewFilter = () => {
 export default ReviewFilter
 
 const Wrapper = styled.div`
-   width: 90%;  
+   width: 95%;  
    display: flex;
    justify-content: space-between;
    align-items: center;
