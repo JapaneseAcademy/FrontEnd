@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { HiOutlinePencilSquare } from "react-icons/hi2";
 import { getCourseReviewsByPage } from "../apis/reviewAPI";
 import { getCourseDetail } from "../apis/courseAPI";
-import { convertTags } from "../utils/utils";
+import { convertTags, numberWithCommas } from "../utils/utils";
 
 // type Review = {
 //   reviewId: string;
@@ -22,6 +22,12 @@ import { convertTags } from "../utils/utils";
 const CourseDetailPage = () => {
   const [selectedOption, setSelectedOption] = useState("detail");
   const [currentPage, setCurrentPage] = useState(1);
+
+  //강의 정보들
+  const [courseTitle, setCourseTitle] = useState<string>("");
+  const [coursePrice, setCoursePrice] = useState<number>(0);
+  const [courseMainImage, setCourseImage] = useState<string>("");
+  const [courseDetailImages, setCourseDetailImages] = useState<string[]>([]);
   const [courseTypes, setCourseTypes] = useState<string[]>([]);
   // const [currentReviews, setCurrentReviews] = useState<Review[]>([]);
 
@@ -84,12 +90,16 @@ const CourseDetailPage = () => {
       //{todo: 요일 드롭다운 세팅}
       //{todo: 시간 드롭다운 세팅}
       setCourseTypes(convertTags(data.isLive, data.isOnline, data.isRecorded));
+      setCourseTitle(data.title);
+      setCoursePrice(data.cost);
+      setCourseImage(data.mainImageUrl);
+      setCourseDetailImages(data.descriptions);
     });
 
 
     //2) 강의별 후기 API 호출(페이지 1은 미리 세팅)
     getCourseReviewsByPage(courseId, "1").then((data) => { //{todo: 페이지 수 정확하게}
-      console.log(data);
+
     }
     );
     
@@ -103,9 +113,9 @@ const CourseDetailPage = () => {
   return (
     <>
       <Wrapper>
-        <CourseImage src="/images/courseBanner/course-banner-oneshot1.png" alt="Course Image" />
-        <CourseTitle>[기초문법+회화] 원샷반</CourseTitle>
-        <CoursePrice>130,000원</CoursePrice>
+        <CourseImage src={courseMainImage} alt="Course Image" />
+        <CourseTitle>{courseTitle}</CourseTitle>
+        <CoursePrice>{numberWithCommas(coursePrice)}원</CoursePrice>
         <DropDownContainer>
           <Dropdown>
             <DropDownTitle>요일</DropDownTitle>
@@ -149,10 +159,9 @@ const CourseDetailPage = () => {
 
         <CourseDetailContainer id='course_detail_container'>
           <CourseDetailContent selected={selectedOption === "detail"}>
-            <CourseDetailImage src="/images/courseDetail/course-detail-1.png" alt="Course Image" />
-            <CourseDetailImage src="/images/courseDetail/course-detail-2.png" alt="Course Image" />
-            <CourseDetailImage src="/images/courseDetail/course-detail-3.png" alt="Course Image" />
-            <CourseDetailImage src="/images/courseDetail/course-detail-4.png" alt="Course Image" />
+            {courseDetailImages.map((image, index) => (
+              <CourseDetailImage key={index} src={image} alt="Course Detail Image" />
+            ))}
           </CourseDetailContent>
 
           <CourseDetailContent id='course_review_container' selected={selectedOption === "review"}>

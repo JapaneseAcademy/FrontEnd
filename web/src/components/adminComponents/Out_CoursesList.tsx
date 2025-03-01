@@ -117,7 +117,6 @@ const Out_CoursesList = () => {
             <TableHeaderItem id='day'>요일</TableHeaderItem>
             <TableHeaderItem id='time'>시간</TableHeaderItem>
             <TableHeaderItem id='numOfStudents'>학생 수</TableHeaderItem>
-
           </TableHeader>
           <TableBody>
             {courses.map((course) => (

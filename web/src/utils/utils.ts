@@ -6,3 +6,8 @@ export const convertTags = (isLive: boolean, isOnline: boolean, isRecorded: bool
    if (isRecorded) tags.push("현장강의");
    return tags;
 };
+
+//1000단위 콤마 추가
+export const numberWithCommas = (x: number) => {
+   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
