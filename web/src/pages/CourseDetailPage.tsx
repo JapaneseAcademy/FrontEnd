@@ -105,10 +105,6 @@ const CourseDetailPage = () => {
     
   }, [courseId]);
 
-  useEffect(() => {
-    console.log("courseTypes:", courseTypes);
-  }
-  , [courseTypes]);
 
   return (
     <>
@@ -118,17 +114,10 @@ const CourseDetailPage = () => {
         <CoursePrice>{numberWithCommas(coursePrice)}원</CoursePrice>
         <DropDownContainer>
           <Dropdown>
-            <DropDownTitle>요일</DropDownTitle>
+            <DropDownTitle>분반</DropDownTitle>
             <DropDownContent>
               <option>월수금</option>
               <option>화목토</option>
-          </DropDownContent>
-        </Dropdown>
-        <Dropdown>
-          <DropDownTitle>시간</DropDownTitle>
-          <DropDownContent>
-            <option>10:00 ~ 11:30</option>
-            <option>14:00 ~ 15:30</option>
           </DropDownContent>
         </Dropdown>
         <Dropdown>
