@@ -48,6 +48,10 @@ const CourseDetailPage = () => {
     navigate('writeReview');
   }
 
+  const handleBuyClick = () => {
+    alert("준비중입니다. 카카오톡으로 문의해주세요.")
+  }
+
 
   const reviewTexts = [
     "수업이 너무 재밌어요! 선생님도 친절하시고, 함께 공부하니까 더 즐거워요. 어쩌구저쩌구 텍스트가 넘어간다. 어쩌구저쩌구 텍스트가 넘어간다. 어쩌구저쩌구 텍스트가 넘어간다.",
@@ -191,7 +195,7 @@ const CourseDetailPage = () => {
               {/* 하단 고정 버튼 */}
       <FixedButtonContainer>
         {/* <CartButton id="cart_btn">장바구니</CartButton> */}
-        <BuyButton id="buy_btn">신청하기</BuyButton>
+        <BuyButton id="buy_btn" onClick={handleBuyClick}>신청하기</BuyButton>
       </FixedButtonContainer>
       </Wrapper>
 
