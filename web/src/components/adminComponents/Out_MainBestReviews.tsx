@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { REVIEWS_DATA } from "../../constants/example";
 import ReviewFilter from "./filters/ReviewFilter.tsx";
 import { FaRegCircleCheck } from "react-icons/fa6";
@@ -22,7 +22,10 @@ const Out_ReviewsList = () => {
    const [selectedReviewId, setSelectedStudentId] = useState<number | null>(1);
    const [currentPage, setCurrentPage] = useState(1);
    const [currentGroup, setCurrentGroup] = useState(1); // 페이지 그룹 추가
-   const [currentReviews] = useState<Review[]>(REVIEWS_DATA); // 초기 데이터 설정
+   const [currentReviews, setCurrentReviews] = useState<Review[]>(REVIEWS_DATA); // 초기 데이터 설정
+
+   const [isMainBest, setIsMainBest] = useState(false);
+   const [isCourseBest, setIsCourseBest] = useState(false);
 
    const ItemsPerPage = 8;
    const PagesPerGroup = 10; // 한 그룹당 10개의 페이지
@@ -45,6 +48,35 @@ const Out_ReviewsList = () => {
       { length: endPage - startPage + 1 },
       (_, i) => startPage + i
    );
+
+   const handleMainBestChange = () => {
+      if (confirm("메인 베스트로 설정하시겠습니까?")) {
+         //{todo: 메인 베스트로 설정 api 호출}
+
+         //성공시
+         alert("메인 베스트로 설정되었습니다.");
+         setIsMainBest(!isMainBest);
+      }
+   };
+   
+   const handleCourseBestChange = () => {
+      if (confirm("강의 베스트로 설정하시겠습니까?")) {
+         //{todo: 강의 베스트로 설정 api 호출}
+
+         //성공시
+         alert("강의 베스트로 설정되었습니다.");
+         setIsCourseBest(!isCourseBest);
+      }
+   };
+
+
+   useEffect(() => {
+      if (selectedReview) {
+         setIsMainBest(selectedReview.mainBest);
+         setIsCourseBest(selectedReview.courseBest);
+      }
+   }, [selectedReview]);
+   
 
    return (
       <Wrapper id="admin-reviews-list-wrapper">
@@ -143,8 +175,28 @@ const Out_ReviewsList = () => {
                ))}
             </DetailContent>
          </DetailRow>
+      
+         <ChoiceRow>
+            <CheckBox>
+               <input
+                  type="checkbox"
+                  id="main-best"
+                  checked={isMainBest}
+                  onChange={handleMainBestChange}
+               />
+               <label htmlFor="main-best">메인 베스트</label>
+            </CheckBox>
 
-         <ButtonsContainer></ButtonsContainer>
+            <CheckBox>
+               <input
+                  type="checkbox"
+                  id="course-best"
+                  checked={isCourseBest}
+                  onChange={handleCourseBestChange}
+               />
+               <label htmlFor="course-best">강의 베스트</label>
+            </CheckBox>
+         </ChoiceRow>
          </ReviewsDetailContainer>
       </Wrapper>
    );
@@ -374,16 +426,24 @@ const ReviewImage = styled.img`
   border-radius: 5px;
 `;
 
-
-
-const ButtonsContainer = styled.div`
+const ChoiceRow = styled.div`
 width: 85%;
 display: flex;
 flex-direction: row;
 align-items: center;
-justify-content: flex-end;
-gap: 10px;
+justify-content: space-between;
+gap: 20px;
+font-size: 0.8rem;
 `
+
+const CheckBox = styled.div`
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: flex-start;
+gap: 5px;
+`
+
 
 
 //페이지네이션
