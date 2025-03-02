@@ -67,12 +67,6 @@ const CourseDetailPage = () => {
       setCourseDetailImages(data.descriptions);
       setCourseLevel(data.level);
     });
-
-
-    //2) 강의별 후기 API 호출(페이지 1은 미리 세팅)
-    // getCourseReviewsByPage(courseInfoId, 1).then((data) => { 
-
-    // });
     
   }, [courseInfoId]);
 
@@ -165,7 +159,7 @@ const CourseDetailPage = () => {
             <ReviewContainer>
               {currentReviews.map((review) => (
                 <Reviewcard key={review.reviewId} onClick={()=>handleReviewClick(review.reviewId.toString())}>
-                  <ReviewImage src="/images/3.jpg" />
+                  <ReviewImage src={review.imageUrls[0]==null ?  "/images/no-image.png" : review.imageUrls[0] }  alt="Review Image"/>
                   <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: "5px" }}>
                     <UserAndDate>
                       <ReviewCourse>{courseTitle}</ReviewCourse>
@@ -266,19 +260,6 @@ const FixedButtonContainer = styled.div`
   z-index: 1000; 
 `;
 
-// const CartButton = styled.button`
-//   width: 45%;
-//   background-color: #ffffff;
-//   border: 1px solid #d3d3d3;
-//   padding: 10px 20px;
-//   font-size: 16px;
-//   cursor: pointer;
-
-//   &:hover {
-//     background-color: #e0e0e0;
-//   }
-// `;
-
 const BuyButton = styled.button`
   width: 90%;
   background-color: #ff8255;
@@ -358,6 +339,8 @@ const CourseDetailImage = styled.img`
   object-fit: cover;
 `;
 
+////리뷰//////
+
 const ReviewContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -392,9 +375,14 @@ const Reviewcard = styled.div`
 const ReviewImage = styled.img`
   width: 100px;
   height: 100px;
+  min-width: 100px;
+  min-height: 100px;
+  aspect-ratio: 1/1;
   margin-right: 10px;
   object-fit: cover;
-  
+  object-position: center;
+  background-color: #f1f1f1; // 이미지 로딩 전 배경색
+  border-radius: 5px;
 `;
 
 
