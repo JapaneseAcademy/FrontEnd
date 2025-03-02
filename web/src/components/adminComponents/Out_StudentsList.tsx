@@ -27,10 +27,7 @@ const Out_StudentsList = () => {
   // 저장 버튼 클릭 시 적용
   const handleSave = () => {
     if (selectedStudent) {
-      selectedStudent.name = editedStudent.name;
-      selectedStudent.birth = editedStudent.birth;
-      selectedStudent.phone = editedStudent.phone;
-      selectedStudent.class = editedStudent.class;
+      selectedStudent.notes = editedStudent.notes;
     }
 
     //{todo: 서버에 저장하는 로직 추가(api호출)}
@@ -45,12 +42,14 @@ const Out_StudentsList = () => {
         <Title>
           학생 목록
         </Title>
+
         <StudentFilter />
+
         <StudentsTable>
           <TableHeader>
             <TableHeaderItem>이름</TableHeaderItem>
             <TableHeaderItem>생년월일</TableHeaderItem>
-            <TableHeaderItem>수강현황</TableHeaderItem>
+            <TableHeaderItem>전화번호</TableHeaderItem>
           </TableHeader>
           <TableBody>
             {STUDENTS_LIST.map((student) => (
@@ -64,7 +63,7 @@ const Out_StudentsList = () => {
               >
                 <TableItem>{student.name}</TableItem>
                 <TableItem>{student.birth}</TableItem>
-                <TableItem>{student.class}</TableItem>
+                <TableItem>{student.phone}</TableItem>
               </TableRow>
             ))}
           </TableBody>
@@ -74,34 +73,26 @@ const Out_StudentsList = () => {
       <StudentDetailContainer id="student-detail-container">
         <DetailRow>
           <DetailTitle>이름</DetailTitle>
-          {isEditing ? (
-            <DetailInput value={editedStudent.name || ''} onChange={(e) => handleInputChange(e, "name")} />
-          ) : (
             <DetailContent>{selectedStudent?.name}</DetailContent>
-          )}
         </DetailRow>
         <DetailRow>
           <DetailTitle>생년월일</DetailTitle>
-          {isEditing ? (
-            <DetailInput value={editedStudent.birth || ''} onChange={(e) => handleInputChange(e, "birth")} />
-          ) : (
             <DetailContent>{selectedStudent?.birth}</DetailContent>
-          )}
         </DetailRow>
         <DetailRow>
           <DetailTitle>전화번호</DetailTitle>
-          {isEditing ? (
-            <DetailInput value={editedStudent.phone || ''} onChange={(e) => handleInputChange(e, "phone")} />
-          ) : (
             <DetailContent>{selectedStudent?.phone}</DetailContent>
-          )}
         </DetailRow>
         <DetailRow>
           <DetailTitle>수강현황</DetailTitle>
-          {isEditing ? (
-            <DetailInput value={editedStudent.class || ''} onChange={(e) => handleInputChange(e, "class")} />
-          ) : (
             <DetailContent>{selectedStudent?.class}</DetailContent>
+        </DetailRow>
+        <DetailRow>
+          <DetailTitle>특이사항</DetailTitle>
+          {isEditing ? (
+            <DetailInput value={editedStudent.notes || ''} onChange={(e) => handleInputChange(e, "notes")} />
+          ) : (
+            <DetailContent>{selectedStudent?.notes}</DetailContent>
           )}
         </DetailRow>
 
