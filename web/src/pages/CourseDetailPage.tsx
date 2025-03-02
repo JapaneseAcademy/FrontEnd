@@ -34,7 +34,7 @@ const CourseDetailPage = () => {
   const navigate = useNavigate();
   const courseInfoId = parseInt(String(useParams().courseInfoId));
 
-  const handleReviewClick = (reviewId: string) => {
+  const handleReviewClick = (reviewId: number) => {
     navigate(`/review?reviewId=${reviewId}`);
   }
 
@@ -158,7 +158,7 @@ const CourseDetailPage = () => {
               </WriteReviewBtn>
             <ReviewContainer>
               {currentReviews.map((review) => (
-                <Reviewcard key={review.reviewId} onClick={()=>handleReviewClick(review.reviewId.toString())}>
+                <Reviewcard key={review.reviewId} onClick={()=>handleReviewClick(review.reviewId)}>
                   <ReviewImage src={review.imageUrls[0]==null ?  "/images/no-image.png" : review.imageUrls[0] }  alt="Review Image"/>
                   <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: "5px" }}>
                     <UserAndDate>
