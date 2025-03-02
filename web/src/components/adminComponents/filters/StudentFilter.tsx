@@ -1,9 +1,19 @@
 import styled from "styled-components"
 
-const StudentFilter = () => {
+interface StudentFilterProps {
+   searchTerm: string;
+   onSearchChange: (term: string) => void;
+}
+
+const StudentFilter = ({ searchTerm, onSearchChange }: StudentFilterProps) => {
    return (
       <Wrapper id="filter-container-wrapper">
-         <SearchInput placeholder="이름" />
+         <SearchInput 
+         type="text"
+         placeholder="이름" 
+         value={searchTerm}
+         onChange={(e) => onSearchChange(e.target.value)} //입력할때마다 상위 컴포넌트로 검색어 전달
+         />
       </Wrapper>
    )
 }

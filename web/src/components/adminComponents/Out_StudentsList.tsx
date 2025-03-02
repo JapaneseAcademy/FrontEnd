@@ -7,8 +7,19 @@ const Out_StudentsList = () => {
   const [selectedStudentId, setSelectedStudentId] = useState<number | null>(1);
   const [isEditing, setIsEditing] = useState(false);
   const [editedStudent, setEditedStudent] = useState<any>({});
+  const [searchTerm, setSearchTerm] = useState(""); // 🔹 검색어 상태 추가
 
-  // 선택한 학생의 데이터 가져오기
+    // 🔹 검색어 변경 함수 (StudentFilter에서 입력한 값을 업데이트)
+    const handleSearchChange = (term: string) => {
+      setSearchTerm(term);
+    };
+  
+    // 🔹 검색어를 포함하는 학생들만 필터링
+    const filteredStudents = STUDENTS_LIST.filter((student) =>
+      student.name.includes(searchTerm)
+    );
+
+  // 선택한 학생의 데이터 가져오기 (필터링된 목록에서 찾음)
   const selectedStudent = STUDENTS_LIST.find(
     (student) => student.id === selectedStudentId
   );
@@ -35,6 +46,7 @@ const Out_StudentsList = () => {
     setIsEditing(false);
   };
 
+
   return (
     <Wrapper id='admin-students-list-wrapper'>
 
@@ -43,7 +55,8 @@ const Out_StudentsList = () => {
           학생 목록
         </Title>
 
-        <StudentFilter />
+         {/* 🔹 검색 기능을 위한 검색어 변경 함수 전달 */}
+        <StudentFilter searchTerm={searchTerm} onSearchChange={handleSearchChange} />
 
         <StudentsTable>
           <TableHeader>
@@ -52,14 +65,11 @@ const Out_StudentsList = () => {
             <TableHeaderItem>전화번호</TableHeaderItem>
           </TableHeader>
           <TableBody>
-            {STUDENTS_LIST.map((student) => (
+            {filteredStudents.map((student) => (
               <TableRow
                 key={student.id}
-                onClick={() => {
-                  setSelectedStudentId(student.id);
-                  setIsEditing(false);
-                }}
-                isSelected={selectedStudentId === student.id}
+                isSelected={student.id === selectedStudentId}
+                onClick={() => setSelectedStudentId(student.id)}
               >
                 <TableItem>{student.name}</TableItem>
                 <TableItem>{student.birth}</TableItem>
@@ -92,7 +102,7 @@ const Out_StudentsList = () => {
           {isEditing ? (
             <DetailInput value={editedStudent.notes || ''} onChange={(e) => handleInputChange(e, "notes")} />
           ) : (
-            <DetailContent>{selectedStudent?.notes}</DetailContent>
+            <DetailContent style={{minHeight:'150px'}}>{selectedStudent?.notes}</DetailContent>
           )}
         </DetailRow>
 
