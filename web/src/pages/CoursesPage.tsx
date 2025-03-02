@@ -11,6 +11,7 @@ type course = {
   tags: string[];
   courseTitle: string;
   courseCost: number;
+  level: string;
 }
 
 //임시 하드코딩용
@@ -23,7 +24,8 @@ const CoursesPage = () => {
         courseImage: course.mainImageUrl,
         tags: convertTags(course.isLive, course.isOnline, course.isRecorded),
         courseTitle: course.title,
-        courseCost: course.cost
+        courseCost: course.cost,
+        level: course.level
       }));
   
       setCourses(formattedCourses); // ✅ 한 번에 전체 데이터 세팅
@@ -68,6 +70,7 @@ const CoursesPage = () => {
                 courseTitle={course.courseTitle}
                 courseCost={course.courseCost}
                 Tags={course.tags}
+                level={course.level}
               />
             ))}
           </CoursesContainer>

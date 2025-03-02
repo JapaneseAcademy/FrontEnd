@@ -7,9 +7,10 @@ interface CourseProps {
    courseTitle: string;
    courseCost: number;
    Tags: string[];
+   level: string;
 }
 
-const Course = ({ courseId, courseImage, courseTitle, courseCost, Tags }: CourseProps) => {
+const Course = ({ courseId, courseImage, courseTitle, courseCost, Tags, level }: CourseProps) => {
    const navigate = useNavigate();
 
    const handleCourseClick = () => {
@@ -27,6 +28,7 @@ const Course = ({ courseId, courseImage, courseTitle, courseCost, Tags }: Course
             {Tags.map((tag) => (
                <CourseTag key={tag}>{tag}</CourseTag>
             ))}
+            <CourseTag style={{backgroundColor:'#61b58d'}}>{level}</CourseTag>
          </CourseTagContainer>
          <CourseTitle>{courseTitle}</CourseTitle>
          <CoursePrice>{formattedCost}원</CoursePrice>
