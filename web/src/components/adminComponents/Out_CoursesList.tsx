@@ -28,10 +28,20 @@ const Out_CoursesList = () => {
   const [courses, setCourses] = useState<Course[]>([])
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [editedCourse, setEditedCourse] = useState<Course | null>(null);
+  const [selectedYear, setSelectedYear] = useState<string>("2025");
+  const [selectedMonth, setSelectedMonth] = useState<string>("03");
 
   //사진 첨부 관련
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const detailImageInputRef = useRef<HTMLInputElement | null>(null);
+
+  //년/월 선택 관련
+  const handleYearChange = (year: string) => {
+    setSelectedYear(year);
+  };
+  const handleMonthChange = (month: string) => {
+    setSelectedMonth(month);
+  };
 
   // 선택한 수업의 데이터 가져오기(임시)
   const selectedCourse = courses.find(course => course.courseId == selectedCourseId);
@@ -105,17 +115,26 @@ const Out_CoursesList = () => {
     console.log("세팅 후:", courses);
   }, [courses]);
 
+  //년/월 확인
+  useEffect(() => {
+    console.log("년:", selectedYear, "월:", selectedMonth);
+  }, [selectedYear, selectedMonth]);
+
   return (
     <Wrapper>
       <CourseListContainer id-="course-list-container"> 
         <Title>수업 목록</Title>
-        <CourseFilter />
+        <CourseFilter 
+          handleYearChange={handleYearChange} 
+          handleMonthChange={handleMonthChange} 
+          selectedYear={selectedYear}
+          selectedMonth={selectedMonth}
+        />
         {/* 학생 목록 표 */}
         <CoursesTable id='courses-table'>
           <TableHeader>
             <TableHeaderItem id='courseName'>수업 이름</TableHeaderItem>
-            <TableHeaderItem id='day'>요일</TableHeaderItem>
-            <TableHeaderItem id='time'>시간</TableHeaderItem>
+            <TableHeaderItem id='class'>분반</TableHeaderItem>
             <TableHeaderItem id='numOfStudents'>학생 수</TableHeaderItem>
           </TableHeader>
           <TableBody>
@@ -184,23 +203,12 @@ const Out_CoursesList = () => {
               </DetailContent>
             </DetailRow>
             <DetailRow>
-              <DetailTitle>요일</DetailTitle>
+              <DetailTitle>분반</DetailTitle>
               <DetailContent>
                 <Input
                   type="text"
                   name="courseBlocks"
                   value="화요일, 수요일(hard)"
-                  onChange={handleEditChange}
-                />
-              </DetailContent>
-            </DetailRow>
-            <DetailRow>
-              <DetailTitle>시간</DetailTitle>
-              <DetailContent>
-                <Input
-                  type="text"
-                  name="courseBlocks"
-                  value="13:00 - 15:00(hard)"
                   onChange={handleEditChange}
                 />
               </DetailContent>
@@ -245,12 +253,8 @@ const Out_CoursesList = () => {
               </DetailContent>
             </DetailRow>
             <DetailRow>
-              <DetailTitle>요일</DetailTitle>
-              <DetailContent>화요일, 수요일</DetailContent>
-            </DetailRow>
-            <DetailRow> 
-              <DetailTitle>시간</DetailTitle>
-              <DetailContent>13:00 - 15:00</DetailContent>
+              <DetailTitle>분반</DetailTitle>
+              <DetailContent>- 월 13:00~14:00, 수 13:00~14:00</DetailContent>
             </DetailRow>
             <DetailRow>
               <DetailTitle>학생 수</DetailTitle>

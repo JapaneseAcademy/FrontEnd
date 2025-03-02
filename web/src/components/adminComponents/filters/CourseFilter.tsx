@@ -1,24 +1,44 @@
 import styled from "styled-components"
 
-const CourseFilter = () => {
-  return (
-    <Wrapper id="filter-container-wrapper">
-      <CourseDropdown>
-         <option value="all">클래스</option>
-         <option value="japanese">기초 회화 1반</option>
-         <option value="chinese">중급 회화1 반</option>
-         <option value="english">고급 회화 1반</option>
-      </CourseDropdown>
-      <SearchInput placeholder="이름" />
-      <OrderOption>
-         <option value="name">이름 순</option>
-         <option value="birth">생년월일 순</option>
-      </OrderOption>
-   </Wrapper>
-  )
+interface CourseFilterProps {
+   handleYearChange: (year: string) => void;
+   handleMonthChange: (month: string) => void;
+   selectedYear: string;
+   selectedMonth: string;
 }
+   
+   const CourseFilter = ({ handleYearChange, handleMonthChange, selectedYear, selectedMonth }: CourseFilterProps) => {
+      return (
+      <Wrapper id="filter-container-wrapper">
+         <Dropdown id="year-dropdown" value={selectedYear} onChange={(e) => handleYearChange(e.target.value)}>
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+         </Dropdown>
+         <Text>년</Text>
+         <Dropdown id="month-dropdown" value={selectedMonth} onChange={(e) => handleMonthChange(e.target.value)}>
+            <option value="01">01</option>
+            <option value="02">02</option>
+            <option value="03">03</option>
+            <option value="04">04</option>
+            <option value="05">05</option>
+            <option value="06">06</option>
+            <option value="07">07</option>
+            <option value="08">08</option>
+            <option value="09">09</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+         </Dropdown>
+         <Text>월</Text>
+      </Wrapper>
+      );
+   };
+   
+export default CourseFilter;
 
-export default CourseFilter
 
 const Wrapper = styled.div`
    width: 90%;  
@@ -28,8 +48,8 @@ const Wrapper = styled.div`
    margin-bottom: 10px;
 `
 
-const CourseDropdown = styled.select`
-   width: 50%;
+const Dropdown = styled.select`
+   width: 20%;
    height: 30px;
    padding: 5px;
    border-radius: 5px;
@@ -42,28 +62,8 @@ const CourseDropdown = styled.select`
    }
 `
 
-const SearchInput = styled.input`
-   width: 20%;
-   height: 30px;
-   padding: 5px;
-   border-radius: 5px;
-   font-size: 0.8rem;
-
-
-   &:hover {
-      background-color: #f1f1f1;
-   }
+const Text = styled.span`
+   margin: 0 5px;
+   font-size: 0.9rem;
+   color: #333;
 `
-
-const OrderOption = styled.select`
-   width: 30%;
-   height: 30px;
-   padding: 5px;
-   border-radius: 5px;
-   font-size: 0.8rem;
-
-   &:hover {
-      background-color: #f1f1f1;
-   }
-`
-
