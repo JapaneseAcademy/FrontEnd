@@ -42,6 +42,10 @@ const Out_CoursesList = () => {
   const handleMonthChange = (month: string) => {
     setSelectedMonth(month);
   };
+  const handleSearchClick = () => {
+    //{todo: 검색 api 호출}
+    console.log(selectedYear, "년", selectedMonth, "월", "검색!!");
+  };
 
   // 선택한 수업의 데이터 가져오기(임시)
   const selectedCourse = courses.find(course => course.courseId == selectedCourseId);
@@ -129,6 +133,7 @@ const Out_CoursesList = () => {
           handleMonthChange={handleMonthChange} 
           selectedYear={selectedYear}
           selectedMonth={selectedMonth}
+          handleSearchClick={handleSearchClick}
         />
         {/* 학생 목록 표 */}
         <CoursesTable id='courses-table'>
