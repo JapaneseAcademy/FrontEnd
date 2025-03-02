@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react"
 import { getCourses } from "../../apis/courseAPI"
 import { FiPlus } from "react-icons/fi"
 import CourseFilter from "./filters/CourseFilter.tsx"
+import CourseMembers from "./etc/CourseMembers.tsx"
 
 // type courseBlock = {
 //   day: string;
@@ -275,6 +276,7 @@ const Out_CoursesList = () => {
           </>
         )}
 
+      <CourseMembers />
       </CourseDetailContainer>
     </Wrapper>
   )

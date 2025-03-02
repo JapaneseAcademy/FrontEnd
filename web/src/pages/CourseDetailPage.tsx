@@ -26,7 +26,7 @@ const CourseDetailPage = () => {
   //강의 정보들
   const [courseTitle, setCourseTitle] = useState<string>("");
   const [coursePrice, setCoursePrice] = useState<number>(0);
-  const [courseMainImage, setCourseImage] = useState<string>("");
+  const [courseMainImage, setCourseMainImage] = useState<string>("");
   const [courseDetailImages, setCourseDetailImages] = useState<string[]>([]);
   const [courseTypes, setCourseTypes] = useState<string[]>([]);
   // const [currentReviews, setCurrentReviews] = useState<Review[]>([]);
@@ -96,7 +96,7 @@ const CourseDetailPage = () => {
       setCourseTypes(convertTags(data.isLive, data.isOnline, data.isRecorded));
       setCourseTitle(data.title);
       setCoursePrice(data.cost);
-      setCourseImage(data.mainImageUrl);
+      setCourseMainImage(data.mainImageUrl);
       setCourseDetailImages(data.descriptions);
     });
 
@@ -217,6 +217,7 @@ const Wrapper = styled.div`
 
 const CourseImage = styled.img`
   width: 100%;
+  aspect-ratio: 1/1;
   margin-top: 20px;
   margin-bottom: 20px;
 `;
