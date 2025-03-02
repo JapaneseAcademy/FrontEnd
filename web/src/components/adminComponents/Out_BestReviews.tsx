@@ -59,7 +59,6 @@ const Out_ReviewsList = () => {
          setIsMainBest(!isMainBest);
       }
    };
-   
    const handleCourseBestChange = () => {
       if (confirm("강의 베스트로 설정하시겠습니까?")) {
          //{todo: 강의 베스트로 설정 api 호출}
@@ -67,6 +66,15 @@ const Out_ReviewsList = () => {
          //성공시
          alert("강의 베스트로 설정되었습니다.");
          setIsCourseBest(!isCourseBest);
+      }
+   };
+   const handleHiddenChange = () => {
+      if (confirm("리뷰를 숨김 처리 하시겠습니까?")) {
+         //{todo: 리뷰 숨김 처리 api 호출}
+
+         //성공시
+         alert("리뷰가 숨김 처리 되었습니다.");
+         setIsReviewHidden(!isReviewHidden);
       }
    };
 
@@ -204,7 +212,7 @@ const Out_ReviewsList = () => {
                   type="checkbox"
                   id="review-hidden"
                   checked={isReviewHidden}
-                  onChange={() => setIsReviewHidden(!isReviewHidden)}
+                  onChange={handleHiddenChange}
                />
                <label htmlFor="review-hidden">리뷰 숨김</label>
             </CheckBox>
@@ -319,8 +327,8 @@ const TableItem = styled.div`
    overflow: hidden;
    text-overflow: ellipsis;
    word-break: break-word;
-   line-height: 1.4rem; /* 줄 높이 설정 */
-   max-height: calc(1.4rem * 2); /* 최대 2줄까지만 표시 */
+   line-height: 1.1rem; /* 줄 높이 설정 */
+   max-height: calc(1.3rem * 2); /* 최대 2줄까지만 표시 */
 
    &:nth-child(1) {
       width: 15%;
