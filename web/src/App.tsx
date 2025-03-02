@@ -20,7 +20,7 @@ import RegisterPage from './pages/RegisterPage';
 import ReviewDetailPage from './pages/ReviewDetailPage';
 import EditMyPage from './pages/EditMyPage';
 import WriteReviewPage from './pages/WriteReviewPage';
-import Out_MainBestReviews from './components/adminComponents/Out_MainBestReviews';
+import Out_MainBestReviews from './components/adminComponents/Out_BestReviews';
 
 function App() {
   const location = useLocation();

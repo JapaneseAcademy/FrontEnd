@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { REVIEWS_DATA } from "../../constants/example";
+import { REVIEWS_DATA } from "../../constants/example.ts";
 import ReviewFilter from "./filters/ReviewFilter.tsx";
 import { FaRegCircleCheck } from "react-icons/fa6";
 
@@ -26,6 +26,7 @@ const Out_ReviewsList = () => {
 
    const [isMainBest, setIsMainBest] = useState(false);
    const [isCourseBest, setIsCourseBest] = useState(false);
+   const [isReviewHidden, setIsReviewHidden] = useState(false);
 
    const ItemsPerPage = 10;
    const PagesPerGroup = 10; // 한 그룹당 10개의 페이지
@@ -195,6 +196,17 @@ const Out_ReviewsList = () => {
                   onChange={handleCourseBestChange}
                />
                <label htmlFor="course-best">강의 베스트</label>
+            </CheckBox>
+         </ChoiceRow>
+         <ChoiceRow>
+            <CheckBox>
+               <input
+                  type="checkbox"
+                  id="review-hidden"
+                  checked={isReviewHidden}
+                  onChange={() => setIsReviewHidden(!isReviewHidden)}
+               />
+               <label htmlFor="review-hidden">리뷰 숨김</label>
             </CheckBox>
          </ChoiceRow>
          </ReviewsDetailContainer>
@@ -405,7 +417,7 @@ gap: 5px;
 
 const DetailTitle = styled.div`
 width: 15%;
-font-weight: bold;
+font-weight: 500;
 font-size: 1rem;
 `
 
@@ -419,11 +431,11 @@ border-radius: 5px;
 `
 
 const ReviewImage = styled.img`
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 5px;
+   width: 120px;
+   height: 120px;
+   object-fit: cover;
+   object-position: center;
+   border-radius: 5px;
 `;
 
 const ChoiceRow = styled.div`

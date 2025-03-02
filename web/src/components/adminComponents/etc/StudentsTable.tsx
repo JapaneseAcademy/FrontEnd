@@ -117,6 +117,7 @@ const Wrapper = styled.div`
    align-items: center;
    justify-content: center;
    border: 1px solid #e0e0e0;
+   margin-bottom: 20px;
 `
 
 const TableHeader = styled.div`
@@ -157,6 +158,11 @@ const TableRow = styled.div`
    display: flex;
    justify-content: space-between;
    border-bottom: 1px solid #e0e0e0;
+
+   //마지막 row style
+   &:last-child {
+      border-bottom: none;
+   }
 `
 
 const TableItem = styled.div`

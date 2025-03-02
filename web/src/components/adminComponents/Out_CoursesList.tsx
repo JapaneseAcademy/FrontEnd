@@ -426,7 +426,7 @@ const DetailRow = styled.div`
 
 const DetailTitle = styled.div`
   width: 20%;
-  font-weight: bold;
+  font-weight: 500;
   font-size: 1rem;
   align-self: flex-start;
 `
@@ -451,7 +451,7 @@ const ButtonsContainer = styled.div`
 
 const Button = styled.button`
   width: 80px;
-  height: 30px;
+  height: 35px;
   background-color: #d7d7d7;
   border: none;
   border-radius: 5px;

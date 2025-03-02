@@ -283,7 +283,7 @@ const DetailRow = styled.div`
 
 const DetailTitle = styled.div`
   width: 20%;
-  font-weight: bold;
+  font-weight: 500;
   font-size: 1rem;
 `
 
