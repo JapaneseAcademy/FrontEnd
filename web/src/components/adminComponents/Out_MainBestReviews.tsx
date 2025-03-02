@@ -22,12 +22,12 @@ const Out_ReviewsList = () => {
    const [selectedReviewId, setSelectedStudentId] = useState<number | null>(1);
    const [currentPage, setCurrentPage] = useState(1);
    const [currentGroup, setCurrentGroup] = useState(1); // 페이지 그룹 추가
-   const [currentReviews, setCurrentReviews] = useState<Review[]>(REVIEWS_DATA); // 초기 데이터 설정
+   const [currentReviews] = useState<Review[]>(REVIEWS_DATA); // 초기 데이터 설정
 
    const [isMainBest, setIsMainBest] = useState(false);
    const [isCourseBest, setIsCourseBest] = useState(false);
 
-   const ItemsPerPage = 8;
+   const ItemsPerPage = 10;
    const PagesPerGroup = 10; // 한 그룹당 10개의 페이지
 
    // 선택한 리뷰 데이터 가져오기
@@ -99,12 +99,12 @@ const Out_ReviewsList = () => {
                   isSelected={review.reviewId === selectedReviewId}
                   onClick={() => setSelectedStudentId(review.reviewId)}
                >
-                  <TableItem>{review.courseTitle}</TableItem>
-                  <TableItem>{review.reviewTitle}</TableItem>
-                  <TableItem>{review.reviewText}</TableItem>
-                  <TableItem>{review.reviewDate}</TableItem>
-                  <TableItem>{review.mainBest?<FaRegCircleCheck color="#84cb26"/>:""}</TableItem>
-                  <TableItem>{review.courseBest?<FaRegCircleCheck color="#ff7b1c"/>:""}</TableItem>
+                  <TableItem className="courseTitle" style={{color:'#5e5e5e', fontSize:'0.8rem'}}>{review.courseTitle}</TableItem>
+                  <TableItem className="reviewTitle">{review.reviewTitle}</TableItem>
+                  <TableItem className="reviewText">{review.reviewText}</TableItem>
+                  <TableItem className="reviewDate" style={{color:'#5e5e5e', fontSize:'0.8rem'}}>{review.reviewDate}</TableItem>
+                  <TableItem className="mainBest">{review.mainBest?<FaRegCircleCheck color="#84cb26"/>:""}</TableItem>
+                  <TableItem className="courseBest">{review.courseBest?<FaRegCircleCheck color="#ff7b1c"/>:""}</TableItem>
                </TableRow>
                ))}
             </TableBody>
@@ -395,16 +395,16 @@ overflow-y: auto;
 `
 
 const DetailRow = styled.div`
-width: 85%;
+width: 90%;
 display: flex;
 flex-direction: row;
 align-items: center;
 justify-content: flex-start;
-gap: 10px;
+gap: 5px;
 `
 
 const DetailTitle = styled.div`
-width: 20%;
+width: 15%;
 font-weight: bold;
 font-size: 1rem;
 `
@@ -414,7 +414,7 @@ font-size: 0.9rem;
 border: 1px solid #e1e1e1;
 background-color: #f7f7f7;
 padding: 5px;
-width: 80%;
+width: 90%;
 border-radius: 5px;
 `
 

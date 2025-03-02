@@ -44,7 +44,6 @@ const Out_StudentsList = () => {
       <StudentListContainer id="student-list-container">
         <Title>
           학생 목록
-          <PlusButton>+</PlusButton>
         </Title>
         <StudentFilter />
         <StudentsTable>
@@ -156,22 +155,6 @@ const Title = styled.div`
   border-bottom: 1px solid #e1e1e1;
   font-weight: bold;
   font-size: 1.5rem;
-`
-
-const PlusButton = styled.button`
-  width: 30px;
-  height: 30px;
-  background-color: #d7d7d7;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-left: 10px;
-  font-size: 20px;
-
-  &:hover {
-    background-color: #636363;
-    color: #ffffff;
-  }
 `
 
 const StudentsTable = styled.div`

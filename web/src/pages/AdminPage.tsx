@@ -75,7 +75,6 @@ const AdminPage = () => {
                      <CategoryTitle><MdOutlineRateReview/>후기 관리</CategoryTitle>
                      <Items>
                         <CategoryItem isSelected={selectedItem === 'mainReviews'} onClick={() => handleItemClick('mainReviews')}>- 메인 리뷰 설정</CategoryItem>
-                        <CategoryItem isSelected={selectedItem === 'courseReviews'} onClick={() => handleItemClick('courseReviews')}>- 강의별 베스트 리뷰 설정</CategoryItem>
                      </Items>
                   </Category>
                   <Category>

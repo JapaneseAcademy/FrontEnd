@@ -103,7 +103,7 @@ const CourseDetailPage = () => {
 
     //2) 강의별 후기 API 호출(페이지 1은 미리 세팅)
     getCourseReviewsByPage(courseId, "1").then((data) => { //{todo: 페이지 수 정확하게}
-
+      console.log(data); //임시 사용
     }
     );
     
