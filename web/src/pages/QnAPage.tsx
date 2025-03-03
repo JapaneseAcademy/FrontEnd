@@ -227,6 +227,7 @@ const CategoryDropdown = styled.select`
   font-size: 15px;
   border: 1px solid #ababab;
   margin-bottom: 30px;
+  border-radius: 5px;
 
   &:hover {
     background-color: #f1f1f1;
