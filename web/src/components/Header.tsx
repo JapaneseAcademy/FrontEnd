@@ -67,7 +67,8 @@ const Header = () => {
               <IoMdContact size={30} style={{marginRight: '10px'}}/>마이페이지</MypageButton>
               <LogoutButton onClick={logoutTemp}>로그아웃</LogoutButton>
             </>
-            : <LoginButton onClick={() => { getKakaoCode(); closeSidebar(); }}>카카오로 시작하기</LoginButton> }
+            // : <LoginButton onClick={() => { getKakaoCode(); closeSidebar(); }}>카카오로 시작하기</LoginButton> }
+            : <LoginButton onClick={() => { alert("준비중입니다.") }}>카카오로 시작하기</LoginButton> }
         </ButtonContainer>
         <MenuContainer>
           <Menu onClick={() => { navigate(`/teachers`); closeSidebar(); }}>선생님 소개</Menu>
