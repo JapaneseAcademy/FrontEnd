@@ -190,8 +190,7 @@ const CourseDetailPage = () => {
                     <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: "5px" }}>
                       <ReviewCourse>{courseTitle}</ReviewCourse>
                       <ReviewTitle>
-                        {/* {review.reviewTitle} */}
-                        일이 사 오육칠 구십일이 사 오육칠 구십일이 사 오육칠 구십
+                        {review.reviewTitle}
                       </ReviewTitle>
                       <ReviewText>{review.review}</ReviewText>
                       <UserAndDate>
