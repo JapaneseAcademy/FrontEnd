@@ -6,8 +6,8 @@ const Footer = () => {
       <Title>예리한 일본어</Title>
       <Info>상호 : 예리한 일본어 | 대표자 : 이예리</Info>
       <Info>사업자등록번호 : 111-23-23498</Info>
-      <Info>주소 : 서울시 동작구 흑석로 84 중앙대학교</Info>
-      <Info>Tel: 010-1234-5678</Info>
+      <Info>주소 : 서울특별시 중구 충무로 24 남산센트럴뷰레지던스 2층 207호 </Info>
+      <Info>Tel: 010-3551-6736</Info>
       <Rights></Rights>
 
    </Wrapper>
@@ -25,8 +25,9 @@ const Wrapper = styled.div`
    background-color: #f8f8f8;
    padding: 20px;
    padding-top: 30px;
-   padding-bottom: 30px;
+   padding-bottom: 25px;
    margin-top: 50px;
+   gap: 2px;
    `
 
 const Title = styled.div`
