@@ -188,13 +188,13 @@ const CourseDetailPage = () => {
                   <Reviewcard key={review.reviewId} onClick={() => handleReviewClick(review.reviewId)}>
                     <ReviewImage src={review.imageUrls[0] ?? "/images/no-image.png"} alt="Review Image" />
                     <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: "5px" }}>
+                      <ReviewCourse>{courseTitle}</ReviewCourse>
                       <ReviewTitle>
                         {review.reviewTitle}
-                        <span>{review.createdDate}</span>
                       </ReviewTitle>
                       <ReviewText>{review.review}</ReviewText>
                       <UserAndDate>
-                        <ReviewCourse>{courseTitle}</ReviewCourse>
+                        <ReviewCourse>{review.createdDate}</ReviewCourse>
                         <ReviewCourse>{review.writer}</ReviewCourse>
                       </UserAndDate>
                     </div>
