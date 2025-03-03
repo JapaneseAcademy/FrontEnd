@@ -11,3 +11,31 @@ export const convertTags = (live: boolean, online: boolean, recorded: boolean) =
 export const numberWithCommas = (x: number) => {
    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
+//영어 요일을 한글 요일로 바꾸는 함수
+export const convertWeekday = (weekday: string) => {
+   switch (weekday) {
+      case "MONDAY":
+         return "월";
+      case "TUESDAY":
+         return "화";
+      case "WEDNESDAY":
+         return "수";
+      case "THURSDAY":
+         return "목";
+      case "FRIDAY":
+         return "금";
+      case "SATURDAY":
+         return "토";
+      case "SUNDAY":
+         return "일";
+      default:
+         return "";
+   }
+}
+
+//시,분,초까지 있는 시간을 시,분까지만 표시하는 함수
+export const convertTime = (time: string) => {
+   return time.slice(0, 5);
+}
+

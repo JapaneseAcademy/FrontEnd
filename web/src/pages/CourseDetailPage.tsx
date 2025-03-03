@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { HiOutlinePencilSquare } from "react-icons/hi2";
 import { getCourseReviewsByPage } from "../apis/reviewAPI";
 import { getCourseDetail } from "../apis/courseAPI";
-import { convertTags, numberWithCommas } from "../utils/utils";
+import { convertTags, convertTime, convertWeekday, numberWithCommas } from "../utils/utils";
 
 type Review = {
   reviewId: number;
@@ -45,7 +45,7 @@ const CourseDetailPage = () => {
   const [totalPages, setTotalPages] = useState(1); // 총 페이지 수 상태 추가
 
   //분반 정보들
-  const [timeTables, setTimeTables] = useState<timeTable[]>([]);
+  const [convertedTimeTables, setConvertedTimeTables] = useState<string[]>([]);
 
   const navigate = useNavigate();
   const courseInfoId = parseInt(String(useParams().courseInfoId));
@@ -67,6 +67,15 @@ const CourseDetailPage = () => {
     alert("준비중입니다. 카카오톡으로 문의해주세요.")
   }
 
+  //timeTables를 한 분반(timeTable)당 하나의 문자열로 바꾸는 함수
+  const convertTimeTable = (timeTables: timeTable[]) => {
+    return timeTables.map((timeTable) => 
+      timeTable.timeBlocks.map((timeBlock) => 
+        `${convertWeekday(timeBlock.weekday)} ${convertTime(timeBlock.startTime)}-${convertTime(timeBlock.endTime)}`
+      ).join(" / ") // ✅ 각 timeBlock을 문자열로 변환 후 " / "로 연결
+    );
+  };
+
 
   useEffect(() => {
     // 페이지 로드 시 상단으로 이동
@@ -74,19 +83,24 @@ const CourseDetailPage = () => {
 
     //1) 강의 상세정보 API 호출
     getCourseDetail(courseInfoId).then((data) => {
-      //{todo: 요일 드롭다운 세팅}
-      //{todo: 시간 드롭다운 세팅}
-      setCourseTypes(convertTags(data.isLive, data.isOnline, data.isRecorded));
+      setCourseTypes(convertTags(data.live, data.online, data.recorded));
       setCourseTitle(data.title);
       setCoursePrice(data.cost);
       setCourseMainImage(data.mainImageUrl);
       setCourseDetailImages(data.descriptions);
       setCourseLevel(data.level);
 
-
+      //분반 정보 세팅
+      setConvertedTimeTables(convertTimeTable(data.course.timeTables));
     });
     
   }, [courseInfoId]);
+
+  //분반 세팅 확인
+  useEffect(() => {
+    console.log(convertedTimeTables);
+  }
+  , [convertedTimeTables]);
 
   /////////리뷰관련////////
   const fetchReviews = useCallback(async (page: number) => {
@@ -109,13 +123,6 @@ const CourseDetailPage = () => {
     fetchReviews(1); // 첫 페이지의 리뷰 데이터 요청
   }, [fetchReviews]); 
 
-
-  ///////분반 관련//////
-
-
-  //분반 세팅값 확인
-
-
   return (
     <>
       <Wrapper>
@@ -130,8 +137,9 @@ const CourseDetailPage = () => {
           <Dropdown>
             <DropDownTitle>분반</DropDownTitle>
             <DropDownContent>
-              <option>월수금</option>
-              <option>화목토</option>
+              {convertedTimeTables.map((timeTable, index) => (
+                <option key={index}>{timeTable}</option>
+              ))}
           </DropDownContent>
         </Dropdown>
         <Dropdown>
