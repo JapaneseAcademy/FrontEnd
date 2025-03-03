@@ -4,6 +4,8 @@ import styled from "styled-components";
 import Course from "../components/Course";
 import { convertTags } from "../utils/utils";
 import { getCourses } from "../apis/courseAPI";
+import { useRecoilState } from "recoil";
+import { loadingAtom } from "../recoil/loadingAtom";
 
 type course = {
   courseId: string;
@@ -97,20 +99,31 @@ type course = {
 // 나중에 api 완성되면 이걸로 다시 작업
 const CoursesPage = () => {
   const [courses, setCourses] = useState<course[]>([]);
+  const [isLoading, setIsLoading] = useRecoilState<boolean>(loadingAtom);
 
   useEffect(() => {
-    getCourses().then((data) => {
-      const formattedCourses = data.map((course: any) => ({
-        courseId: course.courseInfoId,
-        courseImage: course.mainImageUrl,
-        tags: convertTags(course.live, course.online, course.recorded),
-        courseTitle: course.title,
-        courseCost: course.cost,
-        level: course.level
-      }));
-  
-      setCourses(formattedCourses); // ✅ 한 번에 전체 데이터 세팅
-    });
+    const fetchCourses = async () => {
+      setIsLoading(true); // ✅ 로딩 시작
+      try {
+        const data = await getCourses();
+        const formattedCourses = data.map((course: any) => ({
+          courseId: course.courseInfoId,
+          courseImage: course.mainImageUrl,
+          tags: convertTags(course.live, course.online, course.recorded),
+          courseTitle: course.title,
+          courseCost: course.cost,
+          level: course.level,
+        }));
+
+        setCourses(formattedCourses); // ✅ 한 번에 전체 데이터 세팅
+      } catch (error) {
+        console.error("코스 데이터를 불러오는 중 오류 발생:", error);
+      } finally {
+        setIsLoading(false); // ✅ 로딩 종료
+      }
+    };
+
+    fetchCourses();
   }, []);
   
 
@@ -140,34 +153,39 @@ const CoursesPage = () => {
     <>
       <Main>
         <Wrapper>
-          <Title>예리 센세와 함께 일본어를 배워보세요!</Title>
+          { isLoading ? (<div>로딩중...</div>) 
+          : (
+          <>
+            <Title>예리 센세와 함께 일본어를 배워보세요!</Title>
 
-          <CoursesContainer>
-            {currentCourses.map((course: course) => (
-              <Course
-                key={course.courseId}
-                courseId={course.courseId}
-                courseImage={course.courseImage}
-                courseTitle={course.courseTitle}
-                courseCost={course.courseCost}
-                Tags={course.tags}
-                level={course.level}
-              />
-            ))}
-          </CoursesContainer>
+            <CoursesContainer>
+              {currentCourses.map((course: course) => (
+                <Course
+                  key={course.courseId}
+                  courseId={course.courseId}
+                  courseImage={course.courseImage}
+                  courseTitle={course.courseTitle}
+                  courseCost={course.courseCost}
+                  Tags={course.tags}
+                  level={course.level}
+                />
+              ))}
+            </CoursesContainer>
 
-          {/* 페이지네이션 */}
-          <Pagination>
-            {Array.from({ length: totalPages }, (_, index) => (
-              <PageButton
-                key={index + 1}
-                $isActive={currentPage === index + 1}
-                onClick={() => handlePageChange(index + 1)}
-              >
-                {index + 1}
-              </PageButton>
-            ))}
-          </Pagination>
+            {/* 페이지네이션 */}
+            <Pagination>
+              {Array.from({ length: totalPages }, (_, index) => (
+                <PageButton
+                  key={index + 1}
+                  $isActive={currentPage === index + 1}
+                  onClick={() => handlePageChange(index + 1)}
+                >
+                  {index + 1}
+                </PageButton>
+              ))}
+            </Pagination>
+          </>
+          )}
         </Wrapper>
       </Main>
     </>
