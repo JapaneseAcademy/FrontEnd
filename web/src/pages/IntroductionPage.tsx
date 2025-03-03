@@ -43,7 +43,7 @@ const IntroductionPage = () => {
                 <Text id='stations'>
                   <LocationTextRow><span>2호선</span>| 을지로3가역 <br/> | 을지로4가역 </LocationTextRow>
                   <LocationTextRow><span>3호선</span>| 충무로역 </LocationTextRow>
-                  <LocationTextRow><span>4호선</span>| 명동역 </LocationTextRow>
+                  <LocationTextRow><span>4호선</span>| 명동역 <br/> | 충무로역 </LocationTextRow>
                   <LocationTextRow><span>5호선</span>| 을지로4가역 </LocationTextRow>
                 </Text>
               </LocationText>
@@ -202,8 +202,12 @@ const LocationTextRow = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+  color: #333;
+  font-size: 14px;
 
   span {
     font-weight: 600;
+    color: black;
+    font-size: 16px;
   }
 `
