@@ -17,14 +17,6 @@ type Review = {
 }
 
 
-//한 강의(월별)
-type course = {
-  courseId: string;
-  endDate: string;
-  startDate: string;
-  timeTables: timeTable[];
-}
-
 //한 분반
 type timeTable = {
   timeTableId: number; //분반 아이디
@@ -52,7 +44,8 @@ const CourseDetailPage = () => {
   const [currentReviews, setCurrentReviews] = useState<Review[]>([]);
   const [totalPages, setTotalPages] = useState(1); // 총 페이지 수 상태 추가
 
-  const [courses, setCourses] = useState<course[]>([]);
+  //분반 정보들
+  const [timeTables, setTimeTables] = useState<timeTable[]>([]);
 
   const navigate = useNavigate();
   const courseInfoId = parseInt(String(useParams().courseInfoId));
@@ -89,8 +82,8 @@ const CourseDetailPage = () => {
       setCourseMainImage(data.mainImageUrl);
       setCourseDetailImages(data.descriptions);
       setCourseLevel(data.level);
-      ///course 세팅
-      setCourses(data.courses);
+
+
     });
     
   }, [courseInfoId]);
@@ -121,10 +114,7 @@ const CourseDetailPage = () => {
 
 
   //분반 세팅값 확인
-  useEffect(() => {
-    console.log("courses: ", courses);
-  }
-  , [courses]);
+
 
   return (
     <>

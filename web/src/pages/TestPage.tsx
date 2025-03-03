@@ -1,6 +1,6 @@
 import { getMonthlyCourses } from "../apis/adminAPI";
 import { postTest } from "../apis/apiTest";
-import { getCourses } from "../apis/courseAPI";
+import { getCourseInfos } from "../apis/courseAPI";
 import { getKakaoCode } from "../apis/loginAPI";
 
 const TestPage = () => {
@@ -20,7 +20,7 @@ const TestPage = () => {
 
          <button onClick={handleLoginClick}>login</button>
 
-         <button onClick={() => getCourses()}>getCourses</button>
+         <button onClick={() => getCourseInfos()}>getCourses</button>
          
          <button onClick={() => getMonthlyCourses("2025-03-01")}>getMonthlyCourses</button>
       </>

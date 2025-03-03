@@ -20,3 +20,14 @@ export const getReviewDetail = async (reviewId: number) => {
       console.error(error);
    }
 }
+
+//메인 페이지의 베스트 후기 조회하는 api
+export const getMainBestReviews = async () => {
+   try {
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/reviews/main`);
+      console.log("[ getMainBestReviews ]", response.data);
+      return response.data;
+   } catch (error) {
+      console.error(error);
+   }
+}

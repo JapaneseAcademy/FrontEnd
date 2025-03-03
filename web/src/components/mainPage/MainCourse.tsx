@@ -10,7 +10,7 @@ interface CourseProps {
    level: string;
 }
 
-const Course = ({ courseInfoId, courseImage, courseTitle, courseCost, tags, level }: CourseProps) => {
+const MainCourse = ({ courseInfoId, courseImage, courseTitle, courseCost, tags, level }: CourseProps) => {
    const navigate = useNavigate();
 
    const handleCourseClick = () => {
@@ -36,39 +36,47 @@ const Course = ({ courseInfoId, courseImage, courseTitle, courseCost, tags, leve
    );
 };
 
-export default Course;
+export default MainCourse;
 
 const Wrapper = styled.div`
-   width: 100%;
+   cursor: pointer;
+
    display: flex;
    flex-direction: column;
-   cursor: pointer; /* 클릭 가능하게 표시 */
+   width: 300px; /* 고정 너비 */
+
+   flex-shrink: 0; /* 너비가 줄어들지 않도록 설정 */
 `;
 
 const CourseImage = styled.img`
    width: 100%;
+   /* height: 200px; */
    aspect-ratio: 1/1;
+   object-fit: cover;
+   object-position: center;
+   border-radius: 5px;
+   margin-bottom: 7px;
 `;
 
 const CourseTitle = styled.div`
-   font-size: 19px;
+   font-size: 16px;
    font-weight: 500;
-   margin-top: 10px;
+   margin-top: 7px;
 `;
 
 const CoursePrice = styled.div`
-   font-size: 16px;
-   margin-top: 5px;
+   margin-top: 2px;
+   font-size: 14px;
 `;
 
 const CourseTagContainer = styled.div`
    display: flex;
    gap: 5px;
-   margin-top: 10px;
+   margin-top: 2px;
 `;
 
 const CourseTag = styled.div`
-   padding: 5px;
+   padding: 4px;
    font-size: 11px;
    font-weight: 600;
    color: white;

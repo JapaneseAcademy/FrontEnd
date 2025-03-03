@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { useEffect, useRef, useState } from "react"
-import { getCourses } from "../../apis/courseAPI"
+import { getCourseInfos } from "../../apis/courseAPI"
 import { FiPlus } from "react-icons/fi"
 import CourseFilter from "./filters/CourseFilter.tsx"
 import CourseMembers from "./etc/CourseMembers.tsx"
@@ -97,7 +97,7 @@ const Out_CoursesList = () => {
 
   useEffect(() => {
     //강의 목록 전체 조회 api
-    getCourses().then((data) => {
+    getCourseInfos().then((data) => {
       const courseInfos = data.courseInfos;
       const formattedCourses = courseInfos.map((course: any) => ({
         courseId: course.courseId,

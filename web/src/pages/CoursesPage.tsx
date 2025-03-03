@@ -3,19 +3,12 @@ import Main from "../components/Main";
 import styled from "styled-components";
 import Course from "../components/Course";
 import { convertTags } from "../utils/utils";
-import { getCourses } from "../apis/courseAPI";
+import { getCourseInfos } from "../apis/courseAPI";
 import { useRecoilState } from "recoil";
 import { loadingAtom } from "../recoil/loadingAtom";
 import Loading from "../components/Loading";
+import { course } from "../types/types";
 
-type course = {
-  courseId: string;
-  courseImage: string;
-  tags: string[];
-  courseTitle: string;
-  courseCost: number;
-  level: string;
-}
 
 //임시 하드코딩용
 // const CoursesPage = () => {
@@ -106,9 +99,9 @@ const CoursesPage = () => {
     const fetchCourses = async () => {
       setIsLoading(true); // ✅ 로딩 시작
       try {
-        const data = await getCourses();
+        const data = await getCourseInfos();
         const formattedCourses = data.map((course: any) => ({
-          courseId: course.courseInfoId,
+          courseInfoId: course.courseInfoId,
           courseImage: course.mainImageUrl,
           tags: convertTags(course.live, course.online, course.recorded),
           courseTitle: course.title,
@@ -162,12 +155,12 @@ const CoursesPage = () => {
             <CoursesContainer>
               {currentCourses.map((course: course) => (
                 <Course
-                  key={course.courseId}
-                  courseId={course.courseId}
+                  key={course.courseInfoId}
+                  courseInfoId={course.courseInfoId}
                   courseImage={course.courseImage}
                   courseTitle={course.courseTitle}
                   courseCost={course.courseCost}
-                  Tags={course.tags}
+                  tags={course.tags}
                   level={course.level}
                 />
               ))}

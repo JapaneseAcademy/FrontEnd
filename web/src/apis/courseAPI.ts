@@ -2,8 +2,8 @@ import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 
-export const getCourses = async () => {
-   console.log("[ getCourses ]");
+export const getCourseInfos = async () => {
+   console.log("[ getCourseInfos ]");
    try{
       const response = await axios.get(`${BASE_URL}/api/v1/courses`);
       console.log(response.data);

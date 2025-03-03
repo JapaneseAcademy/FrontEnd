@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getCourses } from '../apis/courseAPI';
+import { getCourseInfos } from '../apis/courseAPI';
 
 const useCourses = () => {
    const [courses, setCourses] = useState([]);
@@ -9,7 +9,7 @@ const useCourses = () => {
    useEffect(() => {
       const fetchData = async () => {
          try {
-         const data = await getCourses();
+         const data = await getCourseInfos();
          setCourses(data);
          } catch (err) {
          setError(err as Error);

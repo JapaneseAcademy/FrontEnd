@@ -87,7 +87,7 @@ const fadeInUp = keyframes`
 `;
 
 const Banner = styled.div`
-  background-image: url('/images/academy_interior.jpg');
+  background-image: url('/images/classroom.jpeg');
   background-size: cover;
   background-position: center;
   background-blend-mode: overlay;
