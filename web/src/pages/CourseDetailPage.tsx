@@ -176,10 +176,10 @@ const CourseDetailPage = () => {
           </CourseDetailContent>
 
           <CourseDetailContent id='course_review_container' selected={selectedOption === "review"}>
-            <WriteReviewBtn onClick={handleReviewWriteClick}>
+            {/* <WriteReviewBtn onClick={handleReviewWriteClick}>
               <HiOutlinePencilSquare size={15} style={{ marginRight: "5px" }} />
               수강 후기 작성하기
-              </WriteReviewBtn>
+              </WriteReviewBtn> */}
             <ReviewContainer>
               {currentReviews.map((review) => (
                 <Reviewcard key={review.reviewId} onClick={()=>handleReviewClick(review.reviewId)}>
