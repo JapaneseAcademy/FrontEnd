@@ -1,4 +1,5 @@
 import { Route, Routes, useLocation } from 'react-router-dom';
+import styled from 'styled-components'; // ✅ styled-components 추가
 import './App.css';
 import HomePage from './pages/HomePage';
 import TeachersPage from './pages/TeachersPage';
@@ -24,42 +25,42 @@ import Out_MainBestReviews from './components/adminComponents/Out_BestReviews';
 
 function App() {
   const location = useLocation();
-
-  // AdminPage 경로를 포함한 모든 하위 경로에서도 Header와 Footer 숨김
   const isAdminPage = location.pathname.startsWith('/admin');
 
   return (
     <>
       {!isAdminPage && <Header />}
-      <Routes>
-        {/* 메인 라우트 */}
-        <Route path="/" element={<HomePage />} />
-        <Route path="/teachers" element={<TeachersPage />} />
-        <Route path="/courses" element={<CoursesPage />} />
-        <Route path="/qna" element={<QnAPage />} />
-        <Route path="/mypage" element={<MyPage />}></Route>
-        <Route path="/introduction" element={<IntroductionPage />} />
-        <Route path="/test" element={<TestPage />} />
-        <Route path="/courses/:courseInfoId" element={<CourseDetailPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/review" element={<ReviewDetailPage />} />
-        <Route path="/mypage/edit" element={<EditMyPage />}></Route>
-        <Route path="/courses/:courseId/writeReview" element={<WriteReviewPage />} />
       
+      {/* ✅ 전체 레이아웃을 감싸는 컨테이너 추가 */}
+      <AppWrapper>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/teachers" element={<TeachersPage />} />
+          <Route path="/courses" element={<CoursesPage />} />
+          <Route path="/qna" element={<QnAPage />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/introduction" element={<IntroductionPage />} />
+          <Route path="/test" element={<TestPage />} />
+          <Route path="/courses/:courseInfoId" element={<CourseDetailPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/review" element={<ReviewDetailPage />} />
+          <Route path="/mypage/edit" element={<EditMyPage />} />
+          <Route path="/courses/:courseId/writeReview" element={<WriteReviewPage />} />
+          
+          {/* Admin 라우트 */}
+          <Route path="/admin" element={<AdminPage />}>
+            <Route path="student" element={<StudentsList />} />
+            <Route path="message" element={<SendMessages />} />
+            <Route path="course" element={<CoursesList />} />
+            <Route path="mainReviews" element={<Out_MainBestReviews />} />
+            <Route path="youtube" element={<ChangeYoutube />} />
+          </Route>
 
-        {/* Admin 라우트 */}
-        <Route path="/admin" element={<AdminPage />}>
-          <Route path="student" element={<StudentsList />} />
-          <Route path="message" element={<SendMessages/>} />
-          <Route path="course" element={<CoursesList />} />
-          <Route path="course" element={<CoursesList />} />
-          <Route path="mainReviews" element={<Out_MainBestReviews />} />
-          <Route path="youtube" element={<ChangeYoutube/>} />
-        </Route>
+          {/* Not Found */}
+          <Route path="*" element={<div>Not Found</div>} />
+        </Routes>
+      </AppWrapper>
 
-        {/* Not Found */}
-        <Route path="*" element={<div>Not Found</div>} />
-      </Routes>
       {!isAdminPage && <Footer />}
       {!isAdminPage && <FloatingKakaoBtn />}
     </>
@@ -67,3 +68,16 @@ function App() {
 }
 
 export default App;
+
+// ✅ 중앙 정렬 & 최대 너비 설정
+const AppWrapper = styled.div`
+  width: 100%;
+  max-width: 480px; /* 모바일 크기 고정 */
+  margin: 0 auto; /* 가운데 정렬 */
+  min-height: 100vh; /* 최소 높이 설정 */
+  background-color: #ffffff; /* 필요하면 배경색 설정 */
+  
+  @media (max-width: 480px) {
+    width: 100%; /* 모바일에서는 100% 사용 */
+  }
+`;

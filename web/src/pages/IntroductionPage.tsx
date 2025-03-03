@@ -91,7 +91,7 @@ const Banner = styled.div`
   background-size: cover;
   background-position: center;
   background-blend-mode: overlay;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.566);
 
   height: 300px;
   width: 100%;
