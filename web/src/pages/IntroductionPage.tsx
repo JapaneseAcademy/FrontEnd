@@ -168,7 +168,7 @@ const LocationContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 40px;
-  margin-bottom: 80px;
+  margin-bottom: 50px;
 `
 
 const Location = styled.div`
