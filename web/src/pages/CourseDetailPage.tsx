@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { HiOutlinePencilSquare } from "react-icons/hi2";
@@ -96,8 +96,7 @@ const CourseDetailPage = () => {
   }, [courseInfoId]);
 
   /////////리뷰관련////////
-  // ✅ 현재 페이지의 리뷰를 가져오는 함수
-  const fetchReviews = async (page: number) => {
+  const fetchReviews = useCallback(async (page: number) => {
     try {
       const response = await getCourseReviewsByPage(courseInfoId, page);
       setCurrentReviews(response.reviews); // 받아온 리뷰 데이터 업데이트
@@ -105,7 +104,8 @@ const CourseDetailPage = () => {
     } catch (error) {
       console.error("리뷰 데이터를 불러오는 중 오류 발생:", error);
     }
-  };
+  }, [courseInfoId]); // ✅ courseInfoId가 변경될 때만 새로운 fetchReviews 함수가 생성됨
+  
   // ✅ 페이지 변경 시 새로운 리뷰 데이터를 요청
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -114,7 +114,7 @@ const CourseDetailPage = () => {
   // ✅ 페이지 로드 시 초기 데이터 가져오기
   useEffect(() => {
     fetchReviews(1); // 첫 페이지의 리뷰 데이터 요청
-  }, [courseInfoId]); 
+  }, [fetchReviews]); 
 
 
   ///////분반 관련//////
