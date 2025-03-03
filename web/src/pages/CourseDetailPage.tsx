@@ -181,22 +181,26 @@ const CourseDetailPage = () => {
               수강 후기 작성하기
               </WriteReviewBtn> */}
             <ReviewContainer>
-              {currentReviews.map((review) => (
-                <Reviewcard key={review.reviewId} onClick={()=>handleReviewClick(review.reviewId)}>
-                  <ReviewImage src={review.imageUrls[0]==null ?  "/images/no-image.png" : review.imageUrls[0] }  alt="Review Image"/>
-                  <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: "5px" }}>
-                    <UserAndDate>
-                      <ReviewCourse>{courseTitle}</ReviewCourse>
-                    </UserAndDate>
-                    <ReviewTitle>{review.reviewTitle}</ReviewTitle>
-                    <ReviewText>{review.review}</ReviewText>
-                    <UserAndDate>
-                      <ReviewCourse>{review.createdDate}</ReviewCourse>
-                      <ReviewCourse>{review.writer}</ReviewCourse>
-                    </UserAndDate>                  
+              {currentReviews.length === 0 ? (
+                <NoReview>후기가 아직 없어요!</NoReview>
+              ) : (
+                currentReviews.map((review) => (
+                  <Reviewcard key={review.reviewId} onClick={() => handleReviewClick(review.reviewId)}>
+                    <ReviewImage src={review.imageUrls[0] ?? "/images/no-image.png"} alt="Review Image" />
+                    <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: "5px" }}>
+                      <ReviewTitle>
+                        {review.reviewTitle}
+                        <span>{review.createdDate}</span>
+                      </ReviewTitle>
+                      <ReviewText>{review.review}</ReviewText>
+                      <UserAndDate>
+                        <ReviewCourse>{courseTitle}</ReviewCourse>
+                        <ReviewCourse>{review.writer}</ReviewCourse>
+                      </UserAndDate>
                     </div>
-                </Reviewcard>
-              ))}
+                  </Reviewcard>
+                ))
+              )}
             </ReviewContainer>
 
             {/* 페이지네이션 버튼 */}
@@ -528,21 +532,28 @@ const DropDownContent = styled.select`
 
 
 ///수강후기 작성하기 버튼
-const WriteReviewBtn = styled.button`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* background-color: #7f7f7f; */
-  background-color: none;
-  color: #333;
-  border: none;
-  padding: 10px 20px;
-  font-size: 13px;
-  cursor: pointer;
+// const WriteReviewBtn = styled.button`
+//   width: 100%;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   /* background-color: #7f7f7f; */
+//   background-color: none;
+//   color: #333;
+//   border: none;
+//   padding: 10px 20px;
+//   font-size: 13px;
+//   cursor: pointer;
 
-  &:hover {
-    background-color: #232323;
-    color: #fff;
-  }
+//   &:hover {
+//     background-color: #232323;
+//     color: #fff;
+//   }
+// `;
+
+const NoReview = styled.div`
+  font-size: 15px;
+  color: #707070;
+  margin-top: 40px;
+  margin-bottom: 40px;
 `;
