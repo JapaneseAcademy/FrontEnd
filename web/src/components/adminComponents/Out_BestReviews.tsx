@@ -105,7 +105,7 @@ const Out_ReviewsList = () => {
                {paginatedReviews.map((review) => (
                <TableRow
                   key={review.reviewId}
-                  isSelected={review.reviewId === selectedReviewId}
+                  $isSelected={review.reviewId === selectedReviewId}
                   onClick={() => setSelectedStudentId(review.reviewId)}
                >
                   <TableItem className="courseTitle" style={{color:'#5e5e5e', fontSize:'0.8rem'}}>{review.courseTitle}</TableItem>
@@ -134,7 +134,7 @@ const Out_ReviewsList = () => {
                <PageNumber
                key={page}
                onClick={() => setCurrentPage(page)}
-               active={currentPage === page}
+               $active={currentPage === page}
                >
                {page}
                </PageNumber>
@@ -369,29 +369,28 @@ font-size: 0.9rem;
 height: 100%;
 
 ` 
-const TableRow = styled.div<{ isSelected: boolean }>`
-width: 100%;
-display: flex;
-flex-direction: row;
-align-items: center;
-justify-content: space-between;
-padding-top: 4px;
-padding-bottom: 4px;
-border-bottom: 1px solid #e1e1e1;
-cursor: pointer;
-font-size: 0.9rem;
-background-color: ${({ isSelected }) => (isSelected ? "#e6f7ff" : "transparent")}; 
+const TableRow = styled.div<{ $isSelected: boolean }>`
+   width: 100%;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: space-between;
+   padding-top: 4px;
+   padding-bottom: 4px;
+   border-bottom: 1px solid #e1e1e1;
+   cursor: pointer;
+   font-size: 0.9rem;
+   background-color: ${({ $isSelected }) => ($isSelected ? "#e6f7ff" : "transparent")}; 
 
-&:hover {
-   background-color: ${({ isSelected }) => (isSelected ? "#cceeff" : "#f1f1f1")}; 
-}
+   &:hover {
+      background-color: ${({ $isSelected }) => ($isSelected ? "#cceeff" : "#f1f1f1")}; 
+   }
 
-//마지막 요소는 border-bottom 없애기
-&:last-child {
-   border-bottom: none;
-}
-
+   &:last-child {
+      border-bottom: none;
+   }
 `;
+
 
 
 
@@ -494,18 +493,18 @@ cursor: pointer;
 
 `
 
-const PageNumber = styled.div<{ active: boolean }>`
-width: 25px;
-height: 25px;
-font-size: 12px;
-display: flex;
-flex-direction: row;
-align-items: center;
-justify-content: center;
-cursor: pointer;  
-background-color: ${({ active }) => (active ? "#e6f7ff" : "transparent")};
-border: 1px solid #e1e1e1;
-&:hover {
-   background-color: ${({ active }) => (active ? "#cceeff" : "#f1f1f1")};
-}
-`
+const PageNumber = styled.div<{ $active: boolean }>`
+   width: 25px;
+   height: 25px;
+   font-size: 12px;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: center;
+   cursor: pointer;  
+   background-color: ${({ $active }) => ($active ? "#e6f7ff" : "transparent")};
+   border: 1px solid #e1e1e1;
+   &:hover {
+      background-color: ${({ $active }) => ($active ? "#cceeff" : "#f1f1f1")};
+   }
+`;

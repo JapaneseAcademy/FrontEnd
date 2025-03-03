@@ -161,7 +161,7 @@ const CoursesPage = () => {
             {Array.from({ length: totalPages }, (_, index) => (
               <PageButton
                 key={index + 1}
-                isActive={currentPage === index + 1}
+                $isActive={currentPage === index + 1}
                 onClick={() => handlePageChange(index + 1)}
               >
                 {index + 1}
@@ -210,16 +210,16 @@ const Pagination = styled.div`
   gap: 10px; // 페이지 버튼 간 간격
 `;
 
-const PageButton = styled.button<{ isActive: boolean }>`
+const PageButton = styled.button<{ $isActive: boolean }>`
   padding: 7px 12px;
   font-size: 16px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  background-color: ${(props) => (props.isActive ? "#402900" : "#f0f0f0")};
-  color: ${(props) => (props.isActive ? "#fff" : "#000")};
+  background-color: ${(props) => (props.$isActive ? "#402900" : "#f0f0f0")};
+  color: ${(props) => (props.$isActive ? "#fff" : "#000")};
 
   &:hover {
-    background-color: ${(props) => (props.isActive ? "#402900" : "#d3d3d3")};
+    background-color: ${(props) => (props.$isActive ? "#402900" : "#d3d3d3")};
   }
 `;

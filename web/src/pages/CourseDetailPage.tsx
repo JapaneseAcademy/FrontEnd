@@ -156,13 +156,13 @@ const CourseDetailPage = () => {
 
         <OptionContainer>
           <Option
-            selected={selectedOption === "detail"}
+            $selected={selectedOption === "detail"} // 변경된 부분
             onClick={() => handleOptionClick("detail")}
           >
             상세정보
           </Option>
           <Option
-            selected={selectedOption === "review"}
+            $selected={selectedOption === "review"} // 변경된 부분
             onClick={() => handleOptionClick("review")}
           >
             수강후기
@@ -207,7 +207,7 @@ const CourseDetailPage = () => {
                 <PageButton
                   key={number}
                   onClick={() => handlePageChange(number)}
-                  active={currentPage === number}
+                  $active={currentPage === number}
                 >
                   {number}
                 </PageButton>
@@ -308,7 +308,7 @@ const OptionContainer = styled.div`
   border: 1px solid #e1e1e1;
 `;
 
-const Option = styled.div<{ selected: boolean }>`
+const Option = styled.div<{ $selected: boolean }>`
   width: 50%;
   height: 100%;
   text-align: center;
@@ -318,9 +318,9 @@ const Option = styled.div<{ selected: boolean }>`
   padding: 10px 0;
   font-size: 16px;
   cursor: pointer;
-  color: ${({ selected }) => (selected ? "#333" : "#d3d3d3")};
-  font-weight: ${({ selected }) => (selected ? "600" : "400")};
-  border-bottom: ${({ selected }) => (selected ? "2px solid #333" : "none")};
+  color: ${({ $selected }) => ($selected ? "#333" : "#d3d3d3")};
+  font-weight: ${({ $selected }) => ($selected ? "600" : "400")};
+  border-bottom: ${({ $selected }) => ($selected ? "2px solid #333" : "none")};
 
   &:hover {
     color: #000;
@@ -330,6 +330,7 @@ const Option = styled.div<{ selected: boolean }>`
     border-right: 1px solid #d3d3d3;
   }
 `;
+
 
 
 const CourseDetailContainer = styled.div`
@@ -465,7 +466,7 @@ const Pagination = styled.div`
   gap: 10px;
 `;
 
-const PageButton = styled.button<{ active: boolean }>`
+const PageButton = styled.button<{ $active: boolean }>`
   width: 30px;
   height: 30px;
   display: flex;
@@ -473,9 +474,9 @@ const PageButton = styled.button<{ active: boolean }>`
   align-items: center;
   font-size: 14px;
   cursor: pointer;
-  border: 1px solid ${({ active }) => (active ? "#ff8255" : "#e1e1e1")};
-  background-color: ${({ active }) => (active ? "#ff8255" : "#fff")};
-  color: ${({ active }) => (active ? "#fff" : "#000")};
+  border: 1px solid ${({ $active }) => ($active ? "#ff8255" : "#e1e1e1")};
+  background-color: ${({ $active }) => ($active ? "#ff8255" : "#fff")};
+  color: ${({ $active }) => ($active ? "#fff" : "#000")};
 
   &:hover {
     background-color: #f1f1f1;
@@ -483,6 +484,7 @@ const PageButton = styled.button<{ active: boolean }>`
     color: #fff;
   }
 `;
+
 
 ///dropdown
 const DropDownContainer = styled.div`
