@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { GrHomeRounded } from "react-icons/gr";
 import { IoMenu } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
-import { getKakaoCode } from '../apis/loginAPI';
+// import { getKakaoCode } from '../apis/loginAPI';
 import { IoMdContact } from "react-icons/io"
 
 const Header = () => {

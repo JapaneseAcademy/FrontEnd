@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { HiOutlinePencilSquare } from "react-icons/hi2";
+// import { HiOutlinePencilSquare } from "react-icons/hi2";
 import { getCourseReviewsByPage } from "../apis/reviewAPI";
 import { getCourseDetail } from "../apis/courseAPI";
 import { convertTags, convertTime, convertWeekday, numberWithCommas } from "../utils/utils";
@@ -59,9 +59,9 @@ const CourseDetailPage = () => {
     setCurrentPage(1); // ✅ 탭을 변경하면 첫 페이지로 리셋
   };
   
-  const handleReviewWriteClick = () => {
-    navigate('writeReview');
-  }
+  // const handleReviewWriteClick = () => {
+  //   navigate('writeReview');
+  // }
 
   const handleBuyClick = () => {
     alert("준비중입니다. 카카오톡으로 문의해주세요.")
