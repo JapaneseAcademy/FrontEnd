@@ -6,6 +6,7 @@ import { convertTags } from "../utils/utils";
 import { getCourses } from "../apis/courseAPI";
 import { useRecoilState } from "recoil";
 import { loadingAtom } from "../recoil/loadingAtom";
+import Loading from "../components/Loading";
 
 type course = {
   courseId: string;
@@ -153,7 +154,7 @@ const CoursesPage = () => {
     <>
       <Main>
         <Wrapper>
-          { isLoading ? (<div>로딩중...</div>) 
+          { isLoading ? (<Loading />)
           : (
           <>
             <Title>예리 센세와 함께 일본어를 배워보세요!</Title>
