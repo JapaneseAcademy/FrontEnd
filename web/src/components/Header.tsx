@@ -57,7 +57,7 @@ const Header = () => {
       {/* 사이드바 오픈 시 오버레이 렌더링 */}
       {isSidebarOpen && <Overlay onClick={closeSidebar} />}
 
-      <Sidebar isOpen={isSidebarOpen} onClick={(e) => e.stopPropagation()}>        
+      <Sidebar isopen={isSidebarOpen} onClick={(e) => e.stopPropagation()}>        
         <CloseButton onClick={toggleSidebar}>×</CloseButton>
         <ButtonContainer>
           {isLogin 
@@ -226,19 +226,19 @@ const Navigator = styled.div`
 
 
 interface SidebarProps {
-  isOpen: boolean;
+  isopen: boolean;
 }
 
 const Sidebar = styled.div<SidebarProps>`
   position: fixed;
   top: 0;
-  left: ${({ isOpen }) => (isOpen ? '0' : '-300px')};
+  left: ${({ isopen }) => (isopen ? '0' : '-300px')};
   width: 300px;
   height: 100%;
   background-color: #353535;
   color: white;
   transition: left 0.3s ease;
-  box-shadow: ${({ isOpen }) => (isOpen ? '2px 0 5px rgba(0, 0, 0, 0.5)' : 'none')};
+  box-shadow: ${({ isopen }) => (isopen ? '2px 0 5px rgba(0, 0, 0, 0.5)' : 'none')};
   z-index: 9999;
 
   display: flex;

@@ -17,6 +17,27 @@ type Review = {
 }
 
 
+//한 강의(월별)
+type course = {
+  courseId: string;
+  endDate: string;
+  startDate: string;
+  timeTables: timeTable[];
+}
+
+//한 분반
+type timeTable = {
+  timeTableId: number; //분반 아이디
+  timeBlocks: timeBlock[];
+}
+//한 타임블럭(분반 내)
+type timeBlock = {
+  weekday: string;
+  startTime: string;
+  endTime: string;
+}
+
+
 const CourseDetailPage = () => {
   const [selectedOption, setSelectedOption] = useState("detail");
   const [currentPage, setCurrentPage] = useState(1);
@@ -30,6 +51,8 @@ const CourseDetailPage = () => {
   const [courseLevel, setCourseLevel] = useState<string>("");
   const [currentReviews, setCurrentReviews] = useState<Review[]>([]);
   const [totalPages, setTotalPages] = useState(1); // 총 페이지 수 상태 추가
+
+  const [courses, setCourses] = useState<course[]>([]);
 
   const navigate = useNavigate();
   const courseInfoId = parseInt(String(useParams().courseInfoId));
@@ -54,7 +77,7 @@ const CourseDetailPage = () => {
 
   useEffect(() => {
     // 페이지 로드 시 상단으로 이동
-    // window.scrollTo(0, 0); // 완성 시에 활성화. 개발할때는 불편해서 {todo}
+    window.scrollTo(0, 0); // 완성 시에 활성화. 개발할때는 불편해서 {todo}
 
     //1) 강의 상세정보 API 호출
     getCourseDetail(courseInfoId).then((data) => {
@@ -66,6 +89,8 @@ const CourseDetailPage = () => {
       setCourseMainImage(data.mainImageUrl);
       setCourseDetailImages(data.descriptions);
       setCourseLevel(data.level);
+      ///course 세팅
+      setCourses(data.courses);
     });
     
   }, [courseInfoId]);
@@ -81,24 +106,25 @@ const CourseDetailPage = () => {
       console.error("리뷰 데이터를 불러오는 중 오류 발생:", error);
     }
   };
-
   // ✅ 페이지 변경 시 새로운 리뷰 데이터를 요청
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     fetchReviews(page);
   };
-
   // ✅ 페이지 로드 시 초기 데이터 가져오기
   useEffect(() => {
     fetchReviews(1); // 첫 페이지의 리뷰 데이터 요청
   }, [courseInfoId]); 
 
-  //세팅값들 확인
-  useEffect(() => {
-    console.log("courseInfoId:", courseInfoId, "courseTitle:", courseTitle, "coursePrice:", coursePrice, "courseMainImage:", courseMainImage, "courseDetailImages:", courseDetailImages, "courseTypes:", courseTypes);
-  }
-    , [courseInfoId, courseTitle, coursePrice, courseMainImage, courseDetailImages, courseTypes]);
 
+  ///////분반 관련//////
+
+
+  //분반 세팅값 확인
+  useEffect(() => {
+    console.log("courses: ", courses);
+  }
+  , [courses]);
 
   return (
     <>
