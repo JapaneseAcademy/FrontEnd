@@ -1,9 +1,9 @@
 //boolean 값으로오는 isLive, isOnline, isRecorded 필드를 tags[] 형태로 변경(true면 Live, Online, Recorded 추가하기)
-export const convertTags = (isLive: boolean, isOnline: boolean, isRecorded: boolean) => {
+export const convertTags = (live: boolean, online: boolean, recorded: boolean) => {
    const tags = [];
-   if (isLive) tags.push("온라인");
-   if (isOnline) tags.push("동영상");
-   if (isRecorded) tags.push("현장강의");
+   if (live) tags.push("현장강의");
+   if (online) tags.push("온라인");
+   if (recorded) tags.push("동영상");
    return tags;
 };
 
