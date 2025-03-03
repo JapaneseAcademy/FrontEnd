@@ -190,7 +190,8 @@ const CourseDetailPage = () => {
                     <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: "5px" }}>
                       <ReviewCourse>{courseTitle}</ReviewCourse>
                       <ReviewTitle>
-                        {review.reviewTitle}
+                        {/* {review.reviewTitle} */}
+                        일이 사 오육칠 구십일이 사 오육칠 구십일이 사 오육칠 구십
                       </ReviewTitle>
                       <ReviewText>{review.review}</ReviewText>
                       <UserAndDate>
@@ -427,17 +428,17 @@ const ReviewTitle = styled.div`
   display: flex;
   margin-bottom: 5px;
 
-  span {
-    font-size: 12px;
-    color: #707070;
-    font-weight: 300;
-    margin-left: auto;
-  }
+  //두번째 줄까지만 표현하고, 넘어가면 ... 으로 표시
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+
 `;
 
 const ReviewText = styled.div`
   font-size: 14px;
-
+  color: #333;
   // 세 줄 까지만 표현하고, 넘어가면 ... 으로 표시
   overflow: hidden;
   text-overflow: ellipsis;

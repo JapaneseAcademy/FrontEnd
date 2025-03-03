@@ -86,17 +86,6 @@ const ReviewCard = styled.div`
    background-color: white;
    border-radius: 5px;
    padding: 20px;
-
-   #review_content {
-   font-size: 14px;
-   overflow: hidden; /* 넘치는 텍스트 숨김 */
-   display: -webkit-box; /* Flexbox와 비슷한 WebKit 기반 레이아웃 */
-   -webkit-line-clamp: 3; /* 최대 3줄까지만 표시 */
-   -webkit-box-orient: vertical; /* 블록 방향으로 텍스트 정렬 */
-   text-overflow: ellipsis; /* 넘치는 텍스트를 "..." 처리 */
-   line-height: 1.5; /* 줄 간격 조정 */
-   max-height: calc(1.5em * 3); /* 3줄 높이 제한 */
-   }
 `;
 
 const CourseTitle = styled.span`
