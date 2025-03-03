@@ -64,15 +64,6 @@ const IntroductionPage = () => {
           <Title>오시는 길 안내</Title>
           <PathImage onClick={handleLocationClick}></PathImage>
           <div id="instruction">위 이미지를 클릭하시면 네이버 지도로 이동합니다.</div>
-          {/* <KakaoMap
-            latitude={37.563887} // 위도
-            longitude={126.993645}  // 경도
-            level={3}
-            style={{ width: "100%", aspectRatio: '1/1'}}
-            markers={[
-              { latitude: 37.563887, longitude: 126.993645, title: "인현동1가 136-20" }
-            ]}
-         /> */}
 
         </Content>
       </Main>

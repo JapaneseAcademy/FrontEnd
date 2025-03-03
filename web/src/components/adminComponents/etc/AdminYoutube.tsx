@@ -8,7 +8,9 @@ interface AdminYoutubeProps {
 const AdminYoutube = ({ youtubeId }: AdminYoutubeProps) => {
    return (
       <Wrapper>
-         <YouTube videoId={youtubeId} />
+         <YouTube 
+            videoId={youtubeId}
+         />
       </Wrapper>
    )
 }

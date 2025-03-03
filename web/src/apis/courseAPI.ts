@@ -14,11 +14,10 @@ export const getCourses = async () => {
    }
 }
 
-export const getCourseDetail = async (courseId: string) => {
-   console.log("[ getCourseDetail ]");
+export const getCourseDetail = async (courseId: number) => {
    try {
       const response = await axios.get(`${BASE_URL}/api/v1/courses/${courseId}`);
-      console.log(response.data);
+      console.log("[ getCourseDetail ]", response.data);
       return response.data;
    }
    catch (error){
@@ -26,6 +25,7 @@ export const getCourseDetail = async (courseId: string) => {
    }
 }
 
+//{todo: 수정}
 export const postCourse = async () => {
    try {
       const response = await axios.post(

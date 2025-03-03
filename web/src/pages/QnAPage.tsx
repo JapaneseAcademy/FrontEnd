@@ -57,14 +57,24 @@ const QnAPage = () => {
                 수강인원이 3인 이상이면 아래를 참고해주세요! <br/><br/>
 
                 - 1회차 수업 시작시간 기준 72시간 이전: 100% 환불<br/>
-                - 1회차 수업 시작시간 기준 72시간 이내: 환불 불가
+                - 1회차 수업 시작시간 기준 72시간 이내: 환불 불가<br/><br/>
+
+                --- <br/><br/>
+                인원과 상관없는 환불 규정은 아래를 참고해주세요. 학원법 제18조 제2항을 따라 등록일 기준으로 진행됩니다.<br/>
+
+                (일자별 환불은 진행되지 않습니다) <br/><br/>
+
+                - 개강 전: 전액 환불<br/>
+                - 총 교습시간 1/3 경과 전: 납부 수강료 2/3 환불<br/>
+                - 총 교습시간의 1/2 경과 전: 납부 수강료  1/2 환불<br/>
+                - 총 교습시간의 1/2 경과 후: 환불 불가
+                
+
                 </Answer>
-                <Question>Q. [환불규정] 환불이 가능한 경우가 있나요?</Question>
-                <Answer>A. 환불은 개강일 이전까지만 가능합니다.</Answer>
-                <Question>Q. [환불규정] 환불이 가능한 경우가 있나요?</Question>
-                <Answer>A. 환불은 개강일 이전까지만 가능합니다.</Answer>
-                <Question>Q. [환불규정] 환불이 가능한 경우가 있나요?</Question>
-                <Answer>A. 환불은 개강일 이전까지만 가능합니다.</Answer>
+                <Question>Q. 반을 변경하고 싶어요.</Question>
+                <Answer>A. 마감 또는 폐강되지 않은 반에 한해 월 1회 이동 가능합니다. <br/>
+                  (단, 본인의 이동으로 해당 반이 3인 미만이 될 경우 불가합니다)
+                </Answer>                
               </AnswerContainer>
               <AnswerContainer id="apply" style={{display: selectedCategory === 'apply' ? 'flex' : 'none'}}>
                 <Question>Q. 수강신청은 언제 하나요? </Question>

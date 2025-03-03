@@ -20,6 +20,7 @@ import RegisterPage from './pages/RegisterPage';
 import ReviewDetailPage from './pages/ReviewDetailPage';
 import EditMyPage from './pages/EditMyPage';
 import WriteReviewPage from './pages/WriteReviewPage';
+import Out_MainBestReviews from './components/adminComponents/Out_BestReviews';
 
 function App() {
   const location = useLocation();
@@ -39,7 +40,7 @@ function App() {
         <Route path="/mypage" element={<MyPage />}></Route>
         <Route path="/introduction" element={<IntroductionPage />} />
         <Route path="/test" element={<TestPage />} />
-        <Route path="/courses/:courseId" element={<CourseDetailPage />} />
+        <Route path="/courses/:courseInfoId" element={<CourseDetailPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/review" element={<ReviewDetailPage />} />
         <Route path="/mypage/edit" element={<EditMyPage />}></Route>
@@ -51,6 +52,8 @@ function App() {
           <Route path="student" element={<StudentsList />} />
           <Route path="message" element={<SendMessages/>} />
           <Route path="course" element={<CoursesList />} />
+          <Route path="course" element={<CoursesList />} />
+          <Route path="mainReviews" element={<Out_MainBestReviews />} />
           <Route path="youtube" element={<ChangeYoutube/>} />
         </Route>
 

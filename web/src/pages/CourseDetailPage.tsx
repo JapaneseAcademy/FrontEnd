@@ -4,32 +4,60 @@ import styled from "styled-components";
 import { HiOutlinePencilSquare } from "react-icons/hi2";
 import { getCourseReviewsByPage } from "../apis/reviewAPI";
 import { getCourseDetail } from "../apis/courseAPI";
-import { convertTags } from "../utils/utils";
+import { convertTags, numberWithCommas } from "../utils/utils";
 
-// type Review = {
-//   reviewId: string;
+type Review = {
+  reviewId: number;
 
-//   reviewImage: string;
-//   reviewCourse: string;
-//   reviewTitle: string;
-//   reviewText: string;
-//   reviewDate: string;
-//   reviewName: string;
-//   isAnonymous: boolean;
-// }
+  imageUrls: string[];
+  review: string;
+  writer: string;
+  createdDate: string;
+  reviewTitle: string;
+}
+
+
+//한 강의(월별)
+type course = {
+  courseId: string;
+  endDate: string;
+  startDate: string;
+  timeTables: timeTable[];
+}
+
+//한 분반
+type timeTable = {
+  timeTableId: number; //분반 아이디
+  timeBlocks: timeBlock[];
+}
+//한 타임블럭(분반 내)
+type timeBlock = {
+  weekday: string;
+  startTime: string;
+  endTime: string;
+}
 
 
 const CourseDetailPage = () => {
   const [selectedOption, setSelectedOption] = useState("detail");
   const [currentPage, setCurrentPage] = useState(1);
+
+  //강의 정보들
+  const [courseTitle, setCourseTitle] = useState<string>("");
+  const [coursePrice, setCoursePrice] = useState<number>(0);
+  const [courseMainImage, setCourseMainImage] = useState<string>("");
+  const [courseDetailImages, setCourseDetailImages] = useState<string[]>([]);
   const [courseTypes, setCourseTypes] = useState<string[]>([]);
-  // const [currentReviews, setCurrentReviews] = useState<Review[]>([]);
+  const [courseLevel, setCourseLevel] = useState<string>("");
+  const [currentReviews, setCurrentReviews] = useState<Review[]>([]);
+  const [totalPages, setTotalPages] = useState(1); // 총 페이지 수 상태 추가
 
-  const reviewsPerPage = 5; // ✅ 한 페이지당 리뷰 개수
+  const [courses, setCourses] = useState<course[]>([]);
+
   const navigate = useNavigate();
-  const courseId = String(useParams().courseId);
+  const courseInfoId = parseInt(String(useParams().courseInfoId));
 
-  const handleReviewClick = (reviewId: string) => {
+  const handleReviewClick = (reviewId: number) => {
     navigate(`/review?reviewId=${reviewId}`);
   }
 
@@ -42,83 +70,78 @@ const CourseDetailPage = () => {
     navigate('writeReview');
   }
 
+  const handleBuyClick = () => {
+    alert("준비중입니다. 카카오톡으로 문의해주세요.")
+  }
 
-  const reviewTexts = [
-    "수업이 너무 재밌어요! 선생님도 친절하시고, 함께 공부하니까 더 즐거워요. 어쩌구저쩌구 텍스트가 넘어간다. 어쩌구저쩌구 텍스트가 넘어간다. 어쩌구저쩌구 텍스트가 넘어간다.",
-    "강의가 체계적이고 이해하기 쉬워요. 강력 추천합니다!",
-    "처음엔 어려웠는데 선생님 설명 덕분에 일본어가 재미있어졌어요!",
-    "수업 분위기가 좋아서 부담 없이 공부할 수 있었어요!",
-    "친구랑 같이 수강했는데 너무 유익했어요. 다음에도 듣고 싶어요!",
-    "문법 설명이 자세하고 실전 연습도 많아서 실력이 많이 늘었어요.",
-    "온라인 강의지만 정말 오프라인처럼 생생한 수업이에요!",
-    "교재와 함께 진행되는 방식이 좋아서 복습하기 편했어요.",
-    "발음 교정이 특히 유익했어요. 일본어 발음이 많이 개선됐어요.",
-    "자주 틀리는 부분을 정확하게 짚어주셔서 도움이 됐어요.",
-    "선생님이 학생들을 정말 잘 챙겨주셔서 만족스러웠어요!",
-    "진짜 후회 없는 선택! 일본어 기초 확실히 다질 수 있었어요!",
-  ];
-  
-  const reviews = Array.from({ length: 12 }, (_, i) => ({
-    id: i + 1,
-    user: `user${i + 1}`,
-    date: `2023.12.${String(i + 1).padStart(2, "0")}`,
-    text: reviewTexts[i % reviewTexts.length], // ✅ 리스트에서 랜덤한 리뷰 내용 사용
-  }));
-  
-
-  // ✅ 현재 페이지의 리뷰만 표시
-  const indexOfLastReview = currentPage * reviewsPerPage;
-  const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
-  const currentReviews = reviews.slice(indexOfFirstReview, indexOfLastReview);
-
-  // ✅ 페이지 번호 생성
-  const totalPages = Math.ceil(reviews.length / reviewsPerPage);
-  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   useEffect(() => {
     // 페이지 로드 시 상단으로 이동
-    // window.scrollTo(0, 0); // 완성 시에 활성화. 개발할때는 불편해서 {todo}
+    window.scrollTo(0, 0); // 완성 시에 활성화. 개발할때는 불편해서 {todo}
 
     //1) 강의 상세정보 API 호출
-    getCourseDetail(courseId).then((data) => {
+    getCourseDetail(courseInfoId).then((data) => {
       //{todo: 요일 드롭다운 세팅}
       //{todo: 시간 드롭다운 세팅}
       setCourseTypes(convertTags(data.isLive, data.isOnline, data.isRecorded));
+      setCourseTitle(data.title);
+      setCoursePrice(data.cost);
+      setCourseMainImage(data.mainImageUrl);
+      setCourseDetailImages(data.descriptions);
+      setCourseLevel(data.level);
+      ///course 세팅
+      setCourses(data.courses);
     });
-
-
-    //2) 강의별 후기 API 호출(페이지 1은 미리 세팅)
-    getCourseReviewsByPage(courseId, "1").then((data) => { //{todo: 페이지 수 정확하게}
-      console.log(data);
-    }
-    );
     
-  }, [courseId]);
+  }, [courseInfoId]);
 
+  /////////리뷰관련////////
+  // ✅ 현재 페이지의 리뷰를 가져오는 함수
+  const fetchReviews = async (page: number) => {
+    try {
+      const response = await getCourseReviewsByPage(courseInfoId, page);
+      setCurrentReviews(response.reviews); // 받아온 리뷰 데이터 업데이트
+      setTotalPages(response.totalPage); // 총 페이지 수 업데이트 (백엔드에서 제공)
+    } catch (error) {
+      console.error("리뷰 데이터를 불러오는 중 오류 발생:", error);
+    }
+  };
+  // ✅ 페이지 변경 시 새로운 리뷰 데이터를 요청
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    fetchReviews(page);
+  };
+  // ✅ 페이지 로드 시 초기 데이터 가져오기
   useEffect(() => {
-    console.log("courseTypes:", courseTypes);
+    fetchReviews(1); // 첫 페이지의 리뷰 데이터 요청
+  }, [courseInfoId]); 
+
+
+  ///////분반 관련//////
+
+
+  //분반 세팅값 확인
+  useEffect(() => {
+    console.log("courses: ", courses);
   }
-  , [courseTypes]);
+  , [courses]);
 
   return (
     <>
       <Wrapper>
-        <CourseImage src="/images/courseBanner/course-banner-oneshot1.png" alt="Course Image" />
-        <CourseTitle>[기초문법+회화] 원샷반</CourseTitle>
-        <CoursePrice>130,000원</CoursePrice>
+        <CourseImage src={courseMainImage} alt="Course Image" />
+        <CourseTitle>{courseTitle}</CourseTitle>
+        <CoursePrice>{numberWithCommas(coursePrice)}원</CoursePrice>
         <DropDownContainer>
           <Dropdown>
-            <DropDownTitle>요일</DropDownTitle>
+            <DropDownTitle>난이도</DropDownTitle>
+            <Tag>{courseLevel}</Tag>
+          </Dropdown>
+          <Dropdown>
+            <DropDownTitle>분반</DropDownTitle>
             <DropDownContent>
               <option>월수금</option>
               <option>화목토</option>
-          </DropDownContent>
-        </Dropdown>
-        <Dropdown>
-          <DropDownTitle>시간</DropDownTitle>
-          <DropDownContent>
-            <option>10:00 ~ 11:30</option>
-            <option>14:00 ~ 15:30</option>
           </DropDownContent>
         </Dropdown>
         <Dropdown>
@@ -149,10 +172,9 @@ const CourseDetailPage = () => {
 
         <CourseDetailContainer id='course_detail_container'>
           <CourseDetailContent selected={selectedOption === "detail"}>
-            <CourseDetailImage src="/images/courseDetail/course-detail-1.png" alt="Course Image" />
-            <CourseDetailImage src="/images/courseDetail/course-detail-2.png" alt="Course Image" />
-            <CourseDetailImage src="/images/courseDetail/course-detail-3.png" alt="Course Image" />
-            <CourseDetailImage src="/images/courseDetail/course-detail-4.png" alt="Course Image" />
+            {courseDetailImages.map((image, index) => (
+              <CourseDetailImage key={index} src={image} alt="Course Detail Image" />
+            ))}
           </CourseDetailContent>
 
           <CourseDetailContent id='course_review_container' selected={selectedOption === "review"}>
@@ -162,17 +184,17 @@ const CourseDetailPage = () => {
               </WriteReviewBtn>
             <ReviewContainer>
               {currentReviews.map((review) => (
-                <Reviewcard key={review.id} onClick={()=>handleReviewClick(review.id.toString())}>
-                  <ReviewImage src="/images/3.jpg" />
+                <Reviewcard key={review.reviewId} onClick={()=>handleReviewClick(review.reviewId)}>
+                  <ReviewImage src={review.imageUrls[0]==null ?  "/images/no-image.png" : review.imageUrls[0] }  alt="Review Image"/>
                   <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: "5px" }}>
                     <UserAndDate>
-                      <ReviewCourse>원샷반1</ReviewCourse>
+                      <ReviewCourse>{courseTitle}</ReviewCourse>
                     </UserAndDate>
-                    <ReviewTitle>세계 최고의 일본어 강의!</ReviewTitle>
-                    <ReviewText>{review.text}</ReviewText>
+                    <ReviewTitle>{review.reviewTitle}</ReviewTitle>
+                    <ReviewText>{review.review}</ReviewText>
                     <UserAndDate>
-                      <ReviewCourse>{review.date}</ReviewCourse>
-                      <ReviewCourse>sb31******</ReviewCourse>
+                      <ReviewCourse>{review.createdDate}</ReviewCourse>
+                      <ReviewCourse>{review.writer}</ReviewCourse>
                     </UserAndDate>                  
                     </div>
                 </Reviewcard>
@@ -181,8 +203,12 @@ const CourseDetailPage = () => {
 
             {/* 페이지네이션 버튼 */}
             <Pagination>
-              {pageNumbers.map((number) => (
-                <PageButton key={number} onClick={() => setCurrentPage(number)} active={currentPage === number}>
+              {Array.from({ length: totalPages }, (_, index) => index + 1).map((number) => (
+                <PageButton
+                  key={number}
+                  onClick={() => handlePageChange(number)}
+                  active={currentPage === number}
+                >
                   {number}
                 </PageButton>
               ))}
@@ -193,7 +219,7 @@ const CourseDetailPage = () => {
               {/* 하단 고정 버튼 */}
       <FixedButtonContainer>
         {/* <CartButton id="cart_btn">장바구니</CartButton> */}
-        <BuyButton id="buy_btn">신청하기</BuyButton>
+        <BuyButton id="buy_btn" onClick={handleBuyClick}>신청하기</BuyButton>
       </FixedButtonContainer>
       </Wrapper>
 
@@ -215,6 +241,7 @@ const Wrapper = styled.div`
 
 const CourseImage = styled.img`
   width: 100%;
+  aspect-ratio: 1/1;
   margin-top: 20px;
   margin-bottom: 20px;
 `;
@@ -223,6 +250,19 @@ const CourseTitle = styled.div`
   width: 90%;
   font-size: 18px;
   font-weight: 500;
+`;
+
+const Tag = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  width: 40px;
+  height: 25px;
+  font-weight: 300;
+  color: white;
+  background-color: #61b58d;
+  border-radius: 5px;
 `;
 
 const CoursePrice = styled.div`
@@ -245,19 +285,6 @@ const FixedButtonContainer = styled.div`
   box-shadow: 0px -4px 15px rgba(0, 0, 0, 0.05);
   z-index: 1000; 
 `;
-
-// const CartButton = styled.button`
-//   width: 45%;
-//   background-color: #ffffff;
-//   border: 1px solid #d3d3d3;
-//   padding: 10px 20px;
-//   font-size: 16px;
-//   cursor: pointer;
-
-//   &:hover {
-//     background-color: #e0e0e0;
-//   }
-// `;
 
 const BuyButton = styled.button`
   width: 90%;
@@ -338,6 +365,8 @@ const CourseDetailImage = styled.img`
   object-fit: cover;
 `;
 
+////리뷰//////
+
 const ReviewContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -372,9 +401,14 @@ const Reviewcard = styled.div`
 const ReviewImage = styled.img`
   width: 100px;
   height: 100px;
+  min-width: 100px;
+  min-height: 100px;
+  aspect-ratio: 1/1;
   margin-right: 10px;
   object-fit: cover;
-  
+  object-position: center;
+  background-color: #f1f1f1; // 이미지 로딩 전 배경색
+  border-radius: 5px;
 `;
 
 

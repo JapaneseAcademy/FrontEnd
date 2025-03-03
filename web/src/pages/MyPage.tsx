@@ -52,6 +52,15 @@ const MyPage = () => {
       payment: '간편결제',
       image: '/images/courseBanner/course-banner-oneshot3.png'
     },
+    {
+      id: 4,
+      title: '예리한 일본어 4급',
+      date: '2025.02.25',
+      type: '실시간 온라인',
+      price: '100,000원',
+      payment: '카드결제',
+      image: '/images/courseBanner/course-banner-oneshot3.png'
+    }
   ]
 
   useEffect(() => {
