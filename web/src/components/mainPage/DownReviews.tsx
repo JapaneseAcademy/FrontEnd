@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 import { getMainBestReviews } from "../../apis/reviewAPI";
+import { useNavigate } from "react-router-dom";
 
 type MainReview = {
    reviewId: number;
@@ -15,6 +16,11 @@ type MainReview = {
 
 const DownReviews = () => {
    const [mainBestReviews, setMainBestReviews] = useState<MainReview[]>([]);
+   const navigate = useNavigate();
+
+   const handleReviewClick = (reviewId: number) => {
+      navigate(`/review?reviewId=${reviewId}`);
+    }
 
    useEffect(() => {
       getMainBestReviews().then((data) => {
@@ -30,7 +36,7 @@ const DownReviews = () => {
    return (
       <Wrapper id='down-reviews-wrapper'>
       {mainBestReviews.map((review) => (
-         <ReviewCard key={review.reviewId}>
+         <ReviewCard key={review.reviewId} onClick={() => handleReviewClick(review.reviewId)}>
             <CourseTitle>{review.courseTitle}</CourseTitle>
             <ReviewTitle>{review.reviewTitle}</ReviewTitle>
             <ReviewImages>
@@ -86,6 +92,7 @@ const ReviewCard = styled.div`
    background-color: white;
    border-radius: 5px;
    padding: 20px;
+   cursor: pointer;
 `;
 
 const CourseTitle = styled.span`

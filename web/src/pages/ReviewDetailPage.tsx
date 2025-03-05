@@ -21,7 +21,7 @@ const ReviewDetailPage = () => {
    }
 
    useEffect(() => {
-      console.log(reviewId);
+      window.scrollTo(0, 0);
       getReviewDetail(reviewId).then((data: ReviewDetail) => {
          setReviewDetail(data);
       }

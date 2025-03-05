@@ -10,7 +10,6 @@ import DownReviews from '../components/mainPage/DownReviews';
 const HomePage = () => {
   const navigate = useNavigate();
 
-
   useEffect(() => {
     // window.scrollTo(0, 0); // 화면 맨 위로 이동 -> 나중에 개발 다 하고 활성화
     

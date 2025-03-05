@@ -121,7 +121,7 @@ const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Pretendard';
+  font-family: 'NPSfontRegular';
   cursor: pointer;
   font-size: 35px;
 
@@ -137,7 +137,7 @@ const Title = styled.div`
 
   /* mobile 규격 */
   @media screen and (max-width: 540px) {
-    font-size: 20px;
+    font-size: 23px;
   }
 `;
 
