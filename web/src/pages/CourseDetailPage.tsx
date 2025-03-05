@@ -286,6 +286,14 @@ const FixedButtonContainer = styled.div`
   padding: 10px 0;
   box-shadow: 0px -4px 15px rgba(0, 0, 0, 0.05);
   z-index: 1000; 
+
+     //미디어쿼리 - 모바일 사이즈 이상으로는 사이즈 고정되게
+  @media (min-width: 480px) {
+    width: 480px;
+    //가운데정렬
+    left: 50%;
+    transform: translateX(-50%); //가운데 정렬
+  }
 `;
 
 const BuyButton = styled.button`

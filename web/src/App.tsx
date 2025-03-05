@@ -30,24 +30,10 @@ function App() {
   return (
     <>
       {!isAdminPage && <Header />}
-      
-      {/* ✅ 전체 레이아웃을 감싸는 컨테이너 추가 */}
-      <AppWrapper>
+
+      {/* ✅ Admin 페이지가 아닐 때만 AppWrapper 적용 */}
+      {isAdminPage ? (
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/teachers" element={<TeachersPage />} />
-          <Route path="/courses" element={<CoursesPage />} />
-          <Route path="/qna" element={<QnAPage />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/introduction" element={<IntroductionPage />} />
-          <Route path="/test" element={<TestPage />} />
-          <Route path="/courses/:courseInfoId" element={<CourseDetailPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/review" element={<ReviewDetailPage />} />
-          <Route path="/mypage/edit" element={<EditMyPage />} />
-          <Route path="/courses/:courseId/writeReview" element={<WriteReviewPage />} />
-          
-          {/* Admin 라우트 */}
           <Route path="/admin" element={<AdminPage />}>
             <Route path="student" element={<StudentsList />} />
             <Route path="message" element={<SendMessages />} />
@@ -55,17 +41,36 @@ function App() {
             <Route path="mainReviews" element={<Out_MainBestReviews />} />
             <Route path="youtube" element={<ChangeYoutube />} />
           </Route>
-
-          {/* Not Found */}
           <Route path="*" element={<div>Not Found</div>} />
         </Routes>
-      </AppWrapper>
+      ) : (
+        <AppWrapper>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/teachers" element={<TeachersPage />} />
+            <Route path="/courses" element={<CoursesPage />} />
+            <Route path="/qna" element={<QnAPage />} />
+            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/introduction" element={<IntroductionPage />} />
+            <Route path="/test" element={<TestPage />} />
+            <Route path="/courses/:courseInfoId" element={<CourseDetailPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/review" element={<ReviewDetailPage />} />
+            <Route path="/mypage/edit" element={<EditMyPage />} />
+            <Route path="/courses/:courseId/writeReview" element={<WriteReviewPage />} />
+            <Route path="*" element={<div>Not Found</div>} />
+          </Routes>
+          {/* ✅ Footer와 FloatingKakaoBtn을 AppWrapper 내부에 배치하여 크기 조정 */}
+          <Footer />
+          <FloatingKakaoBtn />
+          
+        </AppWrapper>
+      )}
 
-      {!isAdminPage && <Footer />}
-      {!isAdminPage && <FloatingKakaoBtn />}
     </>
   );
 }
+
 
 export default App;
 
