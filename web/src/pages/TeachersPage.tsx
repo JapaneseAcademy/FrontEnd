@@ -16,7 +16,8 @@ const TeachersPage = () => {
   return (
     <>
       <Main>
-      <TeacherBanner src="/images/teacher-introduction-banner.png" alt="Teacher Banner" />
+      <TeacherBanner src="/images/teacherBanner/teacher-banner-1.png" alt="Teacher Banner" />
+      <TeacherBanner src="/images/teacherBanner/teacher-banner-2.png" alt="Teacher Banner" />
 
       <Title>
         예리 센세와 소통하고 싶다면?
@@ -51,7 +52,6 @@ const TeacherBanner = styled.img`
   width: 100%;
   object-fit: cover;
   object-position: center;
-  margin-top: 20px;
 
   animation: ${fadeInUp} 0.8s ease-out;
 `;
