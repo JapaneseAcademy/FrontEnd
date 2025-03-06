@@ -4,7 +4,7 @@ import axios from "axios";
 export const getCourseReviewsByPage = async (courseInfoId: number, page: number) => {
    try {
       const response = await axios.get(
-         `${import.meta.env.VITE_BASE_URL}/api/v1/reviews?courseInfoId=${courseInfoId}&page=${page-1}`,);
+         `${import.meta.env.VITE_BASE_URL}/api/v1/courses/${courseInfoId}/reviews?page=${page-1}`,);
       console.log("[ getCourseReviews ]" ,response.data);
       return response.data;
    } catch (error) {

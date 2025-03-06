@@ -1,4 +1,4 @@
-import { getMonthlyCourses } from "../apis/adminAPI";
+import { getMonthlyCourses } from "../apis/adminAPI/adminAPI";
 import { postTest } from "../apis/apiTest";
 import { getCourseInfos } from "../apis/courseAPI";
 import { getKakaoCode } from "../apis/loginAPI";
