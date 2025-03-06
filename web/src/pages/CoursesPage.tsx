@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Main from "../components/Main";
 import styled from "styled-components";
 import Course from "../components/Course";
@@ -11,12 +11,17 @@ import { course } from "../types/types";
 
 
 const CoursesPage = () => {
+  const [allCourses, setAllCourses] = useState<course[]>([]); // 원본 데이터 저장
   const [courses, setCourses] = useState<course[]>([]);
   const [isLoading] = useRecoilState<boolean>(loadingAtom);
+  const [level, setLevel] = useState<string>("all");
+
+  const handleLevelChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setLevel(e.target.value);
+  };
 
   useEffect(() => {
     const fetchCourses = async () => {
-      // setIsLoading(true); // ✅ 로딩 시작
       try {
         const data = await getCourseInfos();
         const formattedCourses = data.map((course: any) => ({
@@ -28,40 +33,46 @@ const CoursesPage = () => {
           level: course.level,
         }));
 
-        setCourses(formattedCourses); // ✅ 한 번에 전체 데이터 세팅
+        setAllCourses(formattedCourses); // ✅ 전체 데이터 저장
+        setCourses(formattedCourses); // ✅ 최초에는 전체 데이터 표시
       } catch (error) {
         console.error("코스 데이터를 불러오는 중 오류 발생:", error);
-      } finally {
-        // setIsLoading(false); // ✅ 로딩 종료
       }
     };
 
     fetchCourses();
   }, []);
-  
+
+  // 선택한 레벨에 따라 필터링 (allCourses를 유지하면서 courses만 변경)
+  useEffect(() => {
+    if (level === "all") {
+      setCourses(allCourses);
+    } else {
+      const filteredCourses = allCourses.filter((course) => course.level === level);
+      setCourses(filteredCourses);
+    }
+  }, [level, allCourses]);
 
   useEffect(() => {
     console.log("세팅 후:", courses);
-  }
-  , [courses]);
+  }, [courses]);
 
-  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
-  const coursesPerPage = 3; // 페이지당 표시할 코스 개수
+  const [currentPage, setCurrentPage] = useState(1);
+  const coursesPerPage = 3;
 
-  // 현재 페이지에 표시할 코스 계산
-  const startIndex = (currentPage - 1) * coursesPerPage;
-  const endIndex = startIndex + coursesPerPage;
-  const currentCourses = courses.slice(startIndex, endIndex);
+  // 현재 페이지에 표시할 코스 계산 (useMemo 적용)
+  const currentCourses = useMemo(() => {
+    const startIndex = (currentPage - 1) * coursesPerPage;
+    return courses.slice(startIndex, startIndex + coursesPerPage);
+  }, [courses, currentPage]);
 
-  // 페이지 변경 핸들러
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
-    // window.scrollTo({ top: 0, behavior: 'smooth' }); // 페이지 최상단으로 스크롤, 부드럽게 이동
     window.scrollTo(0, 0);
   };
 
-  // 전체 페이지 수 계산
   const totalPages = Math.ceil(courses.length / coursesPerPage);
+
   return (
     <>
       <Main>
@@ -70,7 +81,14 @@ const CoursesPage = () => {
           : (
           <>
             <Title>예리 센세와 함께 일본어를 배워보세요!</Title>
-
+            <LevelDropdown onChange={handleLevelChange}>
+              <option value="all">전체</option>
+              <option value="기초">기초</option>
+              <option value="초급">초급</option>
+              <option value="중급">중급</option>
+              <option value="고급">고급</option>
+              <option value="프리">프리</option>
+            </LevelDropdown>
             <CoursesContainer>
               {currentCourses.map((course: course) => (
                 <Course
@@ -118,12 +136,12 @@ const Wrapper = styled.div`
 const Title = styled.div`
   font-size: 20px;
   font-weight: 500;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   margin-top: 40px;
   width: 100%;
   color: #402900;
   border-bottom: 1px solid #402900;
-  padding-bottom: 20px;
+  padding-bottom: 15px;
 `;
 
 const CoursesContainer = styled.div`
@@ -153,4 +171,19 @@ const PageButton = styled.button<{ $isActive: boolean }>`
   &:hover {
     background-color: ${(props) => (props.$isActive ? "#402900" : "#d3d3d3")};
   }
+`;
+
+const LevelDropdown = styled.select`
+  width: 70px;
+  height: 30px;
+  margin-bottom: 10px;
+  border: 1px solid #402900;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #402900;
+  font-size: 13px;
+  cursor: pointer;
+  outline: none;
+  padding-left: 5px;
+  margin-right: auto;
 `;
