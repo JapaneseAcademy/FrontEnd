@@ -93,6 +93,7 @@ const Wrapper = styled.div`
    flex-direction: column;
    justify-content: center;
    align-items: center;
+   padding-bottom: 100px;
 `
 
 const Title = styled.div`
