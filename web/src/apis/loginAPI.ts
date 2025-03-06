@@ -95,9 +95,9 @@ export const register = async (name: string, phone: string, birth: string, setIs
 }
 
 export const editUser = async (name: string, phone: string, birth: string) => {
-   console.log("-- editUser 함수 호출 --");
+   console.log("[ editUser ]");
    try {
-      const response = await axios.patch(
+      const response = await axios.put(
          `${BASE_URL}/api/v1/members/profile`,
          {
             name : name,
