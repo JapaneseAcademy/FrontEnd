@@ -5,8 +5,8 @@ const ReviewFilter = () => {
     <Wrapper id="filter-container-wrapper">
       <CourseDropdown>
          <option value="all">강의</option>
-         <option value="japanese">고수들의 회화비밀</option>
-         <option value="chinese">원샷반1</option>
+         <option value="talk-secret">고수들의 회화비밀</option>
+         <option value="oneshot1">원샷반1</option>
          <option value="english">집에서 원서읽기</option>
          <option value="english">예리에몽의 회화포켓</option>
       </CourseDropdown>

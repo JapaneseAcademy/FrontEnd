@@ -1,13 +1,23 @@
 import styled from "styled-components";
-import { STUDENTS_LIST } from "../../constants/studentsList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import StudentFilter from "./filters/StudentFilter.tsx";
+import { getAdminStudents } from "../../apis/adminAPI/adminStudentsAPI.ts";
+
+type Student = {
+  id: number;
+  name: string;
+  birth: string;
+  phone: string;
+  note: string;
+}
 
 const Out_StudentsList = () => {
   const [selectedStudentId, setSelectedStudentId] = useState<number | null>(1);
   const [isEditing, setIsEditing] = useState(false);
   const [editedStudent, setEditedStudent] = useState<any>({});
   const [searchTerm, setSearchTerm] = useState(""); // 🔹 검색어 상태 추가
+  //학생 리스트
+  const [students, setStudents] = useState<Student[]>([]);
 
     // 🔹 검색어 변경 함수 (StudentFilter에서 입력한 값을 업데이트)
     const handleSearchChange = (term: string) => {
@@ -15,12 +25,12 @@ const Out_StudentsList = () => {
     };
   
     // 🔹 검색어를 포함하는 학생들만 필터링
-    const filteredStudents = STUDENTS_LIST.filter((student) =>
+    const filteredStudents = students.filter((student) =>
       student.name.includes(searchTerm)
     );
 
   // 선택한 학생의 데이터 가져오기 (필터링된 목록에서 찾음)
-  const selectedStudent = STUDENTS_LIST.find(
+  const selectedStudent = students.find(
     (student) => student.id === selectedStudentId
   );
 
@@ -38,7 +48,7 @@ const Out_StudentsList = () => {
   // 저장 버튼 클릭 시 적용
   const handleSave = () => {
     if (selectedStudent) {
-      selectedStudent.notes = editedStudent.notes;
+      selectedStudent.note = editedStudent.note;
     }
 
     //{todo: 서버에 저장하는 로직 추가(api호출)}
@@ -46,6 +56,20 @@ const Out_StudentsList = () => {
     setIsEditing(false);
   };
 
+
+  // 학생들 정보 불러오는 api 호출
+  useEffect(() => {
+    getAdminStudents().then((data) => {
+      setStudents(data);
+    }
+    );
+  }
+  , []);
+  //세팅 잘 됐는지 확인
+  useEffect(() => {
+    console.log(students);
+  }
+  , [students]);
 
   return (
     <Wrapper id='admin-students-list-wrapper'>
@@ -93,16 +117,16 @@ const Out_StudentsList = () => {
           <DetailTitle>전화번호</DetailTitle>
             <DetailContent>{selectedStudent?.phone}</DetailContent>
         </DetailRow>
-        <DetailRow>
+        {/* <DetailRow>
           <DetailTitle>수강현황</DetailTitle>
             <DetailContent>{selectedStudent?.class}</DetailContent>
-        </DetailRow>
+        </DetailRow> */}
         <DetailRow>
           <DetailTitle>특이사항</DetailTitle>
           {isEditing ? (
             <DetailInput value={editedStudent.notes || ''} onChange={(e) => handleInputChange(e, "notes")} />
           ) : (
-            <DetailContent style={{minHeight:'150px'}}>{selectedStudent?.notes}</DetailContent>
+            <DetailContent style={{minHeight:'150px'}}>{selectedStudent?.note}</DetailContent>
           )}
         </DetailRow>
 
