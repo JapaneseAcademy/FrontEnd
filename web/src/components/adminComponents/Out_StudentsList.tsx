@@ -61,6 +61,8 @@ const Out_StudentsList = () => {
   useEffect(() => {
     getAdminStudents().then((data) => {
       setStudents(data);
+      //가장 첫번째 학생의 id로 초기화
+      setSelectedStudentId(data[0].id);
     }
     );
   }

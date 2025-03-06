@@ -9,8 +9,9 @@ export const getKakaoCode = () => {
    window.location.href = KAKAO_LOGIN_URL;
 }
 
-export const login = async (code: string, navigate: (path: string) => void) => {
-   console.log("-- 로그인 함수 호출 --");
+export const login = async (code: string, navigate: (path: string) => void, setIsLoading: (loading: boolean) => void) => {
+   console.log("[ login ]");
+   setIsLoading(true); // ✅ 로딩 시작
    try {
       // 카카오에서 받은 토큰으로 로그인
       const response = await axios.post(
@@ -44,6 +45,9 @@ export const login = async (code: string, navigate: (path: string) => void) => {
             // AxiosError가 아닌 다른 에러 처리
             console.error("Unexpected error:", error);
       }
+   }
+      finally {
+         setIsLoading(false); // ✅ 로딩 종료
    }
 }
 

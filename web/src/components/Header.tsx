@@ -5,10 +5,13 @@ import { IoMenu } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 import { getKakaoCode } from '../apis/loginAPI';
 import { IoMdContact } from "react-icons/io"
+import { useRecoilState } from 'recoil';
+import { loadingAtom } from '../recoil/loadingAtom';
 
 const Header = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
+  const [isLoading, setIsLoading] = useRecoilState<boolean>(loadingAtom);
   const navigate = useNavigate();
 
   const toggleSidebar = () => {
@@ -19,9 +22,10 @@ const Header = () => {
     setSidebarOpen(false);
   };
   
-  const logoutTemp = () => {
+  const logoutTemp = () => { //{todo: 로그아웃 api 호출}
     if(confirm('로그아웃 하시겠습니까?')) {
       localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
       setIsLogin(false);
     }
     // 화면 새로고침
@@ -29,11 +33,20 @@ const Header = () => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    if(token) {
-      setIsLogin(true);
-    }
-  }, []);
+    setIsLoading(true);
+    const checkLoginStatus = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 500)); // ✅ 0.5초 대기
+      const accessToken = localStorage.getItem('accessToken');
+      setIsLogin(!!accessToken); // ✅ 로그인 상태 갱신
+      setIsLoading(false); // ✅ 로딩 종료
+    };
+    checkLoginStatus();
+  }
+  , []);
+
+  if (isLoading) {
+    return;
+  }
 
   return (
     <>

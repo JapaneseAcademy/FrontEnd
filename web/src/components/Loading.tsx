@@ -22,10 +22,10 @@ const Wrapper = styled.div`
 `
 
 const LoadingGif = styled.img`
-   width: 20%;
+   width: 5%;
 `
 
 const LoadingText = styled.div`
-   font-size: 18px;
+   font-size: 16px;
    margin-top: 20px;
 `

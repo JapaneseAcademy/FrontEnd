@@ -6,23 +6,33 @@ import { useEffect } from 'react';
 import { login } from '../apis/loginAPI';
 import DownCourses from '../components/mainPage/DownCourses';
 import DownReviews from '../components/mainPage/DownReviews';
+import { loadingAtom } from '../recoil/loadingAtom';
+import { useRecoilState } from 'recoil';
+import Loading from '../components/Loading';
 
 const HomePage = () => {
+  const [isLoading, setIsLoading] = useRecoilState<boolean>(loadingAtom);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // window.scrollTo(0, 0); // 화면 맨 위로 이동 -> 나중에 개발 다 하고 활성화
+    window.scrollTo(0, 0); 
     
     // 카카오에서 code 받아온 후의 처리
     const url = new URL(window.location.href);
     const code = url.searchParams.get('code');
-    console.log('code:', code);
     // code가 있고, localStorage에 토큰이 없으면 로그인 요청
     if (code && !localStorage.getItem('accessToken')) {
-      login(code, navigate);
+      setIsLoading(true);
+      login(code, navigate, setIsLoading).then(() => {
+        setIsLoading(false);
+      }
+      );
     }
   }, );
 
+  if (isLoading) {
+    return <Loading />
+  }
 
   return (
   <>
