@@ -61,26 +61,26 @@ const AdminPage = () => {
                   <Category>
                      <CategoryTitle><FaRegUser/>학생 관리</CategoryTitle>
                      <Items>
-                        <CategoryItem isSelected={selectedItem === 'student'} onClick={() => handleItemClick('student')}>- 학생 목록</CategoryItem>
-                        <CategoryItem isSelected={selectedItem === 'message'} onClick={() => handleItemClick('message')}>- 문자 발송</CategoryItem>
+                        <CategoryItem $isselected={selectedItem === 'student'} onClick={() => handleItemClick('student')}>- 학생 목록</CategoryItem>
+                        <CategoryItem $isselected={selectedItem === 'message'} onClick={() => handleItemClick('message')}>- 문자 발송</CategoryItem>
                      </Items>
                   </Category>
                   <Category>
                      <CategoryTitle><FaRegFileVideo/>수업 관리</CategoryTitle>
                      <Items>
-                        <CategoryItem isSelected={selectedItem === 'course'} onClick={() => handleItemClick('course')}>- 수업 목록</CategoryItem>
+                        <CategoryItem $isselected={selectedItem === 'course'} onClick={() => handleItemClick('course')}>- 수업 목록</CategoryItem>
                      </Items>
                   </Category>
                   <Category>
                      <CategoryTitle><MdOutlineRateReview/>후기 관리</CategoryTitle>
                      <Items>
-                        <CategoryItem isSelected={selectedItem === 'mainReviews'} onClick={() => handleItemClick('mainReviews')}>- 메인 리뷰 설정</CategoryItem>
+                        <CategoryItem $isselected={selectedItem === 'mainReviews'} onClick={() => handleItemClick('mainReviews')}>- 메인 리뷰 설정</CategoryItem>
                      </Items>
                   </Category>
                   <Category>
                      <CategoryTitle><MdOutlineDesktopWindows/>홈페이지 관리</CategoryTitle>
                      <Items>
-                        <CategoryItem isSelected={selectedItem === 'youtube'} onClick={() => handleItemClick('youtube')}>- 대표 유튜브 영상 변경</CategoryItem>
+                        <CategoryItem $isselected={selectedItem === 'youtube'} onClick={() => handleItemClick('youtube')}>- 대표 유튜브 영상 변경</CategoryItem>
                      </Items>
                   </Category>
                   <div style={{fontSize:'10px', color:'#b3b3b3'}}>문의 : burittodance@naver.com</div>
@@ -180,14 +180,14 @@ const CategoryTitle = styled.div`
    font-weight: 500;
    margin-bottom: 10px;
 `
-const CategoryItem = styled.div<{ isSelected: boolean }>`
+const CategoryItem = styled.div<{ $isselected: boolean }>`
    font-size: 0.9rem;
    cursor: pointer;
-   color: ${({ isSelected }) => (isSelected ? "#333" : "#676767")};
-   font-weight: ${({ isSelected }) => (isSelected ? "500" : "normal")};
+   color: ${({ $isselected }) => ($isselected ? "#333" : "#676767")};
+   font-weight: ${({ $isselected }) => ($isselected ? "500" : "normal")};
    padding: 5px 10px;
    border-radius: 4px;
-   background-color: ${({ isSelected }) => (isSelected ? "#eaeaea" : "transparent")};
+   background-color: ${({ $isselected }) => ($isselected ? "#eaeaea" : "transparent")};
 
    &:hover {
       color: #333;

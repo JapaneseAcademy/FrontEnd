@@ -92,7 +92,7 @@ const Out_StudentsList = () => {
             {filteredStudents.map((student) => (
               <TableRow
                 key={student.id}
-                isSelected={student.id === selectedStudentId}
+                $isselected={student.id === selectedStudentId}
                 onClick={() => setSelectedStudentId(student.id)}
               >
                 <TableItem>{student.name}</TableItem>
@@ -124,7 +124,7 @@ const Out_StudentsList = () => {
         <DetailRow>
           <DetailTitle>특이사항</DetailTitle>
           {isEditing ? (
-            <DetailInput value={editedStudent.notes || ''} onChange={(e) => handleInputChange(e, "notes")} />
+            <DetailInput style={{minHeight:'150px'}} value={editedStudent.notes || ''} onChange={(e) => handleInputChange(e, "notes")} />
           ) : (
             <DetailContent style={{minHeight:'150px'}}>{selectedStudent?.note}</DetailContent>
           )}
@@ -239,7 +239,7 @@ const TableBody = styled.div`
   overflow-y: scroll;
   height: 100%;
 ` 
-const TableRow = styled.div<{ isSelected: boolean }>`
+const TableRow = styled.div<{ $isselected: boolean }>`
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -250,10 +250,10 @@ const TableRow = styled.div<{ isSelected: boolean }>`
   padding-bottom: 9px;
   border-bottom: 1px solid #e1e1e1;
   cursor: pointer;
-  background-color: ${({ isSelected }) => (isSelected ? "#e6f7ff" : "transparent")}; 
+  background-color: ${({ $isselected }) => ($isselected ? "#e6f7ff" : "transparent")}; 
   
   &:hover {
-    background-color: ${({ isSelected }) => (isSelected ? "#cceeff" : "#f1f1f1")}; 
+    background-color: ${({ $isselected }) => ($isselected ? "#cceeff" : "#f1f1f1")}; 
   }
 `;
 
