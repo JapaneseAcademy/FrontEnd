@@ -22,10 +22,19 @@ import ReviewDetailPage from './pages/ReviewDetailPage';
 import EditMyPage from './pages/EditMyPage';
 import WriteReviewPage from './pages/WriteReviewPage';
 import Out_MainBestReviews from './components/adminComponents/Out_BestReviews';
+import { useRecoilState } from 'recoil';
+import { loadingAtom } from './recoil/loadingAtom';
+import Loading from './components/Loading';
 
 function App() {
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith('/admin');
+  const [isLoading] = useRecoilState(loadingAtom);
+
+  // ✅ 로딩 중이면 전체 앱 대신 로딩 화면을 렌더링
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -63,14 +72,11 @@ function App() {
           {/* ✅ Footer와 FloatingKakaoBtn을 AppWrapper 내부에 배치하여 크기 조정 */}
           <Footer />
           <FloatingKakaoBtn />
-          
         </AppWrapper>
       )}
-
     </>
   );
 }
-
 
 export default App;
 

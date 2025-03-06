@@ -33,20 +33,20 @@ const Header = () => {
   };
 
   useEffect(() => {
-    setIsLoading(true);
+    // setIsLoading(true);
     const checkLoginStatus = async () => {
       await new Promise((resolve) => setTimeout(resolve, 500)); // ✅ 0.5초 대기
       const accessToken = localStorage.getItem('accessToken');
       setIsLogin(!!accessToken); // ✅ 로그인 상태 갱신
-      setIsLoading(false); // ✅ 로딩 종료
+      // setIsLoading(false); // ✅ 로딩 종료
     };
     checkLoginStatus();
   }
   , []);
 
-  if (isLoading) {
-    return;
-  }
+  // if (isLoading) {
+  //   return;
+  // }
 
   return (
     <>

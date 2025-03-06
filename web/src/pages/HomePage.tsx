@@ -22,17 +22,18 @@ const HomePage = () => {
     const code = url.searchParams.get('code');
     // code가 있고, localStorage에 토큰이 없으면 로그인 요청
     if (code && !localStorage.getItem('accessToken')) {
-      setIsLoading(true);
+      // setIsLoading(true);
       login(code, navigate, setIsLoading).then(() => {
-        setIsLoading(false);
+        //url에서 code 제거
+        window.history.replaceState({}, document.title, "/");
       }
       );
     }
   }, );
 
-  if (isLoading) {
-    return <Loading />
-  }
+  // if (isLoading) {
+  //   return <Loading />
+  // }
 
   return (
   <>

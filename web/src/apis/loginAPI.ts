@@ -47,6 +47,7 @@ export const login = async (code: string, navigate: (path: string) => void, setI
       }
    }
       finally {
+         window.history.replaceState({}, document.title, "/"); //url에서 code 제거
          setIsLoading(false); // ✅ 로딩 종료
    }
 }

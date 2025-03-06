@@ -97,7 +97,7 @@ const CoursesPage = () => {
 
   useEffect(() => {
     const fetchCourses = async () => {
-      setIsLoading(true); // ✅ 로딩 시작
+      // setIsLoading(true); // ✅ 로딩 시작
       try {
         const data = await getCourseInfos();
         const formattedCourses = data.map((course: any) => ({
@@ -113,7 +113,7 @@ const CoursesPage = () => {
       } catch (error) {
         console.error("코스 데이터를 불러오는 중 오류 발생:", error);
       } finally {
-        setIsLoading(false); // ✅ 로딩 종료
+        // setIsLoading(false); // ✅ 로딩 종료
       }
     };
 
