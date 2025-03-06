@@ -57,6 +57,10 @@ const MyPage = () => {
 
       <MyCoursesContainer>
         <Header style={{fontSize:'20px', fontWeight:'450', marginBottom:'10px'}}>내 강의</Header>
+        {/* enrollment가 없을 때 */}
+        {enrollments.length === 0 && (
+        <div style={{fontSize:'14px', color:'#7c7c7c', marginTop:'auto', marginBottom:'auto'}}>아직 신청한 강의가 없어요!</div>
+        )} 
         {enrollments.map((enrollment) => (
           <MyCourseCard key={enrollment.enrollmentId}>
             <CourseImage src={enrollment.mainImageUrl}/>
@@ -130,10 +134,11 @@ const MyCoursesContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   border: 1px solid #e1e1e1;
   border-radius: 10px;
-  padding-bottom: 10px;
+  margin-bottom: 40px;
+  min-height: 400px;
 `
 
 const MyCourseCard = styled.div`
