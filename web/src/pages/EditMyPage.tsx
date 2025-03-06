@@ -76,7 +76,7 @@ const EditMyPage = () => {
       <Wrapper>
          <Title>내 정보 수정</Title>
          <InputRow>
-            <InputTitle>이름</InputTitle>
+            <InputTitle>이름 <span>*수강생 식별을 위해 실명으로 기입해주세요.</span></InputTitle>
             <Input placeholder="이름을 입력해주세요" onChange={handleNameChange} value={name}/>
          </InputRow>
          <InputRow style={{flexDirection:'column', justifyContent:'space-between'}}>
@@ -128,6 +128,15 @@ const InputTitle = styled.div`
    text-align: left;
    margin-bottom: 5px;
    color: #333;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: space-between;
+
+   span {
+      font-size: 10px;
+      color: #7c7c7c;
+   }
 `
 
 const Input = styled.input`
