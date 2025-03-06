@@ -9,7 +9,7 @@ const DownCourses = () => {
    const [courses, setCourses] = useState<course[]>([]);
    
    useEffect(() => {
-      getCourseInfos().then((data) => {
+      getCourseInfos("ALL").then((data) => {
          const formattedCourses = data.map((course: any) => ({
             courseInfoId: course.courseInfoId,
             courseImage: course.mainImageUrl,

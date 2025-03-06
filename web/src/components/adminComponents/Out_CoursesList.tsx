@@ -97,7 +97,7 @@ const Out_CoursesList = () => {
 
   useEffect(() => {
     //강의 목록 전체 조회 api
-    getCourseInfos().then((data) => {
+    getCourseInfos("ALL").then((data) => {
       const courseInfos = data.courseInfos;
       const formattedCourses = courseInfos.map((course: any) => ({
         courseId: course.courseId,
