@@ -3,15 +3,16 @@ import { IoMdContact } from "react-icons/io"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { getEnrollments, getUserInfo } from "../apis/userAPI";
+import { convertCategory, numberWithCommas } from "../utils/utils";
 
 type Enrollment = {
   enrollmentId: string;
-  courseTitle: string;
+  title: string;
   paymentDate: string;
-  courseType: string;
-  price: string;
-  paymentMethod: string;
-  courseImage: string;
+  category: string;
+  paymentAmount: number;
+  // paymentMethod: string;
+  mainImageUrl: string;
 }
 
 const MyPage = () => {
@@ -22,46 +23,6 @@ const MyPage = () => {
   const handleEditClick = () => {
     navigate('/mypage/edit')
   }
-
-  //내 수강 내역 임시 데이터
-  const myCourse = [
-    {
-      id: 1,
-      title: '예리한 일본어 1급',
-      date: '2025.02.25',
-      type: '실시간 온라인',
-      price: '100,000원',
-      payment: '간편결제',
-      image: '/images/courseBanner/course-banner-oneshot1.png'
-    },
-    {
-      id: 2,
-      title: '예리한 일본어 2급',
-      date: '2025.02.25',
-      type: '실시간 온라인',
-      price: '100,000원',
-      payment: '카드결제',
-      image: '/images/courseBanner/course-banner-oneshot2.png'
-    },
-    {
-      id: 3,
-      title: '예리한 일본어 3급',
-      date: '2025.02.25',
-      type: '실시간 온라인',
-      price: '100,000원',
-      payment: '간편결제',
-      image: '/images/courseBanner/course-banner-oneshot3.png'
-    },
-    {
-      id: 4,
-      title: '예리한 일본어 4급',
-      date: '2025.02.25',
-      type: '실시간 온라인',
-      price: '100,000원',
-      payment: '카드결제',
-      image: '/images/courseBanner/course-banner-oneshot3.png'
-    }
-  ]
 
   useEffect(() => {
     //마이페이지 진입 시, 스크롤을 맨 위로 이동
@@ -80,22 +41,9 @@ const MyPage = () => {
 
     //강의 수강 내역 세팅
     getEnrollments().then((data) => {
-      data.forEach((enrollment: any) => {
-        const newEnrollment: Enrollment = {
-          enrollmentId: enrollment.enrollmentId,
-          courseTitle: enrollment.courseTitle,
-          paymentDate: enrollment.paymentAt,
-          courseType: enrollment.category,
-          price: enrollment.paymentAmount,
-          paymentMethod: enrollment.paymentMethod, //만들어달라고 해야함
-          courseImage: enrollment.course.image //만들어달라고 해야함
-        }
-        setEnrollments((prev) => [...prev, newEnrollment]);
-      }
-      )
+      setEnrollments(data);
     })
-  }
-  , [enrollments])
+  }, [])
 
   return (
     <Wrapper>
@@ -109,15 +57,15 @@ const MyPage = () => {
 
       <MyCoursesContainer>
         <Header style={{fontSize:'20px', fontWeight:'450', marginBottom:'10px'}}>내 강의</Header>
-        {myCourse.map((course) => (
-          <MyCourseCard key={course.id}>
-            <CourseImage src={course.image}/>
+        {enrollments.map((enrollment) => (
+          <MyCourseCard key={enrollment.enrollmentId}>
+            <CourseImage src={enrollment.mainImageUrl}/>
             <CourseInfo>
-              <CourseTitle>{course.title}</CourseTitle>
-              <Text>결제일시 | {course.date}</Text>
-              <Text>강의유형 | {course.type}</Text>
-              <Text>결제금액 | {course.price}</Text>
-              <Text>결제수단 | {course.payment}</Text>
+              <CourseTitle>{enrollment.title}</CourseTitle>
+              <Text>결제일시 | {enrollment.paymentDate}</Text>
+              <Text>강의유형 | {convertCategory(enrollment.category)}</Text>
+              <Text>결제금액 | {numberWithCommas(enrollment.paymentAmount)}</Text>
+              <Text>결제수단 | 카카오페이</Text>
             </CourseInfo>
           </MyCourseCard>
         ))}

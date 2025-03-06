@@ -39,3 +39,16 @@ export const convertTime = (time: string) => {
    return time.slice(0, 5);
 }
 
+//강의 유형 한글로 바꾸는 함수
+export const convertCategory = (category: string) => {
+   switch (category) {
+      case "LIVE":
+         return "현장강의";
+      case "ONLINE":
+         return "온라인";
+      case "RECORDED":
+         return "동영상";
+      default:
+         return "";
+   }
+}
