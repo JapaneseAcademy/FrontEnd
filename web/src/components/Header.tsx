@@ -5,13 +5,12 @@ import { IoMenu } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 import { getKakaoCode } from '../apis/loginAPI';
 import { IoMdContact } from "react-icons/io"
-import { useRecoilState } from 'recoil';
-import { loadingAtom } from '../recoil/loadingAtom';
+
 
 const Header = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
-  const [isLoading, setIsLoading] = useRecoilState<boolean>(loadingAtom);
+  // const [isLoading, setIsLoading] = useRecoilState<boolean>(loadingAtom);
   const navigate = useNavigate();
 
   const toggleSidebar = () => {

@@ -7,11 +7,10 @@ import { login } from '../apis/loginAPI';
 import DownCourses from '../components/mainPage/DownCourses';
 import DownReviews from '../components/mainPage/DownReviews';
 import { loadingAtom } from '../recoil/loadingAtom';
-import { useRecoilState } from 'recoil';
-import Loading from '../components/Loading';
+import { useSetRecoilState } from 'recoil';
 
 const HomePage = () => {
-  const [isLoading, setIsLoading] = useRecoilState<boolean>(loadingAtom);
+  const setIsLoading = useSetRecoilState(loadingAtom);
   const navigate = useNavigate();
 
   useEffect(() => {
