@@ -34,6 +34,7 @@ export const login = async (code: string, navigate: (path: string) => void, setI
       else {
          localStorage.setItem("accessToken", response.data.token.accessToken);
          localStorage.setItem("refreshToken", response.data.token.refreshToken);
+         window.history.replaceState({}, document.title, "/"); //url에서 code 제거
       }
    }
    catch (error) {
@@ -48,14 +49,14 @@ export const login = async (code: string, navigate: (path: string) => void, setI
       }
    }
       finally {
-         window.history.replaceState({}, document.title, "/"); //url에서 code 제거
          setIsLoading(false); // ✅ 로딩 종료
    }
 }
 
 
-export const register = async (name: string, phone: string, birth: string) => {
-   console.log("-- register 함수 호출 --");
+export const register = async (name: string, phone: string, birth: string, setIsLoading: (loading: boolean) => void) => {
+   console.log("[ register ]");
+   setIsLoading(true); // ✅ 로딩 시작
    //쿼리 파라미터에서 kakaoID 받아오기
    const kakaoId = new URLSearchParams(window.location.search).get("kakaoID");
 
@@ -75,7 +76,7 @@ export const register = async (name: string, phone: string, birth: string) => {
       localStorage.setItem("accessToken", response.data.token.accessToken);
       localStorage.setItem("refreshToken", response.data.token.refreshToken);
 
-      alert("회원가입이 완료되었습니다! 다시 로그인해주세요.");
+      alert("회원가입이 완료되었습니다!");
 
       //메인페이지로 이동
       window.location.href = "/";
@@ -87,6 +88,9 @@ export const register = async (name: string, phone: string, birth: string) => {
       } else {
          console.error("Unexpected error:", error);
       }
+   }
+   finally {
+      setIsLoading(false); // ✅ 로딩 종료
    }
 }
 

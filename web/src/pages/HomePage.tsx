@@ -22,11 +22,8 @@ const HomePage = () => {
     // code가 있고, localStorage에 토큰이 없으면 로그인 요청
     if (code && !localStorage.getItem('accessToken')) {
       // setIsLoading(true);
-      login(code, navigate, setIsLoading).then(() => {
-        //url에서 code 제거
-        window.history.replaceState({}, document.title, "/");
-      }
-      );
+      login(code, navigate, setIsLoading);
+
     }
   }, );
 

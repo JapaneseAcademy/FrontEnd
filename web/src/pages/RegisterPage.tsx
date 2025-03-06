@@ -1,6 +1,8 @@
 import { useState } from "react"
 import styled from "styled-components"
 import { register } from "../apis/loginAPI"
+import { useSetRecoilState } from "recoil"
+import { loadingAtom } from "../recoil/loadingAtom"
 
 const RegisterPage = () => {
    const [name, setName] = useState('')
@@ -8,6 +10,7 @@ const RegisterPage = () => {
    const [month, setMonth] = useState('')
    const [day, setDay] = useState('')
    const [phone, setPhone] = useState('')
+   const setIsloading = useSetRecoilState<boolean>(loadingAtom);
 
    const handleNameChange = (e: any) => {
       setName(e.target.value)
@@ -54,7 +57,7 @@ const RegisterPage = () => {
 
       //등록
       console.log(name, year, month, day, phone);
-      register(name, phone, `${year}-${month}-${day}`)
+      register(name, phone, `${year}-${month}-${day}`, setIsloading);
    }
 
 
