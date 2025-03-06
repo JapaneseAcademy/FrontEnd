@@ -13,12 +13,13 @@ import { course } from "../types/types";
 const CoursesPage = () => {
   const [courses, setCourses] = useState<course[]>([]);
   const [isLoading] = useRecoilState<boolean>(loadingAtom);
+  const [courseLevel] = useState<string>("ALL");
 
   useEffect(() => {
     const fetchCourses = async () => {
       // setIsLoading(true); // ✅ 로딩 시작
       try {
-        const data = await getCourseInfos();
+        const data = await getCourseInfos(courseLevel);
         const formattedCourses = data.map((course: any) => ({
           courseInfoId: course.courseInfoId,
           courseImage: course.mainImageUrl,
