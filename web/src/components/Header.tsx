@@ -29,6 +29,7 @@ const Header = () => {
       setIsLogin(false);
     }
     // 화면 새로고침
+    alert('로그아웃 되었습니다.');
     window.location.reload();
   };
 

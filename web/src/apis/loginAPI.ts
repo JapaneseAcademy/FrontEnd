@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const REST_API_KEY = import.meta.env.VITE_REST_API_KEY;
-const REDIRECT_URI = 'http://localhost:5173';
+// 현재 환경에 따라 동적으로 redirect_uri를 설정
+const REDIRECT_URI = `${window.location.origin}`;
 const KAKAO_LOGIN_URL = `${import.meta.env.VITE_KAKAO_AUTH_URL}?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
