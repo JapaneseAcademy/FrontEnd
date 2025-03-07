@@ -65,6 +65,7 @@ const Header = () => {
         <Navigator onClick={() => navigate(`/courses`)}>강좌 목록</Navigator>
         <Navigator onClick={() => navigate(`/introduction`)}>학원 안내</Navigator>
         <Navigator onClick={() => navigate(`/qna`)}>FAQ</Navigator>
+        <Navigator onClick={() => navigate(`/reviews`)}>수강 후기</Navigator>
       </SecondRow>
 
       {/* 사이드바 오픈 시 오버레이 렌더링 */}
