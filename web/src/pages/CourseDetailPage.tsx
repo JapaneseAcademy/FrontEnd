@@ -32,6 +32,7 @@ type timeBlock = {
 
 const CourseDetailPage = () => {
   const [selectedOption, setSelectedOption] = useState("detail");
+  //페이지네이션
   const [currentPage, setCurrentPage] = useState(1);
 
   //강의 정보들
@@ -41,6 +42,7 @@ const CourseDetailPage = () => {
   const [courseDetailImages, setCourseDetailImages] = useState<string[]>([]);
   const [courseTypes, setCourseTypes] = useState<string[]>([]);
   const [courseLevel, setCourseLevel] = useState<string>("");
+  //리뷰 정보들
   const [currentReviews, setCurrentReviews] = useState<Review[]>([]);
   const [totalPages, setTotalPages] = useState(1); // 총 페이지 수 상태 추가
 
@@ -96,11 +98,6 @@ const CourseDetailPage = () => {
     
   }, [courseInfoId]);
 
-  //분반 세팅 확인
-  useEffect(() => {
-    console.log(convertedTimeTables);
-  }
-  , [convertedTimeTables]);
 
   /////////리뷰관련////////
   const fetchReviews = useCallback(async (page: number) => {

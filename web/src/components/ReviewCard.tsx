@@ -1,13 +1,22 @@
 import styled from "styled-components"
 
-const ReviewCard = () => {
+interface ReviewCardProps {
+   reviewId: number;
+   imageUrls: string[];
+   review: string;
+   writer: string;
+   createdDate: string;
+   reviewTitle: string;
+}
+
+const ReviewCard = ({ reviewId, imageUrls, review, writer, createdDate, reviewTitle }: ReviewCardProps) => {
    return (
-      <Wrapper>
-         <ReviewImage src="/images/review/review1.jpg" />
+      <Wrapper key={reviewId}>
+         <ReviewImage src={imageUrls[0]} />
          <ReviewContent>
-            <ReviewTitle>예리 센세의 수업을 듣고 느낀 점이무니다.....</ReviewTitle>
-            <ReviewText>예리 센세의 수업을 듣고 느낀 점을 솔직하게 작성해주세요. 수업이 어땠는지, 센세의 가르침이 어땠는지, 수업을 듣고 느낀 점 등을 자유롭게 작성해주세요. 예리 센세의 수업을 듣고 느낀 점을 솔직하게 작성해주세요. 수업이 어땠는지, 센세의 가르침이 어땠는지, 수업을 듣고 느낀 점 등을 자유롭게 작성해주세요.</ReviewText>
-            <ReviewDate>2021.09.01</ReviewDate>
+            <ReviewTitle>{reviewTitle}</ReviewTitle>
+            <ReviewText>{review}</ReviewText>
+            <ReviewDate><span>{createdDate}</span> <span>{writer}</span></ReviewDate>
          </ReviewContent>
       </Wrapper>
    )
@@ -26,6 +35,10 @@ const Wrapper = styled.div`
    padding: 25px 0;
 
    gap: 15px;
+   //마지막 요소에는 border-bottom을 표시하지 않음
+   &:last-child {
+      border-bottom: none;
+   }
 `
 
 const ReviewImage = styled.img`
@@ -73,6 +86,8 @@ const ReviewContent = styled.div`
 
 
 const ReviewDate = styled.div`
+   display: flex;
+   justify-content: space-between;
    width: 100%;
    font-size: 14px;
    color: #808080;

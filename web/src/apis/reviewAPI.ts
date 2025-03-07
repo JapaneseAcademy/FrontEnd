@@ -33,3 +33,14 @@ export const getMainBestReviews = async () => {
       console.error(error);
    }
 }
+
+//전체 리뷰 조회하는 api
+export const getAllReviews = async (page: number) => {
+   try {
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/reviews?page=${page-1}`);
+      console.log("[ getAllReviews ]", response.data);
+      return response.data;
+   } catch (error) {
+      console.error(error);
+   }
+}
