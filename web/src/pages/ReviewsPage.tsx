@@ -18,6 +18,7 @@ const ReviewsPage = () => {
    const [totalPage, setTotalPage] = useState<number>(0);
    const [currentPage, setCurrentPage] = useState<number>(1);
    const [itemsPerPage, setItemsPerPage] = useState<number>(5);
+   const [totalReviewsNum, setTotalReviewsNum] = useState<number>(0);
 
    const totalGroups = Math.ceil(totalPage / itemsPerPage); // 전체 그룹 개수
    const currentGroup = Math.ceil(currentPage / itemsPerPage); // 현재 그룹
@@ -41,6 +42,7 @@ const ReviewsPage = () => {
          setCurrentReviews(response.reviews); // 받아온 리뷰 데이터 업데이트
          setTotalPage(response.totalPage); // 총 페이지 수 업데이트 (백엔드에서 제공)
          setItemsPerPage(response.listSize); // 페이지 당 아이템 수 업데이트 (백엔드에서 제공)
+         setTotalReviewsNum(response.totalElements); // 총 리뷰 수 업데이트 (백엔드에서 제공)
       } catch (error) {
          console.error("리뷰 데이터를 불러오는 중 오류 발생:", error);
       }
@@ -60,7 +62,7 @@ const ReviewsPage = () => {
 
    return (
       <Wrapper>
-         <Title>예리 센세와 함께 공부한 수강생들의 <br/> <span style={{fontWeight:'550'}}>생생한 후기</span>를 확인하세요! <span style={{color:'#535353'}}>(490건) </span></Title>
+         <Title>예리 센세와 함께 공부한 수강생들의 <br/> <span style={{fontWeight:'550'}}>생생한 후기</span>를 확인하세요! <span style={{color:'#535353'}}>({totalReviewsNum}건) </span></Title>
          <ReviewsContainer id="reviews-container">
             {currentReviews.map((review) => (
                <ReviewCard
