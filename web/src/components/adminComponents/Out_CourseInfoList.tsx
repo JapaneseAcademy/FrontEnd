@@ -1,9 +1,7 @@
 import styled from "styled-components"
 import { useEffect, useState } from "react"
 // import { FiPlus } from "react-icons/fi"
-import CourseFilter from "./filters/CourseFilter.tsx"
 import { getAdminCoursesByMonth } from "../../apis/adminAPI/adminCoursesAPI.ts"
-import { convertTime, convertWeekday } from "../../utils/utils.ts"
 import { useNavigate } from "react-router-dom"
 
 //한 타임블럭(분반 내)
@@ -28,35 +26,13 @@ const Out_CourseInfoList = () => {
   const [selectedTimeTableId, setSelectedTimeTableId] = useState<number>(1);
   const [timeTables, setTimeTables] = useState<timeTable[]>([]);
 
-  const [selectedYear, setSelectedYear] = useState<string>("2025");
-  const [selectedMonth, setSelectedMonth] = useState<string>("03");
-
   const navigate = useNavigate();
-
-  const converTimeTable = (timeTable: timeTable) => {
-    let timeTableString = "";
-    timeTable.timeBlocks.forEach((timeBlock) => {
-      timeTableString += `${convertWeekday(timeBlock.weekday)} ${convertTime(timeBlock.startTime)} - ${convertTime(timeBlock.endTime)} \n `;
-    });
-    // /을 기준으로 줄바꿈, 마지막 / 제거
-    timeTableString = timeTableString.slice(0, -2);
-    return timeTableString;
-  };
-
-
-  //년/월 선택 관련
-  const handleYearChange = (year: string) => {
-    setSelectedYear(year);
-  };
-  const handleMonthChange = (month: string) => {
-    setSelectedMonth(month);
-  };
 
   const selectedTimeTable = timeTables.find((table) => table.timeTableId === selectedTimeTableId);
 
   useEffect(() => {
     //관리자-월별 강의 조회 api
-    getAdminCoursesByMonth(`${selectedYear}-${selectedMonth}`, navigate).then((data) => {
+    getAdminCoursesByMonth(`2025-03`, navigate).then((data) => {
       const formattedTimeTables = data.map((timeTable: any) => ({
         courseId: timeTable.courseId,
         timeTableId: timeTable.timeTable.timeTableId,
@@ -70,29 +46,13 @@ const Out_CourseInfoList = () => {
     }
     );
 
-  }, [selectedYear, selectedMonth]);
+  }, []);
 
-  //년/월 확인
-  useEffect(() => {
-    console.log("년:", selectedYear, "월:", selectedMonth);
-  }, [selectedYear, selectedMonth]);
-
-  //timeTableId 확인
-  useEffect(() => {
-    console.log("선택된 timeTableId:", selectedTimeTableId);
-  }, [selectedTimeTableId]);
 
   return (
     <Wrapper>
       <CourseListContainer id="course-list-container"> 
         <Title>강의 관리</Title>
-        <CourseFilter 
-          handleYearChange={handleYearChange} 
-          handleMonthChange={handleMonthChange} 
-          selectedYear={selectedYear}
-          selectedMonth={selectedMonth}
-        />
-        {/* 학생 목록 표 */}
         <CoursesTable id='courses-table'>
           <TableHeader>
             <TableHeaderItem id='courseName'>강의명</TableHeaderItem>
@@ -107,8 +67,8 @@ const Out_CourseInfoList = () => {
                 onClick={() => setSelectedTimeTableId(timeTable.timeTableId)}
               >
                 <TableItem>{timeTable.title}</TableItem>
-                <TableItem>{converTimeTable(timeTable)}</TableItem>
-                <TableItem>{timeTable.studentCount}</TableItem>
+                <TableItem><CourseImage style={{width:'60px', height:'60px', aspectRatio:'1/1'}} src="/images/courseBanner/course-banner-oneshot1.png" /></TableItem>
+                <TableItem>180,000원</TableItem>
               </TableRow>
             ))}
           </TableBody>
@@ -235,7 +195,7 @@ const TableHeaderItem = styled.div`
   }
   //두번째 항목
   &:nth-child(2) {
-    flex: 2;
+    flex: 1.2;
   }
   //세번째 항목
   &:nth-child(3) {
@@ -259,7 +219,7 @@ const TableItem = styled.div`
   }
   //두번째 항목
   &:nth-child(2) {
-    flex: 2;
+    flex: 1.2;
   }
   //세번째 항목
   &:nth-child(3) {
