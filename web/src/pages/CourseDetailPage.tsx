@@ -68,7 +68,7 @@ const CourseDetailPage = () => {
   }
 
   //timeTables를 한 분반(timeTable)당 하나의 문자열로 바꾸는 함수
-  const convertTimeTable = (timeTables: timeTable[]) => {
+  const convertTimeTables = (timeTables: timeTable[]) => {
     return timeTables.map((timeTable) => 
       timeTable.timeBlocks.map((timeBlock) => 
         `${convertWeekday(timeBlock.weekday)} ${convertTime(timeBlock.startTime)}-${convertTime(timeBlock.endTime)}`
@@ -91,7 +91,7 @@ const CourseDetailPage = () => {
       setCourseLevel(data.level);
 
       //분반 정보 세팅
-      setConvertedTimeTables(convertTimeTable(data.course.timeTables));
+      setConvertedTimeTables(convertTimeTables(data.course.timeTables));
     });
     
   }, [courseInfoId]);

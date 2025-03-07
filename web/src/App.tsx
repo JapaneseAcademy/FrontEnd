@@ -25,6 +25,7 @@ import Out_MainBestReviews from './components/adminComponents/Out_BestReviews';
 import { useRecoilState } from 'recoil';
 import { loadingAtom } from './recoil/loadingAtom';
 import Loading from './components/Loading';
+import AdminLoginPage from './pages/AdminLoginPage';
 
 function App() {
   const location = useLocation();
@@ -51,6 +52,7 @@ function App() {
             <Route path="youtube" element={<ChangeYoutube />} />
           </Route>
           <Route path="*" element={<div>Not Found</div>} />
+          <Route path="/admin/login" element={<AdminLoginPage />} />
         </Routes>
       ) : (
         <AppWrapper>

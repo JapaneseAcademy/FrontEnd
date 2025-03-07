@@ -1,16 +1,11 @@
 import styled from "styled-components"
+import { getKakaoCode } from "../apis/loginAPI";
 
-interface LoginWrapperProps {
-   onLoginSuccess: () => void;
-}
+const AdminLoginPage = () => {
 
-const LoginWrapper = ({ onLoginSuccess }: LoginWrapperProps) => {
-
-   // 아직 관리자 토큰인지 검증하는 api 완성 안 돼서, 
-   // 일단 로그인 버튼 클릭만 하면 관리자 인증되는 걸로 설정
    const handleLogin = () => {
-      // {todo: 관리자 토큰 검증 api 호출}
-      onLoginSuccess();
+      console.log("카카오 로그인");
+      getKakaoCode();
    }
 
    return (
@@ -24,14 +19,14 @@ const LoginWrapper = ({ onLoginSuccess }: LoginWrapperProps) => {
    )
 }
 
-export default LoginWrapper
+export default AdminLoginPage
 
 const Wrapper = styled.div`
    display: flex;
-   justify-content: center;
+   justify-content: center;   
    align-items: center;
    flex-direction: row;
-   background-color: #f7f7f7;
+   background-color: #f7f7f7; 
    width: 100%;
    height: 100%;
 `
@@ -71,6 +66,3 @@ const KakaoLoginButton = styled.button`
       background-color: #ffcd00;
    }
 `
-
-
-

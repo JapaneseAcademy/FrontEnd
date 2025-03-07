@@ -90,7 +90,7 @@ const StudentsTable = () => {
          </TableHeader>
          <TableBody>
             {STUDENTS.map((student, index) => (
-               <TableRow>
+               <TableRow key={index}>
                   <TableItem key={index}>
                      {student.studentName}
                   </TableItem>

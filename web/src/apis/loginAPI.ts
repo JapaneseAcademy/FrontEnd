@@ -1,8 +1,14 @@
 import axios from "axios";
 
 const REST_API_KEY = import.meta.env.VITE_REST_API_KEY;
-// 현재 환경에 따라 동적으로 redirect_uri를 설정
-const REDIRECT_URI = `${window.location.origin}`;
+// 현재 환경에 따라 동적으로 redirect_uri를 설정 
+   // 1) http://localhost:5173 
+   // 2) http://localhost:5173/admin
+   // 3) https://yeri-jp.com
+   // 4) https://yeri-jp.com/admin
+//origin 뒤에 /admin이 있을 때만 /admin을 붙여주고,
+//그 외에는 나머지를 다 떼고 origin만 남김
+const REDIRECT_URI = window.location.origin + (window.location.pathname.includes("/admin") ? "/admin" : "");
 const KAKAO_LOGIN_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 

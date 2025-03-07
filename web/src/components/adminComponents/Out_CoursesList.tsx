@@ -1,40 +1,51 @@
 import styled from "styled-components"
-import { useEffect, useRef, useState } from "react"
-import { getCourseInfos } from "../../apis/courseAPI"
-import { FiPlus } from "react-icons/fi"
+import { useEffect, useState } from "react"
+// import { FiPlus } from "react-icons/fi"
 import CourseFilter from "./filters/CourseFilter.tsx"
 import CourseMembers from "./etc/CourseMembers.tsx"
+import { getAdminCoursesByMonth } from "../../apis/adminAPI/adminCoursesAPI.ts"
+import { convertTime, convertWeekday } from "../../utils/utils.ts"
 
-// type courseBlock = {
-//   day: string;
-//   time: string;
+//한 분반
+// type timeTable = {
+//   timeTableId: number; //분반 아이디
+//   timeBlocks: timeBlock[];
 // }
+//한 타임블럭(분반 내)
+type timeBlock = {
+  weekday: string;
+  startTime: string;
+  endTime: string;
+}
 
-type Course = {
-  courseId: string;
-  courseTitle: string;
-  courseMainImage: string;
-  courseImages: string[];
-  // courseBlocks: courseBlock[]; {todo: api 수정되면 추가}
-  coursePrice: number;
-  studentsNum: number;
+type timeTable = { //한 
+  courseId: number;
+  timeTableId: number;
+  timeBlocks: timeBlock[];
   
-  isOnline: boolean;
-  isLive: boolean;
-  isRecorded: boolean;
+  endDate: string;
+  startDate: string;
+  title: string;
+  studentCount: number;
 }
 
 const Out_CoursesList = () => {
-  const [selectedCourseId, setSelectedCourseId] = useState<string>("1");
-  const [courses, setCourses] = useState<Course[]>([])
-  const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  const [editedCourse, setEditedCourse] = useState<Course | null>(null);
+  const [selectedTimeTableId, setSelectedTimeTableId] = useState<number>(1);
+  const [timeTables, setTimeTables] = useState<timeTable[]>([]);
+
   const [selectedYear, setSelectedYear] = useState<string>("2025");
   const [selectedMonth, setSelectedMonth] = useState<string>("03");
 
-  //사진 첨부 관련
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const detailImageInputRef = useRef<HTMLInputElement | null>(null);
+  const converTimeTable = (timeTable: timeTable) => {
+    let timeTableString = "";
+    timeTable.timeBlocks.forEach((timeBlock) => {
+      timeTableString += `${convertWeekday(timeBlock.weekday)} ${convertTime(timeBlock.startTime)} - ${convertTime(timeBlock.endTime)} \n `;
+    });
+    // /을 기준으로 줄바꿈, 마지막 / 제거
+    timeTableString = timeTableString.slice(0, -2);
+    return timeTableString;
+  };
+
 
   //년/월 선택 관련
   const handleYearChange = (year: string) => {
@@ -43,98 +54,46 @@ const Out_CoursesList = () => {
   const handleMonthChange = (month: string) => {
     setSelectedMonth(month);
   };
-  const handleSearchClick = () => {
-    //{todo: 검색 api 호출}
-    console.log(selectedYear, "년", selectedMonth, "월", "검색!!");
-  };
 
-  // 선택한 수업의 데이터 가져오기(임시)
-  const selectedCourse = courses.find(course => course.courseId == selectedCourseId);
-
-  const handleEditClick = () => {
-    setIsEditMode(true);
-    if (selectedCourse) {
-      setEditedCourse({ ...selectedCourse });
-    }
-  };
-
-  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    if (!editedCourse) return;
-    const { name, value } = e.target;
-    setEditedCourse(prev => prev ? { ...prev, [name]: value } : null);
-  };
-  
-  const handleEditComplete = () => {
-    console.log("수정 완료된 값:", editedCourse);
-    setIsEditMode(false);
-  };
-
-  const handleDeleteImage = (index: number) => {
-    setEditedCourse((prev) => {
-      if (!prev) return null;
-      return { ...prev, courseImages: prev.courseImages.filter((_, i) => i !== index) };
-    });
-  };
-
-  const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = URL.createObjectURL(e.target.files[0]);
-      setEditedCourse(prev => prev ? { ...prev, courseMainImage: file } : null);
-    }
-  };
-
-  const handleAddDetailImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      if (editedCourse?.courseImages.length === 10) {
-        alert("상세 이미지는 최대 10개까지만 추가할 수 있습니다.");
-        return;
-      }
-      const file = URL.createObjectURL(e.target.files[0]);
-      setEditedCourse(prev => prev ? { ...prev, courseImages: [...prev.courseImages, file] } : null);
-    }
-  };
-  
+  const selectedTimeTable = timeTables.find((table) => table.timeTableId === selectedTimeTableId);
 
   useEffect(() => {
-    //강의 목록 전체 조회 api
-    getCourseInfos().then((data) => {
-      const courseInfos = data.courseInfos;
-      const formattedCourses = courseInfos.map((course: any) => ({
-        courseId: course.courseId,
-        courseTitle: course.title,
-        courseMainImage: course.mainImageUrl,
-        courseImages: [course.mainImageUrl, course.mainImageUrl, course.mainImageUrl], // {todo: 임시}  
-        // courseBlocks: course.blocks,
-        coursePrice: course.cost,
-        studentsNum: 11, //{todo: 임시}
-
-        isOnline: course.isOnline,
-        isLive: course.isLive,
-        isRecorded: course.isRecorded
+    //관리자-월별 강의 조회 api
+    getAdminCoursesByMonth(`${selectedYear}-${selectedMonth}`).then((data) => {
+      const formattedTimeTables = data.map((timeTable: any) => ({
+        courseId: timeTable.courseId,
+        timeTableId: timeTable.timeTable.timeTableId,
+        timeBlocks: timeTable.timeTable.timeBlocks,
+        endDate: timeTable.endDate,
+        startDate: timeTable.startDate,
+        title: timeTable.title,
+        studentCount: timeTable.studentCount,
       }));
-      setCourses(formattedCourses);
-    });
-  }, []);
+      setTimeTables(formattedTimeTables);
+    }
+    );
 
-  useEffect(() => {
-    console.log("세팅 후:", courses);
-  }, [courses]);
+  }, [selectedYear, selectedMonth]);
 
   //년/월 확인
   useEffect(() => {
     console.log("년:", selectedYear, "월:", selectedMonth);
   }, [selectedYear, selectedMonth]);
 
+  //timeTableId 확인
+  useEffect(() => {
+    console.log("선택된 timeTableId:", selectedTimeTableId);
+  }, [selectedTimeTableId]);
+
   return (
     <Wrapper>
-      <CourseListContainer id-="course-list-container"> 
+      <CourseListContainer id="course-list-container"> 
         <Title>수업 목록</Title>
         <CourseFilter 
           handleYearChange={handleYearChange} 
           handleMonthChange={handleMonthChange} 
           selectedYear={selectedYear}
           selectedMonth={selectedMonth}
-          handleSearchClick={handleSearchClick}
         />
         {/* 학생 목록 표 */}
         <CoursesTable id='courses-table'>
@@ -144,140 +103,55 @@ const Out_CoursesList = () => {
             <TableHeaderItem id='numOfStudents'>학생 수</TableHeaderItem>
           </TableHeader>
           <TableBody>
-            {courses.map((course) => (
+            {timeTables.map((timeTable) => (
               <TableRow 
-                key={course.courseId} 
-                onClick={() => setSelectedCourseId(course.courseId)}
-                isSelected={selectedCourseId == course.courseId} 
+                key={timeTable.timeTableId} 
+                isSelected={selectedTimeTableId === timeTable.timeTableId} 
+                onClick={() => setSelectedTimeTableId(timeTable.timeTableId)}
               >
-                <TableItem>{course.courseTitle}</TableItem>
-                <TableItem>화, 수</TableItem> 
-                <TableItem>13:00 - 15:00</TableItem>
-                <TableItem>11</TableItem>
+                <TableItem>{timeTable.title}</TableItem>
+                <TableItem>{converTimeTable(timeTable)}</TableItem>
+                <TableItem>{timeTable.studentCount}</TableItem>
               </TableRow>
             ))}
           </TableBody>
         </CoursesTable>
       </CourseListContainer>
 
-      <CourseDetailContainer>
-        { isEditMode ? (
-          <>
-            <DetailRow>
-              <DetailTitle>수업이름</DetailTitle>
-              <DetailContent>
-                <Input
-                  type="text"
-                  name="courseTitle"
-                  value={editedCourse?.courseTitle || ""}
-                  onChange={handleEditChange}
-                />
-              </DetailContent>
-            </DetailRow>
-            <DetailRow>
-              <DetailTitle>썸네일</DetailTitle>
-              <DetailContent>
-                <CourseImage src={editedCourse?.courseMainImage}/>
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  style={{ display: "none" }}
-                  onChange={handleThumbnailChange}
-                />
-                <PlusButton onClick={() => fileInputRef.current?.click()}>변경</PlusButton>
-              </DetailContent>
-            </DetailRow>
-            <DetailRow>
-              <DetailTitle>상세 이미지</DetailTitle>
-              <DetailContent>
-              <Images>
-                {editedCourse?.courseImages.map((image, index) => (
-                  <ImageWrapper key={index}>
-                    <CourseImage src={image} />
-                    <DeleteImageButton onClick={() => handleDeleteImage(index)}>x</DeleteImageButton>
-                  </ImageWrapper>
-                ))}
-              </Images>
-              <input 
-                  type="file" 
-                  ref={detailImageInputRef} 
-                  style={{ display: "none" }} 
-                  accept="image/*"
-                  onChange={handleAddDetailImage}
-              />
-                <PlusButton onClick={() => detailImageInputRef.current?.click()}><FiPlus /></PlusButton>
-              </DetailContent>
-            </DetailRow>
-            <DetailRow>
-              <DetailTitle>분반</DetailTitle>
-              <DetailContent>
-                <Input
-                  type="text"
-                  name="courseBlocks"
-                  value="화요일, 수요일(hard)"
-                  onChange={handleEditChange}
-                />
-              </DetailContent>
-            </DetailRow>
-            <DetailRow>
-              <DetailTitle>학생 수</DetailTitle>
-              <DetailContent>
-                {selectedCourse?.studentsNum}
-              </DetailContent>
-            </DetailRow>
-            <DetailRow>
-              <DetailTitle>수강료</DetailTitle>
-              <DetailContent>
-                <Input
-                  type="text"
-                  name="coursePrice"
-                  value={editedCourse?.coursePrice}
-                  onChange={handleEditChange}
-                />
-              </DetailContent>
-            </DetailRow>
-            <ButtonsContainer>
-              <Button onClick={handleEditComplete}>완료</Button>
-            </ButtonsContainer>
-          </>
-        ) : (
-          <>
-            <DetailRow>
-              <DetailTitle>수업이름</DetailTitle>
-              <DetailContent>{selectedCourse?.courseTitle}</DetailContent>
-            </DetailRow>
-            <DetailRow>
-              <DetailTitle>썸네일</DetailTitle>
-              <DetailContent><CourseImage src={selectedCourse?.courseMainImage}/></DetailContent>
-            </DetailRow>
-            <DetailRow>
-              <DetailTitle>상세 이미지</DetailTitle>
-              <DetailContent>
-                {selectedCourse?.courseImages.map((image, index) => (
-                  <CourseImage key={index} src={image}/>
-                ))}
-              </DetailContent>
-            </DetailRow>
-            <DetailRow>
-              <DetailTitle>분반</DetailTitle>
-              <DetailContent>- 월 13:00~14:00, 수 13:00~14:00</DetailContent>
-            </DetailRow>
-            <DetailRow>
-              <DetailTitle>학생 수</DetailTitle>
-              <DetailContent>{selectedCourse?.studentsNum}</DetailContent>
-            </DetailRow>
-            <DetailRow>
-              <DetailTitle>수강료</DetailTitle>
-              <DetailContent>{selectedCourse?.coursePrice}</DetailContent>
-            </DetailRow>
-            <ButtonsContainer>
-              <Button onClick={handleEditClick}>수정</Button>
-            </ButtonsContainer>
-          </>
-        )}
-
-      <CourseMembers />
+      <CourseDetailContainer id="course-detail-container">
+        <DetailRow className='course-title'>
+          <DetailTitle>강의명</DetailTitle>
+          <DetailContent>{selectedTimeTable?.title || "강의 없음"}</DetailContent>
+        </DetailRow>
+        {/* <DetailRow className='course-main-image'>
+          <DetailTitle>썸네일</DetailTitle>
+          <DetailContent>
+            <CourseImage src="/images/courseBanner/course-banner-oneshot1.png" alt="대표 이미지" />
+          </DetailContent>
+        </DetailRow>
+        <DetailRow className="course-detail-images">
+          <DetailTitle>상세 이미지</DetailTitle>
+          <DetailContent>
+                <CourseImage src="/images/courseBanner/course-banner-oneshot1.png" alt="상세 이미지" />
+                <CourseImage src="/images/courseBanner/course-banner-oneshot1.png" alt="상세 이미지" />
+                <CourseImage src="/images/courseBanner/course-banner-oneshot1.png" alt="상세 이미지" />
+          </DetailContent>
+        </DetailRow> */}
+        <DetailRow className='course-timetables'>
+          <DetailTitle>분반</DetailTitle>
+          <DetailContent>{selectedTimeTable ? converTimeTable(selectedTimeTable) : "분반 정보 없음"}</DetailContent>
+        </DetailRow>
+        <DetailRow className="course-students">
+          <DetailTitle>학생 수</DetailTitle>
+          <DetailContent>{selectedTimeTable?.studentCount || 0}</DetailContent>
+        </DetailRow>
+        <DetailRow>
+          <DetailTitle className="course-period">강의 기간</DetailTitle>
+          <DetailContent>{selectedTimeTable ? `${selectedTimeTable.startDate} ~ ${selectedTimeTable.endDate}` : "기간 정보 없음"}</DetailContent>
+        </DetailRow>
+        <CourseMembers />
       </CourseDetailContainer>
+
     </Wrapper>
   )
 }
@@ -292,6 +166,9 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 10px;
+
+  //기본적으로 단어 단위 줄바꿈
+  word-break: keep-all;
 `
 
 const CourseListContainer = styled.div`
@@ -300,7 +177,7 @@ const CourseListContainer = styled.div`
   align-items: center;
   justify-content: flex-start;
   background-color: #ffffff;
-  width: 60%;
+  width: 50%;
   height: 100%;
   border-right: 1px solid #e1e1e1;
 `
@@ -335,7 +212,7 @@ const TableHeader = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
+  padding: 10px 0;
   background-color: #d7d7d7;
   font-size: 1rem;
   font-weight: 500;
@@ -350,6 +227,31 @@ const TableHeaderItem = styled.div`
   &:not(:last-child) {
     border-right: 1px solid #e1e1e1; // ✅ 마지막 항목 제외
   }
+
+  //세번째 항목
+  &:nth-child(3) {
+    flex: 0.4;
+  }
+`;
+
+const TableItem = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:not(:last-child) {
+    border-right: 1px solid #e1e1e1; // ✅ 마지막 항목 제외
+  }
+
+  //세번째 항목
+  &:nth-child(3) {
+    flex: 0.4;
+  }
+
+  //개행문자 처리
+  white-space: pre-line;
+  text-align: center;
 `;
 
 const TableBody = styled.div`
@@ -363,6 +265,11 @@ const TableBody = styled.div`
   //넘어가면 스크롤 가능하도록
   overflow-y: scroll;
   height: 100%;
+  //스크롤바 숨기기
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
 ` 
 const TableRow = styled.div<{ isSelected: boolean }>`
   width: 100%;
@@ -370,7 +277,6 @@ const TableRow = styled.div<{ isSelected: boolean }>`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
   padding-top: 9px;
   padding-bottom: 9px;
   border-bottom: 1px solid #e1e1e1;
@@ -383,19 +289,7 @@ const TableRow = styled.div<{ isSelected: boolean }>`
 `;
 
 
-const TableItem = styled.div`
-  flex: 1; // ✅ Header와 동일하게 설정
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  &:not(:last-child) {
-    border-right: 1px solid #e1e1e1; // ✅ 마지막 항목 제외
-  }
-`;
-
-
-
+////////////////
 
 const CourseDetailContainer = styled.div`
   display: flex;
@@ -403,7 +297,7 @@ const CourseDetailContainer = styled.div`
   align-items: center;
   justify-content: flex-start;
   background-color: #ffffff;
-  width: 40%;
+  width: 50%;
   height: 100%;
   border-right: 1px solid #e1e1e1;
   padding-top: 20px;
@@ -437,119 +331,121 @@ const DetailContent = styled.div`
   padding: 10px;
   width: 80%;
   border-radius: 5px;
-`
 
-const ButtonsContainer = styled.div`
-  width: 85%;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-bottom: 20px;
-`
+  //넘어가면 다음 줄로
+  flex-wrap: wrap;
+  gap: 5px;
 
-const Button = styled.button`
-  width: 80px;
-  height: 35px;
-  background-color: #d7d7d7;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #636363;
-    color: #ffffff;
-  }
+  //텍스트 줄바꿈 처리
+  white-space: pre-line;
 `
 
 // const CourseImage = styled.img`
-//   width: 45%; 
-//   /* height: 200px; */
+//   width: 120px;
+//   height: 120px;
 //   object-fit: cover;
 //   object-position: center;
+//   border-radius: 5px;
+// `;
+
+// const ButtonsContainer = styled.div`
+//   width: 85%;
+//   display: flex;
+//   flex-direction: row;
+//   align-items: center;
+//   justify-content: flex-end;
+//   gap: 10px;
+//   margin-bottom: 20px;
 // `
 
-//Editmode 일 때
-const Input = styled.input`
-  width: 100%;
-  height: 30px;
-  border: 1px solid #e1e1e1;
-  border-radius: 5px;
-  padding: 5px;
-  font-size: 0.9rem;
-  outline: none;
-  box-sizing: border-box;
-`
+// const Button = styled.button`
+//   width: 80px;
+//   height: 35px;
+//   background-color: #d7d7d7;
+//   border: none;
+//   border-radius: 5px;
+//   cursor: pointer;
 
-const PlusButton = styled.button`
-  justify-self: flex-end    ;
-  width: 30px;
-  height: 30px;
-  background-color: #d7d7d7;
-  margin-top: 10px;
-  border: none; 
-  border-radius: 5px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.6rem;
+//   &:hover {
+//     background-color: #636363;
+//     color: #ffffff;
+//   }
+// `
 
-  &:hover {
-    background-color: #636363;
-    color: #ffffff;
-  }
-`
+// ////////Editmode 일 때////////
+// const Input = styled.input`
+//   width: 100%;
+//   height: 30px;
+//   border: 1px solid #e1e1e1;
+//   border-radius: 5px;
+//   padding: 5px;
+//   font-size: 0.9rem;
+//   outline: none;
+//   box-sizing: border-box;
+// `
+
+// const PlusButton = styled.button`
+//   justify-self: flex-end    ;
+//   width: 30px;
+//   height: 30px;
+//   background-color: #d7d7d7;
+//   margin-top: 10px;
+//   border: none; 
+//   border-radius: 5px;
+//   cursor: pointer;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   font-size: 0.6rem;
+
+//   &:hover {
+//     background-color: #636363;
+//     color: #ffffff;
+//   }
+// `
 
 
-////
-const Images = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 10px;
-  flex-wrap: wrap;
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #e1e1e1;
-  border-radius: 5px;
-  box-sizing: border-box;
-`;
+// ////
+// const Images = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   align-items: center;
+//   justify-content: flex-start;
+//   gap: 10px;
+//   flex-wrap: wrap;
+//   width: 100%;
+//   padding: 10px;
+//   border: 1px solid #e1e1e1;
+//   border-radius: 5px;
+//   box-sizing: border-box;
+// `;
 
-const ImageWrapper = styled.div`
-  position: relative;  /* ✅ 개별 이미지의 부모 요소를 기준으로 absolute 배치 */
-  display: inline-block;
-`;
+// const ImageWrapper = styled.div`
+//   position: relative;  /* ✅ 개별 이미지의 부모 요소를 기준으로 absolute 배치 */
+//   display: inline-block;
+// `;
 
-const CourseImage = styled.img`
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 5px;
-`;
 
-const DeleteImageButton = styled.button`
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  width: 24px;
-  height: 24px;
-  background-color: rgba(230, 73, 73, 0.7);
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  color: white;
-  font-weight: bold;
+// const DeleteImageButton = styled.button`
+//   position: absolute;
+//   top: 5px;
+//   right: 5px;
+//   width: 24px;
+//   height: 24px;
+//   background-color: rgba(230, 73, 73, 0.7);
+//   border: none;
+//   border-radius: 50%;
+//   cursor: pointer;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   font-size: 12px;
+//   color: white;
+//   font-weight: bold;
 
-  &:hover 
-  {
-    background-color: rgba(230, 73, 73, 1);
-  }
-`;
+//   &:hover 
+//   {
+//     background-color: rgba(230, 73, 73, 1);
+//   }
+// `;
