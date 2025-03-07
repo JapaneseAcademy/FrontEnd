@@ -27,6 +27,7 @@ import Out_SendMessages from './components/adminComponents/Out_SendMessages';
 import Out_ChangeYoutube from './components/adminComponents/Out_ChangeYoutube';
 import Out_CourseInfoList from './components/adminComponents/Out_CourseInfoList';
 import Out_TimeTables from './components/adminComponents/Out_TimeTableList';
+import ReviewsPage from './pages/ReviewsPage';
 
 function App() {
   const location = useLocation();
@@ -71,6 +72,7 @@ function App() {
             <Route path="/review" element={<ReviewDetailPage />} />
             <Route path="/mypage/edit" element={<EditMyPage />} />
             <Route path="/courses/:courseId/writeReview" element={<WriteReviewPage />} />
+            <Route path="/reviews" element={<ReviewsPage />} />
             <Route path="*" element={<div>Not Found</div>} />
           </Routes>
           {/* ✅ Footer와 FloatingKakaoBtn을 AppWrapper 내부에 배치하여 크기 조정 */}
