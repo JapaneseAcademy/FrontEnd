@@ -2,16 +2,12 @@ import styled from "styled-components"
 import { useEffect, useState } from "react"
 // import { FiPlus } from "react-icons/fi"
 import CourseFilter from "./filters/CourseFilter.tsx"
-import CourseMembers from "./etc/CourseMembers.tsx"
-import { getAdminCoursesByMonth } from "../../apis/adminAPI/adminCoursesAPI.ts"
+import { getAdminCoursesByMonth, getStudentsByTimetableId } from "../../apis/adminAPI/adminTimeTableAPI.ts"
 import { convertTime, convertWeekday } from "../../utils/utils.ts"
 import { useNavigate } from "react-router-dom"
+import StudentsTable from "./etc/StudentsTable.tsx"
 
-//한 분반
-// type timeTable = {
-//   timeTableId: number; //분반 아이디
-//   timeBlocks: timeBlock[];
-// }
+
 //한 타임블럭(분반 내)
 type timeBlock = {
   weekday: string;
@@ -19,7 +15,7 @@ type timeBlock = {
   endTime: string;
 }
 
-type timeTable = { //한 
+type timeTable = { 
   courseId: number;
   timeTableId: number;
   timeBlocks: timeBlock[];
@@ -30,12 +26,22 @@ type timeTable = { //한
   studentCount: number;
 }
 
+type student = {
+  studentId: number;
+  name: string;
+  phone: string;
+  paymentDate: string;
+}
+
 const Out_TimeTables = () => {
   const [selectedTimeTableId, setSelectedTimeTableId] = useState<number>(1);
   const [timeTables, setTimeTables] = useState<timeTable[]>([]);
 
   const [selectedYear, setSelectedYear] = useState<string>("2025");
   const [selectedMonth, setSelectedMonth] = useState<string>("03");
+
+  //수강 중인 학생 정보들
+  const [students, setStudents] = useState<student[]>([]);
 
   const navigate = useNavigate();
 
@@ -60,6 +66,19 @@ const Out_TimeTables = () => {
 
   const selectedTimeTable = timeTables.find((table) => table.timeTableId === selectedTimeTableId);
 
+  //해당 timetable에 수강 중인 학생들 조회
+  const handleTitmeTableClick = (timeTableId: number) => {
+    setSelectedTimeTableId(timeTableId);
+    getStudentsByTimetableId(timeTableId).then((data) => {
+      setStudents(data);
+    }
+    );
+  };
+
+  useEffect(() => {
+    console.log("students: ", students);
+  }, [students]);
+
   useEffect(() => {
     //관리자-월별 강의 조회 api
     getAdminCoursesByMonth(`${selectedYear}-${selectedMonth}`, navigate).then((data) => {
@@ -78,15 +97,6 @@ const Out_TimeTables = () => {
 
   }, [selectedYear, selectedMonth]);
 
-  //년/월 확인
-  useEffect(() => {
-    console.log("년:", selectedYear, "월:", selectedMonth);
-  }, [selectedYear, selectedMonth]);
-
-  //timeTableId 확인
-  useEffect(() => {
-    console.log("선택된 timeTableId:", selectedTimeTableId);
-  }, [selectedTimeTableId]);
 
   return (
     <Wrapper>
@@ -109,12 +119,12 @@ const Out_TimeTables = () => {
             {timeTables.map((timeTable) => (
               <TableRow 
                 key={timeTable.timeTableId} 
-                isSelected={selectedTimeTableId === timeTable.timeTableId} 
-                onClick={() => setSelectedTimeTableId(timeTable.timeTableId)}
+                $isselected={selectedTimeTableId === timeTable.timeTableId} 
+                onClick={() => handleTitmeTableClick(timeTable.timeTableId)}
               >
                 <TableItem>{timeTable.title}</TableItem>
                 <TableItem>{converTimeTable(timeTable)}</TableItem>
-                <TableItem>{timeTable.studentCount}</TableItem>
+                <TableItem>{timeTable.studentCount} 명</TableItem>
               </TableRow>
             ))}
           </TableBody>
@@ -122,37 +132,27 @@ const Out_TimeTables = () => {
       </CourseListContainer>
 
       <CourseDetailContainer id="course-detail-container">
-        <DetailRow className='course-title'>
-          <DetailTitle>강의명</DetailTitle>
-          <DetailContent>{selectedTimeTable?.title || "강의 없음"}</DetailContent>
-        </DetailRow>
-        {/* <DetailRow className='course-main-image'>
-          <DetailTitle>썸네일</DetailTitle>
-          <DetailContent>
-            <CourseImage src="/images/courseBanner/course-banner-oneshot1.png" alt="대표 이미지" />
-          </DetailContent>
-        </DetailRow>
-        <DetailRow className="course-detail-images">
-          <DetailTitle>상세 이미지</DetailTitle>
-          <DetailContent>
-                <CourseImage src="/images/courseBanner/course-banner-oneshot1.png" alt="상세 이미지" />
-                <CourseImage src="/images/courseBanner/course-banner-oneshot1.png" alt="상세 이미지" />
-                <CourseImage src="/images/courseBanner/course-banner-oneshot1.png" alt="상세 이미지" />
-          </DetailContent>
-        </DetailRow> */}
-        <DetailRow className='course-timetables'>
-          <DetailTitle>분반</DetailTitle>
-          <DetailContent>{selectedTimeTable ? converTimeTable(selectedTimeTable) : "분반 정보 없음"}</DetailContent>
-        </DetailRow>
-        <DetailRow className="course-students">
-          <DetailTitle>학생 수</DetailTitle>
-          <DetailContent>{selectedTimeTable?.studentCount || 0}</DetailContent>
-        </DetailRow>
-        <DetailRow>
-          <DetailTitle className="course-period">강의 기간</DetailTitle>
-          <DetailContent>{selectedTimeTable ? `${selectedTimeTable.startDate} ~ ${selectedTimeTable.endDate}` : "기간 정보 없음"}</DetailContent>
-        </DetailRow>
-        <CourseMembers />
+        <TimeTableContent>
+          <DetailRow className='course-title'>
+            <DetailTitle>강의명</DetailTitle>
+            <DetailContent>{selectedTimeTable?.title || "강의 없음"}</DetailContent>
+          </DetailRow>
+          <DetailRow className='course-timetables'>
+            <DetailTitle>분반</DetailTitle>
+            <DetailContent>{selectedTimeTable ? converTimeTable(selectedTimeTable) : "분반 정보 없음"}</DetailContent>
+          </DetailRow>
+          <DetailRow className="course-students">
+            <DetailTitle>학생 수</DetailTitle>
+            <DetailContent>{selectedTimeTable?.studentCount || 0} 명</DetailContent>
+          </DetailRow>
+          <DetailRow>
+            <DetailTitle className="course-period">강의 기간</DetailTitle>
+            <DetailContent>{selectedTimeTable ? `${selectedTimeTable.startDate} ~ ${selectedTimeTable.endDate}` : "기간 정보 없음"}</DetailContent>
+          </DetailRow>
+        </TimeTableContent>
+
+        <StudentsTable students={students} />
+
       </CourseDetailContainer>
 
     </Wrapper>
@@ -274,7 +274,7 @@ const TableBody = styled.div`
   }
 
 ` 
-const TableRow = styled.div<{ isSelected: boolean }>`
+const TableRow = styled.div<{ $isselected: boolean }>`
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -284,10 +284,10 @@ const TableRow = styled.div<{ isSelected: boolean }>`
   padding-bottom: 9px;
   border-bottom: 1px solid #e1e1e1;
   cursor: pointer;
-  background-color: ${({ isSelected }) => (isSelected ? "#e6f7ff" : "transparent")}; 
+  background-color: ${({ $isselected: $isSelected }) => ($isSelected ? "#e6f7ff" : "transparent")}; 
   
   &:hover {
-    background-color: ${({ isSelected }) => (isSelected ? "#cceeff" : "#f1f1f1")}; 
+    background-color: ${({ $isselected: $isSelected }) => ($isSelected ? "#cceeff" : "#f1f1f1")}; 
   }
 `;
 
@@ -303,12 +303,22 @@ const CourseDetailContainer = styled.div`
   width: 50%;
   height: 100%;
   border-right: 1px solid #e1e1e1;
-  padding-top: 20px;
-  padding-bottom: 10px;
+  padding-top: 30px;
+  padding-bottom: 20px;
 
   //넘어가면 스크롤 가능하도록
   overflow-y: scroll;
   height: 100%;
+`
+
+const TimeTableContent = styled.div`
+  width: 90%;
+  min-height: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
 `
 
 const DetailRow = styled.div`

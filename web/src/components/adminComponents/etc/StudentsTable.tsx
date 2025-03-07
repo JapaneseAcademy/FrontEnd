@@ -1,85 +1,18 @@
 import styled from "styled-components"
 
-const StudentsTable = () => {
+type student = {
+   studentId: number;
+   name: string;
+   phone: string;
+   paymentDate: string;
+}
 
-   //학생 예시 데이터
-   const STUDENTS = [
-      {
-         studentName: '홍길동',
-         phone: '010-1234-5678',
-         paymentDate: '2021-01-01',
-      },
-      {
-         studentName: '김철수',
-         phone: '010-2345-6789',
-         paymentDate: '2021-02-01',
-      },
-      {
-         studentName: '이영희',
-         phone: '010-3456-7890',
-         paymentDate: '2021-03-01',
-      },
-      {
-         studentName: '박민수',
-         phone: '010-4567-8901',
-         paymentDate: '2021-04-01',
-      },
-      {
-         studentName: '정미경',
-         phone: '010-5678-9012',
-         paymentDate: '2021-05-01',
-      },
-      {
-         studentName: '홍길동',
-         phone: '010-1234-5678',
-         paymentDate: '2021-01-01',
-      },
-      {
-         studentName: '김철수',
-         phone: '010-2345-6789',
-         paymentDate: '2021-02-01',
-      },
-      {
-         studentName: '이영희',
-         phone: '010-3456-7890',
-         paymentDate: '2021-03-01',
-      },
-      {
-         studentName: '박민수',
-         phone: '010-4567-8901',
-         paymentDate: '2021-04-01',
-      },
-      {
-         studentName: '정미경',
-         phone: '010-5678-9012',
-         paymentDate: '2021-05-01',
-      },
-      {
-         studentName: '홍길동',
-         phone: '010-1234-5678',
-         paymentDate: '2021-01-01',
-      },
-      {
-         studentName: '김철수',
-         phone: '010-2345-6789',
-         paymentDate: '2021-02-01',
-      },
-      {
-         studentName: '이영희',
-         phone: '010-3456-7890',
-         paymentDate: '2021-03-01',
-      },
-      {
-         studentName: '박민수',
-         phone: '010-4567-8901',
-         paymentDate: '2021-04-01',
-      },
-      {
-         studentName: '정미경',
-         phone: '010-5678-9012',
-         paymentDate: '2021-05-01',
-      },
-   ]
+interface StudentsTableProps {
+   students: student[];
+}
+
+const StudentsTable = ({ students }: StudentsTableProps) => {
+
 
    return (
       <Wrapper id='students-table-wrapper'>
@@ -89,20 +22,20 @@ const StudentsTable = () => {
             <TableHeaderItem>결제일</TableHeaderItem>
          </TableHeader>
          <TableBody>
-            {STUDENTS.map((student, index) => (
-               <TableRow key={index}>
-                  <TableItem key={index}>
-                     {student.studentName}
-                  </TableItem>
-                  <TableItem key={index}>
-                     {student.phone}
-                  </TableItem>
-                  <TableItem key={index}>
-                     {student.paymentDate}
-                  </TableItem>
+            {/* students가 없을때 */}
+            {students.length === 0 ?
+               <TableRow>
+                  <TableItem style={{width:'100%', color:'#737373'}}>수강생이 없습니다.</TableItem>
                </TableRow>
-            ))}
-
+            :
+               students.map((student) => (
+                  <TableRow key={student.studentId}>
+                     <TableItem>{student.name}</TableItem>
+                     <TableItem>{student.phone}</TableItem>
+                     <TableItem>{student.paymentDate}</TableItem>
+                  </TableRow>
+               ))
+            }
          </TableBody>
       </Wrapper>
    )
@@ -118,6 +51,7 @@ const Wrapper = styled.div`
    justify-content: center;
    border: 1px solid #e0e0e0;
    margin-bottom: 20px;
+   margin-top: 40px;
 `
 
 const TableHeader = styled.div`

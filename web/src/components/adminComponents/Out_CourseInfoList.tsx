@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { useEffect, useState } from "react"
 // import { FiPlus } from "react-icons/fi"
-import { getAdminCoursesByMonth } from "../../apis/adminAPI/adminCoursesAPI.ts"
+import { getAdminCoursesByMonth } from "../../apis/adminAPI/adminTimeTableAPI.ts"
 import { useNavigate } from "react-router-dom"
 
 //한 타임블럭(분반 내)
