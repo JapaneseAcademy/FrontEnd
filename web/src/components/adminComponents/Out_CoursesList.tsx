@@ -5,6 +5,7 @@ import CourseFilter from "./filters/CourseFilter.tsx"
 import CourseMembers from "./etc/CourseMembers.tsx"
 import { getAdminCoursesByMonth } from "../../apis/adminAPI/adminCoursesAPI.ts"
 import { convertTime, convertWeekday } from "../../utils/utils.ts"
+import { useNavigate } from "react-router-dom"
 
 //한 분반
 // type timeTable = {
@@ -36,6 +37,8 @@ const Out_CoursesList = () => {
   const [selectedYear, setSelectedYear] = useState<string>("2025");
   const [selectedMonth, setSelectedMonth] = useState<string>("03");
 
+  const navigate = useNavigate();
+
   const converTimeTable = (timeTable: timeTable) => {
     let timeTableString = "";
     timeTable.timeBlocks.forEach((timeBlock) => {
@@ -59,7 +62,7 @@ const Out_CoursesList = () => {
 
   useEffect(() => {
     //관리자-월별 강의 조회 api
-    getAdminCoursesByMonth(`${selectedYear}-${selectedMonth}`).then((data) => {
+    getAdminCoursesByMonth(`${selectedYear}-${selectedMonth}`, navigate).then((data) => {
       const formattedTimeTables = data.map((timeTable: any) => ({
         courseId: timeTable.courseId,
         timeTableId: timeTable.timeTable.timeTableId,

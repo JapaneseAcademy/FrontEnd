@@ -21,12 +21,12 @@ export const adminLogin = async (code: string, navigate: (path: string) => void,
       
       //role이 INSTRUCTOR 일 때만 true 반환
       if (response.data.role === "INSTRUCTOR") {
-         console.log("관리자 로그인 성공!!!");
+         alert("관리자로 로그인 되었습니다.");
          // setIsAdminLogin(true);
          navigate('/admin/student');
       }
       else {
-         console.log("관리자가 아닙니다.");
+         alert("관리자가 아닙니다.");
          // setIsAdminLogin(false);
          navigate('/admin/login');
       }
