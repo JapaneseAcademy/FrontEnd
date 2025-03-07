@@ -33,8 +33,10 @@ const AdminPage = () => {
          setSelectedItem('student');
       } else if (location.pathname === '/admin/message') {
          setSelectedItem('message');
-      } else if (location.pathname === '/admin/course') {
-         setSelectedItem('course');
+      } else if (location.pathname === '/admin/courseInfo') {
+         setSelectedItem('courseInfo');
+      } else if (location.pathname === '/admin/timetables') {
+         setSelectedItem('timetables');
       } else if (location.pathname === '/admin/mainReviews') {
          setSelectedItem('mainReviews');
       } else if (location.pathname === '/admin/courseReviews') {
@@ -69,8 +71,8 @@ const AdminPage = () => {
                <Category>
                   <CategoryTitle><FaRegFileVideo/>강의 관리</CategoryTitle>
                   <Items>
-                     <CategoryItem $isselected={selectedItem === 'course'} onClick={() => handleItemClick('course')}>- 강의 관리</CategoryItem>
-                     <CategoryItem $isselected={selectedItem === 'course'} onClick={() => handleItemClick('course')}>- 분반 목록</CategoryItem>
+                     <CategoryItem $isselected={selectedItem === 'courseInfo'} onClick={() => handleItemClick('courseInfo')}>- 강의 관리</CategoryItem>
+                     <CategoryItem $isselected={selectedItem === 'timetables'} onClick={() => handleItemClick('timetables')}>- 분반 목록</CategoryItem>
                   </Items>
                </Category>
                <Category>

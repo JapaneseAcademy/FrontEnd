@@ -12,10 +12,6 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import FloatingKakaoBtn from './components/FloatingKakaoBtn';
 import AdminPage from './pages/AdminPage';
-import StudentsList from './components/adminComponents/Out_StudentsList';
-import CoursesList from './components/adminComponents/Out_CoursesList';
-import SendMessages from './components/adminComponents/Out_SendMessages';
-import ChangeYoutube from './components/adminComponents/Out_ChangeYoutube';
 import CourseDetailPage from './pages/CourseDetailPage';
 import RegisterPage from './pages/RegisterPage';
 import ReviewDetailPage from './pages/ReviewDetailPage';
@@ -26,6 +22,11 @@ import { useRecoilState } from 'recoil';
 import { loadingAtom } from './recoil/loadingAtom';
 import Loading from './components/Loading';
 import AdminLoginPage from './pages/AdminLoginPage';
+import Out_StudentsList from './components/adminComponents/Out_StudentsList';
+import Out_SendMessages from './components/adminComponents/Out_SendMessages';
+import Out_ChangeYoutube from './components/adminComponents/Out_ChangeYoutube';
+import Out_CourseInfoList from './components/adminComponents/Out_CourseInfoList';
+import Out_TimeTables from './components/adminComponents/Out_TimeTableList';
 
 function App() {
   const location = useLocation();
@@ -45,11 +46,12 @@ function App() {
       {isAdminPage ? (
         <Routes>
           <Route path="/admin" element={<AdminPage />}>
-            <Route path="student" element={<StudentsList />} />
-            <Route path="message" element={<SendMessages />} />
-            <Route path="course" element={<CoursesList />} />
+            <Route path="student" element={<Out_StudentsList />} />
+            <Route path="message" element={<Out_SendMessages />} />
+            <Route path="courseInfo" element={<Out_CourseInfoList />} />
+            <Route path="timetables" element={<Out_TimeTables />} />
             <Route path="mainReviews" element={<Out_MainBestReviews />} />
-            <Route path="youtube" element={<ChangeYoutube />} />
+            <Route path="youtube" element={<Out_ChangeYoutube />} />
           </Route>
           <Route path="*" element={<div>Not Found</div>} />
           <Route path="/admin/login" element={<AdminLoginPage />} />

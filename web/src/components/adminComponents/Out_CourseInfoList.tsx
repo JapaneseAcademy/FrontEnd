@@ -2,16 +2,10 @@ import styled from "styled-components"
 import { useEffect, useState } from "react"
 // import { FiPlus } from "react-icons/fi"
 import CourseFilter from "./filters/CourseFilter.tsx"
-import CourseMembers from "./etc/CourseMembers.tsx"
 import { getAdminCoursesByMonth } from "../../apis/adminAPI/adminCoursesAPI.ts"
 import { convertTime, convertWeekday } from "../../utils/utils.ts"
 import { useNavigate } from "react-router-dom"
 
-//한 분반
-// type timeTable = {
-//   timeTableId: number; //분반 아이디
-//   timeBlocks: timeBlock[];
-// }
 //한 타임블럭(분반 내)
 type timeBlock = {
   weekday: string;
@@ -30,7 +24,7 @@ type timeTable = { //한
   studentCount: number;
 }
 
-const Out_CoursesList = () => {
+const Out_CourseInfoList = () => {
   const [selectedTimeTableId, setSelectedTimeTableId] = useState<number>(1);
   const [timeTables, setTimeTables] = useState<timeTable[]>([]);
 
@@ -91,7 +85,7 @@ const Out_CoursesList = () => {
   return (
     <Wrapper>
       <CourseListContainer id="course-list-container"> 
-        <Title>수업 목록</Title>
+        <Title>강의 관리</Title>
         <CourseFilter 
           handleYearChange={handleYearChange} 
           handleMonthChange={handleMonthChange} 
@@ -101,9 +95,9 @@ const Out_CoursesList = () => {
         {/* 학생 목록 표 */}
         <CoursesTable id='courses-table'>
           <TableHeader>
-            <TableHeaderItem id='courseName'>수업 이름</TableHeaderItem>
-            <TableHeaderItem id='class'>분반</TableHeaderItem>
-            <TableHeaderItem id='numOfStudents'>학생 수</TableHeaderItem>
+            <TableHeaderItem id='courseName'>강의명</TableHeaderItem>
+            <TableHeaderItem id='class'>썸네일</TableHeaderItem>
+            <TableHeaderItem id='numOfStudents'>수강료</TableHeaderItem>
           </TableHeader>
           <TableBody>
             {timeTables.map((timeTable) => (
@@ -126,7 +120,11 @@ const Out_CoursesList = () => {
           <DetailTitle>강의명</DetailTitle>
           <DetailContent>{selectedTimeTable?.title || "강의 없음"}</DetailContent>
         </DetailRow>
-        {/* <DetailRow className='course-main-image'>
+        <DetailRow className='course-cost'>
+          <DetailTitle>수강료</DetailTitle>
+          <DetailContent>180,000원</DetailContent>
+        </DetailRow>
+        <DetailRow className='course-main-image'>
           <DetailTitle>썸네일</DetailTitle>
           <DetailContent>
             <CourseImage src="/images/courseBanner/course-banner-oneshot1.png" alt="대표 이미지" />
@@ -139,27 +137,27 @@ const Out_CoursesList = () => {
                 <CourseImage src="/images/courseBanner/course-banner-oneshot1.png" alt="상세 이미지" />
                 <CourseImage src="/images/courseBanner/course-banner-oneshot1.png" alt="상세 이미지" />
           </DetailContent>
-        </DetailRow> */}
-        <DetailRow className='course-timetables'>
-          <DetailTitle>분반</DetailTitle>
-          <DetailContent>{selectedTimeTable ? converTimeTable(selectedTimeTable) : "분반 정보 없음"}</DetailContent>
         </DetailRow>
-        <DetailRow className="course-students">
-          <DetailTitle>학생 수</DetailTitle>
-          <DetailContent>{selectedTimeTable?.studentCount || 0}</DetailContent>
+        <DetailRow className='course-type'>
+          <DetailTitle>강의유형</DetailTitle>
+          <DetailContent>
+            <CourseTag>온라인</CourseTag>
+            <CourseTag>오프라인</CourseTag>
+          </DetailContent>
         </DetailRow>
-        <DetailRow>
-          <DetailTitle className="course-period">강의 기간</DetailTitle>
-          <DetailContent>{selectedTimeTable ? `${selectedTimeTable.startDate} ~ ${selectedTimeTable.endDate}` : "기간 정보 없음"}</DetailContent>
+        <DetailRow className='course-level'>
+          <DetailTitle>난이도</DetailTitle>
+          <DetailContent>
+            <CourseTag style={{backgroundColor:'#61b58d'}}>중급</CourseTag>
+          </DetailContent>
         </DetailRow>
-        <CourseMembers />
       </CourseDetailContainer>
 
     </Wrapper>
   )
 }
 
-export default Out_CoursesList
+export default Out_CourseInfoList
 
 const Wrapper = styled.div`
   width: 100%;
@@ -231,9 +229,17 @@ const TableHeaderItem = styled.div`
     border-right: 1px solid #e1e1e1; // ✅ 마지막 항목 제외
   }
 
+  //첫번째 항목
+  &:nth-child(1) {
+    flex: 1.5;
+  }
+  //두번째 항목
+  &:nth-child(2) {
+    flex: 2;
+  }
   //세번째 항목
   &:nth-child(3) {
-    flex: 0.4;
+    flex: 1;
   }
 `;
 
@@ -247,9 +253,17 @@ const TableItem = styled.div`
     border-right: 1px solid #e1e1e1; // ✅ 마지막 항목 제외
   }
 
+  //첫번째 항목
+  &:nth-child(1) {
+    flex: 1.5;
+  }
+  //두번째 항목
+  &:nth-child(2) {
+    flex: 2;
+  }
   //세번째 항목
   &:nth-child(3) {
-    flex: 0.4;
+    flex: 1;
   }
 
   //개행문자 처리
@@ -344,13 +358,22 @@ const DetailContent = styled.div`
   white-space: pre-line;
 `
 
-// const CourseImage = styled.img`
-//   width: 120px;
-//   height: 120px;
-//   object-fit: cover;
-//   object-position: center;
-//   border-radius: 5px;
-// `;
+const CourseImage = styled.img`
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 5px;
+`;
+
+const CourseTag = styled.div`
+  padding: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: white;
+  background-color: #ff8255;
+  border-radius: 5px;
+`;
 
 // const ButtonsContainer = styled.div`
 //   width: 85%;
