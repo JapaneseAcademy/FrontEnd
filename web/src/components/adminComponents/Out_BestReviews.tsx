@@ -91,10 +91,14 @@ const Out_ReviewsList = () => {
       getAdminReviewsByCourse(selectedCourseInfoId, currentPage, navigate).then((data) => {
          setCurrentReviews(data.reviews);
          setTotalCount(data.totalElements);
+
+         // ✅ 첫 번째 리뷰를 자동 선택
+         if (data.reviews.length > 0) {
+            setSelectedStudentId(data.reviews[0].reviewId);
+         }
       });
-      //{todo: 가장 첫 번째의 리뷰를 선택한 상태로 초기화}
-   }
-   , [currentPage, selectedCourseInfoId]);
+   }, [currentPage, selectedCourseInfoId]);
+
 
 
    useEffect(() => {
@@ -171,9 +175,10 @@ const Out_ReviewsList = () => {
          </StudentListContainer>
 
          <ReviewsDetailContainer id="reviews-detail-container">
-         {selectedReviewId === null ? (
-            <div></div>
-         ) : (
+         {/* 리뷰가 없을때 */}
+            {currentReviews.length === 0 ? (
+               <div style={{color:'#737373'}}>리뷰가 없습니다.</div>
+            ) : (
             <>
             <DetailRow>
                <DetailTitle>강의명</DetailTitle>
