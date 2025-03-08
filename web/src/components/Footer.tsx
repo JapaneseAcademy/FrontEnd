@@ -4,8 +4,8 @@ const Footer = () => {
   return (
    <Wrapper>
       <Title>예리한 일본어</Title>
-      <Info>상호 : 예리한 일본어 | 대표자 : 이예리</Info>
-      <Info>사업자등록번호 : 111-23-23498</Info>
+      <Info>상호명 : 예리한 일본어 | 대표자명 : 이예리</Info>
+      <Info>사업자등록번호 : 292-02-03667</Info>
       <Info>주소 : 서울특별시 중구 충무로 24 남산센트럴뷰레지던스 2층 207호 </Info>
       <Info>Tel: 010-3551-6736</Info>
       <Rights></Rights>
