@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import ReviewFilter from "./filters/ReviewFilter.tsx";
 import { FaRegCircleCheck } from "react-icons/fa6";
-import { getAdminCourseInfoTitles, getAdminReviewsByCourse } from "../../apis/adminAPI/adminReviewAPI.ts";
+import { changeAdminReviewVisiblity, getAdminReviewsByCourse, setAdminBestCourseReview, setAdminBestMainReview } from "../../apis/adminAPI/adminReviewAPI.ts";
 import { useNavigate } from "react-router-dom";
 
 type Review = {
@@ -22,23 +22,17 @@ type Review = {
    visible: boolean;
 };
 
-type courseTitle = {
-   courseInfoId: number;
-   title: string;
-};
-
 const Out_ReviewsList = () => {
-   const [courseTitles, setCourseTitles] = useState<courseTitle[]>([]);
    const [selectedCourseInfoId, setSelectedCourseInfoId] = useState<number>(1);
 
-   const [selectedReviewId, setSelectedStudentId] = useState<number | null>(null);
+   const [selectedReviewId, setSelectedStudentId] = useState<number>(1);
    const [currentPage, setCurrentPage] = useState(1);
    const [currentReviews, setCurrentReviews] = useState<Review[]>([]);
    const [totalCount, setTotalCount] = useState<number>(0);
 
    const [isMainBest, setIsMainBest] = useState(false);
    const [isCourseBest, setIsCourseBest] = useState(false);
-   const [isReviewHidden, setIsReviewHidden] = useState(false);
+   const [isReviewVisible, setIsReviewVisible] = useState(true);
 
    const navigate = useNavigate();
 
@@ -62,39 +56,38 @@ const Out_ReviewsList = () => {
 
 
    const handleMainBestChange = () => {
-      if (confirm("메인 베스트로 설정하시겠습니까?")) {
-         //{todo: 메인 베스트로 설정 api 호출}
-
-         //성공시
-         alert("메인 베스트로 설정되었습니다.");
-         setIsMainBest(!isMainBest);
-      }
+      if (confirm("메인 베스트 상태를 변경하시겠습니까?")) {
+         setAdminBestMainReview(selectedReviewId, navigate).then((status) => {
+            if (status === 200) {
+               setIsMainBest(!isMainBest);
+               alert("메인 베스트 상태가 변경되었습니다.");
+            }
+         });
    };
+}
+
    const handleCourseBestChange = () => {
-      if (confirm("강의 베스트로 설정하시겠습니까?")) {
-         //{todo: 강의 베스트로 설정 api 호출}
-
-         //성공시
-         alert("강의 베스트로 설정되었습니다.");
-         setIsCourseBest(!isCourseBest);
-      }
+      if (confirm("강의 베스트 상태를 변경하시겠습니까?")) {
+         setAdminBestCourseReview(selectedReviewId, navigate).then((status) => {
+            if (status === 200) {
+               setIsCourseBest(!isCourseBest);
+               alert("강의 베스트 상태가 변경되었습니다.");
+            }
+         });
    };
+}
    const handleHiddenChange = () => {
-      if (confirm("리뷰를 숨김 처리 하시겠습니까?")) {
-         //{todo: 리뷰 숨김 처리 api 호출}
-
-         //성공시
-         alert("리뷰가 숨김 처리 되었습니다.");
-         setIsReviewHidden(!isReviewHidden);
-      }
+      if (confirm("리뷰 숨김 상태를 변경하시겠습니까?")) {
+         changeAdminReviewVisiblity(selectedReviewId, navigate).then((status) => {
+            if (status === 200) {
+               setIsReviewVisible(!isReviewVisible);
+               alert("리뷰 숨김 상태가 변경되었습니다.");
+            }
+         });
    };
+}
 
    useEffect(() => {
-      //모든 courseInfos 불러오기
-      getAdminCourseInfoTitles().then((data) => {
-         setCourseTitles(data);
-      });
-
       getAdminReviewsByCourse(selectedCourseInfoId, currentPage, navigate).then((data) => {
          setCurrentReviews(data.reviews);
          setTotalCount(data.totalElements);
@@ -103,16 +96,12 @@ const Out_ReviewsList = () => {
    }
    , [currentPage, selectedCourseInfoId]);
 
-   //확인
-   useEffect(() => {
-      console.log("courseTitles:", courseTitles);
-   }
-   , [courseTitles]);
 
    useEffect(() => {
       if (selectedReview) {
          setIsMainBest(selectedReview.forMain);
          setIsCourseBest(selectedReview.best);
+         setIsReviewVisible(selectedReview.visible);
       }
    }, [selectedReview]);
    
@@ -241,10 +230,10 @@ const Out_ReviewsList = () => {
                   <input
                      type="checkbox"
                      id="review-hidden"
-                     checked={isReviewHidden}
+                     checked={isReviewVisible}
                      onChange={handleHiddenChange}
                   />
-                  <label htmlFor="review-hidden">리뷰 숨김</label>
+                  <label htmlFor="review-hidden">리뷰 공개</label>
                </CheckBox>
             </ChoiceRow>
          </>

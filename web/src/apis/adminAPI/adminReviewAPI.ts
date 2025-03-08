@@ -38,18 +38,84 @@ export const getAdminCourseInfoTitles = async () => {
    }
 }
 
+
+////////////////////////리뷰 상태 설정///////////////////////
+
 //후기 공개/비공개 처리하는 api
-export const changeAdminReviewVisiblity = async (reviewId: number) => {
+export const changeAdminReviewVisiblity = async (reviewId: number, navigate: (path: string) => void) => {
+   //토큰 없으면 로그인 페이지로 이동
+   if (!localStorage.getItem("accessToken")) {
+      alert("관리자 로그인이 필요합니다.");
+      navigate('/admin/login');
+      return;
+   }
    try {
-      const response = await axios.put(`${BASE_URL}/api/v1/admin/reviews/${reviewId}/visible`,{},
+      const response = await axios.post(`${BASE_URL}/api/v1/admin/reviews/visibility?reviewId=${reviewId}`, {},
       {
          headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
          },
       });
-      console.log("[ changeAdminReviewVisiblity ]",response.data);
-      return response.data;
+      console.log("[ changeAdminReviewVisiblity ]",response.status);
+      return response.status
    } catch (error: any) {
       console.error(error);
+      if(error.response.status === 403 || error.response.status === 401){
+         alert("관리자 로그인이 필요합니다.");
+         navigate('/admin/login');
+      }
+   }
+}
+
+//강의별 베스트 후기로 등록하는 api
+export const setAdminBestCourseReview = async (reviewId: number, navigate: (path: string) => void) => {
+   //토큰 없으면 로그인 페이지로 이동
+   if (!localStorage.getItem("accessToken")) {
+      alert("관리자 로그인이 필요합니다.");
+      navigate('/admin/login');
+      return;
+   }
+   try {
+      const response = await axios.post(`${BASE_URL}/api/v1/admin/reviews/best?reviewId=${reviewId}`, {},
+      {
+         headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+         },
+      });
+      console.log("[ setAdminBestCourseReview ]",response.status);
+      return response.status;
+   } catch (error: any) {
+      console.error(error);
+      if(error.response.status === 403 || error.response.status === 401){
+         alert("관리자 로그인이 필요합니다.");
+         navigate('/admin/login');
+      }
+   }
+}
+
+
+//메인 베스트 후기로 등록하는 api
+export const setAdminBestMainReview = async (reviewId: number, navigate: (path: string) => void) => {
+   //토큰 없으면 로그인 페이지로 이동
+   if (!localStorage.getItem("accessToken")) {
+      alert("관리자 로그인이 필요합니다.");
+      navigate('/admin/login');
+      return;
+   }
+   try {
+      const response = await axios.post(`${BASE_URL}/api/v1/admin/reviews/main?reviewId=${reviewId}`,{},
+      {
+         headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+         },
+      });
+      console.log("[ setAdminBestMainReview ]",response.status);
+      return response.status;
+   } catch (error: any) {
+      console.error(error);
+      if(error.response.status === 403 || error.response.status === 401){
+         alert("관리자 로그인이 필요합니다.");
+         navigate('/admin/login');
+      }
    }
 }
