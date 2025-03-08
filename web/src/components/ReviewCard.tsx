@@ -71,7 +71,7 @@ const ReviewText = styled.div`
    overflow: hidden;
    text-overflow: ellipsis;
    //줄간격
-   line-height: 1.3;
+   line-height: 1.2;
 `;
 
 const ReviewContent = styled.div`
