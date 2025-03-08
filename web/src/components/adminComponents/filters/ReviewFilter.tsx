@@ -24,7 +24,6 @@ const ReviewFilter = ({setSelectCourseInfoId}: ReviewFilterProps) => {
    return (
    <Wrapper id="filter-container-wrapper">
       <CourseDropdown id="course-dropdown" onChange={(e) => setSelectCourseInfoId(Number(e.target.value))}>
-         <option value={0}>전체</option>
          {courseTitles.map((courseTitle) => (
             <option key={courseTitle.courseInfoId} value={courseTitle.courseInfoId}>{courseTitle.title}</option>
          ))}

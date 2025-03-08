@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components"
 
 interface ReviewCardProps {
@@ -10,8 +11,16 @@ interface ReviewCardProps {
 }
 
 const ReviewCard = ({ reviewId, imageUrls, review, writer, createdDate, reviewTitle }: ReviewCardProps) => {
+   const navigate = useNavigate();
+
+   const handleReviewClick = () => {
+      console.log("리뷰 클릭");
+      navigate(`/review?reviewId=${reviewId}`);
+   }      
+
+
    return (
-      <Wrapper key={reviewId}>
+      <Wrapper key={reviewId} onClick={handleReviewClick}>
          <ReviewImage src={imageUrls[0]} />
          <ReviewContent>
             <ReviewTitle>{reviewTitle}</ReviewTitle>
@@ -33,6 +42,7 @@ const Wrapper = styled.div`
    justify-content: center;
    border-bottom: 1px solid #e0e0e0;
    padding: 25px 0;
+   cursor: pointer;
 
    gap: 15px;
    //마지막 요소에는 border-bottom을 표시하지 않음

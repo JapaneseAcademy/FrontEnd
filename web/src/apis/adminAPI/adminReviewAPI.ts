@@ -37,3 +37,19 @@ export const getAdminCourseInfoTitles = async () => {
       console.error(error);
    }
 }
+
+//후기 공개/비공개 처리하는 api
+export const changeAdminReviewVisiblity = async (reviewId: number) => {
+   try {
+      const response = await axios.put(`${BASE_URL}/api/v1/admin/reviews/${reviewId}/visible`,{},
+      {
+         headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+         },
+      });
+      console.log("[ changeAdminReviewVisiblity ]",response.data);
+      return response.data;
+   } catch (error: any) {
+      console.error(error);
+   }
+}
