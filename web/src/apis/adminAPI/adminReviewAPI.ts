@@ -26,3 +26,14 @@ export const getAdminReviewsByCourse = async (courseInfoId: number, page: number
       }
    }
 }
+
+//리뷰 불러오는데 쓰일 courseInfo title 불러오는 api  
+export const getAdminCourseInfoTitles = async () => {
+   try {
+      const response = await axios.get(`${BASE_URL}/api/v1/courses/titles`);
+      console.log("[ getAdminCourseInfoTitle ]",response.data);
+      return response.data;
+   } catch (error: any) {
+      console.error(error);
+   }
+}

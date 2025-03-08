@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import ReviewFilter from "./filters/ReviewFilter.tsx";
 import { FaRegCircleCheck } from "react-icons/fa6";
-import { getAdminReviewsByCourse } from "../../apis/adminAPI/adminReviewAPI.ts";
+import { getAdminCourseInfoTitles, getAdminReviewsByCourse } from "../../apis/adminAPI/adminReviewAPI.ts";
 import { useNavigate } from "react-router-dom";
 
 type Review = {
@@ -22,7 +22,15 @@ type Review = {
    visible: boolean;
 };
 
+type courseTitle = {
+   courseInfoId: number;
+   title: string;
+};
+
 const Out_ReviewsList = () => {
+   const [courseTitles, setCourseTitles] = useState<courseTitle[]>([]);
+   const [selectedCourseInfoId, setSelectedCourseInfoId] = useState<number>(1);
+
    const [selectedReviewId, setSelectedStudentId] = useState<number | null>(null);
    const [currentPage, setCurrentPage] = useState(1);
    const [currentReviews, setCurrentReviews] = useState<Review[]>([]);
@@ -35,23 +43,22 @@ const Out_ReviewsList = () => {
    const navigate = useNavigate();
 
 
-      // 선택한 리뷰 데이터 가져오기
-      const selectedReview = currentReviews.find(
-         (review) => review.reviewId === selectedReviewId
-      );
+   // 선택한 리뷰 데이터 가져오기
+   const selectedReview = currentReviews.find(
+      (review) => review.reviewId === selectedReviewId
+   );
 
-      const ItemsPerPage = 8;
+   const ItemsPerPage = 8;
 
    // 총 페이지 수 계산 (currentReviews.length가 아니라 totalCount 사용)
-const totalPages = Math.ceil(totalCount / ItemsPerPage);
+   const totalPages = Math.ceil(totalCount / ItemsPerPage);
 
 
    // 페이지 변경 핸들러
    const handlePageChange = (page: number) => {
       if (page < 1 || page > totalPages) return; // 유효하지 않은 페이지 방지
       setCurrentPage(page);
-};
-
+   };
 
 
    const handleMainBestChange = () => {
@@ -83,19 +90,24 @@ const totalPages = Math.ceil(totalCount / ItemsPerPage);
    };
 
    useEffect(() => {
-      getAdminReviewsByCourse(4, currentPage, navigate).then((data) => {
+      //모든 courseInfos 불러오기
+      getAdminCourseInfoTitles().then((data) => {
+         setCourseTitles(data);
+      });
+
+      getAdminReviewsByCourse(selectedCourseInfoId, currentPage, navigate).then((data) => {
          setCurrentReviews(data.reviews);
          setTotalCount(data.totalElements);
       });
       //{todo: 가장 첫 번째의 리뷰를 선택한 상태로 초기화}
    }
-   , [currentPage]);
+   , [currentPage, selectedCourseInfoId]);
 
    //확인
    useEffect(() => {
-      console.log("currentReviews 세팅 후:", currentReviews);
+      console.log("courseTitles:", courseTitles);
    }
-   , [currentReviews]);
+   , [courseTitles]);
 
    useEffect(() => {
       if (selectedReview) {
@@ -109,7 +121,7 @@ const totalPages = Math.ceil(totalCount / ItemsPerPage);
       <Wrapper id="admin-reviews-list-wrapper">
          <StudentListContainer id="reviews-list-container">
          <Title>리뷰 목록</Title>
-         <ReviewFilter />
+         <ReviewFilter setSelectCourseInfoId={setSelectedCourseInfoId}/>
          <ReviewsTable>
             <TableHeader>
                <TableHeaderItem>강의명</TableHeaderItem>
