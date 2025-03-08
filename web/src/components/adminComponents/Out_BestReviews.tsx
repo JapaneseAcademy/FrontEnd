@@ -1,54 +1,58 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { REVIEWS_DATA } from "../../constants/example.ts";
 import ReviewFilter from "./filters/ReviewFilter.tsx";
 import { FaRegCircleCheck } from "react-icons/fa6";
+import { getAdminReviewsByCourse } from "../../apis/adminAPI/adminReviewAPI.ts";
+import { useNavigate } from "react-router-dom";
 
 type Review = {
    reviewId: number;
 
+   courseInfoId: number;
    courseTitle: string;
-   user: string;
-   reviewDate: string;
+
    reviewTitle: string;
-   reviewText: string;
-   reviewImages: string[];
-   
-   mainBest: boolean;
-   courseBest: boolean;
+   review: string;
+   createdDate: string;
+   imageUrls: string[];
+   writer: string;
+
+   best: boolean;
+   forMain: boolean;
+   visible: boolean;
 };
 
 const Out_ReviewsList = () => {
-   const [selectedReviewId, setSelectedStudentId] = useState<number | null>(1);
+   const [selectedReviewId, setSelectedStudentId] = useState<number | null>(null);
    const [currentPage, setCurrentPage] = useState(1);
-   const [currentGroup, setCurrentGroup] = useState(1); // 페이지 그룹 추가
-   const [currentReviews] = useState<Review[]>(REVIEWS_DATA); // 초기 데이터 설정
+   const [currentReviews, setCurrentReviews] = useState<Review[]>([]);
+   const [totalCount, setTotalCount] = useState<number>(0);
 
    const [isMainBest, setIsMainBest] = useState(false);
    const [isCourseBest, setIsCourseBest] = useState(false);
    const [isReviewHidden, setIsReviewHidden] = useState(false);
 
-   const ItemsPerPage = 10;
-   const PagesPerGroup = 10; // 한 그룹당 10개의 페이지
+   const navigate = useNavigate();
 
-   // 선택한 리뷰 데이터 가져오기
-   const selectedReview = currentReviews.find(
-      (review) => review.reviewId === selectedReviewId
-   );
 
-   // 페이지네이션 계산
-   const totalPages = Math.ceil(currentReviews.length / ItemsPerPage);
-   const startIndex = (currentPage - 1) * ItemsPerPage;
-   const endIndex = startIndex + ItemsPerPage;
-   const paginatedReviews = currentReviews.slice(startIndex, endIndex);
+      // 선택한 리뷰 데이터 가져오기
+      const selectedReview = currentReviews.find(
+         (review) => review.reviewId === selectedReviewId
+      );
 
-   // 현재 페이지 그룹 계산
-   const startPage = (currentGroup - 1) * PagesPerGroup + 1;
-   const endPage = Math.min(startPage + PagesPerGroup - 1, totalPages);
-   const pageNumbers = Array.from(
-      { length: endPage - startPage + 1 },
-      (_, i) => startPage + i
-   );
+      const ItemsPerPage = 8;
+
+   // 총 페이지 수 계산 (currentReviews.length가 아니라 totalCount 사용)
+const totalPages = Math.ceil(totalCount / ItemsPerPage);
+
+
+   // 페이지 변경 핸들러
+   const handlePageChange = (page: number) => {
+      if (page < 1 || page > totalPages) return; // 유효하지 않은 페이지 방지
+      setCurrentPage(page);
+};
+
+
 
    const handleMainBestChange = () => {
       if (confirm("메인 베스트로 설정하시겠습니까?")) {
@@ -78,11 +82,25 @@ const Out_ReviewsList = () => {
       }
    };
 
+   useEffect(() => {
+      getAdminReviewsByCourse(4, currentPage, navigate).then((data) => {
+         setCurrentReviews(data.reviews);
+         setTotalCount(data.totalElements);
+      });
+      //{todo: 가장 첫 번째의 리뷰를 선택한 상태로 초기화}
+   }
+   , [currentPage]);
+
+   //확인
+   useEffect(() => {
+      console.log("currentReviews 세팅 후:", currentReviews);
+   }
+   , [currentReviews]);
 
    useEffect(() => {
       if (selectedReview) {
-         setIsMainBest(selectedReview.mainBest);
-         setIsCourseBest(selectedReview.courseBest);
+         setIsMainBest(selectedReview.forMain);
+         setIsCourseBest(selectedReview.best);
       }
    }, [selectedReview]);
    
@@ -102,7 +120,7 @@ const Out_ReviewsList = () => {
                <TableHeaderItem style={{fontSize:'0.8rem'}}>강의 베스트</TableHeaderItem>
             </TableHeader>
             <TableBody id="review-table-body">
-               {paginatedReviews.map((review) => (
+               {currentReviews.map((review) => (
                <TableRow
                   key={review.reviewId}
                   $isSelected={review.reviewId === selectedReviewId}
@@ -110,10 +128,10 @@ const Out_ReviewsList = () => {
                >
                   <TableItem className="courseTitle" style={{color:'#5e5e5e', fontSize:'0.8rem'}}>{review.courseTitle}</TableItem>
                   <TableItem className="reviewTitle">{review.reviewTitle}</TableItem>
-                  <TableItem className="reviewText">{review.reviewText}</TableItem>
-                  <TableItem className="reviewDate" style={{color:'#5e5e5e', fontSize:'0.8rem'}}>{review.reviewDate}</TableItem>
-                  <TableItem className="mainBest">{review.mainBest?<FaRegCircleCheck color="#84cb26"/>:""}</TableItem>
-                  <TableItem className="courseBest">{review.courseBest?<FaRegCircleCheck color="#ff7b1c"/>:""}</TableItem>
+                  <TableItem className="reviewText">{review.review}</TableItem>
+                  <TableItem className="reviewDate" style={{color:'#5e5e5e', fontSize:'0.8rem'}}>{review.createdDate}</TableItem>
+                  <TableItem className="mainBest">{review.forMain?<FaRegCircleCheck color="#84cb26"/>:""}</TableItem>
+                  <TableItem className="courseBest">{review.best?<FaRegCircleCheck color="#ff7b1c"/>:""}</TableItem>
                </TableRow>
                ))}
             </TableBody>
@@ -121,102 +139,104 @@ const Out_ReviewsList = () => {
 
          {/* 페이지네이션 */}
          <Pagination>
-            <PageButton
-               disabled={currentGroup === 1}
-               onClick={() => {
-               setCurrentGroup((prev) => Math.max(prev - 1, 1));
-               setCurrentPage((prev) => Math.max(prev - PagesPerGroup, 1));
-               }}
+            {/* 이전 버튼 */}
+            <PageButton 
+               onClick={() => handlePageChange(currentPage - 1)}
+               disabled={currentPage === 1}
             >
-               이전
+               〈
             </PageButton>
-            {pageNumbers.map((page) => (
+
+            {/* 페이지 번호 버튼 */}
+            {Array.from({ length: totalPages }, (_, index) => index + 1).map((number) => (
                <PageNumber
-               key={page}
-               onClick={() => setCurrentPage(page)}
-               $active={currentPage === page}
+                  key={number}
+                  onClick={() => handlePageChange(number)}
+                  $active={currentPage === number}
                >
-               {page}
+                  {number}
                </PageNumber>
             ))}
-            <PageButton
-               disabled={endPage === totalPages}
-               onClick={() => {
-               setCurrentGroup((prev) =>
-                  Math.min(prev + 1, Math.ceil(totalPages / PagesPerGroup))
-               );
-               setCurrentPage((prev) =>
-                  Math.min(prev + PagesPerGroup, totalPages)
-               );
-               }}
+
+            {/* 다음 버튼 */}
+            <PageButton 
+               onClick={() => handlePageChange(currentPage + 1)}
+               disabled={currentPage === totalPages}
             >
-               다음
+               〉
             </PageButton>
          </Pagination>
+
          </StudentListContainer>
 
          <ReviewsDetailContainer id="reviews-detail-container">
-         <DetailRow>
-            <DetailTitle>강의명</DetailTitle>
-            <DetailContent>{selectedReview?.courseTitle}</DetailContent>
-         </DetailRow>
-         <DetailRow>
-            <DetailTitle>작성자</DetailTitle>
-            <DetailContent>{selectedReview?.user}</DetailContent>
-         </DetailRow>
-         <DetailRow>
-            <DetailTitle>작성일</DetailTitle>
-            <DetailContent>{selectedReview?.reviewDate}</DetailContent>
-         </DetailRow>
-         <DetailRow>
-            <DetailTitle>제목</DetailTitle>
-            <DetailContent>{selectedReview?.reviewTitle}</DetailContent>
-         </DetailRow>
-         <DetailRow>
-            <DetailTitle>내용</DetailTitle>
-            <DetailContent>{selectedReview?.reviewText}</DetailContent>
-         </DetailRow>
-         <DetailRow>
-            <DetailTitle>사진</DetailTitle>
-            <DetailContent>
-               {selectedReview?.reviewImages.map((image, index) => (
-               <ReviewImage key={index} src={image} alt={`review-${index}`} />
-               ))}
-            </DetailContent>
-         </DetailRow>
-      
-         <ChoiceRow>
-            <CheckBox>
-               <input
-                  type="checkbox"
-                  id="main-best"
-                  checked={isMainBest}
-                  onChange={handleMainBestChange}
-               />
-               <label htmlFor="main-best">메인 베스트</label>
-            </CheckBox>
+         {selectedReviewId === null ? (
+            <div></div>
+         ) : (
+            <>
+            <DetailRow>
+               <DetailTitle>강의명</DetailTitle>
+               <DetailContent>{selectedReview?.courseTitle}</DetailContent>
+            </DetailRow>
+            <DetailRow>
+               <DetailTitle>작성자</DetailTitle>
+               <DetailContent>{selectedReview?.writer}</DetailContent>
+            </DetailRow>
+            <DetailRow>
+               <DetailTitle>작성일</DetailTitle>
+               <DetailContent>{selectedReview?.createdDate}</DetailContent>
+            </DetailRow>
+            <DetailRow>
+               <DetailTitle>제목</DetailTitle>
+               <DetailContent>{selectedReview?.reviewTitle}</DetailContent>
+            </DetailRow>
+            <DetailRow>
+               <DetailTitle>내용</DetailTitle>
+               <DetailContent>{selectedReview?.review}</DetailContent>
+            </DetailRow>
+            <DetailRow>
+               <DetailTitle>사진</DetailTitle>
+               <DetailContent>
+                  {selectedReview?.imageUrls.map((image, index) => (
+                  <ReviewImage key={index} src={image} alt={`reviewImage-${index}`} />
+                  ))}
+               </DetailContent>
+            </DetailRow>
+         
+            <ChoiceRow>
+               <CheckBox>
+                  <input
+                     type="checkbox"
+                     id="main-best"
+                     checked={isMainBest}
+                     onChange={handleMainBestChange}
+                  />
+                  <label htmlFor="main-best">메인 베스트</label>
+               </CheckBox>
 
-            <CheckBox>
-               <input
-                  type="checkbox"
-                  id="course-best"
-                  checked={isCourseBest}
-                  onChange={handleCourseBestChange}
-               />
-               <label htmlFor="course-best">강의 베스트</label>
-            </CheckBox>
-         </ChoiceRow>
-         <ChoiceRow>
-            <CheckBox>
-               <input
-                  type="checkbox"
-                  id="review-hidden"
-                  checked={isReviewHidden}
-                  onChange={handleHiddenChange}
-               />
-               <label htmlFor="review-hidden">리뷰 숨김</label>
-            </CheckBox>
-         </ChoiceRow>
+               <CheckBox>
+                  <input
+                     type="checkbox"
+                     id="course-best"
+                     checked={isCourseBest}
+                     onChange={handleCourseBestChange}
+                  />
+                  <label htmlFor="course-best">강의 베스트</label>
+               </CheckBox>
+            </ChoiceRow>
+            <ChoiceRow>
+               <CheckBox>
+                  <input
+                     type="checkbox"
+                     id="review-hidden"
+                     checked={isReviewHidden}
+                     onChange={handleHiddenChange}
+                  />
+                  <label htmlFor="review-hidden">리뷰 숨김</label>
+               </CheckBox>
+            </ChoiceRow>
+         </>
+         )}
          </ReviewsDetailContainer>
       </Wrapper>
    );
@@ -329,6 +349,8 @@ const TableItem = styled.div`
    word-break: break-word;
    line-height: 1.1rem; /* 줄 높이 설정 */
    max-height: calc(1.3rem * 2); /* 최대 2줄까지만 표시 */
+   //가운데 정렬
+   text-align: center;
 
    &:nth-child(1) {
       width: 15%;
@@ -435,6 +457,15 @@ background-color: #f7f7f7;
 padding: 5px;
 width: 90%;
 border-radius: 5px;
+color: #5e5e5e;
+min-height: 30px;
+//줄간격
+line-height: 1.3;
+//줄바꿈 처리
+word-break: break-all;
+overflow-wrap: break-word;
+//개행문자 처리
+white-space: pre-wrap;
 `
 
 const ReviewImage = styled.img`

@@ -1,51 +1,41 @@
 import styled from "styled-components"
 import { useEffect, useState } from "react"
-// import { FiPlus } from "react-icons/fi"
-import { getAdminCoursesByMonth } from "../../apis/adminAPI/adminTimeTableAPI.ts"
 import { useNavigate } from "react-router-dom"
+import { getAdminCourseInfos } from "../../apis/adminAPI/adminCourseInfosAPI.ts"
+import { convertTags, numberWithCommas } from "../../utils/utils.ts"
 
-//한 타임블럭(분반 내)
-type timeBlock = {
-  weekday: string;
-  startTime: string;
-  endTime: string;
-}
-
-type timeTable = { //한 
-  courseId: number;
-  timeTableId: number;
-  timeBlocks: timeBlock[];
-  
-  endDate: string;
-  startDate: string;
+type courseInfo = {
+  courseInfoId: number;
   title: string;
-  studentCount: number;
+  descriptions: string[];
+  cost: number;
+  mainImageUrl: string;
+  level: string;
+
+  live: boolean;
+  online: boolean;
+  recorded: boolean;
 }
 
 const Out_CourseInfoList = () => {
-  const [selectedTimeTableId, setSelectedTimeTableId] = useState<number>(1);
-  const [timeTables, setTimeTables] = useState<timeTable[]>([]);
+  const [courseInfos, setCourseInfos] = useState<courseInfo[]>([]);
+  const [selectedCourseInfoId, setSelectedCourseInfoId] = useState<number>(1);
 
   const navigate = useNavigate();
 
-  const selectedTimeTable = timeTables.find((table) => table.timeTableId === selectedTimeTableId);
+  const selectedCourseInfo = courseInfos.find((courseInfo) => courseInfo.courseInfoId === selectedCourseInfoId);
+  //live, online, recorded를 tags[] 형태로 변경
+  const tags = convertTags(selectedCourseInfo?.live ?? false, selectedCourseInfo?.online ?? false, selectedCourseInfo?.recorded ?? false);
+
+  const handleCourseInfoClick = (courseInfoId: number) => {
+    setSelectedCourseInfoId(courseInfoId);
+  }
 
   useEffect(() => {
-    //관리자-월별 강의 조회 api
-    getAdminCoursesByMonth(`2025-03`, navigate).then((data) => {
-      const formattedTimeTables = data.map((timeTable: any) => ({
-        courseId: timeTable.courseId,
-        timeTableId: timeTable.timeTable.timeTableId,
-        timeBlocks: timeTable.timeTable.timeBlocks,
-        endDate: timeTable.endDate,
-        startDate: timeTable.startDate,
-        title: timeTable.title,
-        studentCount: timeTable.studentCount,
-      }));
-      setTimeTables(formattedTimeTables);
+    getAdminCourseInfos(navigate).then((data) => {
+      setCourseInfos(data);
     }
     );
-
   }, []);
 
 
@@ -60,15 +50,15 @@ const Out_CourseInfoList = () => {
             <TableHeaderItem id='numOfStudents'>수강료</TableHeaderItem>
           </TableHeader>
           <TableBody>
-            {timeTables.map((timeTable) => (
+            {courseInfos.map((courseInfo) => (
               <TableRow 
-                key={timeTable.timeTableId} 
-                isSelected={selectedTimeTableId === timeTable.timeTableId} 
-                onClick={() => setSelectedTimeTableId(timeTable.timeTableId)}
+                key={courseInfo.courseInfoId}
+                onClick={() => handleCourseInfoClick(courseInfo.courseInfoId)}
+                $isselected={selectedCourseInfoId === courseInfo.courseInfoId} 
               >
-                <TableItem>{timeTable.title}</TableItem>
-                <TableItem><CourseImage style={{width:'60px', height:'60px', aspectRatio:'1/1'}} src="/images/courseBanner/course-banner-oneshot1.png" /></TableItem>
-                <TableItem>180,000원</TableItem>
+                <TableItem>{courseInfo.title}</TableItem>
+                <TableItem><CourseImage style={{width:'60px', height:'60px', aspectRatio:'1/1'}} src={courseInfo.mainImageUrl} /></TableItem>
+                <TableItem>{numberWithCommas(courseInfo.cost)}원</TableItem>
               </TableRow>
             ))}
           </TableBody>
@@ -78,37 +68,38 @@ const Out_CourseInfoList = () => {
       <CourseDetailContainer id="course-detail-container">
         <DetailRow className='course-title'>
           <DetailTitle>강의명</DetailTitle>
-          <DetailContent>{selectedTimeTable?.title || "강의 없음"}</DetailContent>
+          <DetailContent>{selectedCourseInfo?.title}</DetailContent>
         </DetailRow>
         <DetailRow className='course-cost'>
           <DetailTitle>수강료</DetailTitle>
-          <DetailContent>180,000원</DetailContent>
+          <DetailContent>{numberWithCommas(selectedCourseInfo?.cost ?? 0)}원</DetailContent>
         </DetailRow>
         <DetailRow className='course-main-image'>
           <DetailTitle>썸네일</DetailTitle>
           <DetailContent>
-            <CourseImage src="/images/courseBanner/course-banner-oneshot1.png" alt="대표 이미지" />
+            <CourseImage src={selectedCourseInfo?.mainImageUrl} alt="대표 이미지" />
           </DetailContent>
         </DetailRow>
         <DetailRow className="course-detail-images">
           <DetailTitle>상세 이미지</DetailTitle>
           <DetailContent>
-                <CourseImage src="/images/courseBanner/course-banner-oneshot1.png" alt="상세 이미지" />
-                <CourseImage src="/images/courseBanner/course-banner-oneshot1.png" alt="상세 이미지" />
-                <CourseImage src="/images/courseBanner/course-banner-oneshot1.png" alt="상세 이미지" />
+                {selectedCourseInfo?.descriptions.map((description, index) => (
+                  <CourseImage key={index} src={description} alt="상세 이미지" />
+                ))}
           </DetailContent>
         </DetailRow>
         <DetailRow className='course-type'>
           <DetailTitle>강의유형</DetailTitle>
           <DetailContent>
-            <CourseTag>온라인</CourseTag>
-            <CourseTag>오프라인</CourseTag>
+            {tags.map((tag, index) => (
+              <CourseTag key={index}>{tag}</CourseTag>
+            ))}
           </DetailContent>
         </DetailRow>
         <DetailRow className='course-level'>
           <DetailTitle>난이도</DetailTitle>
           <DetailContent>
-            <CourseTag style={{backgroundColor:'#61b58d'}}>중급</CourseTag>
+            <CourseTag style={{backgroundColor:'#61b58d'}}>{selectedCourseInfo?.level}</CourseTag>
           </DetailContent>
         </DetailRow>
       </CourseDetailContainer>
@@ -248,7 +239,7 @@ const TableBody = styled.div`
   }
 
 ` 
-const TableRow = styled.div<{ isSelected: boolean }>`
+const TableRow = styled.div<{ $isselected: boolean }>`
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -258,10 +249,10 @@ const TableRow = styled.div<{ isSelected: boolean }>`
   padding-bottom: 9px;
   border-bottom: 1px solid #e1e1e1;
   cursor: pointer;
-  background-color: ${({ isSelected }) => (isSelected ? "#e6f7ff" : "transparent")}; 
+  background-color: ${({ $isselected: $isSelected }) => ($isSelected ? "#e6f7ff" : "transparent")}; 
   
   &:hover {
-    background-color: ${({ isSelected }) => (isSelected ? "#cceeff" : "#f1f1f1")}; 
+    background-color: ${({ $isselected: $isSelected }) => ($isSelected ? "#cceeff" : "#f1f1f1")}; 
   }
 `;
 
