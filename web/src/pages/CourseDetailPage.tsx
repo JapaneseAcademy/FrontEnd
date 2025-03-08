@@ -29,6 +29,10 @@ type timeBlock = {
   endTime: string;
 }
 
+type convertedTimeTable = {
+  timeTableId: number;
+  timeTable: string;
+}
 
 const CourseDetailPage = () => {
   const [selectedOption, setSelectedOption] = useState("detail");
@@ -47,7 +51,12 @@ const CourseDetailPage = () => {
   const [totalPages, setTotalPages] = useState(1); // 총 페이지 수 상태 추가
 
   //분반 정보들
-  const [convertedTimeTables, setConvertedTimeTables] = useState<string[]>([]);
+  const [convertedTimeTables, setConvertedTimeTables] = useState<convertedTimeTable[]>([]);
+
+  //결제 정보들
+  const [selectedTimeTable, setSelectedTimeTable] = useState<string>("");
+  const [selectedTimeTableId, setSelectedTimeTableId] = useState<number>(0);
+  const [selectedCourseType, setSelectedCourseType] = useState<string>("");
 
   const navigate = useNavigate();
   const courseInfoId = parseInt(String(useParams().courseInfoId));
@@ -61,12 +70,29 @@ const CourseDetailPage = () => {
     setCurrentPage(1); // ✅ 탭을 변경하면 첫 페이지로 리셋
   };
   
-  // const handleReviewWriteClick = () => {
-  //   navigate('writeReview');
-  // }
+  const handleTimeTableChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedTable = convertedTimeTables.find((timeTable) => timeTable.timeTable === e.target.value);
+    
+    if (selectedTable) {
+      setSelectedTimeTable(selectedTable.timeTable);
+      setSelectedTimeTableId(selectedTable.timeTableId);
+    } else {
+      console.warn("해당 분반을 찾을 수 없습니다.");
+      setSelectedTimeTable("");
+      setSelectedTimeTableId(0);
+    }
+  };
+  
+  //유형 선택 시
+  const handleCourseTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCourseType(e.target.value);
+  };
 
   const handleBuyClick = () => {
     alert("준비중입니다. 카카오톡으로 문의해주세요.")
+    console.log("결제 timeTableId: ", selectedTimeTableId);
+    console.log("결제 대상: ", courseTitle + "-" + selectedTimeTable + "-" + selectedCourseType);
+    console.log("결제 금액: ", coursePrice);
   }
 
   //timeTables를 한 분반(timeTable)당 하나의 문자열로 바꾸는 함수
@@ -93,11 +119,23 @@ const CourseDetailPage = () => {
       setCourseLevel(data.level);
 
       //분반 정보 세팅
-      setConvertedTimeTables(convertTimeTables(data.course.timeTables));
+      const convertedTimeTables = convertTimeTables(data.course.timeTables);
+      setConvertedTimeTables(convertedTimeTables.map((timeTable, index) => ({timeTableId: data.course.timeTables[index].timeTableId, timeTable})));
+
+      //분반, 유형의 가장 첫번째 값으로 초기화
+      setSelectedTimeTable(convertTimeTables(data.course.timeTables)[0]);
+      setSelectedCourseType(convertTags(data.live, data.online, data.recorded)[0]);
+      setSelectedTimeTableId(data.course.timeTables[0].timeTableId);
     });
     
   }, [courseInfoId]);
 
+  useEffect(() => {
+    console.log(courseTitle)
+    console.log(selectedTimeTable);
+    console.log(selectedCourseType);
+  }
+  , [selectedTimeTable, selectedCourseType, courseTitle]);
 
   /////////후기 관련////////
   const fetchReviews = useCallback(async (page: number) => {
@@ -133,15 +171,15 @@ const CourseDetailPage = () => {
           </Dropdown>
           <Dropdown>
             <DropDownTitle>분반</DropDownTitle>
-            <DropDownContent>
-              {convertedTimeTables.map((timeTable, index) => (
-                <option key={index}>{timeTable}</option>
+            <DropDownContent onChange={handleTimeTableChange}>
+              {convertedTimeTables.map((timeTable) => (
+                <option key={timeTable.timeTableId}>{timeTable.timeTable}</option>
               ))}
           </DropDownContent>
         </Dropdown>
         <Dropdown>
           <DropDownTitle>유형</DropDownTitle>
-          <DropDownContent onChange={(e) => console.log(e.target.value)}>
+          <DropDownContent onChange={handleCourseTypeChange}>
             {courseTypes.map((type) => (
               <option key={type}>{type}</option>
             ))}
