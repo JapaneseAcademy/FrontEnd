@@ -42,7 +42,7 @@ const CourseDetailPage = () => {
   const [courseDetailImages, setCourseDetailImages] = useState<string[]>([]);
   const [courseTypes, setCourseTypes] = useState<string[]>([]);
   const [courseLevel, setCourseLevel] = useState<string>("");
-  //리뷰 정보들
+  //후기 정보들
   const [currentReviews, setCurrentReviews] = useState<Review[]>([]);
   const [totalPages, setTotalPages] = useState(1); // 총 페이지 수 상태 추가
 
@@ -99,25 +99,25 @@ const CourseDetailPage = () => {
   }, [courseInfoId]);
 
 
-  /////////리뷰관련////////
+  /////////후기 관련////////
   const fetchReviews = useCallback(async (page: number) => {
     try {
       const response = await getCourseReviewsByPage(courseInfoId, page);
-      setCurrentReviews(response.reviews); // 받아온 리뷰 데이터 업데이트
+      setCurrentReviews(response.reviews); // 받아온 후기 데이터 업데이트
       setTotalPages(response.totalPage); // 총 페이지 수 업데이트 (백엔드에서 제공)
     } catch (error) {
-      console.error("리뷰 데이터를 불러오는 중 오류 발생:", error);
+      console.error("후기 데이터를 불러오는 중 오류 발생:", error);
     }
   }, [courseInfoId]); // ✅ courseInfoId가 변경될 때만 새로운 fetchReviews 함수가 생성됨
   
-  // ✅ 페이지 변경 시 새로운 리뷰 데이터를 요청
+  // ✅ 페이지 변경 시 새로운 후기 데이터를 요청
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     fetchReviews(page);
   };
   // ✅ 페이지 로드 시 초기 데이터 가져오기
   useEffect(() => {
-    fetchReviews(1); // 첫 페이지의 리뷰 데이터 요청
+    fetchReviews(1); // 첫 페이지의 후기 데이터 요청
   }, [fetchReviews]); 
 
   return (
@@ -373,7 +373,7 @@ const CourseDetailImage = styled.img`
   object-fit: cover;
 `;
 
-////리뷰//////
+////후기//////
 
 const ReviewContainer = styled.div`
   display: flex;

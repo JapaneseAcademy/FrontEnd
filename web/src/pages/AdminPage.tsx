@@ -78,7 +78,7 @@ const AdminPage = () => {
                <Category>
                   <CategoryTitle><MdOutlineRateReview/>후기 관리</CategoryTitle>
                   <Items>
-                     <CategoryItem $isselected={selectedItem === 'mainReviews'} onClick={() => handleItemClick('mainReviews')}>- 메인 리뷰 설정</CategoryItem>
+                     <CategoryItem $isselected={selectedItem === 'mainReviews'} onClick={() => handleItemClick('mainReviews')}>- 메인 후기 설정</CategoryItem>
                   </Items>
                </Category>
                <Category>

@@ -35,23 +35,23 @@ const ReviewsPage = () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
    };
 
-     /////////리뷰관련////////
+     /////////후기관련////////
    const fetchReviews = useCallback(async (page: number) => {
       try {
-         const response = await getAllReviews(page); // 페이지 번호에 해당하는 리뷰 데이터 요청
-         setCurrentReviews(response.reviews); // 받아온 리뷰 데이터 업데이트
+         const response = await getAllReviews(page); // 페이지 번호에 해당하는 후기 데이터 요청
+         setCurrentReviews(response.reviews); // 받아온 후기 데이터 업데이트
          setTotalPage(response.totalPage); // 총 페이지 수 업데이트 (백엔드에서 제공)
          setItemsPerPage(response.listSize); // 페이지 당 아이템 수 업데이트 (백엔드에서 제공)
-         setTotalReviewsNum(response.totalElements); // 총 리뷰 수 업데이트 (백엔드에서 제공)
+         setTotalReviewsNum(response.totalElements); // 총 후기 수 업데이트 (백엔드에서 제공)
       } catch (error) {
-         console.error("리뷰 데이터를 불러오는 중 오류 발생:", error);
+         console.error("후기 데이터를 불러오는 중 오류 발생:", error);
       }
    }, []); // ✅ courseInfoId가 변경될 때만 새로운 fetchReviews 함수가 생성됨
 
 
      // ✅ 페이지 로드 시 초기 데이터 가져오기
    useEffect(() => {
-      fetchReviews(1); // 첫 페이지의 리뷰 데이터 요청
+      fetchReviews(1); // 첫 페이지의 후기 데이터 요청
    }, [fetchReviews]); 
 
    //세팅 확인

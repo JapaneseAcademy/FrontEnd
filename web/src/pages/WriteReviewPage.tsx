@@ -35,16 +35,16 @@ const WriteReviewPage = () => {
       try {
          console.log("📸 업로드된 사진 목록:", photos);
          console.log("📝 작성한 제목:", reviewTitle);
-         console.log("📝 작성한 리뷰:", reviewText);
+         console.log("📝 작성한 후기:", reviewText);
          console.log("🙈 익명 여부:", isAnonymous ? "익명" : "실명");
    
          // reviewTitle과 reviewText가 비어있을 경우 alert
          if (reviewTitle === '' || reviewText === '') {
-            alert('리뷰 제목과 내용을 모두 입력해주세요.');
+            alert('후기 제목과 내용을 모두 입력해주세요.');
             return;
          }
       
-         alert("리뷰가 등록되었습니다!"); // 실제 API 연동 시 변경 가능
+         alert("후기가 등록되었습니다!"); // 실제 API 연동 시 변경 가능
    
          // 입력값 초기화
          setPhotos([]);
@@ -53,11 +53,11 @@ const WriteReviewPage = () => {
          setReviewText("");
          setIsAnonymous(false); // ✅ 익명 상태 초기화
    
-         // 해당 리뷰를 작성한 courseDetail 페이지로 이동
+         // 해당 후기를 작성한 courseDetail 페이지로 이동
          navigate(`/courses/${courseId}`);
       } catch (error) {
-         console.error("리뷰 등록 중 오류 발생:", error);
-         alert("리뷰 등록에 실패했습니다. 다시 시도해주세요.");
+         console.error("후기 등록 중 오류 발생:", error);
+         alert("후기 등록에 실패했습니다. 다시 시도해주세요.");
       }
    };
 
@@ -125,10 +125,10 @@ const WriteReviewPage = () => {
          </Container>
 
          <Container id='text'>
-            <Title>리뷰 작성</Title>
-            <TitleInput placeholder="리뷰 제목을 작성해주세요(최대 30자)" value={reviewTitle} onChange={handleTitleChange}/>
+            <Title>후기 작성</Title>
+            <TitleInput placeholder="후기 제목을 작성해주세요(최대 30자)" value={reviewTitle} onChange={handleTitleChange}/>
             <ReviewInput
-               placeholder="리뷰를 작성해주세요(최대 500자)"
+               placeholder="후기를 작성해주세요(최대 500자)"
                value={reviewText}
                onChange={handleTextChange} 
             />
@@ -144,7 +144,7 @@ const WriteReviewPage = () => {
             />
          </AnonymousCheckbox>
 
-         <SubmitButton onClick={handleSubmit}>리뷰 등록</SubmitButton>
+         <SubmitButton onClick={handleSubmit}>후기 등록</SubmitButton>
       </Wrapper>
    );
 };

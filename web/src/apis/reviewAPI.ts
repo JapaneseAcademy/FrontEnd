@@ -12,7 +12,7 @@ export const getCourseReviewsByPage = async (courseInfoId: number, page: number)
    }
 }
 
-// 리뷰 상세 조회하는 api
+// 후기 상세 조회하는 api
 export const getReviewDetail = async (reviewId: number) => {
    try {
       const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/reviews/${reviewId}`);
@@ -34,7 +34,7 @@ export const getMainBestReviews = async () => {
    }
 }
 
-//전체 리뷰 조회하는 api
+//전체 후기 조회하는 api
 export const getAllReviews = async (page: number) => {
    try {
       const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/reviews?page=${page-1}`);

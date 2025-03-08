@@ -14,7 +14,6 @@ const ReviewCard = ({ reviewId, imageUrls, review, writer, createdDate, reviewTi
    const navigate = useNavigate();
 
    const handleReviewClick = () => {
-      console.log("리뷰 클릭");
       navigate(`/review?reviewId=${reviewId}`);
    }      
 

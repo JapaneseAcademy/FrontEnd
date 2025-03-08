@@ -37,7 +37,7 @@ const Out_ReviewsList = () => {
    const navigate = useNavigate();
 
 
-   // 선택한 리뷰 데이터 가져오기
+   // 선택한 후기 데이터 가져오기
    const selectedReview = currentReviews.find(
       (review) => review.reviewId === selectedReviewId
    );
@@ -77,11 +77,11 @@ const Out_ReviewsList = () => {
    };
 }
    const handleHiddenChange = () => {
-      if (confirm("리뷰 숨김 상태를 변경하시겠습니까?")) {
+      if (confirm("후기 숨김 상태를 변경하시겠습니까?")) {
          changeAdminReviewVisiblity(selectedReviewId, navigate).then((status) => {
             if (status === 200) {
                setIsReviewVisible(!isReviewVisible);
-               alert("리뷰 숨김 상태가 변경되었습니다.");
+               alert("후기 숨김 상태가 변경되었습니다.");
             }
          });
    };
@@ -92,7 +92,7 @@ const Out_ReviewsList = () => {
          setCurrentReviews(data.reviews);
          setTotalCount(data.totalElements);
 
-         // ✅ 첫 번째 리뷰를 자동 선택
+         // ✅ 첫 번째 후기를 자동 선택
          if (data.reviews.length > 0) {
             setSelectedStudentId(data.reviews[0].reviewId);
          }
@@ -113,7 +113,7 @@ const Out_ReviewsList = () => {
    return (
       <Wrapper id="admin-reviews-list-wrapper">
          <StudentListContainer id="reviews-list-container">
-         <Title>리뷰 목록</Title>
+         <Title>후기 목록</Title>
          <ReviewFilter setSelectCourseInfoId={setSelectedCourseInfoId}/>
          <ReviewsTable>
             <TableHeader>
@@ -175,9 +175,9 @@ const Out_ReviewsList = () => {
          </StudentListContainer>
 
          <ReviewsDetailContainer id="reviews-detail-container">
-         {/* 리뷰가 없을때 */}
+         {/* 후기가 없을때 */}
             {currentReviews.length === 0 ? (
-               <div style={{color:'#737373'}}>리뷰가 없습니다.</div>
+               <div style={{color:'#737373'}}>후기가 없습니다.</div>
             ) : (
             <>
             <DetailRow>
@@ -238,7 +238,7 @@ const Out_ReviewsList = () => {
                      checked={isReviewVisible}
                      onChange={handleHiddenChange}
                   />
-                  <label htmlFor="review-hidden">리뷰 공개</label>
+                  <label htmlFor="review-hidden">후기 공개</label>
                </CheckBox>
             </ChoiceRow>
          </>

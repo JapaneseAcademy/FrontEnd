@@ -27,7 +27,7 @@ export const getAdminReviewsByCourse = async (courseInfoId: number, page: number
    }
 }
 
-//리뷰 불러오는데 쓰일 courseInfo title 불러오는 api  
+//후기 불러오는데 쓰일 courseInfo title 불러오는 api  
 export const getAdminCourseInfoTitles = async () => {
    try {
       const response = await axios.get(`${BASE_URL}/api/v1/courses/titles`);
@@ -39,7 +39,7 @@ export const getAdminCourseInfoTitles = async () => {
 }
 
 
-////////////////////////리뷰 상태 설정///////////////////////
+////////////////////////후기 상태 설정///////////////////////
 
 //후기 공개/비공개 처리하는 api
 export const changeAdminReviewVisiblity = async (reviewId: number, navigate: (path: string) => void) => {
