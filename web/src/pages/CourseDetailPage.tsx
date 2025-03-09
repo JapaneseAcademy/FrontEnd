@@ -92,7 +92,12 @@ const CourseDetailPage = () => {
 
   ////중요!!! 신청하기 버튼 클릭 시 ///// 결제~~~!!
   const handleBuyClick = () => {
-    // alert("준비중입니다. 카카오톡으로 문의해주세요.")
+    // 로그인 안되어있으면 alert
+    if (!localStorage.getItem('accessToken')) {
+      alert('로그인이 필요한 서비스입니다.');
+      return;
+    }
+
     console.log("결제 timeTableId: ", selectedTimeTableId);
     console.log("결제 대상: ", courseTitle + "-" + selectedTimeTable + "-" + selectedCourseType);
     console.log("결제 금액: ", courseSaleCost);
