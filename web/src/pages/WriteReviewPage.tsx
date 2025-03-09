@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { HiOutlinePlusCircle } from "react-icons/hi2";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { writeReview } from "../apis/reviewAPI";
 
 const MAX_PHOTOS = 3;
 const MAX_TITLE_LENGTH = 30;
@@ -14,8 +15,10 @@ const WriteReviewPage = () => {
    const [reviewText, setReviewText] = useState<string>('');
    const [isAnonymous, setIsAnonymous] = useState<boolean>(false);
    const navigate = useNavigate();
-   const courseId = useParams().courseId;
 
+   const enrollmentId = Number(new URLSearchParams(window.location.search).get('enrollmentId'));
+   const courseInfoId = Number(new URLSearchParams(window.location.search).get('courseInfoId'));
+   
    const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value.slice(0, MAX_TITLE_LENGTH);
       setReviewTitle(value);
@@ -43,9 +46,15 @@ const WriteReviewPage = () => {
             alert('후기 제목과 내용을 모두 입력해주세요.');
             return;
          }
-      
-         alert("후기가 등록되었습니다!"); // 실제 API 연동 시 변경 가능
-   
+         // reviewText가 10자 미만일 경우 alert
+         if (reviewText.length < 10) {
+            alert('후기 내용은 최소 10자 이상 입력해주세요.');
+            return;
+         }
+
+         // review 작성 api
+         writeReview(enrollmentId, reviewTitle, reviewText, isAnonymous, photos, navigate, courseInfoId);
+         
          // 입력값 초기화
          setPhotos([]);
          setPreviewUrls([]);
@@ -53,8 +62,6 @@ const WriteReviewPage = () => {
          setReviewText("");
          setIsAnonymous(false); // ✅ 익명 상태 초기화
    
-         // 해당 후기를 작성한 courseDetail 페이지로 이동
-         navigate(`/courses/${courseId}`);
       } catch (error) {
          console.error("후기 등록 중 오류 발생:", error);
          alert("후기 등록에 실패했습니다. 다시 시도해주세요.");
@@ -89,11 +96,6 @@ const WriteReviewPage = () => {
    }
    , [previewUrls]);
 
-   useEffect(() => {
-      //창 열릴 때 맨 위로 이동
-      window.scrollTo(0, 0);
-   }
-   , []);
    
    return (
       <Wrapper>

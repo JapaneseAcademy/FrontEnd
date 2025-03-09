@@ -62,6 +62,7 @@ const CourseDetailPage = () => {
   const navigate = useNavigate();
   const courseInfoId = parseInt(String(useParams().courseInfoId));
 
+
   const handleReviewClick = (reviewId: number) => {
     navigate(`/review?reviewId=${reviewId}`);
   }
@@ -161,6 +162,7 @@ const CourseDetailPage = () => {
   useEffect(() => {
     fetchReviews(1); // 첫 페이지의 후기 데이터 요청
   }, [fetchReviews]); 
+
 
   return (
     <>
@@ -587,27 +589,6 @@ const DropDownContent = styled.select`
     background-color: #f1f1f1;
   }
 `;
-
-
-///수강후기 작성하기 버튼
-// const WriteReviewBtn = styled.button`
-//   width: 100%;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   /* background-color: #7f7f7f; */
-//   background-color: none;
-//   color: #333;
-//   border: none;
-//   padding: 10px 20px;
-//   font-size: 13px;
-//   cursor: pointer;
-
-//   &:hover {
-//     background-color: #232323;
-//     color: #fff;
-//   }
-// `;
 
 const NoReview = styled.div`
   font-size: 15px;

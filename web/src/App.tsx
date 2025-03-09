@@ -74,7 +74,7 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/review" element={<ReviewDetailPage />} />
             <Route path="/mypage/edit" element={<EditMyPage />} />
-            <Route path="/courses/:courseId/writeReview" element={<WriteReviewPage />} />
+            <Route path="/writeReview" element={<WriteReviewPage />} />
             <Route path="/reviews" element={<ReviewsPage />} />
             <Route path="*" element={<div>Not Found</div>} />
             <Route path="/payment" element={<PaymentPage />} />

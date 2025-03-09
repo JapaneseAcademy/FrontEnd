@@ -26,8 +26,8 @@ const MyPage = () => {
     navigate('/mypage/edit')
   }
 
-  const handleReviewWrite = (couresInfoId: number) => {
-    navigate(`/courses/${couresInfoId}/writeReview`);
+  const handleReviewWrite = (enrollmentId: number, courseInfoId: number) => {
+    navigate(`/writeReview?enrollmentId=${enrollmentId}&courseInfoId=${courseInfoId}`);
   }
 
   useEffect(() => {
@@ -78,7 +78,7 @@ const MyPage = () => {
               <Text>결제수단 | 카카오페이</Text> {/*todo: 결제수단 연동*/}
               {/* reviewed가 false일 때만 후기 작성 버튼 보이기 */}
               { !enrollment.reviewed 
-                ? <ReviewButton  onClick={()=>handleReviewWrite(enrollment.courseInfoId)}>후기 작성</ReviewButton> 
+                ? <ReviewButton  onClick={()=>handleReviewWrite(enrollment.enrollmentId, enrollment.courseInfoId)}>후기 작성</ReviewButton> 
                 : <ReviewComplete>후기 작성 완료</ReviewComplete> }
             </CourseInfo>
           </MyCourseCard>
@@ -220,7 +220,7 @@ const ReviewButton = styled.button`
 const ReviewComplete = styled.div`
   width: 100px;
   height: 30px;
-  background-color: #cfcfcf;
+  background-color: #d6d6d6;
   color: white;
   border: none;
   border-radius: 5px;
