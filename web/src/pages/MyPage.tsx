@@ -6,13 +6,15 @@ import { getEnrollments, getUserInfo } from "../apis/userAPI";
 import { convertCategory, numberWithCommas } from "../utils/utils";
 
 type Enrollment = {
-  enrollmentId: string;
+  enrollmentId: number;
   title: string;
   paymentDate: string;
   category: string;
   paymentAmount: number;
   // paymentMethod: string;
   mainImageUrl: string;
+  reviewed: boolean;
+  courseInfoId: number;
 }
 
 const MyPage = () => {
@@ -24,9 +26,9 @@ const MyPage = () => {
     navigate('/mypage/edit')
   }
 
-  // const handleReviewWrite = (couresId: number) => {
-  //   navigate(`/courses/${couresId}/writeReview`);
-  // }
+  const handleReviewWrite = (couresInfoId: number) => {
+    navigate(`/courses/${couresInfoId}/writeReview`);
+  }
 
   useEffect(() => {
     //마이페이지 진입 시, 스크롤을 맨 위로 이동
@@ -74,7 +76,10 @@ const MyPage = () => {
               <Text>강의유형 | {convertCategory(enrollment.category)}</Text>
               <Text>결제금액 | {numberWithCommas(enrollment.paymentAmount)}</Text>
               <Text>결제수단 | 카카오페이</Text> {/*todo: 결제수단 연동*/}
-              <ReviewButton>후기 작성</ReviewButton>
+              {/* reviewed가 false일 때만 후기 작성 버튼 보이기 */}
+              { !enrollment.reviewed 
+                ? <ReviewButton  onClick={()=>handleReviewWrite(enrollment.courseInfoId)}>후기 작성</ReviewButton> 
+                : <ReviewComplete>후기 작성 완료</ReviewComplete> }
             </CourseInfo>
           </MyCourseCard>
         ))}
@@ -198,7 +203,7 @@ const Text = styled.div`
 const ReviewButton = styled.button`
   width: 100px;
   height: 30px;
-  background-color: #fea788;
+  background-color: #ff8255;
   color: white;
   border: none;
   border-radius: 5px;
@@ -210,4 +215,18 @@ const ReviewButton = styled.button`
   &:hover {
     background-color: #ff8255;
   }
+`
+
+const ReviewComplete = styled.div`
+  width: 100px;
+  height: 30px;
+  background-color: #cfcfcf;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  margin-top: 10px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
