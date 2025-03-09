@@ -15,7 +15,7 @@ const DownCourses = () => {
             courseImage: course.mainImageUrl,
             tags: convertTags(course.live, course.online, course.recorded),
             courseTitle: course.title,
-            courseCost: course.cost,
+            saleCost: course.saleCost,
             level: course.level,
          }));
          setCourses(formattedCourses);
@@ -31,7 +31,7 @@ const DownCourses = () => {
                courseInfoId={course.courseInfoId}
                courseImage={course.courseImage}
                courseTitle={course.courseTitle}
-               courseCost={course.courseCost}
+               courseCost={course.saleCost}
                tags={course.tags}
                level={course.level}
             />

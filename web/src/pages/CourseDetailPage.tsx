@@ -90,12 +90,12 @@ const CourseDetailPage = () => {
 
   ////중요!!! 신청하기 버튼 클릭 시 ///// 결제~~~!!
   const handleBuyClick = () => {
-    alert("준비중입니다. 카카오톡으로 문의해주세요.")
+    // alert("준비중입니다. 카카오톡으로 문의해주세요.")
     console.log("결제 timeTableId: ", selectedTimeTableId);
     console.log("결제 대상: ", courseTitle + "-" + selectedTimeTable + "-" + selectedCourseType);
     console.log("결제 금액: ", coursePrice);
 
-    // navigate(`/payment?courseInfoId=${courseInfoId}&timeTableId=${selectedTimeTableId}&courseType=${selectedCourseType}&courseTitle=${courseTitle}&coursePrice=${coursePrice}`);
+    navigate(`/payment?courseInfoId=${courseInfoId}&timeTableId=${selectedTimeTableId}&courseType=${selectedCourseType}&courseTitle=${courseTitle}&coursePrice=${coursePrice}`);
   }
 
   //timeTables를 한 분반(timeTable)당 하나의 문자열로 바꾸는 함수
@@ -115,7 +115,7 @@ const CourseDetailPage = () => {
     getCourseDetail(courseInfoId).then((data) => {
       setCourseTypes(convertTags(data.live, data.online, data.recorded));
       setCourseTitle(data.title);
-      setCoursePrice(data.cost);
+      setCoursePrice(data.course.saleCost);
       setCourseMainImage(data.mainImageUrl);
       setCourseDetailImages(data.descriptions);
       setCourseLevel(data.level);

@@ -29,7 +29,8 @@ const CoursesPage = () => {
           courseImage: course.mainImageUrl,
           tags: convertTags(course.live, course.online, course.recorded),
           courseTitle: course.title,
-          courseCost: course.cost,
+          baseCost: course.baseCost,
+          saleCost: course.saleCost,
           level: course.level,
         }));
 
@@ -96,7 +97,7 @@ const CoursesPage = () => {
                   courseInfoId={course.courseInfoId}
                   courseImage={course.courseImage}
                   courseTitle={course.courseTitle}
-                  courseCost={course.courseCost}
+                  courseCost={course.saleCost}
                   tags={course.tags}
                   level={course.level}
                 />

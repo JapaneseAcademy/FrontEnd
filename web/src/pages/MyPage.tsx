@@ -24,6 +24,10 @@ const MyPage = () => {
     navigate('/mypage/edit')
   }
 
+  // const handleReviewWrite = (couresId: number) => {
+  //   navigate(`/courses/${couresId}/writeReview`);
+  // }
+
   useEffect(() => {
     //마이페이지 진입 시, 스크롤을 맨 위로 이동
     window.scrollTo(0, 0);
@@ -69,7 +73,8 @@ const MyPage = () => {
               <Text>결제일시 | {enrollment.paymentDate}</Text>
               <Text>강의유형 | {convertCategory(enrollment.category)}</Text>
               <Text>결제금액 | {numberWithCommas(enrollment.paymentAmount)}</Text>
-              <Text>결제수단 | 카카오페이</Text>
+              <Text>결제수단 | 카카오페이</Text> {/*todo: 결제수단 연동*/}
+              <ReviewButton>후기 작성</ReviewButton>
             </CourseInfo>
           </MyCourseCard>
         ))}
@@ -166,15 +171,15 @@ const CourseTitle = styled.div`
 `
 
 const CourseImage = styled.img`
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
   object-fit: cover;
   border-radius: 10px;
 `
 
 const CourseInfo = styled.div`
   width: 90%;
-  height: 120px;
+  height: 150px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -188,4 +193,21 @@ const Text = styled.div`
   font-size: 13px;
   margin-top: 5px;
   color: #7c7c7c;
+`
+
+const ReviewButton = styled.button`
+  width: 100px;
+  height: 30px;
+  background-color: #fea788;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  margin-top: 10px; 
+  /* align-self: center; */
+
+  &:hover {
+    background-color: #ff8255;
+  }
 `
