@@ -41,7 +41,8 @@ const CourseDetailPage = () => {
 
   //강의 정보들
   const [courseTitle, setCourseTitle] = useState<string>("");
-  const [coursePrice, setCoursePrice] = useState<number>(0);
+  const [courseBaseCost, setCourseBaseCost] = useState<number>(0);
+  const [courseSaleCost, setCourseSaleCost] = useState<number>(0);
   const [courseMainImage, setCourseMainImage] = useState<string>("");
   const [courseDetailImages, setCourseDetailImages] = useState<string[]>([]);
   const [courseTypes, setCourseTypes] = useState<string[]>([]);
@@ -93,9 +94,9 @@ const CourseDetailPage = () => {
     // alert("준비중입니다. 카카오톡으로 문의해주세요.")
     console.log("결제 timeTableId: ", selectedTimeTableId);
     console.log("결제 대상: ", courseTitle + "-" + selectedTimeTable + "-" + selectedCourseType);
-    console.log("결제 금액: ", coursePrice);
+    console.log("결제 금액: ", courseSaleCost);
 
-    navigate(`/payment?courseInfoId=${courseInfoId}&timeTableId=${selectedTimeTableId}&courseType=${selectedCourseType}&courseTitle=${courseTitle}&coursePrice=${coursePrice}`);
+    navigate(`/payment?courseInfoId=${courseInfoId}&timeTableId=${selectedTimeTableId}&courseType=${selectedCourseType}&courseTitle=${courseTitle}&coursePrice=${courseSaleCost}`);
   }
 
   //timeTables를 한 분반(timeTable)당 하나의 문자열로 바꾸는 함수
@@ -115,7 +116,8 @@ const CourseDetailPage = () => {
     getCourseDetail(courseInfoId).then((data) => {
       setCourseTypes(convertTags(data.live, data.online, data.recorded));
       setCourseTitle(data.title);
-      setCoursePrice(data.course.saleCost);
+      setCourseSaleCost(data.course.saleCost);
+      setCourseBaseCost(data.course.baseCost);
       setCourseMainImage(data.mainImageUrl);
       setCourseDetailImages(data.descriptions);
       setCourseLevel(data.level);
@@ -165,7 +167,12 @@ const CourseDetailPage = () => {
       <Wrapper>
         <CourseImage src={courseMainImage} alt="Course Image" />
         <CourseTitle>{courseTitle}</CourseTitle>
-        <CoursePrice>{numberWithCommas(coursePrice)}원</CoursePrice>
+        {/* baseCost와 saleCost가 다를 때 */}
+        {courseBaseCost !== courseSaleCost ? 
+          <CoursePrice><span>{numberWithCommas(courseBaseCost)}</span>{numberWithCommas(courseSaleCost)}원</CoursePrice>
+        :
+        <CoursePrice>{numberWithCommas(courseBaseCost)}원</CoursePrice>
+        }
         <DropDownContainer>
           <Dropdown>
             <DropDownTitle>난이도</DropDownTitle>
@@ -309,6 +316,12 @@ const CoursePrice = styled.div`
   font-size: 16px;
   font-weight: 300;
   margin-top: 10px;
+
+  span {
+    color: #6d6d6d;
+    text-decoration: line-through;
+    margin-right: 5px;
+  }
 `;
 
 const FixedButtonContainer = styled.div`

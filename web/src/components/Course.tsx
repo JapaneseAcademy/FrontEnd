@@ -5,12 +5,13 @@ interface CourseProps {
    courseInfoId: number;
    courseImage: string;
    courseTitle: string;
-   courseCost: number;
+   baseCost: number;
+   saleCost: number;
    tags: string[];
    level: string;
 }
 
-const Course = ({ courseInfoId, courseImage, courseTitle, courseCost, tags, level }: CourseProps) => {
+const Course = ({ courseInfoId, courseImage, courseTitle, baseCost, saleCost, tags, level }: CourseProps) => {
    const navigate = useNavigate();
 
    const handleCourseClick = () => {
@@ -18,8 +19,10 @@ const Course = ({ courseInfoId, courseImage, courseTitle, courseCost, tags, leve
    };
 
    //가격에 1000원 단위로 콤마 추가
-   const stringCost = courseCost.toString();
-   const formattedCost = stringCost.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+   const stringBaseCost = baseCost.toString();
+   const formattedBaseCost = stringBaseCost.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+   const stringSaleCost = saleCost.toString();
+   const formattedSaleCost = stringSaleCost.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
    return (
       <Wrapper onClick={handleCourseClick}>
@@ -31,8 +34,11 @@ const Course = ({ courseInfoId, courseImage, courseTitle, courseCost, tags, leve
             <CourseTag style={{backgroundColor:'#61b58d'}}>{level}</CourseTag>
          </CourseTagContainer>
          <CourseTitle>{courseTitle}</CourseTitle>
-         <CoursePrice>{formattedCost}원</CoursePrice>
-      </Wrapper>
+         {/* saleCost와 baseCost가 다를 때 */}
+         { saleCost !== baseCost 
+         ? <CoursePrice><span>{formattedBaseCost}</span>{formattedSaleCost}원</CoursePrice>
+         :
+         <CoursePrice>{formattedBaseCost}원</CoursePrice> }      </Wrapper>
    );
 };
 
@@ -59,6 +65,12 @@ const CourseTitle = styled.div`
 const CoursePrice = styled.div`
    font-size: 16px;
    margin-top: 5px;
+
+   span {
+      color: #6d6d6d;
+      text-decoration: line-through;
+      margin-right: 5px;
+   }
 `;
 
 const CourseTagContainer = styled.div`
