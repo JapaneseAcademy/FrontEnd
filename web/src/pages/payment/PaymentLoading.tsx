@@ -30,12 +30,11 @@ const PaymentLoading = () => {
          // } 
       }
       );
-   }, [timeTableId, category, amount, paymentKey, orderId]);
+   }, [timeTableId, category, amount, paymentKey, orderId, courseInfoId]);
 
    return (
       <Wrapper>
          <Loading />  
-         {courseInfoId}
       </Wrapper>
 
    )
