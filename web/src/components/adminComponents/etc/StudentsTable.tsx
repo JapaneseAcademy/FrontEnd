@@ -12,8 +12,6 @@ interface StudentsTableProps {
 }
 
 const StudentsTable = ({ students }: StudentsTableProps) => {
-
-
    return (
       <Wrapper id='students-table-wrapper'>
          <TableHeader>
@@ -23,23 +21,26 @@ const StudentsTable = ({ students }: StudentsTableProps) => {
          </TableHeader>
          <TableBody>
             {/* students가 없을때 */}
-            {students.length === 0 ?
-               <TableRow>
-                  <TableItem style={{width:'100%', color:'#737373'}}>수강생이 없습니다.</TableItem>
+            {students.length === 0 ? (
+               <TableRow key='no-student'>
+                  <TableItem style={{ width: '100%', color: '#737373' }}>
+                     수강생이 없습니다.
+                  </TableItem>
                </TableRow>
-            :
-               students.map((student) => (
-                  <TableRow key={student.studentId}>
-                     <TableItem key={student.studentId}>{student.name}</TableItem>
-                     <TableItem key={student.studentId}>{student.phone}</TableItem>
-                     <TableItem key={student.studentId}>{student.paymentDate}</TableItem>
+            ) : (
+               students.map((student, index) => (
+                  <TableRow key={index}>
+                     <TableItem>{student.name}</TableItem>
+                     <TableItem>{student.phone}</TableItem>
+                     <TableItem>{student.paymentDate}</TableItem>
                   </TableRow>
                ))
-            }
+            )}
          </TableBody>
       </Wrapper>
-   )
-}
+   );
+};
+
 
 export default StudentsTable
 

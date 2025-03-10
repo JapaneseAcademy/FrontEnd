@@ -44,7 +44,7 @@ const Out_ChangeYoutube = () => {
           ID 입력 후 변경하려는 영상이 왼쪽에 정상적으로 나오지 않는다면 ID를 다시 확인해주세요. <br/>
           영상이 정상적으로 나오는지 확인한 후 변경 버튼을 눌러주세요.
         </Notice>
-        <Button onClick={handleYoutubeIdSubmit}>변경</Button>
+        <Button onClick={handleYoutubeIdSubmit}>변경하기</Button>
       </YoutubeFormContainer>
     </Wrapper>
   )
