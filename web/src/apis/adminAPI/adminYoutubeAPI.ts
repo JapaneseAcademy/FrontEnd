@@ -17,7 +17,7 @@ export const getAdminYoutubeId = async () => {
 export const changeAdminYoutubeId = async (youtubeId: string) => {
    try {
       const response = await axios.put(`${BASE_URL}/api/v1/main/youtube`, 
-         { youtubeUrl: youtubeId },
+         { youtubeId },
          {
             headers: {
                Authorization: `Bearer ${localStorage.getItem('accessToken')}`

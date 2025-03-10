@@ -1,11 +1,9 @@
 import { loadTossPayments } from "@tosspayments/tosspayments-sdk";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { getOrderId } from "../../apis/paymentAPI";
 
-//랜덤 주문번호 생성
-const generateRandomString = () => {
-   return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-}
+
 const customerKey = "user_1234";
 
 type Amount = {
@@ -20,6 +18,7 @@ const PaymentPage = () => {
       currency: "KRW",
       value: 0, //TODO: 바꾸기 (결제 금액)
    });
+   const [orderId, setOrderId] = useState<string | null>(null);
 
    //url에서 결제정보 받아오기
    const url = new URL(window.location.href);
@@ -27,11 +26,20 @@ const PaymentPage = () => {
    const courseType = url.searchParams.get("courseType");
    const courseTitle = url.searchParams.get("courseTitle");
    const coursePrice = parseInt(String(url.searchParams.get("coursePrice")));
+   // const courseInfoId = parseInt(String(url.searchParams.get("courseInfoId")));
 
    useEffect(() => {
-      console.log("결제 정보 : ", timeTableId, courseType, courseTitle, coursePrice);
+      // 백엔드에서 orderId를 받아오기
+      getOrderId(parseInt(String(timeTableId))).then((orderId) => {
+         setOrderId(orderId);
+      });
    }
    , [timeTableId, courseType, courseTitle, coursePrice]);
+   //orderId 확인 
+   useEffect(() => {
+      console.log("orderId : ", orderId);
+   }
+   , [orderId]);
 
    useEffect(() => {
       setAmount({
@@ -83,11 +91,11 @@ const PaymentPage = () => {
                onClick={async () => {
                try {
                      await widgets?.requestPayment({
-                     orderId: generateRandomString(), //TODO: 바꾸기 (주문번호)
+                     orderId: orderId, //TODO: 바꾸기 (주문번호)
                      orderName: courseTitle, //TODO: 바꾸기 (상품명)
                      // customerName: "김토스", //TODO: 바꾸기 (구매자 이름)
 
-                     successUrl: window.location.origin + "/payment/success" + window.location.search, //TODO: 바꾸기 (성공 URL)
+                     successUrl: window.location.origin + "/payment/loading" + window.location.search, //TODO: 바꾸기 (성공 URL)
                      failUrl: window.location.origin + "/payment/failure" + window.location.search, //TODO: 바꾸기 (실패 URL)
                      // cancelUrl: window.location.origin + "/sandbox/cancel" + window.location.search, //TODO: 바꾸기 (취소 URL)
                      });

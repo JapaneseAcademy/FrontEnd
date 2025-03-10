@@ -1,21 +1,21 @@
-import { useEffect } from "react"
-
+import styled from "styled-components"
 
 const PaymentSuccess = () => {
   
-    // url에서 paymentKey, orderId, amount 가져오기
-    const url = new URL(window.location.href);
-    const paymentKey = url.searchParams.get("paymentKey");
-    const orderId = url.searchParams.get("orderId");
-    const amount = url.searchParams.get("amount");
-
-    useEffect(() => {
-        console.log("paymentKey : ", paymentKey, "orderId : ", orderId, "amount : ", amount);
-    }, [paymentKey, orderId, amount]);
 
   return (
-    <div>paymentSuccess</div>
+    <Wrapper>
+      결제에 성공했습니다! 짝짝짝
+    </Wrapper>
   )
 }
 
 export default PaymentSuccess
+
+const Wrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;

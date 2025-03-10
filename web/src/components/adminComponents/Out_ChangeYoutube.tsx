@@ -26,13 +26,10 @@ const Out_ChangeYoutube = () => {
 
   useEffect(() => {
     getAdminYoutubeId().then((data) => {
-      setYoutubeId(data.youtubeUrl);
+      setYoutubeId(data.youtubeId);
     });
   }, []);
 
-  useEffect(() => {
-    console.log(youtubeId);
-  }, [youtubeId]);
 
   return (
     <Wrapper>

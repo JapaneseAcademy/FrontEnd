@@ -52,3 +52,18 @@ export const convertCategory = (category: string) => {
          return "";
    }
 }
+
+
+//강의 유형을 영어로 다시 바꾸는 함수
+export const convertCategoryToEng = (category: string|null) => {
+   switch (category) {
+      case "현장강의":
+         return "LIVE";
+      case "온라인":
+         return "ONLINE";
+      case "동영상":
+         return "RECORDED";
+      default:
+         return "";
+   }
+}

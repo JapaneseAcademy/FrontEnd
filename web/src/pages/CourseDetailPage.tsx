@@ -93,8 +93,8 @@ const CourseDetailPage = () => {
   ////중요!!! 신청하기 버튼 클릭 시 ///// 결제~~~!!
   const handleBuyClick = () => {
     // 일단 안되게 임시 처리
-    alert("준비중입니다.");
-    return;
+    // alert("준비중입니다.");
+    // return;
     
     // 로그인 안되어있으면 alert
     if (!localStorage.getItem('accessToken')) {
@@ -106,7 +106,7 @@ const CourseDetailPage = () => {
     console.log("결제 대상: ", courseTitle + "-" + selectedTimeTable + "-" + selectedCourseType);
     console.log("결제 금액: ", courseSaleCost);
 
-    navigate(`/payment?courseInfoId=${courseInfoId}&timeTableId=${selectedTimeTableId}&courseType=${selectedCourseType}&courseTitle=${courseTitle}&coursePrice=${courseSaleCost}`);
+    navigate(`/payment?courseInfoId=${courseInfoId}&timeTableId=${selectedTimeTableId}&category=${selectedCourseType}&courseTitle=${courseTitle}&coursePrice=${courseSaleCost}`);
   }
 
   //timeTables를 한 분반(timeTable)당 하나의 문자열로 바꾸는 함수
