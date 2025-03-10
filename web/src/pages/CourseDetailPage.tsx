@@ -92,9 +92,7 @@ const CourseDetailPage = () => {
 
   ////중요!!! 신청하기 버튼 클릭 시 ///// 결제~~~!!
   const handleBuyClick = () => {
-    // 일단 안되게 임시 처리
-    // alert("준비중입니다.");
-    // return;
+
     
     // 로그인 안되어있으면 alert
     if (!localStorage.getItem('accessToken')) {
@@ -102,6 +100,7 @@ const CourseDetailPage = () => {
       return;
     }
 
+    alert("이동할 결제 페이지는 테스트 페이지입니다. 기능 테스트 중이니 실제 결제는 하지 마세요.");
     console.log("결제 timeTableId: ", selectedTimeTableId);
     console.log("결제 대상: ", courseTitle + "-" + selectedTimeTable + "-" + selectedCourseType);
     console.log("결제 금액: ", courseSaleCost);

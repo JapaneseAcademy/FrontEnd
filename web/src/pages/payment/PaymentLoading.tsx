@@ -24,10 +24,6 @@ const PaymentLoading = () => {
             alert("강의 결제가 완료되었습니다. 마이페이지에서 확인해주세요.");
             window.location.href = "/mypage";
          } 
-         //TODO: 실제 배포에서는 한번만 실행되니까, 이거 주석 풀어야함
-         // else {
-         //    window.location.href = "/payment/failure";
-         // } 
       }
       );
    }, [timeTableId, category, amount, paymentKey, orderId, courseInfoId]);
