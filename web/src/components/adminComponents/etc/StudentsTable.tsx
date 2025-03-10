@@ -30,9 +30,9 @@ const StudentsTable = ({ students }: StudentsTableProps) => {
             :
                students.map((student) => (
                   <TableRow key={student.studentId}>
-                     <TableItem>{student.name}</TableItem>
-                     <TableItem>{student.phone}</TableItem>
-                     <TableItem>{student.paymentDate}</TableItem>
+                     <TableItem key={student.studentId}>{student.name}</TableItem>
+                     <TableItem key={student.studentId}>{student.phone}</TableItem>
+                     <TableItem key={student.studentId}>{student.paymentDate}</TableItem>
                   </TableRow>
                ))
             }

@@ -1,6 +1,7 @@
 import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
+//강의 별로 후기 불러오는 api
 export const getAdminReviewsByCourse = async (courseInfoId: number, page: number, navigate: (path: string) => void) => {
    //토큰 없으면 로그인 페이지로 이동
    if (!localStorage.getItem("accessToken")) {
@@ -9,7 +10,7 @@ export const getAdminReviewsByCourse = async (courseInfoId: number, page: number
       return;
    }
    try {
-      const response = await axios.get(`${BASE_URL}/api/v1/admin/reviews?courseInfoId=${courseInfoId}&page=${page-1}`,
+      const response = await axios.get(`${BASE_URL}/api/v1/admin/courses/${courseInfoId}/reviews?page=${page-1}`,
       {
          headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
