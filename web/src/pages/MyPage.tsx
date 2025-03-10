@@ -209,7 +209,7 @@ const ReviewButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   font-size: 12px;
-  margin-top: 10px; 
+  margin-top: 5px; 
   /* align-self: center; */
 
   &:hover {
@@ -225,7 +225,7 @@ const ReviewComplete = styled.div`
   border: none;
   border-radius: 5px;
   font-size: 12px;
-  margin-top: 10px; 
+  margin-top: 5px; 
   display: flex;
   align-items: center;
   justify-content: center;
