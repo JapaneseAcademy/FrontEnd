@@ -8,7 +8,8 @@ type courseInfo = {
   courseInfoId: number;
   title: string;
   descriptions: string[];
-  cost: number;
+  baseCost: number;
+  saleCost: number;
   mainImageUrl: string;
   level: string;
 
@@ -58,7 +59,7 @@ const Out_CourseInfoList = () => {
               >
                 <TableItem>{courseInfo.title}</TableItem>
                 <TableItem><CourseImage style={{width:'60px', height:'60px', aspectRatio:'1/1'}} src={courseInfo.mainImageUrl} /></TableItem>
-                <TableItem>{numberWithCommas(courseInfo.cost)}원</TableItem>
+                <TableItem>{numberWithCommas(courseInfo.baseCost)}원</TableItem>
               </TableRow>
             ))}
           </TableBody>
@@ -72,7 +73,7 @@ const Out_CourseInfoList = () => {
         </DetailRow>
         <DetailRow className='course-cost'>
           <DetailTitle>수강료</DetailTitle>
-          <DetailContent>{numberWithCommas(selectedCourseInfo?.cost ?? 0)}원</DetailContent>
+          <DetailContent>{numberWithCommas(selectedCourseInfo?.baseCost ?? 0)}원</DetailContent>
         </DetailRow>
         <DetailRow className='course-main-image'>
           <DetailTitle>썸네일</DetailTitle>
