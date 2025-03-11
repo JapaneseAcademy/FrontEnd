@@ -7,7 +7,6 @@ import CoursesPage from './pages/CoursesPage';
 import QnAPage from './pages/QnAPage';
 import MyPage from './pages/MyPage';
 import IntroductionPage from './pages/IntroductionPage';
-import TestPage from './pages/TestPage';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import FloatingKakaoBtn from './components/FloatingKakaoBtn';
@@ -70,7 +69,6 @@ function App() {
             <Route path="/qna" element={<QnAPage />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/introduction" element={<IntroductionPage />} />
-            <Route path="/test" element={<TestPage />} />
             <Route path="/courses/:courseInfoId" element={<CourseDetailPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/review" element={<ReviewDetailPage />} />
