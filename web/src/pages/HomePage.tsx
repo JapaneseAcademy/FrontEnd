@@ -37,7 +37,7 @@ const HomePage = () => {
         <MainBanner src='/images/main-banner.png' />
 
         <Ment>
-          <span style={{fontSize:'16px', fontWeight:'400'}}>
+          <span style={{fontSize:'16px', fontWeight:'400', marginBottom:'10px'}}>
             유학 없이도 원어민처럼!</span>
           <span style={{fontSize:'18px'}}>
             대화로 배우는 살아있는 일본어,<br/>
