@@ -1,99 +1,58 @@
+import { useState } from "react";
 import styled from "styled-components"
+import { sendAdminMessage } from "../../../apis/adminAPI/adminMessageAPI";
 
-const SendMessageContainer = () => {
+type Student = {
+   id: number;
+   name: string;
+   birth: string;
+   phone: string;
+   note: string;
+}
+
+interface SendMessageContainerProps {
+   students: Student[];
+}
+
+const SendMessageContainer = ({ students }: SendMessageContainerProps) => {
+   const [message, setMessage] = useState("");
+
+   const handleMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setMessage(e.target.value);
+   }
+
+   const handleSend = () => {
+      console.log("메시지: ", message);
+      console.log("보낼 학생 id 리스트: ", students.map((student) => student.id));
+
+      if (confirm("메시지를 전송하시겠습니까?")) {
+         const titleAddedMessage = `[예리한 일본어] ${message}`;
+         sendAdminMessage(titleAddedMessage, students.map((student) => student.id));
+      }
+   }
+
    return (
       <Wrapper>
          <PhoneShape>
             <Title>내용</Title>
-            <Message placeholder="메시지를 입력하세요(최대 500자)" />
+            <Message  
+               placeholder="메시지를 입력하세요(최대 800자)"
+               value={message}
+               onChange={handleMessageChange}
+               maxLength={800} 
+            />
+            <SendButton onClick={handleSend}>전송</SendButton>
 
             <TargetStudents>
-               <Title>보낼 사람</Title>
+               <Title>보낼 학생</Title>
                <StudentTable>
-                  <StudentRow>
-                     <Name>김철수</Name>
-                     <Phone>010-4303-9511</Phone>
-                  </StudentRow>
-                  <StudentRow>
-                     <Name>김영희</Name>
-                     <Phone>010-4303-9511</Phone>
-                  </StudentRow>
-                  <StudentRow>
-                     <Name>홍길동</Name>
-                     <Phone>010-4303-9511</Phone>
-                  </StudentRow>
-                  <StudentRow>
-                     <Name>김철수</Name>
-                     <Phone>010-4303-9511</Phone>
-                  </StudentRow>
-                  <StudentRow>
-                     <Name>김영희</Name>
-                     <Phone>010-4303-9511</Phone>
-                  </StudentRow>
-                  <StudentRow>
-                     <Name>홍길동</Name>
-                     <Phone>010-4303-9511</Phone>
-                  </StudentRow>
-                  <StudentRow>
-                     <Name>김철수</Name>
-                     <Phone>010-4303-9511</Phone>
-                  </StudentRow>
-                  <StudentRow>
-                     <Name>김영희</Name>
-                     <Phone>010-4303-9511</Phone>
-                  </StudentRow>
-                  <StudentRow>
-                     <Name>홍길동</Name>
-                     <Phone>010-4303-9511</Phone>
-                  </StudentRow>
-                  <StudentRow>
-                     <Name>김철수</Name>
-                     <Phone>010-4303-9511</Phone>
-                  </StudentRow>
-                  <StudentRow>
-                     <Name>김영희</Name>
-                     <Phone>010-4303-9511</Phone>
-                  </StudentRow>
-                  <StudentRow>
-                     <Name>홍길동</Name>
-                     <Phone>010-4303-9511</Phone>
-                  </StudentRow>
-                  <StudentRow>
-                     <Name>김철수</Name>
-                     <Phone>010-4303-9511</Phone>
-                  </StudentRow>
-                  <StudentRow>
-                     <Name>김영희</Name>
-                     <Phone>010-4303-9511</Phone>
-                  </StudentRow>
-                  <StudentRow>
-                     <Name>홍길동</Name>
-                     <Phone>010-4303-9511</Phone>
-                  </StudentRow>
-                  <StudentRow>
-                     <Name>김철수</Name>
-                     <Phone>010-4303-9511</Phone>
-                  </StudentRow>
-                  <StudentRow>
-                     <Name>김영희</Name>
-                     <Phone>010-4303-9511</Phone>
-                  </StudentRow>
-                  <StudentRow>
-                     <Name>홍길동</Name>
-                     <Phone>010-4303-9511</Phone>
-                  </StudentRow>
-                  <StudentRow>
-                     <Name>김철수</Name>
-                     <Phone>010-4303-9511</Phone>
-                  </StudentRow>
-                  <StudentRow>
-                     <Name>김영희</Name>
-                     <Phone>010-4303-9511</Phone>
-                  </StudentRow>
-                  <StudentRow>
-                     <Name>홍길동</Name>
-                     <Phone>010-4303-9511</Phone>
-                  </StudentRow>
+                  { students.length === 0 && <div style={{color:'#6a6a6a', fontSize:'0.9rem', margin:'10px 0'}}>보낼 학생을 선택해주세요.</div> }
+                  {students.map((student) => (
+                     <StudentRow key={student.id}>
+                        <Name>{student.name}</Name>
+                        <Phone>{student.phone}</Phone>
+                     </StudentRow>
+                  ))}
                </StudentTable>
             </TargetStudents>
          </PhoneShape>
@@ -163,9 +122,24 @@ const Message = styled.textarea`
    &:focus {
       border: 1px solid #5f5f5f;
    }
-   margin-bottom: 20px;
 `;
 
+const SendButton = styled.button`
+   width: 20%;
+   padding: 10px 5px;
+   border: none;
+   border-radius: 5px;
+   background-color: #5f5f5f;
+   color: #ffffff;
+   font-size: 0.8rem;
+   margin-bottom: 40px;
+   align-self: flex-end;
+
+   cursor: pointer;
+   &:hover {
+      background-color: #4f4f4f;    
+   }
+`
 
 const TargetStudents = styled.div`
    width: 100%;
@@ -207,7 +181,7 @@ const StudentRow = styled.div`
    flex-direction: row;       
    align-items: center;
    justify-content: space-between;
-   padding: 10px;
+   padding: 10px 15px;
    border-bottom: 1px solid #e1e1e1;
 
    //맨 마지막 행은 border-bottom 없애기

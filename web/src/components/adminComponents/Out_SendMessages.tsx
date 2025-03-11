@@ -15,7 +15,7 @@ type Student = {
 
 const Out_SendMessages = () => {
   // const [selectedStudentId, setSelectedStudentId] = useState<number | null>(1);
-  const [selectedStudents, setSelectedStudents] = useState<number[]>([]); // ✅ 여러 학생 선택 상태
+  const [selectedStudents, setSelectedStudents] = useState<Student[]>([]); // ✅ 여러 학생 선택 상태
   const [searchTerm, setSearchTerm] = useState("");
   const [students, setStudents] = useState<Student[]>([]);
   const navigate = useNavigate();
@@ -36,11 +36,14 @@ const Out_SendMessages = () => {
   );
 
   // ✅ 학생 선택/해제 함수
-  const handleStudentSelect = (id: number) => {
-    setSelectedStudents((prevSelected) => 
-      prevSelected.includes(id) 
-        ? prevSelected.filter((studentId) => studentId !== id) // 이미 선택된 경우 해제
-        : [...prevSelected, id] // 선택되지 않은 경우 추가
+  const handleStudentSelect = (student: Student) => {
+    setSelectedStudents((prevSelected) => {
+      if (prevSelected.includes(student)) {
+        return prevSelected.filter((s) => s !== student);
+      } else {
+        return [...prevSelected, student];
+      }
+    }
     );
   };
 
@@ -65,14 +68,14 @@ const Out_SendMessages = () => {
             {filteredStudents.map((student) => (
               <TableRow
                 key={student.id}
-                $isselected={selectedStudents.includes(student.id)}
-                onClick={() => handleStudentSelect(student.id)}
+                $isselected={selectedStudents.includes(student)}
+                onClick={() => handleStudentSelect(student)}
               >
                 <TableItem>
                   <Checkbox
                     type="checkbox"
-                    checked={selectedStudents.includes(student.id)}
-                    onChange={() => handleStudentSelect(student.id)}
+                    checked={selectedStudents.includes(student)}
+                    onChange={() => handleStudentSelect(student)}
                     onClick={(e) => e.stopPropagation()} // ✅ 부모 클릭 이벤트 방지
                   />
                 </TableItem>
@@ -85,7 +88,7 @@ const Out_SendMessages = () => {
         </StudentsTable>
       </StudentListContainer>
 
-      <SendMessageContainer />
+      <SendMessageContainer students={selectedStudents}/>
     </Wrapper>
   );
 };
