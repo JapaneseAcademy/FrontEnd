@@ -38,9 +38,11 @@ const HomePage = () => {
 
         <Ment>
           <span style={{fontSize:'16px', fontWeight:'400'}}>
-            일본어 공부가 힘들다면</span>
+            유학 없이도 원어민처럼!</span>
           <span style={{fontSize:'18px'}}>
-            <span style={{fontSize:'20px', textDecoration:'underline', fontWeight: 'bold'}}>예리 센세</span>와 함께 하세요!</span>
+            대화로 배우는 살아있는 일본어,<br/>
+            <span style={{fontSize:'20px', textDecoration:'underline', fontWeight: 'bold'}}>예리한 일본어</span>에서 온·오프라인 전세계 어디서든 시작하세요!
+          </span>
         </Ment>
 
         <Youtube />
@@ -94,7 +96,7 @@ const Ment = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   padding: 20px 20px;
   background-color: #ffffff;
