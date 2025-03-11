@@ -5,11 +5,9 @@ interface CourseFilterProps {
    handleMonthChange: (month: string) => void;
    selectedYear: string;
    selectedMonth: string;
-
-   handleSearchClick: () => void;
 }
    
-   const CourseFilter = ({ handleYearChange, handleMonthChange, selectedYear, selectedMonth, handleSearchClick }: CourseFilterProps) => {
+   const CourseFilter = ({ handleYearChange, handleMonthChange, selectedYear, selectedMonth }: CourseFilterProps) => {
       return (
       <Wrapper id="filter-container-wrapper">
          <Dropdown id="year-dropdown" value={selectedYear} onChange={(e) => handleYearChange(e.target.value)}>
@@ -35,8 +33,6 @@ interface CourseFilterProps {
             <option value="12">12</option>
          </Dropdown>
          <Text>월</Text>
-
-         <Button onClick={handleSearchClick}>확인</Button>
       </Wrapper>
       );
    };
@@ -70,21 +66,4 @@ const Text = styled.span`
    margin: 0 5px;
    font-size: 0.9rem;
    color: #333;
-`
-
-const Button = styled.button`
-   width: 50px;
-   height: 30px;
-   background-color: #2a2a2a;
-   border: none;
-   border-radius: 5px;
-   cursor: pointer;
-   margin-left: auto;
-   color: #ffffff;
-   font-size: 0.8rem;
-
-   &:hover {
-      background-color: #636363;
-
-   }
 `

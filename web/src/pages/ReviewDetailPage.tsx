@@ -21,7 +21,7 @@ const ReviewDetailPage = () => {
    }
 
    useEffect(() => {
-      console.log(reviewId);
+      window.scrollTo(0, 0);
       getReviewDetail(reviewId).then((data: ReviewDetail) => {
          setReviewDetail(data);
       }
@@ -116,19 +116,24 @@ const ReviewText = styled.div`
    width: 100%;
    font-size: 14px;
    color: #707070;
+
+   //개행문자 처리
+   white-space: pre-wrap;
+   word-wrap: break-word;
+   word-break: break-all;
 `
 
 const BackButton = styled.button`
    width: 90%;
    height: 40px;
    border: none;
-   background-color: #402900;
+   background-color: #ff8255;
    color: white;
    font-size: 14px;
    margin-top: 20px;
    cursor: pointer;
 
    &:hover {
-      background-color: #5c3a29;
+      background-color: #d86d46;
    }
 `

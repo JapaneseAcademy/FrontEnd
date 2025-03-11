@@ -1,16 +1,24 @@
 import axios from "axios";
 
 const REST_API_KEY = import.meta.env.VITE_REST_API_KEY;
-const REDIRECT_URI = 'http://localhost:5173';
-const KAKAO_LOGIN_URL = `${import.meta.env.VITE_KAKAO_AUTH_URL}?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+// 현재 환경에 따라 동적으로 redirect_uri를 설정 
+   // 1) http://localhost:5173 
+   // 2) http://localhost:5173/admin
+   // 3) https://yeri-jp.com
+   // 4) https://yeri-jp.com/admin
+//origin 뒤에 /admin이 있을 때만 /admin을 붙여주고,
+//그 외에는 나머지를 다 떼고 origin만 남김
+const REDIRECT_URI = window.location.origin + (window.location.pathname.includes("/admin") ? "/admin" : "");
+const KAKAO_LOGIN_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const getKakaoCode = () => {
    window.location.href = KAKAO_LOGIN_URL;
 }
 
-export const login = async (code: string, navigate: (path: string) => void) => {
-   console.log("-- 로그인 함수 호출 --");
+export const login = async (code: string, navigate: (path: string) => void, setIsLoading: (loading: boolean) => void) => {
+   console.log("[ login ]");
+   setIsLoading(true); // ✅ 로딩 시작
    try {
       // 카카오에서 받은 토큰으로 로그인
       const response = await axios.post(
@@ -32,6 +40,7 @@ export const login = async (code: string, navigate: (path: string) => void) => {
       else {
          localStorage.setItem("accessToken", response.data.token.accessToken);
          localStorage.setItem("refreshToken", response.data.token.refreshToken);
+         window.history.replaceState({}, document.title, "/"); //url에서 code 제거
       }
    }
    catch (error) {
@@ -45,11 +54,15 @@ export const login = async (code: string, navigate: (path: string) => void) => {
             console.error("Unexpected error:", error);
       }
    }
+      finally {
+         setIsLoading(false); // ✅ 로딩 종료
+   }
 }
 
 
-export const register = async (name: string, phone: string, birth: string) => {
-   console.log("-- register 함수 호출 --");
+export const register = async (name: string, phone: string, birth: string, setIsLoading: (loading: boolean) => void) => {
+   console.log("[ register ]");
+   setIsLoading(true); // ✅ 로딩 시작
    //쿼리 파라미터에서 kakaoID 받아오기
    const kakaoId = new URLSearchParams(window.location.search).get("kakaoID");
 
@@ -69,7 +82,7 @@ export const register = async (name: string, phone: string, birth: string) => {
       localStorage.setItem("accessToken", response.data.token.accessToken);
       localStorage.setItem("refreshToken", response.data.token.refreshToken);
 
-      alert("회원가입이 완료되었습니다! 다시 로그인해주세요.");
+      alert("회원가입이 완료되었습니다!");
 
       //메인페이지로 이동
       window.location.href = "/";
@@ -82,12 +95,15 @@ export const register = async (name: string, phone: string, birth: string) => {
          console.error("Unexpected error:", error);
       }
    }
+   finally {
+      setIsLoading(false); // ✅ 로딩 종료
+   }
 }
 
 export const editUser = async (name: string, phone: string, birth: string) => {
-   console.log("-- editUser 함수 호출 --");
+   console.log("[ editUser ]");
    try {
-      const response = await axios.patch(
+      const response = await axios.put(
          `${BASE_URL}/api/v1/members/profile`,
          {
             name : name,

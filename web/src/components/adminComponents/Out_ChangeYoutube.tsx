@@ -1,16 +1,16 @@
 import styled from "styled-components"
 import AdminYoutube from "./etc/AdminYoutube"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { changeAdminYoutubeId, getAdminYoutubeId } from "../../apis/adminAPI/adminYoutubeAPI";
 
 const Out_ChangeYoutube = () => {
-  const [youtubeId, setYoutubeId] = useState<string>('8cFNCYoUsuk');
+  const [youtubeId, setYoutubeId] = useState<string>('');
 
   const handleYoutubeIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setYoutubeId(e.target.value);
   }
 
   const handleYoutubeIdSubmit = () => {
-    // {todo: 서버로 요청을 보내서 유튜브 ID 변경}
     if(youtubeId === '') {
       alert('유튜브 ID를 입력해주세요.');
       return;
@@ -20,19 +20,28 @@ const Out_ChangeYoutube = () => {
     if(!window.confirm('대표 유튜브 영상을 변경하시겠습니까?')) {
       return;
     }
+
+    changeAdminYoutubeId(youtubeId);
   }
+
+  useEffect(() => {
+    getAdminYoutubeId().then((data) => {
+      setYoutubeId(data.youtubeId);
+    });
+  }, []);
+
 
   return (
     <Wrapper>
       <AdminYoutube youtubeId={youtubeId}/>
       <YoutubeFormContainer>
-        <Input value="8cFNCYoUsuk" type="text" placeholder="유튜브 영상의 ID를 입력하세요." onChange={handleYoutubeIdChange}/>
+        <Input value={youtubeId} type="text" placeholder="유튜브 영상의 ID를 입력하세요." onChange={handleYoutubeIdChange}/>
         <Notice>
           *유튜브 영상의 ID는 영상 URL에서 'v=' 뒤에 있는 문자열입니다.<br/>
           ID 입력 후 변경하려는 영상이 왼쪽에 정상적으로 나오지 않는다면 ID를 다시 확인해주세요. <br/>
           영상이 정상적으로 나오는지 확인한 후 변경 버튼을 눌러주세요.
         </Notice>
-        <Button onClick={handleYoutubeIdSubmit}>변경</Button>
+        <Button onClick={handleYoutubeIdSubmit}>변경하기</Button>
       </YoutubeFormContainer>
     </Wrapper>
   )

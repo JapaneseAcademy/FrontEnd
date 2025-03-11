@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { HiOutlinePencilSquare } from "react-icons/hi2";
+// import { HiOutlinePencilSquare } from "react-icons/hi2";
 import { getCourseReviewsByPage } from "../apis/reviewAPI";
 import { getCourseDetail } from "../apis/courseAPI";
-import { convertTags, numberWithCommas } from "../utils/utils";
+import { convertTags, convertTime, convertWeekday, numberWithCommas } from "../utils/utils";
 
 type Review = {
   reviewId: number;
@@ -16,14 +16,6 @@ type Review = {
   reviewTitle: string;
 }
 
-
-//한 강의(월별)
-type course = {
-  courseId: string;
-  endDate: string;
-  startDate: string;
-  timeTables: timeTable[];
-}
 
 //한 분반
 type timeTable = {
@@ -37,25 +29,39 @@ type timeBlock = {
   endTime: string;
 }
 
+type convertedTimeTable = {
+  timeTableId: number;
+  timeTable: string;
+}
 
 const CourseDetailPage = () => {
   const [selectedOption, setSelectedOption] = useState("detail");
+  //페이지네이션
   const [currentPage, setCurrentPage] = useState(1);
 
   //강의 정보들
   const [courseTitle, setCourseTitle] = useState<string>("");
-  const [coursePrice, setCoursePrice] = useState<number>(0);
+  const [courseBaseCost, setCourseBaseCost] = useState<number>(0);
+  const [courseSaleCost, setCourseSaleCost] = useState<number>(0);
   const [courseMainImage, setCourseMainImage] = useState<string>("");
   const [courseDetailImages, setCourseDetailImages] = useState<string[]>([]);
   const [courseTypes, setCourseTypes] = useState<string[]>([]);
   const [courseLevel, setCourseLevel] = useState<string>("");
+  //후기 정보들
   const [currentReviews, setCurrentReviews] = useState<Review[]>([]);
   const [totalPages, setTotalPages] = useState(1); // 총 페이지 수 상태 추가
 
-  const [courses, setCourses] = useState<course[]>([]);
+  //분반 정보들
+  const [convertedTimeTables, setConvertedTimeTables] = useState<convertedTimeTable[]>([]);
+
+  //결제 정보들
+  const [selectedTimeTable, setSelectedTimeTable] = useState<string>("");
+  const [selectedTimeTableId, setSelectedTimeTableId] = useState<number>(0);
+  const [selectedCourseType, setSelectedCourseType] = useState<string>("");
 
   const navigate = useNavigate();
   const courseInfoId = parseInt(String(useParams().courseInfoId));
+
 
   const handleReviewClick = (reviewId: number) => {
     navigate(`/review?reviewId=${reviewId}`);
@@ -66,14 +72,50 @@ const CourseDetailPage = () => {
     setCurrentPage(1); // ✅ 탭을 변경하면 첫 페이지로 리셋
   };
   
-  const handleReviewWriteClick = () => {
-    navigate('writeReview');
-  }
+  const handleTimeTableChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedTable = convertedTimeTables.find((timeTable) => timeTable.timeTable === e.target.value);
+    
+    if (selectedTable) {
+      setSelectedTimeTable(selectedTable.timeTable);
+      setSelectedTimeTableId(selectedTable.timeTableId);
+    } else {
+      console.warn("해당 분반을 찾을 수 없습니다.");
+      setSelectedTimeTable("");
+      setSelectedTimeTableId(0);
+    }
+  };
+  
+  //유형 선택 시
+  const handleCourseTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCourseType(e.target.value);
+  };
 
+  ////중요!!! 신청하기 버튼 클릭 시 ///// 결제~~~!!
   const handleBuyClick = () => {
-    alert("준비중입니다. 카카오톡으로 문의해주세요.")
+
+    
+    // 로그인 안되어있으면 alert
+    if (!localStorage.getItem('accessToken')) {
+      alert('로그인이 필요한 서비스입니다.');
+      return;
+    }
+
+    alert("이동할 결제 페이지는 테스트 페이지입니다. 기능 테스트 중이니 실제 결제는 하지 마세요.");
+    console.log("결제 timeTableId: ", selectedTimeTableId);
+    console.log("결제 대상: ", courseTitle + "-" + selectedTimeTable + "-" + selectedCourseType);
+    console.log("결제 금액: ", courseSaleCost);
+
+    navigate(`/payment?courseInfoId=${courseInfoId}&timeTableId=${selectedTimeTableId}&category=${selectedCourseType}&courseTitle=${courseTitle}&coursePrice=${courseSaleCost}`);
   }
 
+  //timeTables를 한 분반(timeTable)당 하나의 문자열로 바꾸는 함수
+  const convertTimeTables = (timeTables: timeTable[]) => {
+    return timeTables.map((timeTable) => 
+      timeTable.timeBlocks.map((timeBlock) => 
+        `${convertWeekday(timeBlock.weekday)} ${convertTime(timeBlock.startTime)}-${convertTime(timeBlock.endTime)}`
+      ).join(" / ") // ✅ 각 timeBlock을 문자열로 변환 후 " / "로 연결
+    );
+  };
 
   useEffect(() => {
     // 페이지 로드 시 상단으로 이동
@@ -81,57 +123,66 @@ const CourseDetailPage = () => {
 
     //1) 강의 상세정보 API 호출
     getCourseDetail(courseInfoId).then((data) => {
-      //{todo: 요일 드롭다운 세팅}
-      //{todo: 시간 드롭다운 세팅}
-      setCourseTypes(convertTags(data.isLive, data.isOnline, data.isRecorded));
+      setCourseTypes(convertTags(data.live, data.online, data.recorded));
       setCourseTitle(data.title);
-      setCoursePrice(data.cost);
+      setCourseSaleCost(data.course.saleCost);
+      setCourseBaseCost(data.course.baseCost);
       setCourseMainImage(data.mainImageUrl);
       setCourseDetailImages(data.descriptions);
       setCourseLevel(data.level);
-      ///course 세팅
-      setCourses(data.courses);
+
+      //분반 정보 세팅
+      const convertedTimeTables = convertTimeTables(data.course.timeTables);
+      setConvertedTimeTables(convertedTimeTables.map((timeTable, index) => ({timeTableId: data.course.timeTables[index].timeTableId, timeTable})));
+
+      //분반, 유형의 가장 첫번째 값으로 초기화
+      setSelectedTimeTable(convertTimeTables(data.course.timeTables)[0]);
+      setSelectedCourseType(convertTags(data.live, data.online, data.recorded)[0]);
+      setSelectedTimeTableId(data.course.timeTables[0].timeTableId);
     });
     
   }, [courseInfoId]);
 
-  /////////리뷰관련////////
-  // ✅ 현재 페이지의 리뷰를 가져오는 함수
-  const fetchReviews = async (page: number) => {
+  useEffect(() => {
+    console.log(courseTitle)
+    console.log(selectedTimeTable);
+    console.log(selectedCourseType);
+  }
+  , [selectedTimeTable, selectedCourseType, courseTitle]);
+
+  /////////후기 관련////////
+  const fetchReviews = useCallback(async (page: number) => {
     try {
       const response = await getCourseReviewsByPage(courseInfoId, page);
-      setCurrentReviews(response.reviews); // 받아온 리뷰 데이터 업데이트
+      setCurrentReviews(response.reviews); // 받아온 후기 데이터 업데이트
       setTotalPages(response.totalPage); // 총 페이지 수 업데이트 (백엔드에서 제공)
     } catch (error) {
-      console.error("리뷰 데이터를 불러오는 중 오류 발생:", error);
+      console.error("후기 데이터를 불러오는 중 오류 발생:", error);
     }
-  };
-  // ✅ 페이지 변경 시 새로운 리뷰 데이터를 요청
+  }, [courseInfoId]); // ✅ courseInfoId가 변경될 때만 새로운 fetchReviews 함수가 생성됨
+  
+  // ✅ 페이지 변경 시 새로운 후기 데이터를 요청
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     fetchReviews(page);
   };
   // ✅ 페이지 로드 시 초기 데이터 가져오기
   useEffect(() => {
-    fetchReviews(1); // 첫 페이지의 리뷰 데이터 요청
-  }, [courseInfoId]); 
+    fetchReviews(1); // 첫 페이지의 후기 데이터 요청
+  }, [fetchReviews]); 
 
-
-  ///////분반 관련//////
-
-
-  //분반 세팅값 확인
-  useEffect(() => {
-    console.log("courses: ", courses);
-  }
-  , [courses]);
 
   return (
     <>
       <Wrapper>
         <CourseImage src={courseMainImage} alt="Course Image" />
         <CourseTitle>{courseTitle}</CourseTitle>
-        <CoursePrice>{numberWithCommas(coursePrice)}원</CoursePrice>
+        {/* baseCost와 saleCost가 다를 때 */}
+        {courseBaseCost !== courseSaleCost ? 
+          <CoursePrice><span>{numberWithCommas(courseBaseCost)}</span>{numberWithCommas(courseSaleCost)}원</CoursePrice>
+        :
+        <CoursePrice>{numberWithCommas(courseBaseCost)}원</CoursePrice>
+        }
         <DropDownContainer>
           <Dropdown>
             <DropDownTitle>난이도</DropDownTitle>
@@ -139,14 +190,15 @@ const CourseDetailPage = () => {
           </Dropdown>
           <Dropdown>
             <DropDownTitle>분반</DropDownTitle>
-            <DropDownContent>
-              <option>월수금</option>
-              <option>화목토</option>
+            <DropDownContent onChange={handleTimeTableChange}>
+              {convertedTimeTables.map((timeTable) => (
+                <option key={timeTable.timeTableId}>{timeTable.timeTable}</option>
+              ))}
           </DropDownContent>
         </Dropdown>
         <Dropdown>
           <DropDownTitle>유형</DropDownTitle>
-          <DropDownContent onChange={(e) => console.log(e.target.value)}>
+          <DropDownContent onChange={handleCourseTypeChange}>
             {courseTypes.map((type) => (
               <option key={type}>{type}</option>
             ))}
@@ -156,13 +208,13 @@ const CourseDetailPage = () => {
 
         <OptionContainer>
           <Option
-            selected={selectedOption === "detail"}
+            $selected={selectedOption === "detail"} // 변경된 부분
             onClick={() => handleOptionClick("detail")}
           >
             상세정보
           </Option>
           <Option
-            selected={selectedOption === "review"}
+            $selected={selectedOption === "review"} // 변경된 부분
             onClick={() => handleOptionClick("review")}
           >
             수강후기
@@ -178,27 +230,31 @@ const CourseDetailPage = () => {
           </CourseDetailContent>
 
           <CourseDetailContent id='course_review_container' selected={selectedOption === "review"}>
-            <WriteReviewBtn onClick={handleReviewWriteClick}>
+            {/* <WriteReviewBtn onClick={handleReviewWriteClick}>
               <HiOutlinePencilSquare size={15} style={{ marginRight: "5px" }} />
               수강 후기 작성하기
-              </WriteReviewBtn>
+              </WriteReviewBtn> */}
             <ReviewContainer>
-              {currentReviews.map((review) => (
-                <Reviewcard key={review.reviewId} onClick={()=>handleReviewClick(review.reviewId)}>
-                  <ReviewImage src={review.imageUrls[0]==null ?  "/images/no-image.png" : review.imageUrls[0] }  alt="Review Image"/>
-                  <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: "5px" }}>
-                    <UserAndDate>
+              {currentReviews.length === 0 ? (
+                <NoReview>후기가 아직 없어요!</NoReview>
+              ) : (
+                currentReviews.map((review) => (
+                  <Reviewcard key={review.reviewId} onClick={() => handleReviewClick(review.reviewId)}>
+                    <ReviewImage src={review.imageUrls[0] ?? "/images/no-image.png"} alt="Review Image" />
+                    <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: "5px" }}>
                       <ReviewCourse>{courseTitle}</ReviewCourse>
-                    </UserAndDate>
-                    <ReviewTitle>{review.reviewTitle}</ReviewTitle>
-                    <ReviewText>{review.review}</ReviewText>
-                    <UserAndDate>
-                      <ReviewCourse>{review.createdDate}</ReviewCourse>
-                      <ReviewCourse>{review.writer}</ReviewCourse>
-                    </UserAndDate>                  
+                      <ReviewTitle>
+                        {review.reviewTitle}
+                      </ReviewTitle>
+                      <ReviewText>{review.review}</ReviewText>
+                      <UserAndDate>
+                        <ReviewCourse>{review.createdDate}</ReviewCourse>
+                        <ReviewCourse>{review.writer}</ReviewCourse>
+                      </UserAndDate>
                     </div>
-                </Reviewcard>
-              ))}
+                  </Reviewcard>
+                ))
+              )}
             </ReviewContainer>
 
             {/* 페이지네이션 버튼 */}
@@ -207,7 +263,7 @@ const CourseDetailPage = () => {
                 <PageButton
                   key={number}
                   onClick={() => handlePageChange(number)}
-                  active={currentPage === number}
+                  $active={currentPage === number}
                 >
                   {number}
                 </PageButton>
@@ -270,6 +326,12 @@ const CoursePrice = styled.div`
   font-size: 16px;
   font-weight: 300;
   margin-top: 10px;
+
+  span {
+    color: #6d6d6d;
+    text-decoration: line-through;
+    margin-right: 5px;
+  }
 `;
 
 const FixedButtonContainer = styled.div`
@@ -284,6 +346,14 @@ const FixedButtonContainer = styled.div`
   padding: 10px 0;
   box-shadow: 0px -4px 15px rgba(0, 0, 0, 0.05);
   z-index: 1000; 
+
+     //미디어쿼리 - 모바일 사이즈 이상으로는 사이즈 고정되게
+  @media (min-width: 480px) {
+    width: 480px;
+    //가운데정렬
+    left: 50%;
+    transform: translateX(-50%); //가운데 정렬
+  }
 `;
 
 const BuyButton = styled.button`
@@ -308,7 +378,7 @@ const OptionContainer = styled.div`
   border: 1px solid #e1e1e1;
 `;
 
-const Option = styled.div<{ selected: boolean }>`
+const Option = styled.div<{ $selected: boolean }>`
   width: 50%;
   height: 100%;
   text-align: center;
@@ -318,9 +388,9 @@ const Option = styled.div<{ selected: boolean }>`
   padding: 10px 0;
   font-size: 16px;
   cursor: pointer;
-  color: ${({ selected }) => (selected ? "#333" : "#d3d3d3")};
-  font-weight: ${({ selected }) => (selected ? "600" : "400")};
-  border-bottom: ${({ selected }) => (selected ? "2px solid #333" : "none")};
+  color: ${({ $selected }) => ($selected ? "#333" : "#d3d3d3")};
+  font-weight: ${({ $selected }) => ($selected ? "600" : "400")};
+  border-bottom: ${({ $selected }) => ($selected ? "2px solid #333" : "none")};
 
   &:hover {
     color: #000;
@@ -330,6 +400,7 @@ const Option = styled.div<{ selected: boolean }>`
     border-right: 1px solid #d3d3d3;
   }
 `;
+
 
 
 const CourseDetailContainer = styled.div`
@@ -365,7 +436,7 @@ const CourseDetailImage = styled.img`
   object-fit: cover;
 `;
 
-////리뷰//////
+////후기//////
 
 const ReviewContainer = styled.div`
   display: flex;
@@ -424,17 +495,17 @@ const ReviewTitle = styled.div`
   display: flex;
   margin-bottom: 5px;
 
-  span {
-    font-size: 12px;
-    color: #707070;
-    font-weight: 300;
-    margin-left: auto;
-  }
+  //두번째 줄까지만 표현하고, 넘어가면 ... 으로 표시
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+
 `;
 
 const ReviewText = styled.div`
   font-size: 14px;
-
+  color: #333;
   // 세 줄 까지만 표현하고, 넘어가면 ... 으로 표시
   overflow: hidden;
   text-overflow: ellipsis;
@@ -465,7 +536,7 @@ const Pagination = styled.div`
   gap: 10px;
 `;
 
-const PageButton = styled.button<{ active: boolean }>`
+const PageButton = styled.button<{ $active: boolean }>`
   width: 30px;
   height: 30px;
   display: flex;
@@ -473,9 +544,9 @@ const PageButton = styled.button<{ active: boolean }>`
   align-items: center;
   font-size: 14px;
   cursor: pointer;
-  border: 1px solid ${({ active }) => (active ? "#ff8255" : "#e1e1e1")};
-  background-color: ${({ active }) => (active ? "#ff8255" : "#fff")};
-  color: ${({ active }) => (active ? "#fff" : "#000")};
+  border: 1px solid ${({ $active }) => ($active ? "#ff8255" : "#e1e1e1")};
+  background-color: ${({ $active }) => ($active ? "#ff8255" : "#fff")};
+  color: ${({ $active }) => ($active ? "#fff" : "#000")};
 
   &:hover {
     background-color: #f1f1f1;
@@ -483,6 +554,7 @@ const PageButton = styled.button<{ active: boolean }>`
     color: #fff;
   }
 `;
+
 
 ///dropdown
 const DropDownContainer = styled.div`
@@ -526,23 +598,9 @@ const DropDownContent = styled.select`
   }
 `;
 
-
-///수강후기 작성하기 버튼
-const WriteReviewBtn = styled.button`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* background-color: #7f7f7f; */
-  background-color: none;
-  color: #333;
-  border: none;
-  padding: 10px 20px;
-  font-size: 13px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #232323;
-    color: #fff;
-  }
+const NoReview = styled.div`
+  font-size: 15px;
+  color: #707070;
+  margin-top: 40px;
+  margin-bottom: 40px;
 `;

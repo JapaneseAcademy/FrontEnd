@@ -1,6 +1,8 @@
 import { useState } from "react"
 import styled from "styled-components"
 import { register } from "../apis/loginAPI"
+import { useSetRecoilState } from "recoil"
+import { loadingAtom } from "../recoil/loadingAtom"
 
 const RegisterPage = () => {
    const [name, setName] = useState('')
@@ -8,6 +10,7 @@ const RegisterPage = () => {
    const [month, setMonth] = useState('')
    const [day, setDay] = useState('')
    const [phone, setPhone] = useState('')
+   const setIsloading = useSetRecoilState<boolean>(loadingAtom);
 
    const handleNameChange = (e: any) => {
       setName(e.target.value)
@@ -54,7 +57,7 @@ const RegisterPage = () => {
 
       //등록
       console.log(name, year, month, day, phone);
-      register(name, phone, `${year}-${month}-${day}`)
+      register(name, phone, `${year}-${month}-${day}`, setIsloading);
    }
 
 
@@ -62,7 +65,7 @@ const RegisterPage = () => {
       <Wrapper>
          <Title>회원 정보 등록</Title>
          <InputRow>
-            <InputTitle>이름</InputTitle>
+            <InputTitle>이름 <span>*수강생 식별을 위해 실명으로 기입해주세요.</span></InputTitle>
             <Input placeholder="이름을 입력해주세요" onChange={handleNameChange} value={name}/>
          </InputRow>
          <InputRow style={{flexDirection:'column', justifyContent:'space-between'}}>
@@ -90,6 +93,7 @@ const Wrapper = styled.div`
    flex-direction: column;
    justify-content: center;
    align-items: center;
+   padding-bottom: 100px;
 `
 
 const Title = styled.div`
@@ -113,6 +117,15 @@ const InputTitle = styled.div`
    text-align: left;
    margin-bottom: 5px;
    color: #333;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: space-between;
+
+   span {
+      font-size: 10px;
+      color: #7c7c7c;
+   }
 `
 
 const Input = styled.input`

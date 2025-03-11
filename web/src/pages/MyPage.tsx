@@ -3,15 +3,18 @@ import { IoMdContact } from "react-icons/io"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { getEnrollments, getUserInfo } from "../apis/userAPI";
+import { convertCategory, numberWithCommas } from "../utils/utils";
 
 type Enrollment = {
-  enrollmentId: string;
-  courseTitle: string;
+  enrollmentId: number;
+  title: string;
   paymentDate: string;
-  courseType: string;
-  price: string;
-  paymentMethod: string;
-  courseImage: string;
+  category: string;
+  paymentAmount: number;
+  // paymentMethod: string;
+  mainImageUrl: string;
+  reviewed: boolean;
+  courseInfoId: number;
 }
 
 const MyPage = () => {
@@ -23,51 +26,19 @@ const MyPage = () => {
     navigate('/mypage/edit')
   }
 
-  //내 수강 내역 임시 데이터
-  const myCourse = [
-    {
-      id: 1,
-      title: '예리한 일본어 1급',
-      date: '2025.02.25',
-      type: '실시간 온라인',
-      price: '100,000원',
-      payment: '간편결제',
-      image: '/images/courseBanner/course-banner-oneshot1.png'
-    },
-    {
-      id: 2,
-      title: '예리한 일본어 2급',
-      date: '2025.02.25',
-      type: '실시간 온라인',
-      price: '100,000원',
-      payment: '카드결제',
-      image: '/images/courseBanner/course-banner-oneshot2.png'
-    },
-    {
-      id: 3,
-      title: '예리한 일본어 3급',
-      date: '2025.02.25',
-      type: '실시간 온라인',
-      price: '100,000원',
-      payment: '간편결제',
-      image: '/images/courseBanner/course-banner-oneshot3.png'
-    },
-    {
-      id: 4,
-      title: '예리한 일본어 4급',
-      date: '2025.02.25',
-      type: '실시간 온라인',
-      price: '100,000원',
-      payment: '카드결제',
-      image: '/images/courseBanner/course-banner-oneshot3.png'
-    }
-  ]
+  const handleReviewWrite = (enrollmentId: number, courseInfoId: number) => {
+    navigate(`/writeReview?enrollmentId=${enrollmentId}&courseInfoId=${courseInfoId}`);
+  }
 
   useEffect(() => {
     //마이페이지 진입 시, 스크롤을 맨 위로 이동
     window.scrollTo(0, 0);
     
-    console.log(enrollments); // 그냥 배포용으로 사용
+    //accessToken이 없으면 홈페이지로 이동
+    if (!localStorage.getItem('accessToken')) {
+      alert('로그인이 필요한 서비스입니다.');
+      navigate('/');
+    }
 
     //이름 세팅
     getUserInfo().then((data) => {
@@ -76,22 +47,9 @@ const MyPage = () => {
 
     //강의 수강 내역 세팅
     getEnrollments().then((data) => {
-      data.forEach((enrollment: any) => {
-        const newEnrollment: Enrollment = {
-          enrollmentId: enrollment.enrollmentId,
-          courseTitle: enrollment.courseTitle,
-          paymentDate: enrollment.paymentAt,
-          courseType: enrollment.category,
-          price: enrollment.paymentAmount,
-          paymentMethod: enrollment.paymentMethod, //만들어달라고 해야함
-          courseImage: enrollment.course.image //만들어달라고 해야함
-        }
-        setEnrollments((prev) => [...prev, newEnrollment]);
-      }
-      )
+      setEnrollments(data);
     })
-  }
-  , [enrollments])
+  }, [])
 
   return (
     <Wrapper>
@@ -105,15 +63,23 @@ const MyPage = () => {
 
       <MyCoursesContainer>
         <Header style={{fontSize:'20px', fontWeight:'450', marginBottom:'10px'}}>내 강의</Header>
-        {myCourse.map((course) => (
-          <MyCourseCard key={course.id}>
-            <CourseImage src={course.image}/>
+        {/* enrollment가 없을 때 */}
+        {enrollments.length === 0 && (
+        <div style={{fontSize:'14px', color:'#7c7c7c', marginTop:'auto', marginBottom:'auto'}}>아직 신청한 강의가 없어요!</div>
+        )} 
+        {enrollments.map((enrollment) => (
+          <MyCourseCard key={enrollment.enrollmentId}>
+            <CourseImage src={enrollment.mainImageUrl}/>
             <CourseInfo>
-              <CourseTitle>{course.title}</CourseTitle>
-              <Text>결제일시 | {course.date}</Text>
-              <Text>강의유형 | {course.type}</Text>
-              <Text>결제금액 | {course.price}</Text>
-              <Text>결제수단 | {course.payment}</Text>
+              <CourseTitle>{enrollment.title}</CourseTitle>
+              <Text>결제일시 | {enrollment.paymentDate}</Text>
+              <Text>강의유형 | {convertCategory(enrollment.category)}</Text>
+              <Text>결제금액 | {numberWithCommas(enrollment.paymentAmount)}</Text>
+              <Text>결제수단 | 카카오페이</Text> {/*todo: 결제수단 연동*/}
+              {/* reviewed가 false일 때만 후기 작성 버튼 보이기 */}
+              { !enrollment.reviewed 
+                ? <ReviewButton  onClick={()=>handleReviewWrite(enrollment.enrollmentId, enrollment.courseInfoId)}>후기 작성</ReviewButton> 
+                : <ReviewComplete>후기 작성 완료</ReviewComplete> }
             </CourseInfo>
           </MyCourseCard>
         ))}
@@ -178,10 +144,11 @@ const MyCoursesContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   border: 1px solid #e1e1e1;
   border-radius: 10px;
-  padding-bottom: 10px;
+  margin-bottom: 40px;
+  min-height: 400px;
 `
 
 const MyCourseCard = styled.div`
@@ -209,15 +176,15 @@ const CourseTitle = styled.div`
 `
 
 const CourseImage = styled.img`
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
   object-fit: cover;
   border-radius: 10px;
 `
 
 const CourseInfo = styled.div`
   width: 90%;
-  height: 120px;
+  height: 150px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -231,4 +198,35 @@ const Text = styled.div`
   font-size: 13px;
   margin-top: 5px;
   color: #7c7c7c;
+`
+
+const ReviewButton = styled.button`
+  width: 100px;
+  height: 30px;
+  background-color: #ff8255;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  margin-top: 5px; 
+  /* align-self: center; */
+
+  &:hover {
+    background-color: #ff8255;
+  }
+`
+
+const ReviewComplete = styled.div`
+  width: 100px;
+  height: 30px;
+  background-color: #d6d6d6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  margin-top: 5px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `

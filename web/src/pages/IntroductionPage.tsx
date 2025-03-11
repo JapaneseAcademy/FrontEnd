@@ -30,7 +30,7 @@ const IntroductionPage = () => {
               </IconCircle>
               <LocationText>
                 <Subtitle>주소</Subtitle>
-                <Text>서울 중구 인현동1가 136-20 <br/> 2층 207호</Text>
+                <Text>남산센트럴뷰 2층 예리한 일본어</Text>
               </LocationText>
             </Location>
 
@@ -41,10 +41,10 @@ const IntroductionPage = () => {
               <LocationText>
                 <Subtitle>지하철 이용 시</Subtitle>
                 <Text id='stations'>
-                  <LocationTextRow><span>2호선</span>| 을지로3가역 <br/> | 을지로4가역 </LocationTextRow>
-                  <LocationTextRow><span>3호선</span>| 충무로역 </LocationTextRow>
-                  <LocationTextRow><span>4호선</span>| 명동역 </LocationTextRow>
-                  <LocationTextRow><span>5호선</span>| 을지로4가역 </LocationTextRow>
+                  <LocationTextRow>- <span>을지로3가역</span> 8번출구 </LocationTextRow>
+                  <LocationTextRow>- <span>충무로역</span> 7번출구</LocationTextRow>
+                  <LocationTextRow>- <span>을지로4가역</span> 9번출구</LocationTextRow>
+                  <LocationTextRow>- <span>명동역</span> 10번출구</LocationTextRow>
                 </Text>
               </LocationText>
             </Location>
@@ -87,11 +87,11 @@ const fadeInUp = keyframes`
 `;
 
 const Banner = styled.div`
-  background-image: url('/images/academy_interior.jpg');
+  background-image: url('/images/classroom.jpeg');
   background-size: cover;
   background-position: center;
   background-blend-mode: overlay;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.566);
 
   height: 300px;
   width: 100%;
@@ -144,10 +144,10 @@ const Text = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  font-size: 16px;
+  font-size: 15px;
   margin: 5px 0;
   gap: 10px;
-  margin-top: 10px;
+  margin-top: 5px;
 `
 
 
@@ -168,7 +168,7 @@ const LocationContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 40px;
-  margin-bottom: 80px;
+  margin-bottom: 50px;
 `
 
 const Location = styled.div`
@@ -202,8 +202,11 @@ const LocationTextRow = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+  color: #333;
+  font-size: 14px;
 
   span {
-    font-weight: 600;
+    font-weight: 500;
+    color: black;
   }
 `

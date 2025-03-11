@@ -4,19 +4,16 @@ import { FaRegFileVideo } from "react-icons/fa";
 import { MdOutlineDesktopWindows, MdOutlineRateReview } from "react-icons/md";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import LoginWrapper from "../components/adminComponents/etc/LoginWrapper";
+import { adminLogin } from "../apis/adminAPI/adminLoginAPI";
+import { useSetRecoilState } from "recoil";
+import { loadingAtom } from "../recoil/loadingAtom";
 
 const AdminPage = () => {
-   const [isAdminLogin, setIsAdminLogin] = useState(true);
    const location = useLocation();
    const [selectedItem, setSelectedItem] = useState<string>('student');
+   const setIsLoading = useSetRecoilState(loadingAtom);
 
    const navigate = useNavigate();
-
-   // 로그인 성공 시에는 그냥 이걸 호출하면 됨(loginWrapper에서 props로 받아서)
-   const handleLoginSuccess = () => {
-      setIsAdminLogin(true);
-   }
 
    const handleItemClick = (path: string) => {
       navigate(path);
@@ -24,16 +21,22 @@ const AdminPage = () => {
    }
 
    useEffect(() => {
-      //{todo: localstorage에 토큰이 있으면, 그 토큰을 백으로 보내서 관리자 토큰인지 확인.
-               // 만약 관리자 토큰이면 setIsAdminLogin(true)로 설정}
+      //url에서 code 따서 백으로 post api
+      //code가 없으면 로그인 페이지로 이동
+      const code = new URLSearchParams(window.location.search).get("code");
+      if (code) {
+         adminLogin(code, navigate, setIsLoading);
+      }
 
       //selectedItem에 따라서 해당 페이지로 이동
       if (location.pathname === '/admin/student') {
          setSelectedItem('student');
       } else if (location.pathname === '/admin/message') {
          setSelectedItem('message');
-      } else if (location.pathname === '/admin/course') {
-         setSelectedItem('course');
+      } else if (location.pathname === '/admin/courseInfo') {
+         setSelectedItem('courseInfo');
+      } else if (location.pathname === '/admin/timetables') {
+         setSelectedItem('timetables');
       } else if (location.pathname === '/admin/mainReviews') {
          setSelectedItem('mainReviews');
       } else if (location.pathname === '/admin/courseReviews') {
@@ -42,59 +45,57 @@ const AdminPage = () => {
          setSelectedItem('youtube');
       }
    }, [location.pathname])
+   
 
 
    return (
    <Wrapper id='admin-page-wrapper'>
-      {isAdminLogin ? (
-         <AfterLogin>
-            <Sidebar id='sidebar'>
-               <Company>
-                  <CompanyLogo/>
-                  <CompanyTitle>
-                     <span style={{fontSize:'1.2rem', fontWeight:'bold'}}>예리한 일본어</span>
-                     <span style={{fontSize:'0.8rem', color:'#5d5d5d'}}>관리자용</span>
-                  </CompanyTitle>
-               </Company>
+      <AfterLogin>
+         <Sidebar id='sidebar'>
+            <Company onClick={() => navigate('/admin')}>
+               <CompanyLogo/>
+               <CompanyTitle>
+                  <span style={{fontSize:'1.2rem', fontWeight:'bold'}}>예리한 일본어</span>
+                  <span style={{fontSize:'0.8rem', color:'#5d5d5d'}}>관리자용</span>
+               </CompanyTitle>
+            </Company>
 
-               <CategoryContainer>
-                  <Category>
-                     <CategoryTitle><FaRegUser/>학생 관리</CategoryTitle>
-                     <Items>
-                        <CategoryItem isSelected={selectedItem === 'student'} onClick={() => handleItemClick('student')}>- 학생 목록</CategoryItem>
-                        <CategoryItem isSelected={selectedItem === 'message'} onClick={() => handleItemClick('message')}>- 문자 발송</CategoryItem>
-                     </Items>
-                  </Category>
-                  <Category>
-                     <CategoryTitle><FaRegFileVideo/>수업 관리</CategoryTitle>
-                     <Items>
-                        <CategoryItem isSelected={selectedItem === 'course'} onClick={() => handleItemClick('course')}>- 수업 목록</CategoryItem>
-                     </Items>
-                  </Category>
-                  <Category>
-                     <CategoryTitle><MdOutlineRateReview/>후기 관리</CategoryTitle>
-                     <Items>
-                        <CategoryItem isSelected={selectedItem === 'mainReviews'} onClick={() => handleItemClick('mainReviews')}>- 메인 리뷰 설정</CategoryItem>
-                     </Items>
-                  </Category>
-                  <Category>
-                     <CategoryTitle><MdOutlineDesktopWindows/>홈페이지 관리</CategoryTitle>
-                     <Items>
-                        <CategoryItem isSelected={selectedItem === 'youtube'} onClick={() => handleItemClick('youtube')}>- 대표 유튜브 영상 변경</CategoryItem>
-                     </Items>
-                  </Category>
-                  <div style={{fontSize:'10px', color:'#b3b3b3'}}>문의 : burittodance@naver.com</div>
+            <CategoryContainer>
+               <Category>
+                  <CategoryTitle><FaRegUser/>학생 관리</CategoryTitle>
+                  <Items>
+                     <CategoryItem $isselected={selectedItem === 'student'} onClick={() => handleItemClick('student')}>- 학생 목록</CategoryItem>
+                     <CategoryItem $isselected={selectedItem === 'message'} onClick={() => handleItemClick('message')}>- 문자 발송</CategoryItem>
+                  </Items>
+               </Category>
+               <Category>
+                  <CategoryTitle><FaRegFileVideo/>강의 관리</CategoryTitle>
+                  <Items>
+                     <CategoryItem $isselected={selectedItem === 'courseInfo'} onClick={() => handleItemClick('courseInfo')}>- 강의 관리</CategoryItem>
+                     <CategoryItem $isselected={selectedItem === 'timetables'} onClick={() => handleItemClick('timetables')}>- 분반 목록</CategoryItem>
+                  </Items>
+               </Category>
+               <Category>
+                  <CategoryTitle><MdOutlineRateReview/>후기 관리</CategoryTitle>
+                  <Items>
+                     <CategoryItem $isselected={selectedItem === 'mainReviews'} onClick={() => handleItemClick('mainReviews')}>- 후기 목록</CategoryItem>
+                  </Items>
+               </Category>
+               <Category>
+                  <CategoryTitle><MdOutlineDesktopWindows/>홈페이지 관리</CategoryTitle>
+                  <Items>
+                     <CategoryItem $isselected={selectedItem === 'youtube'} onClick={() => handleItemClick('youtube')}>- 대표 유튜브 영상 변경</CategoryItem>
+                  </Items>
+               </Category>
+               <div style={{fontSize:'10px', color:'#b3b3b3'}}>문의 : burittodance@naver.com</div>
 
-               </CategoryContainer>
-            </Sidebar>
+            </CategoryContainer>
+         </Sidebar>
 
-            <Content>
-               <Outlet/>
-            </Content>
-         </AfterLogin>
-      ) : (
-         <LoginWrapper onLoginSuccess={handleLoginSuccess}/>
-      )}
+         <Content>
+            <Outlet/>
+         </Content>
+      </AfterLogin>
    </Wrapper>
    )
 }
@@ -150,6 +151,8 @@ const CompanyLogo = styled.div`
 const CompanyTitle = styled.div`
    display: flex;
    flex-direction: column;
+
+   cursor: pointer; //{todo: 삭제}
 `
 
 const CategoryContainer = styled.div`
@@ -180,14 +183,14 @@ const CategoryTitle = styled.div`
    font-weight: 500;
    margin-bottom: 10px;
 `
-const CategoryItem = styled.div<{ isSelected: boolean }>`
+const CategoryItem = styled.div<{ $isselected: boolean }>`
    font-size: 0.9rem;
    cursor: pointer;
-   color: ${({ isSelected }) => (isSelected ? "#333" : "#676767")};
-   font-weight: ${({ isSelected }) => (isSelected ? "500" : "normal")};
+   color: ${({ $isselected }) => ($isselected ? "#333" : "#676767")};
+   font-weight: ${({ $isselected }) => ($isselected ? "500" : "normal")};
    padding: 5px 10px;
    border-radius: 4px;
-   background-color: ${({ isSelected }) => (isSelected ? "#eaeaea" : "transparent")};
+   background-color: ${({ $isselected }) => ($isselected ? "#eaeaea" : "transparent")};
 
    &:hover {
       color: #333;

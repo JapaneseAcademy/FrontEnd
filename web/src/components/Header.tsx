@@ -6,9 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import { getKakaoCode } from '../apis/loginAPI';
 import { IoMdContact } from "react-icons/io"
 
+
 const Header = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
+  // const [isLoading, setIsLoading] = useRecoilState<boolean>(loadingAtom);
   const navigate = useNavigate();
 
   const toggleSidebar = () => {
@@ -19,21 +21,32 @@ const Header = () => {
     setSidebarOpen(false);
   };
   
-  const logoutTemp = () => {
+  const logoutTemp = () => { //{todo: 로그아웃 api 호출}
     if(confirm('로그아웃 하시겠습니까?')) {
       localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
       setIsLogin(false);
     }
     // 화면 새로고침
+    alert('로그아웃 되었습니다.');
     window.location.reload();
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    if(token) {
-      setIsLogin(true);
-    }
-  }, []);
+    // setIsLoading(true);
+    const checkLoginStatus = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 500)); // ✅ 0.5초 대기
+      const accessToken = localStorage.getItem('accessToken');
+      setIsLogin(!!accessToken); // ✅ 로그인 상태 갱신
+      // setIsLoading(false); // ✅ 로딩 종료
+    };
+    checkLoginStatus();
+  }
+  , []);
+
+  // if (isLoading) {
+  //   return;
+  // }
 
   return (
     <>
@@ -51,6 +64,7 @@ const Header = () => {
         <Navigator onClick={() => navigate('/teachers')}>선생님 소개</Navigator>
         <Navigator onClick={() => navigate(`/courses`)}>강좌 목록</Navigator>
         <Navigator onClick={() => navigate(`/introduction`)}>학원 안내</Navigator>
+        <Navigator onClick={() => navigate(`/reviews`)}>수강 후기</Navigator>
         <Navigator onClick={() => navigate(`/qna`)}>FAQ</Navigator>
       </SecondRow>
 
@@ -68,6 +82,7 @@ const Header = () => {
               <LogoutButton onClick={logoutTemp}>로그아웃</LogoutButton>
             </>
             : <LoginButton onClick={() => { getKakaoCode(); closeSidebar(); }}>카카오로 시작하기</LoginButton> }
+            {/* : <LoginButton onClick={() => { alert("준비중입니다.") }}>카카오로 시작하기</LoginButton> } */}
         </ButtonContainer>
         <MenuContainer>
           <Menu onClick={() => { navigate(`/teachers`); closeSidebar(); }}>선생님 소개</Menu>
@@ -120,7 +135,7 @@ const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Pretendard';
+  font-family: 'NPSfontRegular';
   cursor: pointer;
   font-size: 35px;
 
@@ -136,7 +151,7 @@ const Title = styled.div`
 
   /* mobile 규격 */
   @media screen and (max-width: 540px) {
-    font-size: 20px;
+    font-size: 23px;
   }
 `;
 
