@@ -119,7 +119,7 @@ const CourseDetailPage = () => {
 
   useEffect(() => {
     // 페이지 로드 시 상단으로 이동
-    window.scrollTo(0, 0); // 완성 시에 활성화. 개발할때는 불편해서 {todo}
+    // window.scrollTo(0, 0); // 완성 시에 활성화. 개발할때는 불편해서 {todo}
 
     //1) 강의 상세정보 API 호출
     getCourseDetail(courseInfoId).then((data) => {
@@ -239,12 +239,13 @@ const CourseDetailPage = () => {
                 <NoReview>후기가 아직 없어요!</NoReview>
               ) : (
                 currentReviews.map((review) => (
-                  <Reviewcard key={review.reviewId} onClick={() => handleReviewClick(review.reviewId)}>
+                  <Reviewcard className='review-card' key={review.reviewId} onClick={() => handleReviewClick(review.reviewId)}>
                     <ReviewImage src={review.imageUrls[0] ?? "/images/no-image.png"} alt="Review Image" />
                     <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: "5px" }}>
-                      <ReviewCourse>{courseTitle}</ReviewCourse>
+                      <ReviewCourse> {courseTitle}</ReviewCourse>
                       <ReviewTitle>
-                        {review.reviewTitle}
+                        <BestTag>BEST</BestTag>
+                        <TitleText>{review.reviewTitle}</TitleText>
                       </ReviewTitle>
                       <ReviewText>{review.review}</ReviewText>
                       <UserAndDate>
@@ -463,10 +464,6 @@ const Reviewcard = styled.div`
   &:last-child {
     border-bottom: none;
   }
-
-  &:hover {
-    background-color: #f9f9f9;
-  }
 `;
 
 const ReviewImage = styled.img`
@@ -488,19 +485,43 @@ const ReviewCourse = styled.div`
   color: #707070;
 `;
 
+const BestTag = styled.div`
+  width: 40px;
+  font-size: 12px;
+  color: #fff;
+  background-color: #ff8255;
+  padding: 2px 5px;
+  border-radius: 5px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+`;
+
 const ReviewTitle = styled.div`
   font-size: 16px;
   font-weight: 500;
   width: 100%;
   display: flex;
-  margin-bottom: 5px;
+  align-items: center;
+  justify-content: flex;
+  gap: 5px;
+`;
 
-  //두번째 줄까지만 표현하고, 넘어가면 ... 으로 표시
+const TitleText = styled.div`
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+
+  // 세 줄 까지만 표현하고, 넘어가면 ... 으로 표시
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 1;
 
+  // 높이가 정해진 경우, 넘치는 텍스트를 숨김
+  -webkit-box-orient: vertical;
 `;
 
 const ReviewText = styled.div`
@@ -544,8 +565,8 @@ const PageButton = styled.button<{ $active: boolean }>`
   align-items: center;
   font-size: 14px;
   cursor: pointer;
-  border: 1px solid ${({ $active }) => ($active ? "#ff8255" : "#e1e1e1")};
-  background-color: ${({ $active }) => ($active ? "#ff8255" : "#fff")};
+  border: 1px solid ${({ $active }) => ($active ? "#4d3e2c" : "#e1e1e1")};
+  background-color: ${({ $active }) => ($active ? "#4d3e2c" : "#e1e1e1")};
   color: ${({ $active }) => ($active ? "#fff" : "#000")};
 
   &:hover {
