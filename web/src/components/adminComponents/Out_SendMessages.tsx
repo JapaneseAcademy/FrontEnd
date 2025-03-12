@@ -108,7 +108,16 @@ const Out_SendMessages = () => {
 
         <StudentsTable>
           <TableHeader>
-            <TableHeaderItem><Checkbox type="checkbox" onClick={handleSelectAll}/></TableHeaderItem>
+            <TableHeaderItem>
+            <Checkbox
+              type="checkbox"
+              onClick={handleSelectAll}
+              checked={filteredStudents.length > 0 && filteredStudents.every(student =>
+                selectedStudents.some(selected => selected.id === student.id)
+              )}
+              readOnly
+            />
+            </TableHeaderItem>
             <TableHeaderItem>이름</TableHeaderItem>
             <TableHeaderItem>생년월일</TableHeaderItem>
             <TableHeaderItem>전화번호</TableHeaderItem>
