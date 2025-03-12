@@ -85,12 +85,6 @@ const Out_SendMessages = () => {
     });
   };
 
-  // filtered students 확인
-  useEffect(() => {
-    console.log("필터된 학생들: ", filteredStudents);
-  }
-  , [filteredStudents]);
-
   return (
     <Wrapper>
       <StudentListContainer>
