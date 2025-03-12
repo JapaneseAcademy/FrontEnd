@@ -1,20 +1,48 @@
 import styled from "styled-components"
+import { convertTime, convertWeekday } from "../../../utils/utils";
 
 interface StudentFilterProps {
    searchTerm: string;
    onSearchChange: (term: string) => void;
+   timeTables: TimeTable[];
+   onTimeTableChange: (timeTableId: number) => void; 
 }
 
-const MessageFilter = ({ searchTerm, onSearchChange }: StudentFilterProps) => {
+type TimeTable = {
+   timeTableId: number;
+   courseTitle: string;
+   timeBlocks: TimeBlock[];
+ 
+   students: number[];
+ }
+ 
+ type TimeBlock = {
+   endTime: string;
+   startTime: string;
+   weekday: string;
+ }
+
+const MessageFilter = ({ searchTerm, onSearchChange, timeTables, onTimeTableChange }: StudentFilterProps) => {
+
+   // courseTitle과 Timeblock을 한 문자열로 합쳐서 변환하는 함수
+   const convertTimeTableToString = (timeTable: TimeTable) => {
+      const timeBlockString = timeTable.timeBlocks.map((timeBlock) => {
+         return `${convertWeekday(timeBlock.weekday)} ${convertTime(timeBlock.startTime)} ~ ${convertTime(timeBlock.endTime)}`;
+      }).join(", ");
+      return `[${timeTable.courseTitle}] ${timeBlockString}`;
+   }
+
    return (
       <Wrapper id="filter-container-wrapper">
-         <Dropdown>
-            <option>전체</option>
-            <option>원샷반1</option>
-            <option>원샷반2</option>
-            <option>원샷반3</option>
-            <option>고수들의 회화비밀</option>
+         {/* 🔹 선택된 TimeTable 변경 핸들러 추가 */}
+         <Dropdown onChange={(e) => onTimeTableChange(Number(e.target.value))}>
+         {timeTables.map((timeTable) => (
+            <option key={timeTable.timeTableId} value={timeTable.timeTableId}>
+               {convertTimeTableToString(timeTable)}
+            </option>
+         ))}
          </Dropdown>
+
          <SearchInput 
          type="text"
          placeholder="이름" 
@@ -37,18 +65,18 @@ const Wrapper = styled.div`
 
 
 const SearchInput = styled.input`
-   width: 25%;
+   width: 30%;
    height: 30px;
    padding: 5px;
    border-radius: 5px;
    font-size: 0.8rem;
-   border: 1px solid black;
+   border: 1px solid #555555;
 
 `
 
 ///Dropdown
 const Dropdown = styled.select`
-   width: 30%;
+   width: 70%;
    height: 30px;
    padding: 5px;
    border-radius: 5px;

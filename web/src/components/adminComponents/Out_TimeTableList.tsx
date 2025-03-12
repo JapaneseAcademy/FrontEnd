@@ -55,15 +55,6 @@ const Out_TimeTables = () => {
     return timeTableString;
   };
 
-
-  //년/월 선택 관련
-  const handleYearChange = (year: string) => {
-    setSelectedYear(year);
-  };
-  const handleMonthChange = (month: string) => {
-    setSelectedMonth(month);
-  };
-
   const selectedTimeTable = timeTables.find((table) => table.timeTableId === selectedTimeTableId);
 
   //해당 timetable에 수강 중인 학생들 조회
@@ -103,8 +94,8 @@ const Out_TimeTables = () => {
       <CourseListContainer id="course-list-container"> 
         <Title>분반 목록</Title>
         <CourseFilter 
-          handleYearChange={handleYearChange} 
-          handleMonthChange={handleMonthChange} 
+          handleYearChange={setSelectedYear} 
+          handleMonthChange={setSelectedMonth} 
           selectedYear={selectedYear}
           selectedMonth={selectedMonth}
         />

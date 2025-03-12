@@ -4,6 +4,8 @@ import { getAdminStudents } from "../../apis/adminAPI/adminStudentsAPI.ts";
 import { useNavigate } from "react-router-dom";
 import MessageFilter from "./filters/MessageFilter.tsx";
 import SendMessageContainer from "./etc/SendMessageContainer.tsx";
+import CourseFilter from "./filters/CourseFilter.tsx";
+import { getTimeTableandStudentsForMessage } from "../../apis/adminAPI/adminMessageAPI.ts";
 
 type Student = {
   id: number;
@@ -13,50 +15,91 @@ type Student = {
   note: string;
 }
 
+type TimeTable = {
+  timeTableId: number;
+  courseTitle: string;
+  timeBlocks: TimeBlock[];
+
+  students: number[];
+}
+
+type TimeBlock = {
+  endTime: string;
+  startTime: string;
+  weekday: string;
+}
+
 const Out_SendMessages = () => {
-  // const [selectedStudentId, setSelectedStudentId] = useState<number | null>(1);
-  const [selectedStudents, setSelectedStudents] = useState<Student[]>([]); // ✅ 여러 학생 선택 상태
-  const [searchTerm, setSearchTerm] = useState("");
+  // ✅ 선택된 TimeTable ID 상태 추가
+  const [selectedTimeTableId, setSelectedTimeTableId] = useState<number | null>(null);
+  
+  // ✅ 기존 상태들 유지
+  const [selectedYear, setSelectedYear] = useState("2025");
+  const [selectedMonth, setSelectedMonth] = useState("03");
+  const [timeTables, setTimeTables] = useState<TimeTable[]>([]);
   const [students, setStudents] = useState<Student[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedStudents, setSelectedStudents] = useState<Student[]>([]); // ✅ 학생 선택 상태 유지
   const navigate = useNavigate();
+
+  // const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
 
   useEffect(() => {
     getAdminStudents(navigate).then((data) => {
       setStudents(data);
-      // setSelectedStudentId(data[0]?.id || null);
     });
-  }, []);
-
-  const handleSearchChange = (term: string) => {
-    setSearchTerm(term);
-  };
-
-  const filteredStudents = students.filter((student) =>
-    student.name.includes(searchTerm)
-  );
-
-  // ✅ 학생 선택/해제 함수
-  const handleStudentSelect = (student: Student) => {
-    setSelectedStudents((prevSelected) => {
-      if (prevSelected.includes(student)) {
-        return prevSelected.filter((s) => s !== student);
-      } else {
-        return [...prevSelected, student];
-      }
-    }
-    );
-  };
+  }, [navigate]);
 
   useEffect(() => {
-    console.log("선택된 학생 ID 목록: ", selectedStudents);
+    getTimeTableandStudentsForMessage(selectedYear, selectedMonth).then((data) => {
+      setTimeTables(data);
+      if (data.length > 0) {
+        setSelectedTimeTableId(data[0].timeTableId); // ✅ 첫 번째 분반을 기본 선택
+      }
+    });
+  }, [selectedYear, selectedMonth]);
+
+
+  
+  // 🔹 검색어 적용 + 선택된 TimeTable에 속한 학생만 필터링
+  const filteredStudents = students.filter((student) =>
+    student.name.includes(searchTerm) &&
+    (selectedTimeTableId
+      ? timeTables
+          .find((t) => t.timeTableId === selectedTimeTableId)
+          ?.students.includes(student.id)
+      : true) // ✅ 선택된 TimeTable에 포함된 학생만 표시
+  );
+
+
+  // ✅ 학생 선택/해제 함수 (기존 기능 유지)
+  const handleStudentSelect = (student: Student) => {
+    setSelectedStudents((prevSelected) => {
+      const isSelected = prevSelected.some((s) => s.id === student.id);
+      const newSelection = isSelected
+        ? prevSelected.filter((s) => s.id !== student.id) // 선택 해제
+        : [...prevSelected, student]; // 선택 추가
+
+      console.log("선택된 학생 ID:", newSelection.map((s) => s.id)); // ✅ ID 출력 유지
+      return newSelection;
+    });
+  };
+
+  // filtered students 확인
+  useEffect(() => {
+    console.log("필터된 학생들: ", filteredStudents);
   }
-  , [selectedStudents]);
+  , [filteredStudents]);
 
   return (
-    <Wrapper id="admin-students-list-wrapper">
-      <StudentListContainer id="student-list-container">
+    <Wrapper>
+      <StudentListContainer>
         <Title>문자 발송</Title>
-        <MessageFilter searchTerm={searchTerm} onSearchChange={handleSearchChange} />
+        <CourseFilter handleYearChange={setSelectedYear} handleMonthChange={setSelectedMonth} selectedYear={selectedYear} selectedMonth={selectedMonth} />
+        
+        {/* ✅ 선택된 TimeTable ID 변경 함수 추가 */}
+        <MessageFilter searchTerm={searchTerm} onSearchChange={setSearchTerm} timeTables={timeTables} onTimeTableChange={setSelectedTimeTableId} />
+
         <StudentsTable>
           <TableHeader>
             <TableHeaderItem>선택</TableHeaderItem>
@@ -68,13 +111,13 @@ const Out_SendMessages = () => {
             {filteredStudents.map((student) => (
               <TableRow
                 key={student.id}
-                $isselected={selectedStudents.includes(student)}
+                $isselected={selectedStudents.some((s) => s.id === student.id)}
                 onClick={() => handleStudentSelect(student)}
               >
                 <TableItem>
                   <Checkbox
                     type="checkbox"
-                    checked={selectedStudents.includes(student)}
+                    checked={selectedStudents.some((s) => s.id === student.id)}
                     onChange={() => handleStudentSelect(student)}
                     onClick={(e) => e.stopPropagation()} // ✅ 부모 클릭 이벤트 방지
                   />
@@ -92,6 +135,7 @@ const Out_SendMessages = () => {
     </Wrapper>
   );
 };
+
 
 export default Out_SendMessages;
 
