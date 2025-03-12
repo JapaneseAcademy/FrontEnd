@@ -13,9 +13,11 @@ const BASE_URL = "https://www.yeri-jp.com";
 // ✅ 사이트맵에 포함할 페이지 목록 (필요하면 추가/수정)
 const pages = [
   { url: "/", changefreq: "daily", priority: 1.0 },
-  { url: "/about", changefreq: "weekly", priority: 0.8 },
-  { url: "/review", changefreq: "weekly", priority: 0.8 },
-  { url: "/contact", changefreq: "monthly", priority: 0.6 },
+  { url: "/reviews", changefreq: "weekly", priority: 0.8 },
+  { url: "/courses", changefreq: "weekly", priority: 0.8 },
+  { url: "/introduction", changefreq: "monthly", priority: 0.6 },
+  { url: "/teachers", changefreq: "monthly", priority: 0.6 },
+  { url: "/qna", changefreq: "monthly", priority: 0.4 },
 ];
 
 async function generateSitemap() {
