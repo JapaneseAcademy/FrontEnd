@@ -44,12 +44,17 @@ const Out_SendMessages = () => {
 
   // 전체선택하는 함수, 선택된 학생들을 모두 선택해제하거나 선택하는 함수
   const handleSelectAll = () => {
-    if (selectedStudents.length === students.length) {
+    const allSelected = filteredStudents.every(student =>
+      selectedStudents.some(selected => selected.id === student.id)
+    );
+  
+    if (allSelected) {
       setSelectedStudents([]);
     } else {
-      setSelectedStudents(students);
+      setSelectedStudents(filteredStudents);
     }
-  }
+  };
+  
 
   useEffect(() => {
     getAdminStudents().then((data) => {
