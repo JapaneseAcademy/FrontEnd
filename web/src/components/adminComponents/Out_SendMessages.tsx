@@ -54,7 +54,7 @@ const Out_SendMessages = () => {
     getTimeTableandStudentsForMessage(selectedYear, selectedMonth).then((data) => {
       setTimeTables(data);
       if (data.length > 0) {
-        setSelectedTimeTableId(data[0].timeTableId); // ✅ 첫 번째 분반을 기본 선택
+        setSelectedTimeTableId(0); // 기본으로 전체 선택
       }
     });
   }, [selectedYear, selectedMonth]);

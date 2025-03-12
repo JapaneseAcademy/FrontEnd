@@ -12,15 +12,15 @@ type TimeTable = {
    timeTableId: number;
    courseTitle: string;
    timeBlocks: TimeBlock[];
- 
+
    students: number[];
- }
+}
  
- type TimeBlock = {
+type TimeBlock = {
    endTime: string;
    startTime: string;
    weekday: string;
- }
+}
 
 const MessageFilter = ({ searchTerm, onSearchChange, timeTables, onTimeTableChange }: StudentFilterProps) => {
 
@@ -36,6 +36,7 @@ const MessageFilter = ({ searchTerm, onSearchChange, timeTables, onTimeTableChan
       <Wrapper id="filter-container-wrapper">
          {/* 🔹 선택된 TimeTable 변경 핸들러 추가 */}
          <Dropdown onChange={(e) => onTimeTableChange(Number(e.target.value))}>
+            <option value={0}>전체</option>
          {timeTables.map((timeTable) => (
             <option key={timeTable.timeTableId} value={timeTable.timeTableId}>
                {convertTimeTableToString(timeTable)}
