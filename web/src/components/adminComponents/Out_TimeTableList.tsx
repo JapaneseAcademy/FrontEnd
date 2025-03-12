@@ -157,7 +157,7 @@ const Out_TimeTables = () => {
 
       </CourseDetailContainer>
 
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}/>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} timeTableId={selectedTimeTableId} courseTitle={selectedTimeTable?.title || "강의 없음"} courseTime={selectedTimeTable ? converTimeTable(selectedTimeTable) : "분반 정보 없음"}/>
 
     </Wrapper>
   )

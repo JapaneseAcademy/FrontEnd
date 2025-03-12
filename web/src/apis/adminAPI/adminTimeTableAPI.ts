@@ -43,7 +43,7 @@ export const getStudentsByTimetableId = async (timetableId: number) => {
 }
 
 // 관리자가 직접 강의에 멤버를 등록하는 api
-export const addStudentToCourse = async (timeTableId: number, memberId: number, category: string, paymentAmount: number, paymentDate: string) => {
+export const addStudentToCourse = async (timeTableId: number, memberId: number, category: string, paymentAmount: number, method: string, paymentDate: string) => {
    try {
       const response = await axios.post(`${BASE_URL}/api/v1/admin/enrollments`, {
          timeTableId,
@@ -51,12 +51,15 @@ export const addStudentToCourse = async (timeTableId: number, memberId: number, 
          category,
          paymentAmount,
          paymentDate,
+         method
       }, {
          headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
          },
       });
       console.log("[ addStudentToCourse ]", response.data);
+      alert("수강생이 등록되었습니다.");
+      window.location.reload();
       return response.data;
    } catch (error: any) {
       console.error(error);

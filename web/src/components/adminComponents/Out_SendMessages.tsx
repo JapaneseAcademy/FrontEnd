@@ -42,10 +42,17 @@ const Out_SendMessages = () => {
   const [selectedStudents, setSelectedStudents] = useState<Student[]>([]); // ✅ 학생 선택 상태 유지
   const navigate = useNavigate();
 
-  // const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
+  // 전체선택하는 함수, 선택된 학생들을 모두 선택해제하거나 선택하는 함수
+  const handleSelectAll = () => {
+    if (selectedStudents.length === students.length) {
+      setSelectedStudents([]);
+    } else {
+      setSelectedStudents(students);
+    }
+  }
 
   useEffect(() => {
-    getAdminStudents(navigate).then((data) => {
+    getAdminStudents().then((data) => {
       setStudents(data);
     });
   }, [navigate]);
@@ -96,7 +103,7 @@ const Out_SendMessages = () => {
 
         <StudentsTable>
           <TableHeader>
-            <TableHeaderItem>선택</TableHeaderItem>
+            <TableHeaderItem><Checkbox type="checkbox" onClick={handleSelectAll}/></TableHeaderItem>
             <TableHeaderItem>이름</TableHeaderItem>
             <TableHeaderItem>생년월일</TableHeaderItem>
             <TableHeaderItem>전화번호</TableHeaderItem>
