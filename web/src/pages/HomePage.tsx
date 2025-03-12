@@ -8,6 +8,7 @@ import DownCourses from '../components/mainPage/DownCourses';
 import DownReviews from '../components/mainPage/DownReviews';
 import { loadingAtom } from '../recoil/loadingAtom';
 import { useSetRecoilState } from 'recoil';
+import { Helmet } from 'react-helmet-async';
 
 const HomePage = () => {
   const setIsLoading = useSetRecoilState(loadingAtom);
@@ -33,6 +34,12 @@ const HomePage = () => {
 
   return (
   <>
+      <Helmet>
+        <title>예리한 일본어</title>
+        <link rel="canonical" href="https://www.yeri-jp.com/" />
+        <meta name="description" content="예리한 일본어에서는 유학 없이도 원어민처럼 일본어를 배울 수 있습니다. 대화로 배우는 살아있는 일본어, 예리한 일본어에서 온·오프라인 전세계 어디서든 시작하세요!" />
+      </Helmet>
+
       <Main>
         <MainBanner src='/images/main-banner.png' />
 
@@ -56,7 +63,7 @@ const HomePage = () => {
 
         <CoursesContainer>
           <UpCourses>
-            <Title>강좌 목록</Title>
+            <Title>강의 목록</Title>
             <MoreButton onClick={ () => navigate(`/courses`)}>더보기 &gt;</MoreButton>
           </UpCourses>
           <DownCourses />

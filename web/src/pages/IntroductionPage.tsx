@@ -3,6 +3,7 @@ import styled, { keyframes } from "styled-components"
 import { PiBuildingOfficeLight } from "react-icons/pi";
 import { PiSubwayLight } from "react-icons/pi";
 import { PiBusLight } from "react-icons/pi";
+import { Helmet } from "react-helmet-async";
 
 const IntroductionPage = () => {
   const handleLocationClick = () => {
@@ -14,8 +15,18 @@ const IntroductionPage = () => {
 
 
   return (
-  
     <>
+      <Helmet
+        title="예리한 일본어 - 수강생 후기"
+        meta={[
+            {
+              name: "description",
+              content: "예리한 일본어 학원 위치 및 오시는 길 안내",
+            },
+        ]}
+        link={[{ rel: "canonical", href: "https://www.yeri-jp.com/introduction" }]}
+      />
+      
       {/* <Header /> */}
       <Main>
         <Banner>학원 안내</Banner>

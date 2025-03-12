@@ -63,6 +63,11 @@ export const addStudentToCourse = async (timeTableId: number, memberId: number, 
       return response.data;
    } catch (error: any) {
       console.error(error);
-      alert("수강생 등록에 실패했습니다. 다시 시도해주세요.")
+      // 에러 메시지가 Enrollment already exists로 시작하면 이미 등록된 수강생
+      if (error.response.data.message.startsWith("Enrollment already exists")) {
+         alert("이미 등록된 수강생입니다.");
+      } else {
+         alert("수강생 등록에 실패했습니다. 다시 시도해주세요.");
+      }
    }
 }
