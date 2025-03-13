@@ -8,11 +8,11 @@ import DownReviews from '../components/mainPage/DownReviews';
 import { loadingAtom } from '../recoil/loadingAtom';
 import { useSetRecoilState } from 'recoil';
 import { Helmet } from 'react-helmet-async';
-import { getAdminYoutubeId } from '../apis/adminAPI/adminYoutubeAPI';
 import MainYoutube from '../components/MainYoutube';
+import Loading from '../components/Loading';
 
 const HomePage = () => {
-  const [youtubeId, setYoutubeId] = useState<string>('8-6MmIYae8c');
+  const [isMainBannerLoaded, setIsMainBannerLoaded] = useState<boolean>(false);
   const setIsLoading = useSetRecoilState(loadingAtom);
   const navigate = useNavigate();
 
@@ -24,19 +24,10 @@ const HomePage = () => {
     const code = url.searchParams.get('code');
     // code가 있고, localStorage에 토큰이 없으면 로그인 요청
     if (code && !localStorage.getItem('accessToken')) {
-      // setIsLoading(true);
       login(code, navigate, setIsLoading);
-
     }
   }, );
 
-  //유튜브  설정
-  useEffect(() => {
-    getAdminYoutubeId().then((data) => {
-      setYoutubeId(data.youtubeId);
-    }
-    );
-  }, []);
 
   return (
   <>
@@ -46,8 +37,11 @@ const HomePage = () => {
         <meta name="description" content="예리한 일본어에서는 유학 없이도 원어민처럼 일본어를 배울 수 있습니다. 대화로 배우는 살아있는 일본어, 예리한 일본어에서 온·오프라인 전세계 어디서든 시작하세요!" />
       </Helmet>
 
+      {/* 이미지 로드가 완료될 때까지 로딩 화면 표시 */}
+      {!isMainBannerLoaded && <Loading/>}
+
       <Main>
-        <MainBanner src='/images/main-banner.png' alt='main-banner'/>
+        <MainBanner src='/images/main-banner.png' alt='main-banner' onLoad={() => setIsMainBannerLoaded(true)}/>
 
         <Ment>
           <span style={{fontSize:'16px', fontWeight:'400', marginBottom:'10px'}}>
@@ -58,7 +52,7 @@ const HomePage = () => {
           </span>
         </Ment>
 
-        <MainYoutube youtubeId={youtubeId} />
+        <MainYoutube />
 
         <ReviewsContainer>
           <UpReview>

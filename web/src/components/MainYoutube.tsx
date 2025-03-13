@@ -1,11 +1,16 @@
+import { useEffect, useState } from "react";
 import YouTube from "react-youtube";
 import styled from "styled-components";
+import { getAdminYoutubeId } from "../apis/adminAPI/adminYoutubeAPI";
 
-interface MainYoutubeProps {
-   youtubeId: string;
-}
+const MainYoutube = () => {
+   const [youtubeId, setYoutubeId] = useState<string>('8-6MmIYae8c');
+   useEffect(() => {
+      getAdminYoutubeId().then((data) => {
+      setYoutubeId(data.youtubeId);
+      });
+   }, []);
 
-const MainYoutube = ({ youtubeId }: MainYoutubeProps) => {
    return (
       <YoutubeContainer>
          <StyledYouTube 
