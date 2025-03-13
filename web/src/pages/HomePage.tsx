@@ -38,7 +38,11 @@ const HomePage = () => {
       </Helmet>
 
       {/* 이미지 로드가 완료될 때까지 로딩 화면 표시 */}
-      {!isMainBannerLoaded && <Loading/>}
+      {!isMainBannerLoaded && 
+        <div style={{width:'100%', aspectRatio:'14/15', height:'auto', marginTop:'30px', marginBottom:'30px', justifyContent:'center', alignItems:'center'}}>
+          <Loading/>
+        </div>
+        }
 
       <Main>
         <MainBanner src='/images/main-banner.png' alt='main-banner' onLoad={() => setIsMainBannerLoaded(true)}/>
