@@ -27,8 +27,8 @@ const TeachersPage = () => {
         link={[{ rel: "canonical", href: "https://www.yeri-jp.com/teachers" }]}
       />
       <Main>
-      <TeacherBanner src="/images/teacherBanner/teacher-banner-1.png" alt="Teacher Banner" />
-      <TeacherBanner src="/images/teacherBanner/teacher-banner-2.png" alt="Teacher Banner" />
+      <TeacherBanner src="/images/teacherBanner/teacher-banner-1.png" alt="Teacher Banner1" />
+      <TeacherBanner src="/images/teacherBanner/teacher-banner-2.png" alt="Teacher Banner2" />
 
       <Title>
         예리 센세와 소통하고 싶다면?

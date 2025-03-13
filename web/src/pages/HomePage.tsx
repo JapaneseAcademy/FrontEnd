@@ -41,7 +41,7 @@ const HomePage = () => {
       </Helmet>
 
       <Main>
-        <MainBanner src='/images/main-banner.png' />
+        <MainBanner src='/images/main-banner.png' alt='main-banner'/>
 
         <Ment>
           <span style={{fontSize:'16px', fontWeight:'400', marginBottom:'10px'}}>

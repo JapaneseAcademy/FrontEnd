@@ -69,7 +69,7 @@ const MyPage = () => {
         )} 
         {enrollments.map((enrollment) => (
           <MyCourseCard key={enrollment.enrollmentId}>
-            <CourseImage src={enrollment.mainImageUrl}/>
+            <CourseImage src={enrollment.mainImageUrl} alt="course-image"/>
             <CourseInfo>
               <CourseTitle>{enrollment.title}</CourseTitle>
               <Text>결제일시 | {enrollment.paymentDate}</Text>
