@@ -35,7 +35,7 @@ const SearchInput = styled.input`
    padding: 5px;
    border-radius: 5px;
    font-size: 0.8rem;
-
+   border: 1px solid #5f5f5f;
 
    &:hover {
       background-color: #f1f1f1;

@@ -3,7 +3,7 @@ import styled from "styled-components"
 const Loading = () => {
    return(
       <Wrapper>
-         <LoadingGif src="/images/loading.gif" alt="loading" />
+         <LoadingGif src="/images/loading.gif" alt="loading-image" />
          <LoadingText>잠시만 기다려주세요...</LoadingText>
       </Wrapper>  
    )

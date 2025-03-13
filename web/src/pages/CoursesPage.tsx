@@ -8,6 +8,7 @@ import { useRecoilState } from "recoil";
 import { loadingAtom } from "../recoil/loadingAtom";
 import Loading from "../components/Loading";
 import { course } from "../types/types";
+import { Helmet } from "react-helmet-async";
 
 
 const CoursesPage = () => {
@@ -76,6 +77,17 @@ const CoursesPage = () => {
 
   return (
     <>
+      <Helmet
+        title="예리한 일본어 - 강의 목록"
+        meta={[
+            {
+              name: "description",
+              content: "예리한 일본어의 강의 목록을 확인해보세요. 예리 센세와 함께 일본어를 배워보세요!",
+            },
+        ]}
+        link={[{ rel: "canonical", href: "https://www.yeri-jp.com/courses" }]}
+      />
+
       <Main>
         <Wrapper>
           { isLoading ? (<Loading />)

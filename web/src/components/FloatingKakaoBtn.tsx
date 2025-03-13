@@ -10,7 +10,6 @@ const FloatingKakaoBtn = () => {
 
    return (
       <Button onClick={handleClick}>
-         {/* <img src="/images/snsButtons/kakaotalk1.png" alt="카카오톡 문의" /> */}
          <RiKakaoTalkFill style={{ color: "#3C1E1E", fontSize: "30px" }} />
       </Button>
    );

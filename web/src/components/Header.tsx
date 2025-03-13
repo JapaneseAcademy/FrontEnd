@@ -62,7 +62,7 @@ const Header = () => {
       </FirstRow>
       <SecondRow>
         <Navigator onClick={() => navigate('/teachers')}>선생님 소개</Navigator>
-        <Navigator onClick={() => navigate(`/courses`)}>강좌 목록</Navigator>
+        <Navigator onClick={() => navigate(`/courses`)}>강의 목록</Navigator>
         <Navigator onClick={() => navigate(`/introduction`)}>학원 안내</Navigator>
         <Navigator onClick={() => navigate(`/reviews`)}>수강 후기</Navigator>
         <Navigator onClick={() => navigate(`/qna`)}>FAQ</Navigator>
@@ -86,8 +86,9 @@ const Header = () => {
         </ButtonContainer>
         <MenuContainer>
           <Menu onClick={() => { navigate(`/teachers`); closeSidebar(); }}>선생님 소개</Menu>
-          <Menu onClick={() => { navigate(`/courses`); closeSidebar(); }}>강의 조회</Menu>
+          <Menu onClick={() => { navigate(`/courses`); closeSidebar(); }}>강의 목록</Menu>
           <Menu onClick={() => { navigate(`/introduction`); closeSidebar(); }}>학원 안내</Menu>
+          <Menu onClick={() => { navigate(`/reviews`); closeSidebar(); }}>수강 후기</Menu>
           <Menu onClick={() => { navigate(`/qna`); closeSidebar(); }}>FAQ</Menu>
         </MenuContainer>
       </Sidebar>

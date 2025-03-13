@@ -6,6 +6,8 @@ import { getAdminCoursesByMonth, getStudentsByTimetableId } from "../../apis/adm
 import { convertTime, convertWeekday } from "../../utils/utils.ts"
 import { useNavigate } from "react-router-dom"
 import StudentsTable from "./etc/StudentsTable.tsx"
+import { FaPlus } from "react-icons/fa"
+import Modal from "../Modal.tsx"
 
 
 //한 타임블럭(분반 내)
@@ -34,6 +36,9 @@ type student = {
 }
 
 const Out_TimeTables = () => {
+  //모달 상태
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
   const [selectedTimeTableId, setSelectedTimeTableId] = useState<number>(1);
   const [timeTables, setTimeTables] = useState<timeTable[]>([]);
 
@@ -55,15 +60,6 @@ const Out_TimeTables = () => {
     return timeTableString;
   };
 
-
-  //년/월 선택 관련
-  const handleYearChange = (year: string) => {
-    setSelectedYear(year);
-  };
-  const handleMonthChange = (month: string) => {
-    setSelectedMonth(month);
-  };
-
   const selectedTimeTable = timeTables.find((table) => table.timeTableId === selectedTimeTableId);
 
   //해당 timetable에 수강 중인 학생들 조회
@@ -75,9 +71,12 @@ const Out_TimeTables = () => {
     );
   };
 
-  useEffect(() => {
-    console.log("students: ", students);
-  }, [students]);
+  //학생 수동 등록하는 함수
+  const handleAddStudent = () => {
+    //수동 등록 모달 열기
+    setIsModalOpen(true);
+  }
+
 
   useEffect(() => {
     //관리자-월별 강의 조회 api
@@ -103,8 +102,8 @@ const Out_TimeTables = () => {
       <CourseListContainer id="course-list-container"> 
         <Title>분반 목록</Title>
         <CourseFilter 
-          handleYearChange={handleYearChange} 
-          handleMonthChange={handleMonthChange} 
+          handleYearChange={setSelectedYear} 
+          handleMonthChange={setSelectedMonth} 
           selectedYear={selectedYear}
           selectedMonth={selectedMonth}
         />
@@ -145,15 +144,16 @@ const Out_TimeTables = () => {
             <DetailTitle>학생 수</DetailTitle>
             <DetailContent>{selectedTimeTable?.studentCount || 0} 명</DetailContent>
           </DetailRow>
-          <DetailRow>
-            <DetailTitle className="course-period">강의 기간</DetailTitle>
-            <DetailContent>{selectedTimeTable ? `${selectedTimeTable.startDate} ~ ${selectedTimeTable.endDate}` : "기간 정보 없음"}</DetailContent>
-          </DetailRow>
         </TimeTableContent>
 
+        <ButtonRow>        
+          <AddStudentBtn onClick={handleAddStudent}><FaPlus size={10} color='white'/>학생 수동 등록</AddStudentBtn>
+        </ButtonRow>
         <StudentsTable students={students} />
 
       </CourseDetailContainer>
+
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} timeTableId={selectedTimeTableId} courseTitle={selectedTimeTable?.title || "강의 없음"} courseTime={selectedTimeTable ? converTimeTable(selectedTimeTable) : "분반 정보 없음"}/>
 
     </Wrapper>
   )
@@ -308,7 +308,6 @@ const CourseDetailContainer = styled.div`
 
   //넘어가면 스크롤 가능하도록
   overflow-y: scroll;
-  height: 100%;
 `
 
 const TimeTableContent = styled.div`
@@ -316,7 +315,7 @@ const TimeTableContent = styled.div`
   min-height: 40%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
   gap: 20px;
 `
@@ -353,6 +352,35 @@ const DetailContent = styled.div`
   //텍스트 줄바꿈 처리
   white-space: pre-line;
 `
+
+const ButtonRow = styled.div` 
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+`
+
+
+const AddStudentBtn = styled.button`
+  padding: 10px;
+  background-color: #564500;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  gap: 5px;
+  color: white;
+  
+  &:hover {
+    background-color: #201a00;
+  }
+`
+
+///
 
 // const CourseImage = styled.img`
 //   width: 120px;

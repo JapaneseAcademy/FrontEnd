@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import StudentFilter from "./filters/StudentFilter.tsx";
 import { getAdminStudents } from "../../apis/adminAPI/adminStudentsAPI.ts";
-import { useNavigate } from "react-router-dom";
 
 type Student = {
   id: number;
@@ -19,8 +18,6 @@ const Out_StudentsList = () => {
   const [searchTerm, setSearchTerm] = useState(""); // 🔹 검색어 상태 추가
   //학생 리스트
   const [students, setStudents] = useState<Student[]>([]);
-
-  const navigate = useNavigate();
 
     // 🔹 검색어 변경 함수 (StudentFilter에서 입력한 값을 업데이트)
     const handleSearchChange = (term: string) => {
@@ -62,7 +59,7 @@ const Out_StudentsList = () => {
 
   // 학생들 정보 불러오는 api 호출
   useEffect(() => {
-    getAdminStudents(navigate).then((data) => {
+    getAdminStudents().then((data) => {
       setStudents(data);
       //가장 첫번째 학생의 id로 초기화
       setSelectedStudentId(data[0].id);

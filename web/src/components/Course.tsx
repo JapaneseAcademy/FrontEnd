@@ -26,7 +26,7 @@ const Course = ({ courseInfoId, courseImage, courseTitle, baseCost, saleCost, ta
 
    return (
       <Wrapper onClick={handleCourseClick}>
-         <CourseImage src={courseImage} alt={courseTitle} />
+         <CourseImage src={courseImage} alt={courseTitle} loading="lazy"/>
          <CourseTagContainer>
             {tags.map((tag) => (
                <CourseTag key={tag}>{tag}</CourseTag>

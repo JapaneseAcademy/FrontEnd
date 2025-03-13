@@ -2,6 +2,7 @@ import styled, { keyframes } from "styled-components"
 import ReviewCard from "../components/ReviewCard";
 import { useCallback, useEffect, useState } from "react";
 import { getAllReviews } from "../apis/reviewAPI";
+import { Helmet } from "react-helmet-async";
 
 type Review = {
    reviewId: number;
@@ -61,58 +62,70 @@ const ReviewsPage = () => {
       , [currentReviews]);
 
    return (
-      <Wrapper>
-         <Title>예리 센세와 함께 공부한 수강생들의 <br/> <span style={{fontWeight:'550'}}>생생한 후기</span>를 확인하세요! <span style={{color:'#535353'}}>({totalReviewsNum}건) </span></Title>
-         <ReviewsContainer id="reviews-container">
-            {currentReviews.map((review) => (
-               <ReviewCard
-                  key={review.reviewId}
-                  reviewId={review.reviewId}
-                  imageUrls={review.imageUrls}
-                  review={review.review}
-                  writer={review.writer}
-                  createdDate={review.createdDate}
-                  reviewTitle={review.reviewTitle}
-               />
+      <>
+         <Helmet
+            title="예리한 일본어 - 수강생 후기"
+            meta={[
+               {
+                  name: "description",
+                  content: "예리한 일본어 수강생들의 생생한 후기를 확인하세요!",
+               },
+            ]}
+            link={[{ rel: "canonical", href: "https://www.yeri-jp.com/reviews" }]}
+         />
+         <Wrapper>
+            <Title>예리 센세와 함께 공부한 수강생들의 <br/> <span style={{fontWeight:'550'}}>생생한 후기</span>를 확인하세요! <span style={{color:'#535353'}}>({totalReviewsNum}건) </span></Title>
+            <ReviewsContainer id="reviews-container">
+               {currentReviews.map((review) => (
+                  <ReviewCard
+                     key={review.reviewId}
+                     reviewId={review.reviewId}
+                     imageUrls={review.imageUrls}
+                     review={review.review}
+                     writer={review.writer}
+                     createdDate={review.createdDate}
+                     reviewTitle={review.reviewTitle}
+                  />
+               ))}
+            </ReviewsContainer>
+            {/* <Pagination>
+            {Array.from({ length: totalPage }, (_, index) => index + 1).map((number) => (
+               <PageButton
+               key={number}
+               onClick={() => handlePageChange(number)}
+               $active={currentPage === number}
+               >
+               {number}
+               </PageButton>
             ))}
-         </ReviewsContainer>
-         {/* <Pagination>
-         {Array.from({ length: totalPage }, (_, index) => index + 1).map((number) => (
-            <PageButton
-            key={number}
-            onClick={() => handlePageChange(number)}
-            $active={currentPage === number}
-            >
-            {number}
-            </PageButton>
-         ))}
-         </Pagination> */}
-         {/* 페이지네이션 */}
-         <Pagination>
-            {/* 이전 그룹 버튼 */}
-            {currentGroup > 1 && (
-               <NextButton onClick={() => handlePageChange(startPage - 1)}>〈</NextButton>
-            )}
+            </Pagination> */}
+            {/* 페이지네이션 */}
+            <Pagination>
+               {/* 이전 그룹 버튼 */}
+               {currentGroup > 1 && (
+                  <NextButton onClick={() => handlePageChange(startPage - 1)}>〈</NextButton>
+               )}
 
-            {/* 현재 그룹의 페이지 버튼 */}
-            {Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index).map(
-               (number) => (
-                  <PageButton
-                     key={number}
-                     onClick={() => handlePageChange(number)}
-                     $active={currentPage === number}
-                  >
-                     {number}
-                  </PageButton>
-               )
-            )}
+               {/* 현재 그룹의 페이지 버튼 */}
+               {Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index).map(
+                  (number) => (
+                     <PageButton
+                        key={number}
+                        onClick={() => handlePageChange(number)}
+                        $active={currentPage === number}
+                     >
+                        {number}
+                     </PageButton>
+                  )
+               )}
 
-            {/* 다음 그룹 버튼 */}
-            {currentGroup < totalGroups && (
-               <NextButton onClick={() => handlePageChange(endPage + 1)}>〉</NextButton>
-            )}
-         </Pagination>
-      </Wrapper>
+               {/* 다음 그룹 버튼 */}
+               {currentGroup < totalGroups && (
+                  <NextButton onClick={() => handlePageChange(endPage + 1)}>〉</NextButton>
+               )}
+            </Pagination>
+         </Wrapper>
+      </>
    )
 }
 

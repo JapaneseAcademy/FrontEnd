@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Main from '../components/Main'
 import styled, {keyframes} from 'styled-components'
+import { Helmet } from 'react-helmet-async'
 
 const QnAPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('course')
@@ -11,6 +12,17 @@ const QnAPage = () => {
 
   return (
     <>
+      <Helmet
+        title="예리한 일본어 - FAQ"
+        meta={[
+            {
+              name: "description",
+              content: "예리한 일본어 수강생들이 자주 묻는 질문을 모아놨어요. 궁금한 점이 있으시다면 아래 내용을 참고해주세요.",
+            },
+        ]}
+        link={[{ rel: "canonical", href: "https://www.yeri-jp.com/qna" }]}
+      />
+
       <Main>
         <Banner>
           <BannerText>

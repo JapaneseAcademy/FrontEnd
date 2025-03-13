@@ -58,7 +58,7 @@ const Out_CourseInfoList = () => {
                 $isselected={selectedCourseInfoId === courseInfo.courseInfoId} 
               >
                 <TableItem>{courseInfo.title}</TableItem>
-                <TableItem><CourseImage style={{width:'60px', height:'60px', aspectRatio:'1/1'}} src={courseInfo.mainImageUrl} /></TableItem>
+                <TableItem><CourseImage style={{width:'60px', height:'60px', aspectRatio:'1/1'}} src={courseInfo.mainImageUrl} alt="course-image"/></TableItem>
                 <TableItem>{numberWithCommas(courseInfo.baseCost)}원</TableItem>
               </TableRow>
             ))}

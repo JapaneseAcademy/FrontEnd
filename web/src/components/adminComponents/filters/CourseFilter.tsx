@@ -11,10 +11,6 @@ interface CourseFilterProps {
       return (
       <Wrapper id="filter-container-wrapper">
          <Dropdown id="year-dropdown" value={selectedYear} onChange={(e) => handleYearChange(e.target.value)}>
-            <option value="2021">2021</option>
-            <option value="2022">2022</option>
-            <option value="2023">2023</option>
-            <option value="2024">2024</option>
             <option value="2025">2025</option>
          </Dropdown>
          <Text>년</Text>

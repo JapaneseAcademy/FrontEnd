@@ -1,6 +1,7 @@
 import Main from "../components/Main"
 import styled, { keyframes } from "styled-components"
 import { RiInstagramLine, RiKakaoTalkFill } from "react-icons/ri";
+import { Helmet } from "react-helmet-async";
 
 const TeachersPage = () => {
   const KAKAO_CHANNEL_URL = import.meta.env.VITE_KAKAO_CHANNEL_URL;
@@ -15,9 +16,19 @@ const TeachersPage = () => {
 
   return (
     <>
+      <Helmet
+        title="예리한 일본어 - 선생님 소개"
+        meta={[
+          {
+            name: "description",
+            content: "안녕하세요, 예리센세입니다! 저는 주변에 어떠한 혈연도 지연도 없었고, 외국에 나가 산 적도, 교환학생도 가본 적 없지만 일본어로 듣고 말하고 읽고, JLPT 시험도 가볍게 붙어요. 일본어, 센세, 친구, 세 마리 토끼 함께 잡아보실까요! 예리센세니 요우코소~"
+          },
+        ]}
+        link={[{ rel: "canonical", href: "https://www.yeri-jp.com/teachers" }]}
+      />
       <Main>
-      <TeacherBanner src="/images/teacherBanner/teacher-banner-1.png" alt="Teacher Banner" />
-      <TeacherBanner src="/images/teacherBanner/teacher-banner-2.png" alt="Teacher Banner" />
+      <TeacherBanner src="/images/teacherBanner/teacher-banner-1.png" alt="Teacher Banner1" />
+      <TeacherBanner src="/images/teacherBanner/teacher-banner-2.png" alt="Teacher Banner2" />
 
       <Title>
         예리 센세와 소통하고 싶다면?

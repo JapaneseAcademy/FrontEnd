@@ -52,7 +52,8 @@ const Wrapper = styled.div`
    justify-content: center;
    border: 1px solid #e0e0e0;
    margin-bottom: 20px;
-   margin-top: 40px;
+   margin-top: 10px;
+   border-radius: 5px;
 `
 
 const TableHeader = styled.div`

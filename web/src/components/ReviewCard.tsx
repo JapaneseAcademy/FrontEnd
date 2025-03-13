@@ -20,7 +20,7 @@ const ReviewCard = ({ reviewId, imageUrls, review, writer, createdDate, reviewTi
 
    return (
       <Wrapper key={reviewId} onClick={handleReviewClick}>
-         <ReviewImage src={imageUrls[0]} />
+         <ReviewImage src={imageUrls[0]} alt="review-image"/>
          <ReviewContent>
             <ReviewTitle>{reviewTitle}</ReviewTitle>
             <ReviewText>{review}</ReviewText>

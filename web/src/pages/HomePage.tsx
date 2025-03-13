@@ -1,15 +1,18 @@
 import Main from '../components/Main'
 import styled, {keyframes} from 'styled-components' 
 import { useNavigate } from 'react-router-dom';
-import Youtube from '../components/Youtube';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { login } from '../apis/loginAPI';
 import DownCourses from '../components/mainPage/DownCourses';
 import DownReviews from '../components/mainPage/DownReviews';
 import { loadingAtom } from '../recoil/loadingAtom';
 import { useSetRecoilState } from 'recoil';
+import { Helmet } from 'react-helmet-async';
+import MainYoutube from '../components/MainYoutube';
+import Loading from '../components/Loading';
 
 const HomePage = () => {
+  const [isMainBannerLoaded, setIsMainBannerLoaded] = useState<boolean>(false);
   const setIsLoading = useSetRecoilState(loadingAtom);
   const navigate = useNavigate();
 
@@ -21,29 +24,35 @@ const HomePage = () => {
     const code = url.searchParams.get('code');
     // code가 있고, localStorage에 토큰이 없으면 로그인 요청
     if (code && !localStorage.getItem('accessToken')) {
-      // setIsLoading(true);
       login(code, navigate, setIsLoading);
-
     }
   }, );
 
-  // if (isLoading) {
-  //   return <Loading />
-  // }
 
   return (
   <>
+      <Helmet>
+        <title>예리한 일본어</title>
+        <link rel="canonical" href="https://www.yeri-jp.com/" />
+        <meta name="description" content="예리한 일본어에서는 유학 없이도 원어민처럼 일본어를 배울 수 있습니다. 대화로 배우는 살아있는 일본어, 예리한 일본어에서 온·오프라인 전세계 어디서든 시작하세요!" />
+      </Helmet>
+
+      {/* 이미지 로드가 완료될 때까지 로딩 화면 표시 */}
+      {!isMainBannerLoaded && <Loading/>}
+
       <Main>
-        <MainBanner src='/images/main-banner.png' />
+        <MainBanner src='/images/main-banner.png' alt='main-banner' onLoad={() => setIsMainBannerLoaded(true)}/>
 
         <Ment>
-          <span style={{fontSize:'16px', fontWeight:'400'}}>
-            일본어 공부가 힘들다면</span>
+          <span style={{fontSize:'16px', fontWeight:'400', marginBottom:'10px'}}>
+            유학 없이도 원어민처럼!</span>
           <span style={{fontSize:'18px'}}>
-            <span style={{fontSize:'20px', textDecoration:'underline', fontWeight: 'bold'}}>예리 센세</span>와 함께 하세요!</span>
+            대화로 배우는 살아있는 일본어,<br/>
+            <span style={{fontSize:'20px', textDecoration:'underline', fontWeight: 'bold'}}>예리한 일본어</span>에서 온·오프라인 전세계 어디서든 시작하세요!
+          </span>
         </Ment>
 
-        <Youtube />
+        <MainYoutube />
 
         <ReviewsContainer>
           <UpReview>
@@ -54,7 +63,7 @@ const HomePage = () => {
 
         <CoursesContainer>
           <UpCourses>
-            <Title>강좌 목록</Title>
+            <Title>강의 목록</Title>
             <MoreButton onClick={ () => navigate(`/courses`)}>더보기 &gt;</MoreButton>
           </UpCourses>
           <DownCourses />
@@ -80,7 +89,10 @@ const fadeInUp = keyframes`
 
 const MainBanner = styled.img`
   width: 100%;
+  aspect-ratio: 14/15;
+  height: auto;
   object-fit: cover;
+  object-position: center;
   margin-bottom: 30px;
   margin-top: 30px;
 
@@ -94,7 +106,7 @@ const Ment = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   padding: 20px 20px;
   background-color: #ffffff;
@@ -156,3 +168,4 @@ const UpCourses = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
+
