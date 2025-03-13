@@ -39,9 +39,7 @@ const HomePage = () => {
 
       {/* 이미지 로드가 완료될 때까지 로딩 화면 표시 */}
       {!isMainBannerLoaded && 
-        <div style={{width:'100%', aspectRatio:'14/15', height:'auto', marginTop:'30px', marginBottom:'30px', justifyContent:'center', alignItems:'center'}}>
-          <Loading/>
-        </div>
+        <Loading/>
         }
 
       <Main>
