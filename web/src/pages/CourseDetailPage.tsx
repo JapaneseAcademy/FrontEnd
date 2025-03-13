@@ -14,6 +14,7 @@ type Review = {
   writer: string;
   createdDate: string;
   reviewTitle: string;
+  best: boolean;
 }
 
 
@@ -143,13 +144,6 @@ const CourseDetailPage = () => {
     
   }, [courseInfoId]);
 
-  useEffect(() => {
-    console.log(courseTitle)
-    console.log(selectedTimeTable);
-    console.log(selectedCourseType);
-  }
-  , [selectedTimeTable, selectedCourseType, courseTitle]);
-
   /////////후기 관련////////
   const fetchReviews = useCallback(async (page: number) => {
     try {
@@ -230,10 +224,6 @@ const CourseDetailPage = () => {
           </CourseDetailContent>
 
           <CourseDetailContent id='course_review_container' selected={selectedOption === "review"}>
-            {/* <WriteReviewBtn onClick={handleReviewWriteClick}>
-              <HiOutlinePencilSquare size={15} style={{ marginRight: "5px" }} />
-              수강 후기 작성하기
-              </WriteReviewBtn> */}
             <ReviewContainer>
               {currentReviews.length === 0 ? (
                 <NoReview>후기가 아직 없어요!</NoReview>
@@ -244,7 +234,8 @@ const CourseDetailPage = () => {
                     <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: "5px" }}>
                       <ReviewCourse> {courseTitle}</ReviewCourse>
                       <ReviewTitle>
-                        <BestTag>BEST</BestTag>
+                        { review.best &&
+                        <BestTag>BEST</BestTag> }
                         <TitleText>{review.reviewTitle}</TitleText>
                       </ReviewTitle>
                       <ReviewText>{review.review}</ReviewText>
