@@ -75,7 +75,7 @@ const MyPage = () => {
               <Text>결제일시 | {enrollment.paymentDate}</Text>
               <Text>강의유형 | {convertCategory(enrollment.category)}</Text>
               <Text>결제금액 | {numberWithCommas(enrollment.paymentAmount)}</Text>
-              <Text>결제수단 | 카카오페이</Text> {/*todo: 결제수단 연동*/}
+              <Text>결제수단 | </Text> {/*todo: 결제수단 연동*/}
               {/* reviewed가 false일 때만 후기 작성 버튼 보이기 */}
               { !enrollment.reviewed 
                 ? <ReviewButton  onClick={()=>handleReviewWrite(enrollment.enrollmentId, enrollment.courseInfoId)}>후기 작성</ReviewButton> 

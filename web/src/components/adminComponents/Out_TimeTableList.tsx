@@ -144,10 +144,6 @@ const Out_TimeTables = () => {
             <DetailTitle>학생 수</DetailTitle>
             <DetailContent>{selectedTimeTable?.studentCount || 0} 명</DetailContent>
           </DetailRow>
-          <DetailRow>
-            <DetailTitle className="course-period">강의 기간</DetailTitle>
-            <DetailContent>{selectedTimeTable ? `${selectedTimeTable.startDate} ~ ${selectedTimeTable.endDate}` : "기간 정보 없음"}</DetailContent>
-          </DetailRow>
         </TimeTableContent>
 
         <ButtonRow>        
