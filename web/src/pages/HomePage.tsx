@@ -8,8 +8,8 @@ import DownReviews from '../components/mainPage/DownReviews';
 import { loadingAtom } from '../recoil/loadingAtom';
 import { useSetRecoilState } from 'recoil';
 import { Helmet } from 'react-helmet-async';
-import YouTube from 'react-youtube';
 import { getAdminYoutubeId } from '../apis/adminAPI/adminYoutubeAPI';
+import MainYoutube from '../components/MainYoutube';
 
 const HomePage = () => {
   const [youtubeId, setYoutubeId] = useState<string>('8-6MmIYae8c');
@@ -58,13 +58,7 @@ const HomePage = () => {
           </span>
         </Ment>
 
-        {/* <Youtube /> */}
-        <YoutubeContainer>
-          <StyledYouTube 
-            videoId={youtubeId}
-            opts={{ width: "100%", height: "100%" }} 
-          />
-        </YoutubeContainer>
+        <MainYoutube youtubeId={youtubeId} />
 
         <ReviewsContainer>
           <UpReview>
@@ -181,18 +175,3 @@ const UpCourses = styled.div`
   align-items: center;
 `;
 
-//youtube
-const YoutubeContainer = styled.div`
-  width: 100%;
-  position: relative;
-  padding-top: 56.25%; /* 16:9 비율 유지 (100 / 16 * 9) */
-  margin-bottom: 40px;
-`;
-
-const StyledYouTube = styled(YouTube)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-`;
