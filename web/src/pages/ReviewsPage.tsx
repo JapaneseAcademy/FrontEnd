@@ -12,6 +12,7 @@ type Review = {
    writer: string;
    createdDate: string;
    reviewTitle: string;
+   best: boolean;
 }
 
 const ReviewsPage = () => {
@@ -85,21 +86,10 @@ const ReviewsPage = () => {
                      writer={review.writer}
                      createdDate={review.createdDate}
                      reviewTitle={review.reviewTitle}
+                     best={review.best}
                   />
                ))}
             </ReviewsContainer>
-            {/* <Pagination>
-            {Array.from({ length: totalPage }, (_, index) => index + 1).map((number) => (
-               <PageButton
-               key={number}
-               onClick={() => handlePageChange(number)}
-               $active={currentPage === number}
-               >
-               {number}
-               </PageButton>
-            ))}
-            </Pagination> */}
-            {/* 페이지네이션 */}
             <Pagination>
                {/* 이전 그룹 버튼 */}
                {currentGroup > 1 && (
