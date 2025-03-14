@@ -175,7 +175,7 @@ const Banner = styled.div`
   margin-bottom: 50px;
   
   /* 애니메이션 적용 */
-  animation: ${fadeInUp} 0.8s ease-out;
+  animation: ${fadeInUp} 0.5s ease-out;
 `
 
 const BannerText = styled.div`
