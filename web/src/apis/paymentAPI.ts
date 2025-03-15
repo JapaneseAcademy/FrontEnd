@@ -21,6 +21,8 @@ export const getOrderId = async (timeTableId: number) => {
    }
    catch (error) {
       console.error(error);
+      alert("결제 정보를 받아오는데 실패했습니다.");
+      window.location.href = `/courses`;
    }
 };
 
@@ -59,9 +61,16 @@ export const assignCourse = async (
       console.log("[assignCourse] response : ", response);
       return response.status; //TODO: 예외처ㅣㄹ
    }
-   catch (error) {
+   catch (error: any) {
       console.error(error);
-      alert("수강신청에 실패했습니다. 다시 시도해주세요.");
-      window.location.href = `/courses/${courseInfoId}`;
+      // 이미 있는 수강신청일 경우
+      if (error.response.data.errorCode == "DUPLICATE_ENROLLMENT_ERROR") {
+         alert("이미 수강신청한 강의입니다.");
+         window.location.href = `/courses/${courseInfoId}`;
+      }
+      else {
+         alert("수강신청에 실패했습니다. 다시 시도해주세요.");
+         window.location.href = `/courses/${courseInfoId}`;
+      }
    }
 }
