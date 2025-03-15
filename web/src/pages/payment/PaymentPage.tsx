@@ -26,7 +26,6 @@ const PaymentPage = () => {
    const courseType = url.searchParams.get("courseType");
    const courseTitle = url.searchParams.get("courseTitle");
    const coursePrice = parseInt(String(url.searchParams.get("coursePrice")));
-   // const courseInfoId = parseInt(String(url.searchParams.get("courseInfoId")));
 
    useEffect(() => {
       // 백엔드에서 orderId를 받아오기
@@ -47,7 +46,7 @@ const PaymentPage = () => {
          value: coursePrice,
       });
       async function fetchPaymentWidgets() {
-         const tossPayments = await loadTossPayments("test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm");
+         const tossPayments = await loadTossPayments(import.meta.env.VITE_TOSSPAYMENTS_CLIENT_KEY);
          const widgets = tossPayments.widgets({ customerKey });
          setWidgets(widgets);
       }
