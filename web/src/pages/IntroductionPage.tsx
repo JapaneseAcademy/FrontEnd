@@ -115,7 +115,7 @@ const Banner = styled.div`
   /* font-weight: bold; */
   
     /* 애니메이션 적용 */
-    animation: ${fadeInUp} 0.8s ease-out;
+    animation: ${fadeInUp} 0.5s ease-out;
 `
 
 const Content = styled.div`
@@ -123,9 +123,6 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  /* 애니메이션 적용 */
-  /* animation: ${fadeInUp} 0.8s ease-out; */
 
   #instruction {
     font-size: 14px;

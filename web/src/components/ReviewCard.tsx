@@ -8,9 +8,10 @@ interface ReviewCardProps {
    writer: string;
    createdDate: string;
    reviewTitle: string;
+   best: boolean;
 }
 
-const ReviewCard = ({ reviewId, imageUrls, review, writer, createdDate, reviewTitle }: ReviewCardProps) => {
+const ReviewCard = ({ reviewId, imageUrls, review, writer, createdDate, reviewTitle, best }: ReviewCardProps) => {
    const navigate = useNavigate();
 
    const handleReviewClick = () => {
@@ -22,6 +23,7 @@ const ReviewCard = ({ reviewId, imageUrls, review, writer, createdDate, reviewTi
       <Wrapper key={reviewId} onClick={handleReviewClick}>
          <ReviewImage src={imageUrls[0]} alt="review-image"/>
          <ReviewContent>
+            {best && <BestTag>BEST</BestTag> }
             <ReviewTitle>{reviewTitle}</ReviewTitle>
             <ReviewText>{review}</ReviewText>
             <ReviewDate><span>{createdDate}</span> <span>{writer}</span></ReviewDate>
@@ -75,7 +77,7 @@ const ReviewText = styled.div`
    margin-top: auto;
 
    display: -webkit-box;
-   -webkit-line-clamp: 5; // 최대 5줄까지만 표시
+   -webkit-line-clamp: 4; // 최대 5줄까지만 표시
    -webkit-box-orient: vertical;
    overflow: hidden;
    text-overflow: ellipsis;
@@ -101,3 +103,17 @@ const ReviewDate = styled.div`
    font-size: 14px;
    color: #808080;
 `
+
+const BestTag = styled.div`
+   width: 40px;
+   font-size: 12px;
+   color: #fff;
+   background-color: #ff8255;
+   padding: 2px 5px;
+   border-radius: 5px;
+   height: 20px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin-bottom: 2px;
+`;

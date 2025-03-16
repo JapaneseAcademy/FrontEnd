@@ -38,7 +38,9 @@ const HomePage = () => {
       </Helmet>
 
       {/* 이미지 로드가 완료될 때까지 로딩 화면 표시 */}
-      {!isMainBannerLoaded && <Loading/>}
+      {!isMainBannerLoaded && 
+        <Loading/>
+        }
 
       <Main>
         <MainBanner src='/images/main-banner.png' alt='main-banner' onLoad={() => setIsMainBannerLoaded(true)}/>
@@ -57,6 +59,7 @@ const HomePage = () => {
         <ReviewsContainer>
           <UpReview>
             <Title>수강 후기</Title>
+            <MoreButton onClick={ () => navigate(`/reviews`)}>더보기 &gt;</MoreButton>
           </UpReview>
           <DownReviews />
         </ReviewsContainer>
@@ -97,7 +100,7 @@ const MainBanner = styled.img`
   margin-top: 30px;
 
   /* 애니메이션 적용 */
-  animation: ${fadeInUp} 0.8s ease-out;
+  animation: ${fadeInUp} 0.5s ease-out;
 `;
 
 
@@ -115,7 +118,7 @@ const Ment = styled.div`
   margin-bottom: 30px;
 
   /* 애니메이션 적용 */
-  animation: ${fadeInUp} 0.8s ease-out;
+  animation: ${fadeInUp} 0.5s ease-out;
 `;
 
 

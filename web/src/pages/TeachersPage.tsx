@@ -64,13 +64,13 @@ const TeacherBanner = styled.img`
   object-fit: cover;
   object-position: center;
 
-  animation: ${fadeInUp} 0.8s ease-out;
+  animation: ${fadeInUp} 0.5s ease-out;
 `;
 
 const Title = styled.div`
   font-size: 23px;
   font-weight: 500;
-  margin-top: 40px;
+  margin-top: 20px;
   margin-bottom: 10px;
 `;
 

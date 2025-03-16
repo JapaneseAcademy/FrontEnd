@@ -12,6 +12,7 @@ type Review = {
    writer: string;
    createdDate: string;
    reviewTitle: string;
+   best: boolean;
 }
 
 const ReviewsPage = () => {
@@ -50,6 +51,10 @@ const ReviewsPage = () => {
    }, []); // ✅ courseInfoId가 변경될 때만 새로운 fetchReviews 함수가 생성됨
 
 
+   useEffect(() => {
+      window.scrollTo(0, 0); // 페이지 로드 시 맨 위로 스크롤
+   }, []); // ✅ 페이지 로드 시 한 번만 실행
+   
      // ✅ 페이지 로드 시 초기 데이터 가져오기
    useEffect(() => {
       fetchReviews(1); // 첫 페이지의 후기 데이터 요청
@@ -85,21 +90,10 @@ const ReviewsPage = () => {
                      writer={review.writer}
                      createdDate={review.createdDate}
                      reviewTitle={review.reviewTitle}
+                     best={review.best}
                   />
                ))}
             </ReviewsContainer>
-            {/* <Pagination>
-            {Array.from({ length: totalPage }, (_, index) => index + 1).map((number) => (
-               <PageButton
-               key={number}
-               onClick={() => handlePageChange(number)}
-               $active={currentPage === number}
-               >
-               {number}
-               </PageButton>
-            ))}
-            </Pagination> */}
-            {/* 페이지네이션 */}
             <Pagination>
                {/* 이전 그룹 버튼 */}
                {currentGroup > 1 && (

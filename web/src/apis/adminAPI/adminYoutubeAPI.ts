@@ -10,6 +10,7 @@ export const getAdminYoutubeId = async () => {
    }
    catch (error) {
       console.error(error);
+      alert('유튜브 영상 조회에 실패했습니다. 다시 시도해주세요.');
    }
 }
 

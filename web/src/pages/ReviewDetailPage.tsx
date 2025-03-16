@@ -22,6 +22,12 @@ const ReviewDetailPage = () => {
 
    useEffect(() => {
       window.scrollTo(0, 0);
+      //reviewId가 없으면
+      if (isNaN(reviewId)) {
+         alert("잘못된 접근입니다.");
+         window.location.href = "/";
+      }
+      //reviewId가 있으면
       getReviewDetail(reviewId).then((data: ReviewDetail) => {
          setReviewDetail(data);
       }
