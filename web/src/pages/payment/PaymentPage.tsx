@@ -41,7 +41,7 @@ const PaymentPage = () => {
          value: coursePrice,
       });
       async function fetchPaymentWidgets() {
-         const tossPayments = await loadTossPayments(import.meta.env.VITE_TOSSPAYMENTS_CLIENT_KEY_TEST);
+         const tossPayments = await loadTossPayments(import.meta.env.VITE_TOSSPAYMENTS_CLIENT_KEY_LIVE);
          const widgets = tossPayments.widgets({ customerKey });
          setWidgets(widgets);
       }
