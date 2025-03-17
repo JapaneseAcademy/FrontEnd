@@ -20,7 +20,7 @@ type Student = {
    note: string;
 }
 
-const Modal = ({ isOpen, onClose, timeTableId, courseTitle, courseTime }: ModalProps) => {
+const AddStudentModal = ({ isOpen, onClose, timeTableId, courseTitle, courseTime }: ModalProps) => {
    const [students, setStudents] = useState<Student[]>([]);
    const [selectedStudentId, setSelectedStudentId] = useState<number | null>(null);
    const [selectedCourseType, setSelectedCourseType] = useState<string>('');
@@ -166,7 +166,7 @@ const Modal = ({ isOpen, onClose, timeTableId, courseTitle, courseTime }: ModalP
    );
 };
 
-export default Modal;
+export default AddStudentModal;
 
 const Overlay = styled.div`
    position: fixed;

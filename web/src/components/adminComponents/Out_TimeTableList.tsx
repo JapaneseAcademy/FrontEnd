@@ -7,7 +7,8 @@ import { convertTime, convertWeekday } from "../../utils/utils.ts"
 import { useNavigate } from "react-router-dom"
 import StudentsTable from "./etc/StudentsTable.tsx"
 import { FaPlus } from "react-icons/fa"
-import Modal from "../Modal.tsx"
+import AddStudentModal from "../AddStudentModal.tsx"
+import AddTimeTableModal from "../AddTimeTableModal.tsx"
 
 
 //한 타임블럭(분반 내)
@@ -37,7 +38,8 @@ type student = {
 
 const Out_TimeTables = () => {
   //모달 상태
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isAddStudentModalOpen, setIsAddStudentModalOpen] = useState<boolean>(false);
+  const [isAddTimeTableModalOpen, setIsAddTimeTableModalOpen] = useState<boolean>(false);
 
   const [selectedTimeTableId, setSelectedTimeTableId] = useState<number>(1);
   const [timeTables, setTimeTables] = useState<timeTable[]>([]);
@@ -74,7 +76,7 @@ const Out_TimeTables = () => {
   //학생 수동 등록하는 함수
   const handleAddStudent = () => {
     //수동 등록 모달 열기
-    setIsModalOpen(true);
+    setIsAddStudentModalOpen(true);
   }
 
 
@@ -100,7 +102,7 @@ const Out_TimeTables = () => {
   return (
     <Wrapper>
       <CourseListContainer id="course-list-container"> 
-        <Title>분반 목록</Title>
+        <Title>분반 목록 <AddStudentBtn onClick={()=>setIsAddTimeTableModalOpen(true)}><FaPlus size={10} color='white'/></AddStudentBtn></Title>
         <CourseFilter 
           handleYearChange={setSelectedYear} 
           handleMonthChange={setSelectedMonth} 
@@ -150,10 +152,13 @@ const Out_TimeTables = () => {
           <AddStudentBtn onClick={handleAddStudent}><FaPlus size={10} color='white'/>학생 수동 등록</AddStudentBtn>
         </ButtonRow>
         <StudentsTable students={students} />
-
       </CourseDetailContainer>
 
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} timeTableId={selectedTimeTableId} courseTitle={selectedTimeTable?.title || "강의 없음"} courseTime={selectedTimeTable ? converTimeTable(selectedTimeTable) : "분반 정보 없음"}/>
+
+      {/* 강의 추가 모달 */}
+      <AddTimeTableModal isOpen={isAddTimeTableModalOpen} onClose={() => setIsAddTimeTableModalOpen(false)}/>
+      {/* 학생 수동 등록 모달 */}
+      <AddStudentModal isOpen={isAddStudentModalOpen} onClose={() => setIsAddStudentModalOpen(false)} timeTableId={selectedTimeTableId} courseTitle={selectedTimeTable?.title || "강의 없음"} courseTime={selectedTimeTable ? converTimeTable(selectedTimeTable) : "분반 정보 없음"}/>
 
     </Wrapper>
   )
@@ -190,7 +195,7 @@ const Title = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   padding-top: 20px;
   margin-bottom: 20px;
   padding-bottom: 15px;
