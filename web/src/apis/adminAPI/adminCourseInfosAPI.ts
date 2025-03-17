@@ -16,7 +16,6 @@ export const getAdminCourseInfos = async (navigate: (path: string) => void) => {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
          },
       });
-      console.log("[ getAdminCourseInfos ]",response.data);
       return response.data;
    } catch (error: any) {
       console.error(error);

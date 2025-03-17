@@ -17,7 +17,6 @@ export const getKakaoCode = () => {
 }
 
 export const login = async (code: string, navigate: (path: string) => void, setIsLoading: (loading: boolean) => void) => {
-   console.log("[ login ]");
    setIsLoading(true); // ✅ 로딩 시작
    try {
       // 카카오에서 받은 토큰으로 로그인
@@ -28,12 +27,10 @@ export const login = async (code: string, navigate: (path: string) => void, setI
          },
       );
 
-      console.log(response.data);
       const kakaoID = response.data.loginId;
 
       //1. 첫 로그인일시 회원가입 페이지로 redirect
       if (response.data.requiresSignUp) {
-         console.log("첫로그인!!!");
          navigate("/register?kakaoID=" + kakaoID);
       }
       //2. 기존 회원일 경우 토큰 저장
@@ -61,7 +58,6 @@ export const login = async (code: string, navigate: (path: string) => void, setI
 
 
 export const register = async (name: string, phone: string, birth: string, setIsLoading: (loading: boolean) => void) => {
-   console.log("[ register ]");
    setIsLoading(true); // ✅ 로딩 시작
    //쿼리 파라미터에서 kakaoID 받아오기
    const kakaoId = new URLSearchParams(window.location.search).get("kakaoID");
@@ -76,7 +72,6 @@ export const register = async (name: string, phone: string, birth: string, setIs
             birth : birth
          },
       );
-      console.log(response.data);
 
       //토큰 저장
       localStorage.setItem("accessToken", response.data.token.accessToken);
@@ -106,9 +101,8 @@ export const editUser = async (name: string, phone: string, birth: string) => {
       alert("로그인이 필요합니다.");
       window.location.href = "/";
    }
-   console.log("[ editUser ]");
    try {
-      const response = await axios.put(
+         await axios.put(
          `${BASE_URL}/api/v1/members/profile`,
          {
             name : name,
@@ -121,7 +115,6 @@ export const editUser = async (name: string, phone: string, birth: string) => {
             }
          }
       );
-      console.log(response.data);
       alert("회원 정보 수정이 완료되었습니다.");
       window.location.href = "/mypage";
    }

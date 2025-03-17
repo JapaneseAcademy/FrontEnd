@@ -55,10 +55,6 @@ const CoursesPage = () => {
     }
   }, [level, allCourses]);
 
-  useEffect(() => {
-    console.log("세팅 후:", courses);
-  }, [courses]);
-
   const [currentPage, setCurrentPage] = useState(1);
   const coursesPerPage = 3;
 

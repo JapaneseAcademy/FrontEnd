@@ -4,7 +4,6 @@ import { getKakaoCode } from "../apis/loginAPI";
 const AdminLoginPage = () => {
 
    const handleLogin = () => {
-      console.log("카카오 로그인");
       getKakaoCode();
    }
 

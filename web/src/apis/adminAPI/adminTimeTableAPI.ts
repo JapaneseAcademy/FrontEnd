@@ -15,7 +15,6 @@ export const getAdminCoursesByMonth = async (date: string | '2025-04', navigate:
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
          },
       });
-      console.log("[ getAdminCoursesByMonth ]", response.data);
       return response.data;
    } catch (error: any) {
       console.error(error);
@@ -35,7 +34,6 @@ export const getStudentsByTimetableId = async (timetableId: number) => {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
          },
       });
-      console.log("[ getStudentsByTimetableId ]", response.data);
       return response.data;
    } catch (error: any) {
       console.error(error);
@@ -57,14 +55,13 @@ export const addStudentToCourse = async (timeTableId: number, memberId: number, 
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
          },
       });
-      console.log("[ addStudentToCourse ]", response.data);
       alert("수강생이 등록되었습니다.");
       window.location.reload();
       return response.data;
    } catch (error: any) {
       console.error(error);
-      // 에러 메시지가 Enrollment already exists로 시작하면 이미 등록된 수강생
-      if (error.response.data.message.startsWith("Enrollment already exists")) {
+      //이미 수강신청한 경우
+      if (error.response.data.errorCode == "DUPLICATE_ENROLLMENT_ERROR") {         
          alert("이미 등록된 수강생입니다.");
       } else {
          alert("수강생 등록에 실패했습니다. 다시 시도해주세요.");

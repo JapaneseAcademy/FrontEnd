@@ -2,8 +2,6 @@ import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const adminLogin = async (code: string, navigate: (path: string) => void, setIsLoading: (loading: boolean) => void) => {
-   console.log("[ adminLogin ]");
-   console.log("code: ", code);
    setIsLoading(true); // ✅ 로딩 시작
    try {
       // 카카오에서 받은 토큰으로 로그인
@@ -13,8 +11,6 @@ export const adminLogin = async (code: string, navigate: (path: string) => void,
             authorizationCode: code,
          },
       );
-
-      console.log(response.data);
 
       localStorage.setItem("accessToken", response.data.token.accessToken);
       localStorage.setItem("refreshToken", response.data.token.refreshToken);

@@ -7,7 +7,6 @@ export const getUserInfo = async () => {
       alert("로그인이 필요합니다.");
       window.location.href = "/";
    }
-   console.log("[ getUserInfo ]");
    try {
       const res = await axios.get(`${BASE_URL}/api/v1/members/profile`,
       {
@@ -16,7 +15,6 @@ export const getUserInfo = async () => {
          }
       }
       );
-      console.log(res.data);
       return res.data;
    } catch (error) {
       console.error(error);
@@ -31,7 +29,6 @@ export const getEnrollments = async () => {
       alert("로그인이 필요합니다.");
       window.location.href = "/";
    }
-   console.log("[ getEnrollments ]");
    try {
       const res = await axios.get(`${BASE_URL}/api/v1/enrollments`,
       {
@@ -40,7 +37,6 @@ export const getEnrollments = async () => {
          }
       }
       );
-      console.log(res.data);
       return res.data;
    } catch (error) {
       console.error(error);

@@ -34,11 +34,6 @@ const PaymentPage = () => {
       });
    }
    , [timeTableId, courseType, courseTitle, coursePrice]);
-   //orderId 확인 
-   useEffect(() => {
-      console.log("orderId : ", orderId);
-   }
-   , [orderId]);
 
    useEffect(() => {
       setAmount({

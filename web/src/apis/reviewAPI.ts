@@ -5,7 +5,6 @@ export const getCourseReviewsByPage = async (courseInfoId: number, page: number)
    try {
       const response = await axios.get(
          `${import.meta.env.VITE_BASE_URL}/api/v1/courses/${courseInfoId}/reviews?page=${page-1}`,);
-      console.log("[ getCourseReviews ]" ,response.data);
       return response.data;
    } catch (error) {
       console.error(error);
@@ -16,7 +15,6 @@ export const getCourseReviewsByPage = async (courseInfoId: number, page: number)
 export const getReviewDetail = async (reviewId: number) => {
    try {
       const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/reviews/${reviewId}`);
-      console.log("[ getReviewDetail ]", response.data);
       return response.data;
    } catch (error) {
       console.error(error);
@@ -27,7 +25,6 @@ export const getReviewDetail = async (reviewId: number) => {
 export const getMainBestReviews = async () => {
    try {
       const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/reviews/main`);
-      console.log("[ getMainBestReviews ]", response.data);
       return response.data;
    } catch (error) {
       console.error(error);
@@ -38,7 +35,6 @@ export const getMainBestReviews = async () => {
 export const getAllReviews = async (page: number) => {
    try {
       const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/reviews?page=${page-1}`);
-      console.log("[ getAllReviews ]", response.data);
       return response.data;
    } catch (error) {
       console.error(error);
@@ -75,7 +71,7 @@ export const writeReview = async (
          });
       }
 
-      const response = await axios.post(
+      await axios.post(
          `${import.meta.env.VITE_BASE_URL}/api/v1/reviews`,
          formData,
          {
@@ -86,7 +82,6 @@ export const writeReview = async (
          }
       );
 
-      console.log("[ writeReview ]", response);
       alert("후기가 등록되었습니다.");
       navigate(`/courses/${courseInfoId}`);
    } catch (error: any) {

@@ -36,10 +36,6 @@ const WriteReviewPage = () => {
    
    const handleSubmit = () => {
       try {
-         console.log("📸 업로드된 사진 목록:", photos);
-         console.log("📝 작성한 제목:", reviewTitle);
-         console.log("📝 작성한 후기:", reviewText);
-         console.log("🙈 익명 여부:", isAnonymous ? "익명" : "실명");
    
          // reviewTitle과 reviewText가 비어있을 경우 alert
          if (reviewTitle === '' || reviewText === '') {

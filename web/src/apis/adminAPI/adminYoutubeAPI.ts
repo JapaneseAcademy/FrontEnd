@@ -5,7 +5,6 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const getAdminYoutubeId = async () => {
    try {
       const response = await axios.get(`${BASE_URL}/api/v1/main/youtube`);
-      console.log("[getAdminYoutubeId] ", response.data);
       return response.data;
    }
    catch (error) {
@@ -26,7 +25,6 @@ export const changeAdminYoutubeId = async (youtubeId: string) => {
          }
 
       );
-      console.log("[changeAdminYoutubeId] ", response.data);
       //status code 200이면 성공
       if(response.status === 200) {
          alert('유튜브 영상이 변경되었습니다.');
