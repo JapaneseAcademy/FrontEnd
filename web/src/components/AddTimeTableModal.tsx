@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import TimeTableDropDowns from "./adminComponents/etc/TimeTableDropDowns";
+import { getAdminCourseInfoTitles } from "../apis/adminAPI/adminReviewAPI";
 
 interface ModalProps {
    isOpen: boolean;
@@ -13,7 +14,15 @@ type TimeBlock = {
    endTime: string;
 }
 
+type courseInfo = {
+   courseInfoId: number;
+   title: string;
+}
+
 const AddTimeTableModal = ({ isOpen, onClose}: ModalProps) => {
+   //courseInfos
+   const [courseInfos, setCourseInfos] = useState<courseInfo[]>([]);
+
    const [isAddMode, setIsAddMode] = useState<boolean>(false);
    const [selectedDay, setSelectedDay] = useState<string>("월");
    const [selectedStartTime, setSelectedStartTime] = useState<string>("");
@@ -27,18 +36,35 @@ const AddTimeTableModal = ({ isOpen, onClose}: ModalProps) => {
       setIsAddMode(!isAddMode);
    }
 
+   //상태 모두 초기화하는 함수
+   const handleClose = () => {
+      setSelectedDay("월");
+      setSelectedStartTime("");
+      setSelectedEndTime("");
+      setTimeBlocks([]);
+      setIsAddMode(false);
+      onClose();
+   }
+
+   //courseInfos 세팅
+   useEffect(() => {
+      getAdminCourseInfoTitles().then((data) => {
+         setCourseInfos(data);
+      });
+   }
+   , []);
    //세팅 확인
    useEffect(() => {
-      console.log(selectedDay, selectedStartTime, selectedEndTime);
+      console.log("모달 courseInfo 세팅: ", courseInfos);
    }
-   , [selectedDay, selectedStartTime, selectedEndTime]);
+   , [courseInfos]);
 
    if (!isOpen) return null; // 모달이 닫혀 있으면 렌더링 안 함
 
    return (
-      <Overlay onClick={onClose}>
+      <Overlay onClick={handleClose}>
          <ModalContainer onClick={(e) => e.stopPropagation()}>
-            <CloseButton onClick={onClose}>&times;</CloseButton>
+            <CloseButton onClick={handleClose}>&times;</CloseButton>
 
             {/* 모달 내용 */}
             <Title>분반 추가</Title>
@@ -46,9 +72,11 @@ const AddTimeTableModal = ({ isOpen, onClose}: ModalProps) => {
                <FormRow>
                   <FormLabel>강의</FormLabel>
                   <CourseInfoDropDown>
-                     <option value="1">여기에 courseInfos</option>
-                     <option value="2">원샷반1</option>
-                     <option value="3">원샷반2</option>
+                     {courseInfos.map((courseInfo) => (
+                        <option key={courseInfo.courseInfoId} value={courseInfo.courseInfoId}>
+                           {courseInfo.title}
+                        </option>
+                     ))}
                   </CourseInfoDropDown>
                </FormRow>
                <FormRow>
