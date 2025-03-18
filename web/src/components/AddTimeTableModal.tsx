@@ -1,14 +1,37 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import TimeTableDropDowns from "./adminComponents/etc/TimeTableDropDowns";
 
 interface ModalProps {
    isOpen: boolean;
    onClose: () => void;
+}
 
-
+type TimeBlock = {
+   day: string;
+   startTime: string;
+   endTime: string;
 }
 
 const AddTimeTableModal = ({ isOpen, onClose}: ModalProps) => {
+   const [isAddMode, setIsAddMode] = useState<boolean>(false);
+   const [selectedDay, setSelectedDay] = useState<string>("월");
+   const [selectedStartTime, setSelectedStartTime] = useState<string>("");
+   const [selectedEndTime, setSelectedEndTime] = useState<string>("");
+   const [timeBlocks, setTimeBlocks] = useState<TimeBlock[]>([]);
 
+   const handleAddTimeBlock = () => {
+      if (isAddMode) {
+         setTimeBlocks([...timeBlocks, { day: selectedDay, startTime: selectedStartTime, endTime: selectedEndTime }]);
+      }
+      setIsAddMode(!isAddMode);
+   }
+
+   //세팅 확인
+   useEffect(() => {
+      console.log(selectedDay, selectedStartTime, selectedEndTime);
+   }
+   , [selectedDay, selectedStartTime, selectedEndTime]);
 
    if (!isOpen) return null; // 모달이 닫혀 있으면 렌더링 안 함
 
@@ -23,7 +46,7 @@ const AddTimeTableModal = ({ isOpen, onClose}: ModalProps) => {
                <FormRow>
                   <FormLabel>강의</FormLabel>
                   <CourseInfoDropDown>
-                     <option value="1">고수들의 회화비밀</option>
+                     <option value="1">여기에 courseInfos</option>
                      <option value="2">원샷반1</option>
                      <option value="3">원샷반2</option>
                   </CourseInfoDropDown>
@@ -52,18 +75,25 @@ const AddTimeTableModal = ({ isOpen, onClose}: ModalProps) => {
                         <div>시작 시간</div>
                         <div>종료 시간</div>
                      </TimeBlockHeader>
+
+                     {timeBlocks.map((block, index) => (
+                        <TimeBlock key={index}>
+                           <div>{block.day}</div>
+                           <div>{block.startTime}</div>
+                           <div>{block.endTime}</div>
+                        </TimeBlock>
+                     ))}
+
+                     {/* isAddMode일때만 나타나게 */}
+                     { isAddMode && (
                      <TimeBlock>
-                        <div>월</div>
-                        <div>09:00</div>
-                        <div>10:00</div>
-                     </TimeBlock>
-                     <TimeBlock>
-                        <div>월</div>
-                        <div>09:00</div>
-                        <div>10:00</div>
-                     </TimeBlock>
+                        <TimeTableDropDowns setSelectedDay={setSelectedDay} setSelectedStartTime={setSelectedStartTime} setSelectedEndTime={setSelectedEndTime} />
+                     </TimeBlock> )}
+
                   </TimeBlocks>
-                  <AddTimeBlockBtn>+ 추가</AddTimeBlockBtn>
+                  <AddTimeBlockBtn onClick={handleAddTimeBlock} $isAddmode={isAddMode}> 
+                     {isAddMode ? "완료" : "+ 추가"}
+                     </AddTimeBlockBtn>
                </TimeBlocksContainer>
             </FormContainer>
             <AddBtn>등록</AddBtn>
@@ -211,18 +241,18 @@ const TimeBlocks = styled.div`
    gap: 10px;
 `;
 
-const AddTimeBlockBtn = styled.button`
+const AddTimeBlockBtn = styled.button<{ $isAddmode: boolean }>`
    width: 100%;
    padding: 8px;
-   color: #4d4d4d;
-   background-color: white;
+   color: ${(props) => (props.$isAddmode ? "#ffffff" : "#818181")};
+   background-color: ${(props) => (props.$isAddmode ? "#818181" : "white")};
    border: 1px solid #e0e0e0;
    border-radius: 5px;
    cursor: pointer;
    font-size: 0.8rem;
 
    &:hover {
-      background-color: #f9f9f9;
+      background-color: ${(props) => (props.$isAddmode ? "#b8b8b8" : "#f9f9f9")};
    }
 `;
 
@@ -231,7 +261,7 @@ const TimeBlockHeader = styled.div`
    display: flex;
    flex-direction: row;
    align-items: center;
-   justify-content: space-between;
+   justify-content: space-evenly;
    gap: 10px;
    font-size: 0.9rem;
    font-weight: 500;
@@ -244,12 +274,12 @@ const TimeBlock = styled.div`
    display: flex;
    flex-direction: row;
    align-items: center;
-   justify-content: space-between;
+   justify-content: space-evenly;
    gap: 10px;
    font-size: 0.9rem;
    font-weight: 400;
    color: #606060;
-   padding: 5px 15px;
+   padding: 5px 0;
 `;
 
 
@@ -267,3 +297,4 @@ const AddBtn = styled.button`
    font-weight: bold;
 
 `
+
