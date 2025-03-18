@@ -24,6 +24,7 @@ const TimeTableDropDowns = ({ setSelectedDay, setSelectedStartTime, setSelectedE
    return (
       <>
          <DayDropDown onChange={handleDayChange}>
+            <option value="">선택</option>
             {/* 월부터 일까지 */}
             {["월", "화", "수", "목", "금", "토", "일"].map((day) => (
                <option key={day} value={day}>

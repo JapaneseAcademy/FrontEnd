@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import TimeTableDropDowns from "./adminComponents/etc/TimeTableDropDowns";
 import { getAdminCourseInfoTitles } from "../apis/adminAPI/adminReviewAPI";
+import { createTimetable } from "../apis/adminAPI/adminTimeTableAPI";
+import { convertTimeToFull, convertWeekdayToEng } from "../utils/utils";
 
 interface ModalProps {
    isOpen: boolean;
@@ -9,7 +11,7 @@ interface ModalProps {
 }
 
 type TimeBlock = {
-   day: string;
+   weekday: string;
    startTime: string;
    endTime: string;
 }
@@ -24,14 +26,31 @@ const AddTimeTableModal = ({ isOpen, onClose}: ModalProps) => {
    const [courseInfos, setCourseInfos] = useState<courseInfo[]>([]);
 
    const [isAddMode, setIsAddMode] = useState<boolean>(false);
-   const [selectedDay, setSelectedDay] = useState<string>("월");
+   const [selectedCourseInfoId, setSelectedCourseInfoId] = useState<number>(0);
+   const [selectedYear, setSelectedYear] = useState<string>("0");
+   const [selectedMonth, setSelectedMonth] = useState<string>("0");
+   const [selectedDay, setSelectedDay] = useState<string>("");
    const [selectedStartTime, setSelectedStartTime] = useState<string>("");
    const [selectedEndTime, setSelectedEndTime] = useState<string>("");
    const [timeBlocks, setTimeBlocks] = useState<TimeBlock[]>([]);
 
    const handleAddTimeBlock = () => {
+
       if (isAddMode) {
-         setTimeBlocks([...timeBlocks, { day: selectedDay, startTime: selectedStartTime, endTime: selectedEndTime }]);
+         //예외처리
+         // 요일, 시작시간, 종료시간 중 하나라도 빈 값이면 추가하지 않음
+         if (selectedDay === "" || selectedStartTime === "" || selectedEndTime === "") {
+            alert("요일, 시작 시간, 종료 시간을 모두 선택해주세요.");
+            return;
+         }
+         // 시작시간이 종료시간보다 늦으면 추가하지 않음
+         // if (selectedStartTime >= selectedEndTime) {
+         //    console.log(selectedStartTime, selectedEndTime);
+         //    alert("종료 시간은 시작 시간보다 늦어야 합니다.");
+         //    return;
+         // }
+         
+         setTimeBlocks([...timeBlocks, { weekday: selectedDay, startTime: selectedStartTime, endTime: selectedEndTime }]);
       }
       setIsAddMode(!isAddMode);
    }
@@ -46,6 +65,37 @@ const AddTimeTableModal = ({ isOpen, onClose}: ModalProps) => {
       onClose();
    }
 
+   // 분반 등록하는 함수
+   const handleAddTimeTable = () => {
+      if (selectedCourseInfoId === 0) {
+         alert("강의를 선택해주세요.");
+         return;
+      }
+      if (timeBlocks.length === 0) {
+         alert("시간표를 추가해주세요.");
+         return;
+      }
+      if (selectedYear === "0" || selectedMonth === "0") {
+         alert("년/월을 선택해주세요.");
+         return;
+      }
+
+      if (confirm("분반을 추가하시겠습니까?")) {
+         //timeBlocks내의 모든 weekday를 영어로 바꾸고, 시간 뒤에 00 붙이기
+         timeBlocks.forEach((block) => {
+            block.weekday = convertWeekdayToEng(block.weekday);
+            block.startTime = convertTimeToFull(block.startTime);
+            block.endTime = convertTimeToFull(block.endTime);
+         });
+
+         createTimetable(selectedCourseInfoId, `${selectedYear}-${selectedMonth}`, timeBlocks).then((result) => {
+            if (result) {
+               handleClose();
+            }
+         })
+      }
+   }
+
    //courseInfos 세팅
    useEffect(() => {
       getAdminCourseInfoTitles().then((data) => {
@@ -53,11 +103,16 @@ const AddTimeTableModal = ({ isOpen, onClose}: ModalProps) => {
       });
    }
    , []);
-   //세팅 확인
+
+   // 분반 추가 값들 확인
    useEffect(() => {
-      console.log("모달 courseInfo 세팅: ", courseInfos);
+      console.log("selectedCourseInfoId: ", selectedCourseInfoId,
+      "selectedYear: ", selectedYear,
+      "date: ", `${selectedYear}-${selectedMonth}`,
+      "timeBlocks: ", timeBlocks);
    }
-   , [courseInfos]);
+   , [selectedCourseInfoId, selectedYear, selectedMonth, timeBlocks]);
+      
 
    if (!isOpen) return null; // 모달이 닫혀 있으면 렌더링 안 함
 
@@ -71,7 +126,8 @@ const AddTimeTableModal = ({ isOpen, onClose}: ModalProps) => {
             <FormContainer>
                <FormRow>
                   <FormLabel>강의</FormLabel>
-                  <CourseInfoDropDown>
+                  <CourseInfoDropDown onChange={(e) => setSelectedCourseInfoId(parseInt(e.target.value))}>
+                     <option value={0}>강의 선택</option>
                      {courseInfos.map((courseInfo) => (
                         <option key={courseInfo.courseInfoId} value={courseInfo.courseInfoId}>
                            {courseInfo.title}
@@ -82,16 +138,21 @@ const AddTimeTableModal = ({ isOpen, onClose}: ModalProps) => {
                <FormRow>
                   <FormLabel>년 / 월</FormLabel>
                   <div style={{width: "70%", display: "flex", justifyContent: "space-between"}}>
-                     <YearDropDown>
+                     <YearDropDown onChange={(e) => setSelectedYear(e.target.value)}>
+                        <option value="0">선택</option>
                         <option value="2025">2025</option>
                      </YearDropDown>
-                     <MonthDropDown>
+                     <MonthDropDown onChange={(e) => setSelectedMonth(e.target.value)}>
+                        <option value="0">선택</option>
                         {/* 1부터 12까지 */}
-                        {[...Array(12)].map((_, i) => (
-                           <option key={i} value={i + 1}>
-                              {i + 1}
-                           </option>
-                        ))}
+                        {[...Array(12)].map((_, i) => {
+                           const value = (i + 1).toString().padStart(2, '0');
+                           return (
+                              <option key={value} value={value}>
+                                 {value}
+                              </option>
+                           );
+                        })}
                      </MonthDropDown>
                   </div>
                </FormRow>
@@ -106,7 +167,7 @@ const AddTimeTableModal = ({ isOpen, onClose}: ModalProps) => {
 
                      {timeBlocks.map((block, index) => (
                         <TimeBlock key={index}>
-                           <div>{block.day}</div>
+                           <div>{block.weekday}</div>
                            <div>{block.startTime}</div>
                            <div>{block.endTime}</div>
                         </TimeBlock>
@@ -124,7 +185,7 @@ const AddTimeTableModal = ({ isOpen, onClose}: ModalProps) => {
                      </AddTimeBlockBtn>
                </TimeBlocksContainer>
             </FormContainer>
-            <AddBtn>등록</AddBtn>
+            <AddBtn onClick={handleAddTimeTable}>등록</AddBtn>
 
          </ModalContainer>
       </Overlay>

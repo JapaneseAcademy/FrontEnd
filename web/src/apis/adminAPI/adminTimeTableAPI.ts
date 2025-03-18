@@ -68,3 +68,31 @@ export const addStudentToCourse = async (timeTableId: number, memberId: number, 
       }
    }
 }
+
+
+type TimeBlock = {
+   weekday: string;
+   startTime: string;
+   endTime: string;
+}
+// 분반 생성하는 api
+export const createTimetable = async (courseInfoId: number, date: string, timeBlocks: TimeBlock[]) => {
+   try {
+      const response = await axios.post(`${BASE_URL}/api/v1/admin/courses`, {
+         courseInfoId,
+         date,
+         timeBlocks
+      }, {
+         headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+         },
+      });
+      console.log(response.data);
+      alert("분반이 생성되었습니다.");
+      return true;
+   } catch (error: any) {
+      console.error(error);
+      alert("분반 생성에 실패했습니다. 다시 시도해주세요.");
+      return false;
+   }
+}
