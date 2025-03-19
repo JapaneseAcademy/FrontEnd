@@ -48,6 +48,7 @@ const WriteReviewPage = () => {
             return;
          }
 
+         if(confirm('후기를 등록하시겠습니까?') === false) return;
          // review 작성 api
          writeReview(enrollmentId, reviewTitle, reviewText, isAnonymous, photos, navigate, courseInfoId);
          
