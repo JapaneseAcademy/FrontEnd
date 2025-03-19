@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoMdContact } from "react-icons/io"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import { getEnrollments, getMyReviews, getUserInfo } from "../apis/userAPI";
+import { deleteMyReview, getEnrollments, getMyReviews, getUserInfo } from "../apis/userAPI";
 import { convertCategory, numberWithCommas } from "../utils/utils";
 
 type Enrollment = {
@@ -44,6 +44,14 @@ const MyPage = () => {
 
   const handleReviewClick = (reviewId: number) => {
     navigate(`/review?reviewId=${reviewId}`);
+  }
+
+  const handleDeleteReview = (reviewId: number, event: React.MouseEvent) => {
+    //전체 리뷰 눌리는거 방지
+    event.stopPropagation();
+    if(confirm('정말 삭제하시겠습니까?')) {
+      deleteMyReview(reviewId);
+    }
   }
 
   useEffect(() => {
@@ -112,7 +120,7 @@ const MyPage = () => {
       <MyCoursesContainer>
         <Header style={{fontSize:'20px', fontWeight:'450', marginBottom:'10px'}}>나의 후기</Header>
         {/* 후기가 없을 때 */}
-        {enrollments.length === 0 && (
+        {myReviews.length === 0 && (
         <div style={{fontSize:'14px', color:'#7c7c7c', marginTop:'auto', marginBottom:'auto'}}>아직 작성한 후기가 없어요!</div>
         )} 
         {myReviews.map((review) => (
@@ -128,7 +136,7 @@ const MyPage = () => {
               <ReviewText>{review.review}</ReviewText>
               <UserAndDate>
                 <ReviewCourse>{review.createdDate}</ReviewCourse>
-                <ReviewCourse>{review.writer}</ReviewCourse>
+                <DeleteReviewBtn onClick={(e)=>handleDeleteReview(review.reviewId, e)}>삭제</DeleteReviewBtn>
               </UserAndDate>
             </div>
           </Reviewcard>
@@ -378,11 +386,21 @@ const ReviewText = styled.div`
 
 `;
 
-
 const UserAndDate = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const DeleteReviewBtn = styled.button`
+  font-size: 12px;
+  color: #a7a7a7;
+  cursor: pointer;
+  text-decoration: underline;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;  
 `;
 
 
