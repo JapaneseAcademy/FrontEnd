@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import StudentFilter from "./filters/StudentFilter.tsx";
-import { getAdminStudents } from "../../apis/adminAPI/adminStudentsAPI.ts";
+import { getAdminStudents, updateStudentNote } from "../../apis/adminAPI/adminStudentsAPI.ts";
 
 type Student = {
   id: number;
@@ -12,7 +12,7 @@ type Student = {
 }
 
 const Out_StudentsList = () => {
-  const [selectedStudentId, setSelectedStudentId] = useState<number | null>(1);
+  const [selectedStudentId, setSelectedStudentId] = useState<number>(1);
   const [isEditing, setIsEditing] = useState(false);
   const [editedStudent, setEditedStudent] = useState<any>({});
   const [searchTerm, setSearchTerm] = useState(""); // 🔹 검색어 상태 추가
@@ -41,9 +41,9 @@ const Out_StudentsList = () => {
   };
 
   // 입력값 변경 핸들러
-  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
-  //   setEditedStudent({ ...editedStudent, [field]: e.target.value });
-  // };
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
+    setEditedStudent({ ...editedStudent, [field]: e.target.value });
+  };
 
   // 저장 버튼 클릭 시 적용
   const handleSave = () => {
@@ -51,15 +51,19 @@ const Out_StudentsList = () => {
       selectedStudent.note = editedStudent.note;
     }
 
-    //{todo: 서버에 저장하는 로직 추가(api호출)}
-    console.log("저장되었습니다.", selectedStudent); //확인용
-    setIsEditing(false);
+    if (confirm("저장하시겠습니까?")) {
+      // 특이사항 수정 api 호출
+      console.log(selectedStudentId, editedStudent.note);
+      updateStudentNote(selectedStudentId, editedStudent.note);
+      setIsEditing(false);
+    }
   };
 
 
   // 학생들 정보 불러오는 api 호출
   useEffect(() => {
     getAdminStudents().then((data) => {
+      console.log(data);
       setStudents(data);
       //가장 첫번째 학생의 id로 초기화
       setSelectedStudentId(data[0].id);
@@ -114,14 +118,14 @@ const Out_StudentsList = () => {
           <DetailTitle>전화번호</DetailTitle>
             <DetailContent>{selectedStudent?.phone}</DetailContent>
         </DetailRow>
-        {/* <DetailRow>
+        <DetailRow>
           <DetailTitle>특이사항</DetailTitle>
           {isEditing ? (
-            <DetailInput style={{minHeight:'150px'}} value={editedStudent.notes || ''} onChange={(e) => handleInputChange(e, "notes")} />
+            <DetailInput style={{minHeight:'150px'}} value={editedStudent.note || ''} onChange={(e) => handleInputChange(e, "note")} />
           ) : (
             <DetailContent style={{minHeight:'150px'}}>{selectedStudent?.note}</DetailContent>
           )}
-        </DetailRow> */}
+        </DetailRow>
 
         <ButtonsContainer>
           {isEditing ? (
@@ -136,8 +140,6 @@ const Out_StudentsList = () => {
 };
 
 export default Out_StudentsList;
-
-// 스타일링 코드 (생략 가능)
 
 
 const Wrapper = styled.div`
@@ -313,14 +315,14 @@ const DetailContent = styled.div`
   border-radius: 5px;
 `
 
-// const DetailInput = styled.input`
-//   font-size: 0.9rem;
-//   border: 1px solid #e1e1e1;
-//   padding: 10px;
-//   width: 80%;
-//   font-family: 'Pretendard';
-//   border-radius: 5px;
-// `
+const DetailInput = styled.input`
+  font-size: 0.9rem;
+  border: 1px solid #e1e1e1;
+  padding: 10px;
+  width: 80%;
+  font-family: 'Pretendard';
+  border-radius: 5px;
+`
 
 const ButtonsContainer = styled.div`
   width: 85%;

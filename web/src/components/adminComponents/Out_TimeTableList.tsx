@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { useEffect, useState } from "react"
 // import { FiPlus } from "react-icons/fi"
 import CourseFilter from "./filters/CourseFilter.tsx"
-import { getAdminCoursesByMonth, getStudentsByTimetableId } from "../../apis/adminAPI/adminTimeTableAPI.ts"
+import { deleteTimetable, getAdminCoursesByMonth, getStudentsByTimetableId } from "../../apis/adminAPI/adminTimeTableAPI.ts"
 import { convertTime, convertWeekday } from "../../utils/utils.ts"
 import { useNavigate } from "react-router-dom"
 import StudentsTable from "./etc/StudentsTable.tsx"
@@ -82,7 +82,7 @@ const Out_TimeTables = () => {
   //분반 삭제
   const handleDeleteTimeTable = () => {
     if (confirm("삭제된 분반은 되돌릴 수 없습니다. 분반을 삭제하시겠습니까?")) {
-      //{TODO: 삭제 api 호출}
+      deleteTimetable(selectedTimeTableId);
     }
   }
 

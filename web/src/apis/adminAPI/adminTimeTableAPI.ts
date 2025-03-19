@@ -97,3 +97,20 @@ export const createTimetable = async (courseInfoId: number, date: string, timeBl
       return false;
    }
 }
+
+// 분반 삭제하는 api
+export const deleteTimetable = async (timeTableId: number) => {
+   try {
+      const response = await axios.delete(`${BASE_URL}/api/v1/time-tables/${timeTableId}`, {
+         headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+         },
+      });
+      alert("분반이 삭제되었습니다.");
+      window.location.reload();
+      return response.data;
+   } catch (error: any) {
+      console.error(error);
+      alert("분반 삭제에 실패했습니다. 다시 시도해주세요.");
+   }
+}
