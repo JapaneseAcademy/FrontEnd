@@ -18,17 +18,16 @@ export const getUserInfo = async () => {
       return res.data;
    } catch (error) {
       console.error(error);
-      alert("로그인이 필요합니다.");
-      window.location.href = "/";
+
    }
 };
 
 export const getEnrollments = async () => {
    //토큰없으면 로그인해야 한다고 알려주기
-   if (!localStorage.getItem('accessToken')) {
-      alert("로그인이 필요합니다.");
-      window.location.href = "/";
-   }
+   // if (!localStorage.getItem('accessToken')) {
+   //    alert("로그인이 필요합니다.");
+   //    window.location.href = "/";
+   // }
    try {
       const res = await axios.get(`${BASE_URL}/api/v1/enrollments`,
       {
@@ -41,7 +40,25 @@ export const getEnrollments = async () => {
       return res.data;
    } catch (error) {
       console.error(error);
-      alert("로그인이 필요합니다.");
-      window.location.href = "/";
+      // alert("로그인이 필요합니다.");
+      // window.location.href = "/";
+   }
+}
+
+//내가 쓴 후기 가져오는 api
+export const getMyReviews = async () => {
+   try {
+      const res = await axios.get(`${BASE_URL}/api/v1/members/me/reviews`,
+      {
+         headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+         }  
+      });
+      console.log(res.data);
+      return res.data;
+   } catch (error) {
+      console.error(error);
+      // alert("로그인이 필요합니다.");
+      // window.location.href = "/";
    }
 }
