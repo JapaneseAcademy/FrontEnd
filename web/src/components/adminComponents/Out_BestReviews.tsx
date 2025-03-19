@@ -203,9 +203,14 @@ const Out_ReviewsList = () => {
             <DetailRow>
                <DetailTitle>사진</DetailTitle>
                <DetailContent>
-                  {selectedReview?.imageUrls.map((image, index) => (
-                  <ReviewImage key={index} src={image} alt={`reviewImage-${index}`} />
-                  ))}
+                  {/* imageUrls[0]가 null일 때는 "/images/no-image.png"를 보여준다. */}
+                  {selectedReview?.imageUrls[0] == null ? (
+                     <ReviewImage src="/images/no-image.png" alt="no-image" />
+                  ) : (
+                     selectedReview?.imageUrls.map((image, index) => (
+                        <ReviewImage key={index} src={image} alt={`reviewImage-${index}`} />
+                     ))
+                  )}
                </DetailContent>
             </DetailRow>
          
