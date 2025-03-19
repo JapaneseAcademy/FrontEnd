@@ -11,7 +11,7 @@ type Enrollment = {
   paymentDate: string;
   category: string;
   paymentAmount: number;
-  // paymentMethod: string;
+  method: string;
   mainImageUrl: string;
   reviewed: boolean;
   courseInfoId: number;
@@ -74,8 +74,8 @@ const MyPage = () => {
               <CourseTitle>{enrollment.title}</CourseTitle>
               <Text>결제일시 | {enrollment.paymentDate}</Text>
               <Text>강의유형 | {convertCategory(enrollment.category)}</Text>
-              <Text>결제금액 | {numberWithCommas(enrollment.paymentAmount)}</Text>
-              <Text>결제수단 | </Text> {/*todo: 결제수단 연동*/}
+              <Text>결제금액 | {numberWithCommas(enrollment.paymentAmount)} 원</Text>
+              <Text>결제수단 | {enrollment.method}</Text> 
               {/* reviewed가 false일 때만 후기 작성 버튼 보이기 */}
               { !enrollment.reviewed 
                 ? <ReviewButton  onClick={()=>handleReviewWrite(enrollment.enrollmentId, enrollment.courseInfoId)}>후기 작성</ReviewButton> 

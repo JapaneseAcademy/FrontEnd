@@ -56,7 +56,6 @@ const RegisterPage = () => {
       }
 
       //등록
-      console.log(name, year, month, day, phone);
       register(name, phone, `${year}-${month}-${day}`, setIsloading);
    }
 

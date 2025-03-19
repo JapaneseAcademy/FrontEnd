@@ -92,7 +92,7 @@ const Out_SendMessages = () => {
         ? prevSelected.filter((s) => s.id !== student.id) // 선택 해제
         : [...prevSelected, student]; // 선택 추가
 
-      console.log("선택된 학생 ID:", newSelection.map((s) => s.id)); // ✅ ID 출력 유지
+      // console.log("선택된 학생 ID:", newSelection.map((s) => s.id)); // ✅ ID 출력 유지
       return newSelection;
     });
   };

@@ -28,10 +28,6 @@ const DownReviews = () => {
       });
    }, []);
 
-   useEffect(() => {
-      console.log("mainbestreviews 세팅 후: ", mainBestReviews);
-   }
-   , [mainBestReviews]);
 
    return (
       <Wrapper id='down-reviews-wrapper'>

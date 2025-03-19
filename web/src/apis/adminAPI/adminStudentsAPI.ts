@@ -16,7 +16,6 @@ export const getAdminStudents = async () => {
             },
          }
       );
-      console.log("[ getAdminStudents ]", response.data);
       return response.data;
    }
    catch (error: any) {

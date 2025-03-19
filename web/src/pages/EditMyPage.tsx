@@ -55,7 +55,6 @@ const EditMyPage = () => {
 
       //등록
       if(confirm('수정하시겠습니까?')) {
-         console.log(name, year, month, day, phone);
          editUser(name, phone, `${year}-${month}-${day}`)
       }
    }

@@ -20,7 +20,6 @@ export const sendAdminMessage = async (message: string, receiverIds: number[]) =
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
          },
       });
-      console.log("[sendAdminMessage] ", response.data);
       alert("메시지 전송이 완료되었습니다.");
       return response.data;
    } catch (error) {
@@ -43,7 +42,6 @@ export const getTimeTableandStudentsForMessage = async (year: string, month: str
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
          },
       });
-      console.log("[getTimeTableandStudentsForMessage] ", response.data);
       return response.data;
    } catch (error) {
       console.log(error);

@@ -67,11 +67,6 @@ const Out_StudentsList = () => {
     );
   }
   , []);
-  //세팅 잘 됐는지 확인
-  useEffect(() => {
-    console.log(students);
-  }
-  , [students]);
 
   return (
     <Wrapper id='admin-students-list-wrapper'>

@@ -16,7 +16,6 @@ export const getAdminReviewsByCourse = async (courseInfoId: number, page: number
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
          },
       });
-      console.log("[ getAdminReviewsByCourse ]",response.data);
       return response.data;
    } catch (error: any) {
       console.error(error);
@@ -32,7 +31,6 @@ export const getAdminReviewsByCourse = async (courseInfoId: number, page: number
 export const getAdminCourseInfoTitles = async () => {
    try {
       const response = await axios.get(`${BASE_URL}/api/v1/courses/titles`);
-      console.log("[ getAdminCourseInfoTitle ]",response.data);
       return response.data;
    } catch (error: any) {
       console.error(error);
@@ -57,7 +55,6 @@ export const changeAdminReviewVisiblity = async (reviewId: number, navigate: (pa
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
          },
       });
-      console.log("[ changeAdminReviewVisiblity ]",response.status);
       return response.status
    } catch (error: any) {
       console.error(error);
@@ -83,7 +80,6 @@ export const setAdminBestCourseReview = async (reviewId: number, navigate: (path
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
          },
       });
-      console.log("[ setAdminBestCourseReview ]",response.status);
       return response.status;
    } catch (error: any) {
       console.error(error);
@@ -110,7 +106,6 @@ export const setAdminBestMainReview = async (reviewId: number, navigate: (path: 
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
          },
       });
-      console.log("[ setAdminBestMainReview ]",response.status);
       return response.status;
    } catch (error: any) {
       console.error(error);

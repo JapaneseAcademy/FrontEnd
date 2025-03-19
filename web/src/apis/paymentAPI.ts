@@ -16,7 +16,6 @@ export const getOrderId = async (timeTableId: number) => {
             }
          }
       );
-      console.log(response.data);
       return response.data.orderId;
    }
    catch (error) {
@@ -58,7 +57,6 @@ export const assignCourse = async (
             }
          }
       );
-      console.log("[assignCourse] response : ", response);
       return response.status; //TODO: 예외처ㅣㄹ
    }
    catch (error: any) {

@@ -56,7 +56,6 @@ const CourseDetailPage = () => {
   const [convertedTimeTables, setConvertedTimeTables] = useState<convertedTimeTable[]>([]);
 
   //결제 정보들
-  const [selectedTimeTable, setSelectedTimeTable] = useState<string>("");
   const [selectedTimeTableId, setSelectedTimeTableId] = useState<number>(0);
   const [selectedCourseType, setSelectedCourseType] = useState<string>("");
 
@@ -77,11 +76,9 @@ const CourseDetailPage = () => {
     const selectedTable = convertedTimeTables.find((timeTable) => timeTable.timeTable === e.target.value);
     
     if (selectedTable) {
-      setSelectedTimeTable(selectedTable.timeTable);
       setSelectedTimeTableId(selectedTable.timeTableId);
     } else {
       console.warn("해당 분반을 찾을 수 없습니다.");
-      setSelectedTimeTable("");
       setSelectedTimeTableId(0);
     }
   };
@@ -101,10 +98,7 @@ const CourseDetailPage = () => {
       return;
     }
 
-    alert("이동할 결제 페이지는 테스트 페이지입니다. 기능 테스트 중이니 실제 결제는 하지 마세요.");
-    console.log("결제 timeTableId: ", selectedTimeTableId);
-    console.log("결제 대상: ", courseTitle + "-" + selectedTimeTable + "-" + selectedCourseType);
-    console.log("결제 금액: ", courseSaleCost);
+    alert("이동할 결제 페이지는 테스트 페이지입니다. 기능 테스트 중이니 실제 결제는 절대로 하지 마세요.");
 
     navigate(`/payment?courseInfoId=${courseInfoId}&timeTableId=${selectedTimeTableId}&category=${selectedCourseType}&courseTitle=${courseTitle}&coursePrice=${courseSaleCost}`);
   }
@@ -137,7 +131,6 @@ const CourseDetailPage = () => {
       setConvertedTimeTables(convertedTimeTables.map((timeTable, index) => ({timeTableId: data.course.timeTables[index].timeTableId, timeTable})));
 
       //분반, 유형의 가장 첫번째 값으로 초기화
-      setSelectedTimeTable(convertTimeTables(data.course.timeTables)[0]);
       setSelectedCourseType(convertTags(data.live, data.online, data.recorded)[0]);
       setSelectedTimeTableId(data.course.timeTables[0].timeTableId);
     });

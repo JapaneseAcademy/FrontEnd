@@ -57,14 +57,9 @@ const ReviewsPage = () => {
    
      // ✅ 페이지 로드 시 초기 데이터 가져오기
    useEffect(() => {
-      fetchReviews(1); // 첫 페이지의 후기 데이터 요청
+      fetchReviews(1); // 첫 페이지의 후기 데이터 요청 {TODO: 이거 제대로 바꾸기(잘 도됨...)}
    }, [fetchReviews]); 
 
-   //세팅 확인
-   useEffect(() => {
-      console.log("currentReviews 세팅 후:", currentReviews);
-   }
-      , [currentReviews]);
 
    return (
       <>

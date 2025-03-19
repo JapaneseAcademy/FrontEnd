@@ -33,6 +33,27 @@ export const convertWeekday = (weekday: string) => {
          return "";
    }
 }
+//한글 요일을 영어 요일로 바꾸는 함수
+export const convertWeekdayToEng = (weekday: string) => {
+   switch (weekday) {
+      case "월":
+         return "MONDAY";
+      case "화":
+         return "TUESDAY";
+      case "수":
+         return "WEDNESDAY";
+      case "목":
+         return "THURSDAY";
+      case "금":
+         return "FRIDAY";
+      case "토":
+         return "SATURDAY";
+      case "일":
+         return "SUNDAY";
+      default:
+         return "";
+   }
+}
 
 //시,분,초까지 있는 시간을 시,분까지만 표시하는 함수
 export const convertTime = (time: string) => {
@@ -66,4 +87,9 @@ export const convertCategoryToEng = (category: string|null) => {
       default:
          return "";
    }
+}
+
+// 시간 뒤에 00을 붙이는 함수
+export const convertTimeToFull = (time: string) => {
+   return time + ":00";
 }
