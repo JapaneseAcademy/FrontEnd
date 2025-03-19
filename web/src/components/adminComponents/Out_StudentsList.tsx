@@ -41,9 +41,9 @@ const Out_StudentsList = () => {
   };
 
   // 입력값 변경 핸들러
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
-    setEditedStudent({ ...editedStudent, [field]: e.target.value });
-  };
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
+  //   setEditedStudent({ ...editedStudent, [field]: e.target.value });
+  // };
 
   // 저장 버튼 클릭 시 적용
   const handleSave = () => {
@@ -115,17 +115,13 @@ const Out_StudentsList = () => {
             <DetailContent>{selectedStudent?.phone}</DetailContent>
         </DetailRow>
         {/* <DetailRow>
-          <DetailTitle>수강현황</DetailTitle>
-            <DetailContent>{selectedStudent?.class}</DetailContent>
-        </DetailRow> */}
-        <DetailRow>
           <DetailTitle>특이사항</DetailTitle>
           {isEditing ? (
             <DetailInput style={{minHeight:'150px'}} value={editedStudent.notes || ''} onChange={(e) => handleInputChange(e, "notes")} />
           ) : (
             <DetailContent style={{minHeight:'150px'}}>{selectedStudent?.note}</DetailContent>
           )}
-        </DetailRow>
+        </DetailRow> */}
 
         <ButtonsContainer>
           {isEditing ? (
@@ -317,14 +313,14 @@ const DetailContent = styled.div`
   border-radius: 5px;
 `
 
-const DetailInput = styled.input`
-  font-size: 0.9rem;
-  border: 1px solid #e1e1e1;
-  padding: 10px;
-  width: 80%;
-  font-family: 'Pretendard';
-  border-radius: 5px;
-`
+// const DetailInput = styled.input`
+//   font-size: 0.9rem;
+//   border: 1px solid #e1e1e1;
+//   padding: 10px;
+//   width: 80%;
+//   font-family: 'Pretendard';
+//   border-radius: 5px;
+// `
 
 const ButtonsContainer = styled.div`
   width: 85%;

@@ -79,6 +79,13 @@ const Out_TimeTables = () => {
     setIsAddStudentModalOpen(true);
   }
 
+  //분반 삭제
+  const handleDeleteTimeTable = () => {
+    if (confirm("삭제된 분반은 되돌릴 수 없습니다. 분반을 삭제하시겠습니까?")) {
+      //{TODO: 삭제 api 호출}
+    }
+  }
+
 
   useEffect(() => {
     //관리자-월별 강의 조회 api
@@ -132,17 +139,17 @@ const Out_TimeTables = () => {
         </CoursesTable>
       </CourseListContainer>
 
-      <CourseDetailContainer id="course-detail-container">
+      <CourseDetailContainer id="timetable-detail-container">
         <TimeTableContent>
           <DetailRow className='course-title'>
             <DetailTitle>강의명</DetailTitle>
             <DetailContent>{selectedTimeTable?.title || "강의 없음"}</DetailContent>
           </DetailRow>
-          <DetailRow className='course-timetables'>
+          <DetailRow className='timetables'>
             <DetailTitle>분반</DetailTitle>
             <DetailContent>{selectedTimeTable ? converTimeTable(selectedTimeTable) : "분반 정보 없음"}</DetailContent>
           </DetailRow>
-          <DetailRow className="course-students">
+          <DetailRow className="students-num">
             <DetailTitle>학생 수</DetailTitle>
             <DetailContent>{selectedTimeTable?.studentCount || 0} 명</DetailContent>
           </DetailRow>
@@ -152,6 +159,7 @@ const Out_TimeTables = () => {
           <AddStudentBtn onClick={handleAddStudent}><FaPlus size={10} color='white'/>학생 수동 등록</AddStudentBtn>
         </ButtonRow>
         <StudentsTable students={students} />
+        <DeleteTimeTableBtn onClick={handleDeleteTimeTable}>분반 삭제</DeleteTimeTableBtn>
       </CourseDetailContainer>
 
 
@@ -317,7 +325,7 @@ const CourseDetailContainer = styled.div`
 
 const TimeTableContent = styled.div`
   width: 90%;
-  min-height: 40%;
+  min-height: 35%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -382,6 +390,24 @@ const AddStudentBtn = styled.button`
   
   &:hover {
     background-color: #201a00;
+  }
+`
+
+const DeleteTimeTableBtn = styled.button`
+  width: 90%;
+  padding: 10px;
+  background-color: #ff5e5e;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: #ffffff; 
+
+  &:hover {
+    background-color: #ff0000;
   }
 `
 

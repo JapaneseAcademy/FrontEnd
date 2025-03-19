@@ -29,6 +29,7 @@ const ReviewDetailPage = () => {
       }
       //reviewId가 있으면
       getReviewDetail(reviewId).then((data: ReviewDetail) => {
+         console.log(data);
          setReviewDetail(data);
       }
       )
@@ -46,9 +47,11 @@ const ReviewDetailPage = () => {
 
             <ReviewContents>
                <ReviewImages>
-                  {reviewDetail?.imageUrls.map((imageUrl, index) => (
-                     <img key={index} src={imageUrl} alt={`reviewImage${index}`} />
-                  ))}
+                  {/* imageUrls[0]가 null이면 이미지가 없는 것 */}
+                  { reviewDetail?.imageUrls[0] !== null && reviewDetail?.imageUrls.map((url, index) => {
+                     return <img key={index} src={url} alt="reviewImage" />
+                  }
+                  )}
                </ReviewImages>
                   <ReviewText>{reviewDetail?.review}</ReviewText>
             </ReviewContents>
