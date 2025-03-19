@@ -98,8 +98,6 @@ const CourseDetailPage = () => {
       return;
     }
 
-    alert("이동할 결제 페이지는 테스트 페이지입니다. 기능 테스트 중이니 실제 결제는 절대로 하지 마세요.");
-
     navigate(`/payment?courseInfoId=${courseInfoId}&timeTableId=${selectedTimeTableId}&category=${selectedCourseType}&courseTitle=${courseTitle}&coursePrice=${courseSaleCost}`);
   }
 
