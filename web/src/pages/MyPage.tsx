@@ -57,12 +57,7 @@ const MyPage = () => {
   useEffect(() => {
     //마이페이지 진입 시, 스크롤을 맨 위로 이동
     window.scrollTo(0, 0);
-    
-    //accessToken이 없으면 홈페이지로 이동
-    // if (!localStorage.getItem('accessToken')) {
-    //   alert('로그인이 필요한 서비스입니다.');
-    //   navigate('/');
-    // }
+  
 
     //이름 세팅
     getUserInfo().then((data) => {
@@ -77,11 +72,6 @@ const MyPage = () => {
       setMyReviews(data.reviews);
     })
   }, [])
-  //리뷰 세팅 확인
-  useEffect(() => {
-    console.log("리뷰 세팅 후:", myReviews);
-  }
-  , [myReviews]);
 
   return (
     <Wrapper>
