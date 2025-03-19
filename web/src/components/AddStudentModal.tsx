@@ -7,7 +7,7 @@ interface ModalProps {
    isOpen: boolean;
    onClose: () => void;
 
-   timeTableId: number;
+   timeTableId: number | null;
    courseTitle: string;
    courseTime: string;
 }
@@ -47,6 +47,10 @@ const AddStudentModal = ({ isOpen, onClose, timeTableId, courseTitle, courseTime
          }
 
          if (confirm("선택한 학생을 분반에 등록하시겠습니까?")) {
+            if(!timeTableId) {
+               alert("분반을 선택해주세요.");
+               return;
+            }
             // 학생 수동 등록 api 호출
             addStudentToCourse(timeTableId, selectedStudentId, selectedCourseType, parseInt(paymentAmount), paymentMethod, paymentDate);
             // 선택된 값들 초기화

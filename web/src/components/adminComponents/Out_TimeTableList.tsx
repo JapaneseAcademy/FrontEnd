@@ -41,7 +41,7 @@ const Out_TimeTables = () => {
   const [isAddStudentModalOpen, setIsAddStudentModalOpen] = useState<boolean>(false);
   const [isAddTimeTableModalOpen, setIsAddTimeTableModalOpen] = useState<boolean>(false);
 
-  const [selectedTimeTableId, setSelectedTimeTableId] = useState<number>(1);
+  const [selectedTimeTableId, setSelectedTimeTableId] = useState<number|null>(null);
   const [timeTables, setTimeTables] = useState<timeTable[]>([]);
 
   const [selectedYear, setSelectedYear] = useState<string>("2025");
@@ -75,12 +75,20 @@ const Out_TimeTables = () => {
 
   //학생 수동 등록하는 함수
   const handleAddStudent = () => {
+    if(selectedTimeTableId === null) {
+      alert("학생을 등록할 분반을 선택해주세요.");
+      return;
+    }
     //수동 등록 모달 열기
     setIsAddStudentModalOpen(true);
   }
 
   //분반 삭제
   const handleDeleteTimeTable = () => {
+    if(selectedTimeTableId === null) {
+      alert("삭제할 분반을 선택해주세요.");
+      return;
+    }
     if (confirm("삭제된 분반은 되돌릴 수 없습니다. 분반을 삭제하시겠습니까?")) {
       deleteTimetable(selectedTimeTableId);
     }
@@ -143,11 +151,11 @@ const Out_TimeTables = () => {
         <TimeTableContent>
           <DetailRow className='course-title'>
             <DetailTitle>강의명</DetailTitle>
-            <DetailContent>{selectedTimeTable?.title || "강의 없음"}</DetailContent>
+            <DetailContent>{selectedTimeTable?.title || ""}</DetailContent>
           </DetailRow>
           <DetailRow className='timetables'>
             <DetailTitle>분반</DetailTitle>
-            <DetailContent>{selectedTimeTable ? converTimeTable(selectedTimeTable) : "분반 정보 없음"}</DetailContent>
+            <DetailContent>{selectedTimeTable ? converTimeTable(selectedTimeTable) : ""}</DetailContent>
           </DetailRow>
           <DetailRow className="students-num">
             <DetailTitle>학생 수</DetailTitle>
@@ -166,7 +174,7 @@ const Out_TimeTables = () => {
       {/* 강의 추가 모달 */}
       <AddTimeTableModal isOpen={isAddTimeTableModalOpen} onClose={() => setIsAddTimeTableModalOpen(false)}/>
       {/* 학생 수동 등록 모달 */}
-      <AddStudentModal isOpen={isAddStudentModalOpen} onClose={() => setIsAddStudentModalOpen(false)} timeTableId={selectedTimeTableId} courseTitle={selectedTimeTable?.title || "강의 없음"} courseTime={selectedTimeTable ? converTimeTable(selectedTimeTable) : "분반 정보 없음"}/>
+      <AddStudentModal isOpen={isAddStudentModalOpen} onClose={() => setIsAddStudentModalOpen(false)} timeTableId={selectedTimeTableId} courseTitle={selectedTimeTable?.title || ""} courseTime={selectedTimeTable ? converTimeTable(selectedTimeTable) : ""}/>
 
     </Wrapper>
   )
