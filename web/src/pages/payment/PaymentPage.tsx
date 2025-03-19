@@ -2,6 +2,7 @@ import { loadTossPayments } from "@tosspayments/tosspayments-sdk";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getOrderId } from "../../apis/paymentAPI";
+import OrderInfoContainer from "./OrderInfoContainer";
 
 
 const customerKey = "user_1234";
@@ -23,11 +24,14 @@ const PaymentPage = () => {
    //url에서 결제정보 받아오기
    const url = new URL(window.location.href);
    const timeTableId = url.searchParams.get("timeTableId");
-   const courseType = url.searchParams.get("courseType");
+   const courseType = url.searchParams.get("category");
    const courseTitle = url.searchParams.get("courseTitle");
    const coursePrice = parseInt(String(url.searchParams.get("coursePrice")));
+   const timeTables = url.searchParams.get("timeTables");
 
    useEffect(() => {
+      window.scrollTo(0, 0);
+      
       // 백엔드에서 orderId를 받아오기
       getOrderId(parseInt(String(timeTableId))).then((orderId) => {
          setOrderId(orderId);
@@ -82,32 +86,33 @@ const PaymentPage = () => {
                [ BC, 우리, 하나, 현대 ] 카드 결제가 불가능합니다.<br />(간편결제를 통한 해당 카드사 결제도 불가) <br />
                이용에 불편을 드려 죄송합니다. <br />
             </div>
+            <OrderInfoContainer courseDate="2025년 4월" courseTitle={courseTitle} coursePrice={coursePrice} courseType={courseType} timeTables={timeTables}/>
 
          <Container>
-         <PaymentMethod id="payment-method" />
-         <Agreement id="agreement" />
-         <ButtonWrapper>
-               <Button
-               onClick={async () => {
-               try {
-                     await widgets?.requestPayment({
-                     orderId: orderId, //TODO: 바꾸기 (주문번호)
-                     orderName: courseTitle, //TODO: 바꾸기 (상품명)
-                     // customerName: "김토스", //TODO: 바꾸기 (구매자 이름)
+            <PaymentMethod id="payment-method" />
+            <Agreement id="agreement" />
+            <ButtonWrapper>
+                  <Button
+                  onClick={async () => {
+                  try {
+                        await widgets?.requestPayment({
+                        orderId: orderId, //TODO: 바꾸기 (주문번호)
+                        orderName: courseTitle, //TODO: 바꾸기 (상품명)
+                        // customerName: "김토스", //TODO: 바꾸기 (구매자 이름)
 
-                     successUrl: window.location.origin + "/payment/loading" + window.location.search, //TODO: 바꾸기 (성공 URL)
-                     failUrl: window.location.origin + "/payment/failure" + window.location.search, //TODO: 바꾸기 (실패 URL)
-                     // cancelUrl: window.location.origin + "/sandbox/cancel" + window.location.search, //TODO: 바꾸기 (취소 URL)
-                     });
-               } catch (error) {
-                     // TODO: 에러 처리
-                     console.error(error);
-               }
-               }}
-               >
-               결제하기
-               </Button>
-         </ButtonWrapper>
+                        successUrl: window.location.origin + "/payment/loading" + window.location.search, //TODO: 바꾸기 (성공 URL)
+                        failUrl: window.location.origin + "/payment/failure" + window.location.search, //TODO: 바꾸기 (실패 URL)
+                        // cancelUrl: window.location.origin + "/sandbox/cancel" + window.location.search, //TODO: 바꾸기 (취소 URL)
+                        });
+                  } catch (error) {
+                        // TODO: 에러 처리
+                        console.error(error);
+                  }
+                  }}
+                  >
+                  결제하기
+                  </Button>
+            </ButtonWrapper>
          </Container>
          </Wrapper>
    );

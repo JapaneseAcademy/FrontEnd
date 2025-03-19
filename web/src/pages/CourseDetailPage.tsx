@@ -88,6 +88,11 @@ const CourseDetailPage = () => {
     setSelectedCourseType(e.target.value);
   };
 
+  //timeTableId 넣으면 timeTable을 반환
+  const findTimeTable = (timeTableId: number) => {
+    return convertedTimeTables.find((timeTable) => timeTable.timeTableId === timeTableId);
+  }
+
   ////중요!!! 신청하기 버튼 클릭 시 ///// 결제~~~!!
   const handleBuyClick = () => {
 
@@ -98,7 +103,7 @@ const CourseDetailPage = () => {
       return;
     }
 
-    navigate(`/payment?courseInfoId=${courseInfoId}&timeTableId=${selectedTimeTableId}&category=${selectedCourseType}&courseTitle=${courseTitle}&coursePrice=${courseSaleCost}`);
+    navigate(`/payment?courseInfoId=${courseInfoId}&timeTableId=${selectedTimeTableId}&category=${selectedCourseType}&courseTitle=${courseTitle}&coursePrice=${courseSaleCost}&timeTables=${findTimeTable(selectedTimeTableId)?.timeTable}`);
   }
 
   //timeTables를 한 분반(timeTable)당 하나의 문자열로 바꾸는 함수
@@ -112,7 +117,7 @@ const CourseDetailPage = () => {
 
   useEffect(() => {
     // 페이지 로드 시 상단으로 이동
-    // window.scrollTo(0, 0); // 완성 시에 활성화. 개발할때는 불편해서 {todo}
+    window.scrollTo(0, 0); // 완성 시에 활성화. 개발할때는 불편해서 {todo}
 
     //1) 강의 상세정보 API 호출
     getCourseDetail(courseInfoId).then((data) => {

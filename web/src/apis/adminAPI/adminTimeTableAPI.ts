@@ -2,7 +2,7 @@ import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 //년/월로 해당하는 timeTable 불러오는 api
-export const getAdminCoursesByMonth = async (date: string | '2025-04', navigate: (path: string) => void) => {
+export const getAdminCoursesByMonth = async (date: string, navigate: (path: string) => void) => {
    //토큰 없으면 로그인 페이지로 이동
    if (!localStorage.getItem("accessToken")) {
       alert("관리자 로그인이 필요합니다.");
