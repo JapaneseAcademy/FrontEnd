@@ -101,7 +101,7 @@ export const createTimetable = async (courseInfoId: number, date: string, timeBl
 // 분반 삭제하는 api
 export const deleteTimetable = async (timeTableId: number) => {
    try {
-      const response = await axios.delete(`${BASE_URL}/api/v1/time-tables/${timeTableId}`, {
+      const response = await axios.delete(`${BASE_URL}/api/v1/admin/time-tables/${timeTableId}`, {
          headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
          },
