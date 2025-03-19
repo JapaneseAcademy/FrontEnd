@@ -89,6 +89,7 @@ export const createTimetable = async (courseInfoId: number, date: string, timeBl
       });
       console.log(response.data);
       alert("분반이 생성되었습니다.");
+      window.location.reload();
       return true;
    } catch (error: any) {
       console.error(error);
