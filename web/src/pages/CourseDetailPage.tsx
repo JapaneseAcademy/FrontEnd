@@ -262,8 +262,7 @@ const CourseDetailPage = () => {
 
               {/* 하단 고정 버튼 */}
       <FixedButtonContainer>
-        {/* <CartButton id="cart_btn">장바구니</CartButton> */}
-        <BuyButton id="buy_btn" onClick={handleBuyClick}>신청하기</BuyButton>
+        <BuyButton id="buy_btn" onClick={handleBuyClick}>결제하기</BuyButton>
       </FixedButtonContainer>
       </Wrapper>
 
