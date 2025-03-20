@@ -36,6 +36,7 @@ type student = {
   name: string;
   phone: string;
   paymentDate: string;
+  category: string;
 }
 
 const Out_TimeTables = () => {
@@ -74,6 +75,7 @@ const Out_TimeTables = () => {
   const handleTitmeTableClick = (timeTableId: number) => {
     setSelectedTimeTableId(timeTableId);
     getStudentsByTimetableId(timeTableId).then((data) => {
+      console.log(data);
       setStudents(data);
     }
     );
@@ -126,11 +128,6 @@ const Out_TimeTables = () => {
     );
 
   }, [selectedYear, selectedMonth]);
-  //세팅 확인
-  useEffect(() => {
-    console.log("세팅: ", timeTables);
-  }, [timeTables]);
-
 
   return (
     <Wrapper>

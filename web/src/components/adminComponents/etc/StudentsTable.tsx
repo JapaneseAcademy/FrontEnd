@@ -1,10 +1,12 @@
 import styled from "styled-components"
+import { convertCategory } from "../../../utils/utils";
 
 type student = {
    studentId: number;
    name: string;
    phone: string;
    paymentDate: string;
+   category: string;
 }
 
 interface StudentsTableProps {
@@ -17,7 +19,7 @@ const StudentsTable = ({ students }: StudentsTableProps) => {
          <TableHeader>
             <TableHeaderItem>이름</TableHeaderItem>
             <TableHeaderItem>전화번호</TableHeaderItem>
-            {/* <TableHeaderItem>강의유형</TableHeaderItem> */}
+            <TableHeaderItem>강의유형</TableHeaderItem>
             <TableHeaderItem>결제일</TableHeaderItem>
          </TableHeader>
          <TableBody>
@@ -33,7 +35,7 @@ const StudentsTable = ({ students }: StudentsTableProps) => {
                   <TableRow key={index}>
                      <TableItem>{student.name}</TableItem>
                      <TableItem>{student.phone}</TableItem>
-                     {/* <TableItem>현장강의</TableItem> */}
+                     <TableItem>{convertCategory(student.category)}</TableItem>
                      <TableItem>{student.paymentDate}</TableItem>
                   </TableRow>
                ))
