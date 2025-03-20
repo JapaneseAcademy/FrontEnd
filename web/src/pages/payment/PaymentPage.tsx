@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getOrderId } from "../../apis/paymentAPI";
 import OrderInfoContainer from "./OrderInfoContainer";
+import { getUserInfo } from "../../apis/userAPI";
 
 
 const customerKey = "user_1234";
@@ -12,6 +13,13 @@ type Amount = {
    value: number;
 };
 
+type UserInfo = {
+   id: number;
+   name: string;
+   phone: string;
+   birth: string;
+}
+
 const PaymentPage = () => {
    const [ready, setReady] = useState<boolean>(false);
    const [widgets, setWidgets] = useState<any>(null);
@@ -20,6 +28,7 @@ const PaymentPage = () => {
       value: 0, //TODO: 바꾸기 (결제 금액)
    });
    const [orderId, setOrderId] = useState<string | null>(null);
+   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
 
    //url에서 결제정보 받아오기
    const url = new URL(window.location.href);
@@ -35,6 +44,11 @@ const PaymentPage = () => {
       // 백엔드에서 orderId를 받아오기
       getOrderId(parseInt(String(timeTableId))).then((orderId) => {
          setOrderId(orderId);
+      });
+
+      //결제요청시 첨부할 사용자 정보 받아오기
+      getUserInfo().then((userInfo) => {
+         setUserInfo(userInfo);
       });
    }
    , [timeTableId, courseType, courseTitle, coursePrice]);
@@ -86,7 +100,7 @@ const PaymentPage = () => {
                [ BC, 우리, 하나, 현대 ] 카드 결제가 불가능합니다.<br />(간편결제를 통한 해당 카드사 결제도 불가) <br />
                이용에 불편을 드려 죄송합니다. <br />
             </div>
-            <OrderInfoContainer courseDate="2025년 4월" courseTitle={courseTitle} coursePrice={coursePrice} courseType={courseType} timeTables={timeTables}/>
+            <OrderInfoContainer userInfo={userInfo} courseDate="2025년 4월" courseTitle={courseTitle} coursePrice={coursePrice} courseType={courseType} timeTables={timeTables}/>
 
          <Container>
             <PaymentMethod id="payment-method" />
@@ -96,9 +110,10 @@ const PaymentPage = () => {
                   onClick={async () => {
                   try {
                         await widgets?.requestPayment({
-                        orderId: orderId, //TODO: 바꾸기 (주문번호)
-                        orderName: courseTitle, //TODO: 바꾸기 (상품명)
-                        // customerName: "김토스", //TODO: 바꾸기 (구매자 이름)
+                        orderId: orderId,
+                        orderName: courseTitle, //TODO: 바꾸기 (구체적으로 정보들 다 들어가게)
+                        customerName: userInfo?.name,
+                        customerMobilePhone: userInfo?.phone,
 
                         successUrl: window.location.origin + "/payment/loading" + window.location.search, //TODO: 바꾸기 (성공 URL)
                         failUrl: window.location.origin + "/payment/failure" + window.location.search, //TODO: 바꾸기 (실패 URL)

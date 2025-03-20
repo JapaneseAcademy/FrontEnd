@@ -133,7 +133,7 @@ const AddStudentModal = ({ isOpen, onClose, timeTableId, courseTitle, courseTime
                <InfoRow>
                   <InfoTitle>강의유형</InfoTitle>
                   <InfoDropDown value={selectedCourseType} onChange={handleCourseTypeChange}>
-                     <option value="">강의 선택</option>
+                     <option value="">선택</option>
                      <option value="LIVE">현장강의</option>
                      <option value="ONLINE">온라인</option>
                      <option value="RECORDED">동영상</option>

@@ -7,9 +7,17 @@ interface OrderInfoContainerProps {
    timeTables: string|null;
    courseType: string|null;
    coursePrice: number;
+   userInfo: UserInfo|null;
 }
 
-const OrderInfoContainer = ({courseTitle, courseDate, timeTables, courseType, coursePrice}: OrderInfoContainerProps) => {
+type UserInfo = {
+   id: number;
+   name: string;
+   phone: string;
+   birth: string;
+}
+
+const OrderInfoContainer = ({courseTitle, courseDate, timeTables, courseType, coursePrice, userInfo}: OrderInfoContainerProps) => {
 
    return (
       <Wrapper>
@@ -38,6 +46,15 @@ const OrderInfoContainer = ({courseTitle, courseDate, timeTables, courseType, co
                <InfoTitle>주문금액</InfoTitle>
                <InfoContent style={{fontWeight:'bold'}}>{numberWithCommas(coursePrice)} 원</InfoContent>
             </InfoRow>
+
+            {/* 주문자 정보 */}
+            <InfoRow style={{borderTop:'1px solid #ddd', paddingTop:'20px'}}>
+               <InfoTitle>[ 주문자 정보 ]</InfoTitle>
+            </InfoRow>
+            <InfoContent style={{display:'flex', justifyContent:'space-between', marginTop:'10px'}}>
+                  <div>{userInfo?.name}</div>
+                  <div>{userInfo?.phone}</div>
+               </InfoContent>
          </OrderInfos>
       </Wrapper>
    )
