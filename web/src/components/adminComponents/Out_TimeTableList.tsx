@@ -27,6 +27,8 @@ type timeTable = {
   startDate: string;
   title: string;
   studentCount: number;
+  baseCost: number;
+  saleCost: number;
 }
 
 type student = {
@@ -106,12 +108,18 @@ const Out_TimeTables = () => {
         startDate: timeTable.startDate,
         title: timeTable.title,
         studentCount: timeTable.studentCount,
+        baseCost: timeTable.baseCost,
+        saleCost: timeTable.saleCost
       }));
       setTimeTables(formattedTimeTables);
     }
     );
 
   }, [selectedYear, selectedMonth]);
+  //세팅 확인
+  useEffect(() => {
+    console.log("세팅: ", timeTables);
+  }, [timeTables]);
 
 
   return (
@@ -156,6 +164,15 @@ const Out_TimeTables = () => {
           <DetailRow className='timetables'>
             <DetailTitle>분반</DetailTitle>
             <DetailContent>{selectedTimeTable ? converTimeTable(selectedTimeTable) : ""}</DetailContent>
+          </DetailRow>
+          <DetailRow className='base-cost'>
+            <DetailTitle>기본 수강료</DetailTitle>
+            <DetailContent>{selectedTimeTable?.baseCost || 0} 원</DetailContent>
+          </DetailRow>
+          <DetailRow className='sale-cost'>
+            <DetailTitle>현재 수강료</DetailTitle>
+            <DetailContent style={{width:'69%'}}>{selectedTimeTable?.saleCost || 0} 원</DetailContent>
+            <AddStudentBtn>변경</AddStudentBtn>
           </DetailRow>
           <DetailRow className="students-num">
             <DetailTitle>학생 수</DetailTitle>
@@ -333,7 +350,7 @@ const CourseDetailContainer = styled.div`
 
 const TimeTableContent = styled.div`
   width: 90%;
-  min-height: 35%;
+  /* min-height: 35%; */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -342,7 +359,7 @@ const TimeTableContent = styled.div`
 `
 
 const DetailRow = styled.div`
-  width: 85%;
+  width: 90%;
   display: flex;
   flex-direction: row;
   align-items: center;
