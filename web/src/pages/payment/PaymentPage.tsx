@@ -4,9 +4,8 @@ import styled from "styled-components";
 import { getOrderId } from "../../apis/paymentAPI";
 import OrderInfoContainer from "./OrderInfoContainer";
 import { getUserInfo } from "../../apis/userAPI";
+import { v4 as uuidv4 } from 'uuid';
 
-
-const customerKey = "user_1234";
 
 type Amount = {
    currency: string;
@@ -38,6 +37,13 @@ const PaymentPage = () => {
    const coursePrice = parseInt(String(url.searchParams.get("coursePrice")));
    const timeTables = url.searchParams.get("timeTables");
 
+   //랜덤 customerKey 생성하는 함수
+   const generateCustomerKey = (userId: number) => {
+      const uuid = uuidv4().split('-')[0]; // UUID의 일부만 사용
+      return `User_${userId}_${uuid}`;
+   }
+
+
    useEffect(() => {
       window.scrollTo(0, 0);
       
@@ -45,25 +51,27 @@ const PaymentPage = () => {
       getOrderId(parseInt(String(timeTableId))).then((orderId) => {
          setOrderId(orderId);
       });
-
-      //결제요청시 첨부할 사용자 정보 받아오기
-      getUserInfo().then((userInfo) => {
-         setUserInfo(userInfo);
-      });
    }
    , [timeTableId, courseType, courseTitle, coursePrice]);
 
    useEffect(() => {
-      setAmount({
-         currency: "KRW",
-         value: coursePrice,
+      //결제요청시 첨부할 사용자 정보 받아오기
+      getUserInfo().then((userInfo) => {
+         setUserInfo(userInfo);
+         
+         const customerKey = generateCustomerKey(userInfo?.id);
+         setAmount({
+            currency: "KRW",
+            value: coursePrice,
+         });
+         async function fetchPaymentWidgets() {
+            const tossPayments = await loadTossPayments(import.meta.env.VITE_TOSSPAYMENTS_CLIENT_KEY_LIVE);
+            const widgets = tossPayments.widgets({ customerKey });
+            setWidgets(widgets);
+         }
+         fetchPaymentWidgets();
       });
-      async function fetchPaymentWidgets() {
-         const tossPayments = await loadTossPayments(import.meta.env.VITE_TOSSPAYMENTS_CLIENT_KEY_LIVE);
-         const widgets = tossPayments.widgets({ customerKey });
-         setWidgets(widgets);
-      }
-      fetchPaymentWidgets();
+
    }, [coursePrice]);
 
    useEffect(() => {
@@ -111,16 +119,14 @@ const PaymentPage = () => {
                   try {
                         await widgets?.requestPayment({
                         orderId: orderId,
-                        orderName: courseTitle, //TODO: 바꾸기 (구체적으로 정보들 다 들어가게)
+                        orderName: `${courseTitle}(${timeTables}, ${courseType})`,
                         customerName: userInfo?.name,
                         customerMobilePhone: userInfo?.phone,
 
                         successUrl: window.location.origin + "/payment/loading" + window.location.search, //TODO: 바꾸기 (성공 URL)
                         failUrl: window.location.origin + "/payment/failure" + window.location.search, //TODO: 바꾸기 (실패 URL)
-                        // cancelUrl: window.location.origin + "/sandbox/cancel" + window.location.search, //TODO: 바꾸기 (취소 URL)
                         });
                   } catch (error) {
-                        // TODO: 에러 처리
                         console.error(error);
                   }
                   }}

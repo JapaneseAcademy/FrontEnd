@@ -39,6 +39,10 @@ type student = {
 }
 
 const Out_TimeTables = () => {
+  //현재 수강료 편집 상태
+  const [isEditSaleCost, setIsEditSaleCost] = useState<boolean>(false);
+  const [editedSaleCost, setEditedSaleCost] = useState<string>("");
+
   //모달 상태
   const [isAddStudentModalOpen, setIsAddStudentModalOpen] = useState<boolean>(false);
   const [isAddTimeTableModalOpen, setIsAddTimeTableModalOpen] = useState<boolean>(false);
@@ -94,6 +98,12 @@ const Out_TimeTables = () => {
     if (confirm("삭제된 분반은 되돌릴 수 없습니다. 분반을 삭제하시겠습니까?")) {
       deleteTimetable(selectedTimeTableId);
     }
+  }
+
+  // 현재 수강료 변경하는 함수
+  const handleSaleCostChange = () => {
+    // TODO: 현재 수강료 변경 api 호출
+    setIsEditSaleCost(!isEditSaleCost);
   }
 
 
@@ -171,8 +181,16 @@ const Out_TimeTables = () => {
           </DetailRow>
           <DetailRow className='sale-cost'>
             <DetailTitle>현재 수강료</DetailTitle>
-            <DetailContent style={{width:'69%'}}>{selectedTimeTable?.saleCost || 0} 원</DetailContent>
-            <AddStudentBtn>변경</AddStudentBtn>
+            {isEditSaleCost ? (
+              <DetailContentInput 
+                type="number" 
+                value={editedSaleCost} 
+                onChange={(e) => setEditedSaleCost(e.target.value)} 
+                style={{width: "69%"}}
+              />
+            ) : (
+              <DetailContent style={{width: "69%"}}>{selectedTimeTable?.saleCost || 0} 원</DetailContent>
+            )}            <AddStudentBtn onClick={handleSaleCostChange}>변경</AddStudentBtn>
           </DetailRow>
           <DetailRow className="students-num">
             <DetailTitle>학생 수</DetailTitle>
@@ -378,6 +396,7 @@ const DetailTitle = styled.div`
 const DetailContent = styled.div`
   font-size: 0.9rem;
   border: 1px solid #e1e1e1;
+  background-color: #f9f9f9;
   padding: 10px;
   width: 80%;
   border-radius: 5px;
@@ -390,6 +409,16 @@ const DetailContent = styled.div`
   //텍스트 줄바꿈 처리
   white-space: pre-line;
 `
+const DetailContentInput = styled.input`
+  font-size: 0.9rem;
+  border: 1px solid #e1e1e1;
+  background-color: #ffffff;
+  padding: 10px;
+  width: 80%;
+  border-radius: 5px;
+  outline: none;
+` 
+
 
 const ButtonRow = styled.div` 
   width: 90%;

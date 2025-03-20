@@ -17,6 +17,7 @@ const StudentsTable = ({ students }: StudentsTableProps) => {
          <TableHeader>
             <TableHeaderItem>이름</TableHeaderItem>
             <TableHeaderItem>전화번호</TableHeaderItem>
+            {/* <TableHeaderItem>강의유형</TableHeaderItem> */}
             <TableHeaderItem>결제일</TableHeaderItem>
          </TableHeader>
          <TableBody>
@@ -32,6 +33,7 @@ const StudentsTable = ({ students }: StudentsTableProps) => {
                   <TableRow key={index}>
                      <TableItem>{student.name}</TableItem>
                      <TableItem>{student.phone}</TableItem>
+                     {/* <TableItem>현장강의</TableItem> */}
                      <TableItem>{student.paymentDate}</TableItem>
                   </TableRow>
                ))
@@ -51,7 +53,7 @@ const Wrapper = styled.div`
    align-items: center;
    justify-content: center;
    border: 1px solid #e0e0e0;
-   margin-bottom: 20px;
+   margin-bottom: 30px;
    margin-top: 10px;
    border-radius: 5px;
 `
@@ -64,7 +66,7 @@ const TableHeader = styled.div`
 `
 
 const TableHeaderItem = styled.div`
-   width: 50%;
+   width: 40%;
    padding: 10px;
    font-size: 0.9rem;
    font-weight: 600;
@@ -102,7 +104,7 @@ const TableRow = styled.div`
 `
 
 const TableItem = styled.div`
-   width: 50%;
+   width: 40%;
    padding: 10px;
    font-size: 0.9rem;
    color: #333;
