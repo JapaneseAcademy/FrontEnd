@@ -5,6 +5,7 @@ import { getOrderId } from "../../apis/paymentAPI";
 import OrderInfoContainer from "./OrderInfoContainer";
 import { getUserInfo } from "../../apis/userAPI";
 import { v4 as uuidv4 } from 'uuid';
+import { convertCategoryToEng } from "../../utils/utils";
 
 
 type Amount = {
@@ -48,7 +49,7 @@ const PaymentPage = () => {
       window.scrollTo(0, 0);
       
       // 백엔드에서 orderId를 받아오기
-      getOrderId(parseInt(String(timeTableId)), String(courseType)).then((orderId) => {
+      getOrderId(parseInt(String(timeTableId)), convertCategoryToEng(String(courseType))).then((orderId) => {
          setOrderId(orderId);
       });
    }
