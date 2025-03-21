@@ -45,6 +45,13 @@ const AddStudentModal = ({ isOpen, onClose, timeTableId, courseTitle, courseTime
             alert("결제금액과 결제일을 입력해주세요.");
             return;
          }
+         //결제수단 입력 안했을 때
+         if (!paymentMethod) {
+            alert("결제수단을 입력해주세요.");
+            return;
+         }
+         //확인창 띄우기
+         
 
          if (confirm("선택한 학생을 분반에 등록하시겠습니까?")) {
             if(!timeTableId) {
