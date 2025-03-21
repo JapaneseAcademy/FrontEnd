@@ -453,10 +453,8 @@ const Reviewcard = styled.div`
 `;
 
 const ReviewImage = styled.img`
-  width: 100px;
-  height: 100px;
-  min-width: 100px;
-  min-height: 100px;
+  width: 120px;
+  height: 120px;
   aspect-ratio: 1/1;
   margin-right: 10px;
   object-fit: cover;
