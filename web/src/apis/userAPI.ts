@@ -36,7 +36,6 @@ export const getEnrollments = async () => {
          }
       }
       );
-      console.log(res.data);
       return res.data;
    } catch (error) {
       console.error(error);
@@ -54,7 +53,6 @@ export const getMyReviews = async () => {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`
          }  
       });
-      console.log("[getMyReviews]: ", res.data);
       return res.data;
    } catch (error) {
       console.error(error);
@@ -72,7 +70,6 @@ export const deleteMyReview = async (reviewId: number) => {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`
          }
       });
-      console.log(res.data);
       alert("후기가 삭제되었습니다.");
       window.location.reload();
       return res.data;

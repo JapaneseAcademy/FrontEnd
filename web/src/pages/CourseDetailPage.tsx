@@ -4,7 +4,7 @@ import styled from "styled-components";
 // import { HiOutlinePencilSquare } from "react-icons/hi2";
 import { getCourseReviewsByPage } from "../apis/reviewAPI";
 import { getCourseDetail } from "../apis/courseAPI";
-import { convertTags, convertTime, convertWeekday, numberWithCommas } from "../utils/utils";
+import { convertTags, convertTime, convertWeekday, extractMonth, numberWithCommas } from "../utils/utils";
 
 type Review = {
   reviewId: number;
@@ -48,6 +48,7 @@ const CourseDetailPage = () => {
   const [courseDetailImages, setCourseDetailImages] = useState<string[]>([]);
   const [courseTypes, setCourseTypes] = useState<string[]>([]);
   const [courseLevel, setCourseLevel] = useState<string>("");
+  const [courseDate, setCourseDate] = useState<string>("00월");
   //후기 정보들
   const [currentReviews, setCurrentReviews] = useState<Review[]>([]);
   const [totalPages, setTotalPages] = useState(1); // 총 페이지 수 상태 추가
@@ -93,10 +94,8 @@ const CourseDetailPage = () => {
     return convertedTimeTables.find((timeTable) => timeTable.timeTableId === timeTableId);
   }
 
-  ////중요!!! 신청하기 버튼 클릭 시 ///// 결제~~~!!
-  const handleBuyClick = () => {
 
-    
+  const handleBuyClick = () => {
     // 로그인 안되어있으면 alert
     if (!localStorage.getItem('accessToken')) {
       alert('로그인이 필요한 서비스입니다.');
@@ -121,6 +120,7 @@ const CourseDetailPage = () => {
 
     //1) 강의 상세정보 API 호출
     getCourseDetail(courseInfoId).then((data) => {
+      console.log("강의상세정보:", data);
       setCourseTypes(convertTags(data.live, data.online, data.recorded));
       setCourseTitle(data.title);
       setCourseSaleCost(data.course.saleCost);
@@ -128,6 +128,7 @@ const CourseDetailPage = () => {
       setCourseMainImage(data.mainImageUrl);
       setCourseDetailImages(data.descriptions);
       setCourseLevel(data.level);
+      setCourseDate(`${extractMonth(data.course.startDate)}월`);
 
       //분반 정보 세팅
       const convertedTimeTables = convertTimeTables(data.course.timeTables);
@@ -166,7 +167,7 @@ const CourseDetailPage = () => {
     <>
       <Wrapper>
         <CourseImage src={courseMainImage} alt="Course Image" />
-        <CourseTitle>{courseTitle}</CourseTitle>
+        <CourseTitle>[ {courseTitle} ] - {courseDate}반</CourseTitle>
         {/* baseCost와 saleCost가 다를 때 */}
         {courseBaseCost !== courseSaleCost ? 
           <CoursePrice><span>{numberWithCommas(courseBaseCost)}</span>{numberWithCommas(courseSaleCost)}원</CoursePrice>
