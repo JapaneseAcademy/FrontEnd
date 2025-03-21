@@ -32,7 +32,7 @@ const Course = ({ courseInfoId, courseImage, courseTitle, baseCost, saleCost, ta
             ))}
             <CourseTag style={{backgroundColor:'#61b58d'}}>{level}</CourseTag>
          </CourseTagContainer>
-         <CourseTitle>[ {courseTitle} ] - {extractMonthOnly(date)}월반</CourseTitle>
+         <CourseTitle>[ {courseTitle} ] - 4월반</CourseTitle>
          {/* saleCost와 baseCost가 다를 때 */}
          { saleCost !== baseCost 
          ? <CoursePrice><span>{numberWithCommas(baseCost)}</span>{numberWithCommas(saleCost)}원</CoursePrice>
