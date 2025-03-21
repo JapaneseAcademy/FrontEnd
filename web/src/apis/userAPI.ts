@@ -54,7 +54,7 @@ export const getMyReviews = async () => {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`
          }  
       });
-      console.log(res.data);
+      console.log("[getMyReviews]: ", res.data);
       return res.data;
    } catch (error) {
       console.error(error);

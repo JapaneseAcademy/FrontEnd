@@ -26,6 +26,7 @@ type Review = {
   createdDate: string;
   reviewTitle: string;
   best: boolean;
+  courseTitle: string;
 }
 
 const MyPage = () => {
@@ -117,7 +118,7 @@ const MyPage = () => {
           <Reviewcard className='review-card' key={review.reviewId} onClick={() => handleReviewClick(review.reviewId)}>
             <ReviewImage src={review.imageUrls[0] ?? "/images/no-image.png"} alt="Review Image" />
             <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: "5px" }}>
-              {/* <ReviewCourse> {courseTitle}</ReviewCourse> */} {/* TODO: courseTitle이 없어서 주석처리 */}
+              <ReviewCourse> {review.courseTitle}</ReviewCourse> 
               <ReviewTitle>
                 { review.best &&
                 <BestTag>BEST</BestTag> }
@@ -301,10 +302,8 @@ const Reviewcard = styled.div`
 `;
 
 const ReviewImage = styled.img`
-  width: 100px;
-  height: 100px;
-  min-width: 100px;
-  min-height: 100px;
+  width: 120px;
+  height: 120px;
   aspect-ratio: 1/1;
   margin-right: 10px;
   object-fit: cover;
