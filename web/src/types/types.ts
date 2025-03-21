@@ -7,4 +7,5 @@ export type course = {
     baseCost: number;
     saleCost: number;
     level: string;
+    date: string;
  }

@@ -25,6 +25,7 @@ const CoursesPage = () => {
     const fetchCourses = async () => {
       try {
         const data = await getCourseInfos();
+        console.log(data);  
         const formattedCourses = data.map((course: any) => ({
           courseInfoId: course.courseInfoId,
           courseImage: course.mainImageUrl,
@@ -33,6 +34,7 @@ const CoursesPage = () => {
           baseCost: course.baseCost,
           saleCost: course.saleCost,
           level: course.level,
+          date: course.date,
         }));
 
         setAllCourses(formattedCourses); // ✅ 전체 데이터 저장
@@ -109,6 +111,7 @@ const CoursesPage = () => {
                   baseCost={course.baseCost}
                   tags={course.tags}
                   level={course.level}
+                  date={course.date}
                 />
               ))}
             </CoursesContainer>

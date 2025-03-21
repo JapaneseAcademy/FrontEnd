@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { extractMonthOnly, numberWithCommas } from "../utils/utils";
 
 interface CourseProps {
    courseInfoId: number;
@@ -9,9 +10,10 @@ interface CourseProps {
    saleCost: number;
    tags: string[];
    level: string;
+   date: string;
 }
 
-const Course = ({ courseInfoId, courseImage, courseTitle, baseCost, saleCost, tags, level }: CourseProps) => {
+const Course = ({ courseInfoId, courseImage, courseTitle, baseCost, saleCost, tags, level, date }: CourseProps) => {
    const navigate = useNavigate();
 
    const handleCourseClick = () => {
@@ -19,10 +21,7 @@ const Course = ({ courseInfoId, courseImage, courseTitle, baseCost, saleCost, ta
    };
 
    //가격에 1000원 단위로 콤마 추가
-   const stringBaseCost = baseCost.toString();
-   const formattedBaseCost = stringBaseCost.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-   const stringSaleCost = saleCost.toString();
-   const formattedSaleCost = stringSaleCost.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+   console.log(date);
 
    return (
       <Wrapper onClick={handleCourseClick}>
@@ -33,12 +32,12 @@ const Course = ({ courseInfoId, courseImage, courseTitle, baseCost, saleCost, ta
             ))}
             <CourseTag style={{backgroundColor:'#61b58d'}}>{level}</CourseTag>
          </CourseTagContainer>
-         <CourseTitle>{courseTitle}</CourseTitle>
+         <CourseTitle>[ {courseTitle} ] - {extractMonthOnly(date)}월반</CourseTitle>
          {/* saleCost와 baseCost가 다를 때 */}
          { saleCost !== baseCost 
-         ? <CoursePrice><span>{formattedBaseCost}</span>{formattedSaleCost}원</CoursePrice>
+         ? <CoursePrice><span>{numberWithCommas(baseCost)}</span>{numberWithCommas(saleCost)}원</CoursePrice>
          :
-         <CoursePrice>{formattedBaseCost}원</CoursePrice> }      </Wrapper>
+         <CoursePrice>{numberWithCommas(baseCost)}원</CoursePrice> }      </Wrapper>
    );
 };
 

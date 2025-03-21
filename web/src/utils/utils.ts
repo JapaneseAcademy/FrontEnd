@@ -105,3 +105,15 @@ export const extractMonth = (date: string) => {
       return date.slice(5, 7);
    }
 }
+
+//2025-04 식으로 된 문자열을 넣으면, 4를 반환하는 함수
+export const extractMonthOnly = (date: string) => {
+   //04처럼 앞에 0이 붙어있는 경우, 0을 제거
+   if (date[5] === "0") {
+      return date[6];
+   }
+   //10, 11, 12인 경우, 그대로 반환
+   if (date[5] === "1") {
+      return date.slice(5, 7);
+   }
+}

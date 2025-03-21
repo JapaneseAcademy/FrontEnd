@@ -215,6 +215,7 @@ const CourseDetailPage = () => {
 
         <CourseDetailContainer id='course_detail_container'>
           <CourseDetailContent selected={selectedOption === "detail"}>
+            <CourseDetailImage src="/images/calendar-2025-4.jpeg" alt="Course Detail Image" />
             {courseDetailImages.map((image, index) => (
               <CourseDetailImage key={index} src={image} alt="Course Detail Image" />
             ))}
