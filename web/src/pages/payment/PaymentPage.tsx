@@ -48,7 +48,7 @@ const PaymentPage = () => {
       window.scrollTo(0, 0);
       
       // 백엔드에서 orderId를 받아오기
-      getOrderId(parseInt(String(timeTableId))).then((orderId) => {
+      getOrderId(parseInt(String(timeTableId)), String(courseType)).then((orderId) => {
          setOrderId(orderId);
       });
    }
