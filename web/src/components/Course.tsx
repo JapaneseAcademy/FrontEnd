@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { extractMonthOnly, numberWithCommas } from "../utils/utils";
+import {  numberWithCommas } from "../utils/utils";
 
 interface CourseProps {
    courseInfoId: number;
