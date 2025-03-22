@@ -17,7 +17,7 @@ const IntroductionPage = () => {
   return (
     <>
       <Helmet
-        title="예리한 일본어 - 학원 안내"
+        title="학원 안내 - 예리한 일본어"
         meta={[
             {
               name: "description",

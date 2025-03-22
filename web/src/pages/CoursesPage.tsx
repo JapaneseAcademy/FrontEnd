@@ -76,7 +76,7 @@ const CoursesPage = () => {
   return (
     <>
       <Helmet
-        title="예리한 일본어 - 강의 목록"
+        title="강의 목록 - 예리한 일본어"
         meta={[
             {
               name: "description",
