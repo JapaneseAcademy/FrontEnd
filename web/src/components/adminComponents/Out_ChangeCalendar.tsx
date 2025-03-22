@@ -37,11 +37,9 @@ const Out_ChangeCalendar = () => {
       <Wrapper>
          <CalendarImageContainer>
                <CalendarImage src={typeof calendarImage === 'string' ? calendarImage : ''}/>
-         </CalendarImageContainer>
-         <CalendarFormContainer>
-            <PhotoUploadButton>
+               <PhotoUploadButton>
                <label htmlFor="photoInput" style={{display:'flex', gap:'5px'}}>
-                  사진 업로드
+                  사진 변경
                </label>
                <input
                   id="photoInput"
@@ -57,6 +55,8 @@ const Out_ChangeCalendar = () => {
                   }
                />
             </PhotoUploadButton>
+         </CalendarImageContainer>
+         <CalendarFormContainer>
             <ChangeBtn onClick={handlePhotoUpload}>변경하기</ChangeBtn>
          </CalendarFormContainer>
       </Wrapper>
@@ -78,8 +78,10 @@ const CalendarImageContainer = styled.div`
    width: 70%;
    height: 100%;
    display: flex;
+   flex-direction: column;
    justify-content: center;
    align-items: center;
+   gap: 10px;
 `
 
 const CalendarFormContainer = styled.div`
@@ -119,7 +121,7 @@ const ChangeBtn = styled.button`
 `
 
 const PhotoUploadButton = styled.label`
-   width: 20%;
+   width: 10%;
    min-width: 100px;
    height: 40px;
    padding: 10px;
