@@ -114,3 +114,20 @@ export const deleteTimetable = async (timeTableId: number) => {
       alert("분반 삭제에 실패했습니다. 다시 시도해주세요.");
    }
 }
+
+// 수강생 삭제하는 api
+export const deleteStudent = async (enrollmentId: number) => {
+   try {
+      const response = await axios.delete(`${BASE_URL}/api/v1/admin/enrollments/${enrollmentId}`, {
+         headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+         },
+      });
+      alert("수강생이 삭제되었습니다.");
+      window.location.reload();
+      return response.data;
+   } catch (error: any) {
+      console.error(error);
+      alert("수강생 삭제에 실패했습니다.");
+   }
+}

@@ -32,7 +32,7 @@ type timeTable = {
 }
 
 type student = {
-  studentId: number;
+  enrollmentId: number;
   name: string;
   phone: string;
   paymentDate: string;
@@ -233,7 +233,7 @@ const CourseListContainer = styled.div`
   align-items: center;
   justify-content: flex-start;
   background-color: #ffffff;
-  width: 50%;
+  width: 40%;
   height: 100%;
   border-right: 1px solid #e1e1e1;
 `
@@ -353,7 +353,7 @@ const CourseDetailContainer = styled.div`
   align-items: center;
   justify-content: flex-start;
   background-color: #ffffff;
-  width: 50%;
+  width: 60%;
   height: 100%;
   border-right: 1px solid #e1e1e1;
   padding-top: 30px;

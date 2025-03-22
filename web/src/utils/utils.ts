@@ -117,3 +117,8 @@ export const extractMonthOnly = (date: string) => {
       return date.slice(5, 7);
    }
 }
+
+//전화번호 사이에 - 추가하는 함수
+export const addHyphenToPhoneNumber = (phone: string) => {
+   return phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+}
