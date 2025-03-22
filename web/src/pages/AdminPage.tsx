@@ -43,6 +43,8 @@ const AdminPage = () => {
          setSelectedItem('courseReviews');
       } else if (location.pathname === '/admin/youtube') {
          setSelectedItem('youtube');
+      } else if (location.pathname === '/admin/calendar') {
+         setSelectedItem('calendar');
       }
    }, [location.pathname])
    
@@ -85,6 +87,7 @@ const AdminPage = () => {
                   <CategoryTitle><MdOutlineDesktopWindows/>홈페이지 관리</CategoryTitle>
                   <Items>
                      <CategoryItem $isselected={selectedItem === 'youtube'} onClick={() => handleItemClick('youtube')}>- 대표 유튜브 영상 변경</CategoryItem>
+                     <CategoryItem $isselected={selectedItem === 'calendar'} onClick={() => handleItemClick('calendar')}>- 강의 일정 캘린더 변경</CategoryItem>
                   </Items>
                </Category>
                <div style={{fontSize:'10px', color:'#b3b3b3'}}>문의 : burittodance@naver.com</div>
