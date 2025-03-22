@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { getCourseReviewsByPage } from "../apis/reviewAPI";
 import { getCourseDetail } from "../apis/courseAPI";
 import { convertTags, convertTime, convertWeekday, extractMonth, numberWithCommas } from "../utils/utils";
+import { getCalendar } from "../apis/adminAPI/adminCalendarAPI";
 
 type Review = {
   reviewId: number;
@@ -49,6 +50,7 @@ const CourseDetailPage = () => {
   const [courseTypes, setCourseTypes] = useState<string[]>([]);
   const [courseLevel, setCourseLevel] = useState<string>("");
   const [courseDate, setCourseDate] = useState<string>("00월");
+  const [calendarImage, setCalendarImage] = useState<string>("");
   //후기 정보들
   const [currentReviews, setCurrentReviews] = useState<Review[]>([]);
   const [totalPages, setTotalPages] = useState(1); // 총 페이지 수 상태 추가
@@ -137,6 +139,12 @@ const CourseDetailPage = () => {
       //분반, 유형의 가장 첫번째 값으로 초기화
       setSelectedCourseType(convertTags(data.live, data.online, data.recorded)[0]);
       setSelectedTimeTableId(data.course.timeTables[0].timeTableId);
+
+      //2) 캘린더 이미지 불러오기
+      getCalendar().then((data) => {
+        setCalendarImage(data.calendar);
+      }
+      );
     });
     
   }, [courseInfoId]);
@@ -215,9 +223,9 @@ const CourseDetailPage = () => {
 
         <CourseDetailContainer id='course_detail_container'>
           <CourseDetailContent selected={selectedOption === "detail"}>
-            <CourseDetailImage src="/images/calendar-2025-4.jpeg" alt="Course Detail Image" />
+            <CourseDetailImage src={calendarImage} alt="calendar-image" />
             {courseDetailImages.map((image, index) => (
-              <CourseDetailImage key={index} src={image} alt="Course Detail Image" />
+              <CourseDetailImage key={index} src={image} alt="Course-Detail-Image" />
             ))}
           </CourseDetailContent>
 

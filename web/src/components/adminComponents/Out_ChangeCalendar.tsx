@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { useEffect, useState } from "react"
-import { changeAdminCalendar, getAdminCalendar } from "../../apis/adminAPI/adminCalendarAPI";
+import { changeAdminCalendar, getCalendar } from "../../apis/adminAPI/adminCalendarAPI";
 
 const Out_ChangeCalendar = () => {
    const [calendarImage, setCalendarImage] = useState<string>('/images/no-image.png');
@@ -27,7 +27,7 @@ const Out_ChangeCalendar = () => {
 
    useEffect(() => {
       // 캘린더 이미지 가져오기
-      getAdminCalendar().then((data) => {     
+      getCalendar().then((data) => {     
          setCalendarImage(data.calendar);
       });
    }, []);
