@@ -92,12 +92,10 @@ const fadeInUp = keyframes`
 
 const MainBanner = styled.img`
   width: 100%;
-  aspect-ratio: 14/15;
   height: auto;
   object-fit: cover;
   object-position: center;
   margin-bottom: 30px;
-  margin-top: 30px;
 
   /* 애니메이션 적용 */
   animation: ${fadeInUp} 0.5s ease-out;
