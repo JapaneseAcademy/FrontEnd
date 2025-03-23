@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { useEffect, useState } from "react"
 // import { FiPlus } from "react-icons/fi"
 import CourseFilter from "./filters/CourseFilter.tsx"
-import { deleteTimetable, getAdminCoursesByMonth, getStudentsByTimetableId } from "../../apis/adminAPI/adminTimeTableAPI.ts"
+import { changeCoursePrice, deleteTimetable, getAdminCoursesByMonth, getStudentsByTimetableId } from "../../apis/adminAPI/adminTimeTableAPI.ts"
 import { convertTime, convertWeekday } from "../../utils/utils.ts"
 import { useNavigate } from "react-router-dom"
 import StudentsTable from "./etc/StudentsTable.tsx"
@@ -104,9 +104,30 @@ const Out_TimeTables = () => {
 
   // 현재 수강료 변경하는 함수
   const handleSaleCostChange = () => {
-    // TODO: 현재 수강료 변경 api 호출
-    console.log(editedSaleCost);
-    setIsEditSaleCost(!isEditSaleCost);
+    //수정 모드가 아니면, 수정 모드로 변경
+    if(!isEditSaleCost) {
+      setIsEditSaleCost(true);
+      setEditedSaleCost(selectedTimeTable?.saleCost.toString() || "");
+    }
+    // 수정모드였으면, 가격 수정 api 호출
+    else {
+      if(selectedTimeTableId === null) {
+        alert("수정할 분반을 선택해주세요.");
+        return;
+      }
+      if (confirm("수강료를 변경하시겠습니까?")) {
+        changeCoursePrice(selectedTimeTableId, parseInt(editedSaleCost)).then(() => {
+          setIsEditSaleCost(false);
+          //수정된 수강료로 업데이트
+          setTimeTables(timeTables.map((table) => {
+            if(table.timeTableId === selectedTimeTableId) {
+              return {...table, saleCost: parseInt(editedSaleCost)};
+            }
+            return table;
+          }));
+        });
+      }
+    }
   }
 
 

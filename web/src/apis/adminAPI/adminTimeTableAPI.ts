@@ -133,20 +133,20 @@ export const deleteStudent = async (enrollmentId: number) => {
 }
 
 //강의 가격 수정하는 api
-export const changeCoursePrice = async (courseInfoId: number, price: number) => {
+export const changeCoursePrice = async (timeTableId: number|null, cost: number) => {
    try {
-      const response = await axios.put(`${BASE_URL}/api/v1/admin/courses/${courseInfoId}`, {
-         price
+      const response = await axios.put(`${BASE_URL}/api/v1/admin/time-tables/${timeTableId}`, {
+         cost
       }, {
          headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
          },
       });
-      alert("가격이 수정되었습니다.");
-      window.location.reload();
+      alert("수강료가 변경되었습니다.");
+      // window.location.reload();
       return response.data;
    } catch (error: any) {
       console.error(error);
-      alert("가격 수정에 실패했습니다.");
+      alert("수강료 변경에 실패했습니다.");
    }
 }
