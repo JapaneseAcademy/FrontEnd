@@ -105,6 +105,7 @@ const Out_TimeTables = () => {
   // 현재 수강료 변경하는 함수
   const handleSaleCostChange = () => {
     // TODO: 현재 수강료 변경 api 호출
+    console.log(editedSaleCost);
     setIsEditSaleCost(!isEditSaleCost);
   }
 

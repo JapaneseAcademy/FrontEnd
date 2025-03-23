@@ -131,3 +131,22 @@ export const deleteStudent = async (enrollmentId: number) => {
       alert("수강생 삭제에 실패했습니다.");
    }
 }
+
+//강의 가격 수정하는 api
+export const changeCoursePrice = async (courseInfoId: number, price: number) => {
+   try {
+      const response = await axios.put(`${BASE_URL}/api/v1/admin/courses/${courseInfoId}`, {
+         price
+      }, {
+         headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+         },
+      });
+      alert("가격이 수정되었습니다.");
+      window.location.reload();
+      return response.data;
+   } catch (error: any) {
+      console.error(error);
+      alert("가격 수정에 실패했습니다.");
+   }
+}
