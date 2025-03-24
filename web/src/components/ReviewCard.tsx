@@ -21,7 +21,9 @@ const ReviewCard = ({ reviewId, imageUrls, review, writer, createdDate, reviewTi
 
    return (
       <Wrapper key={reviewId} onClick={handleReviewClick}>
-         <ReviewImage src={imageUrls[0]} alt="review-image"/>
+         { imageUrls[0] == null 
+         ? <ReviewImage src="/images/no-image.png" alt="reviews-review-image"/> 
+         : <ReviewImage src={imageUrls[0]} alt="reviews-review-image"/> }
          <ReviewContent>
             {best && <BestTag>BEST</BestTag> }
             <ReviewTitle>{reviewTitle}</ReviewTitle>

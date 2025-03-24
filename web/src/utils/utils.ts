@@ -93,3 +93,32 @@ export const convertCategoryToEng = (category: string|null) => {
 export const convertTimeToFull = (time: string) => {
    return time + ":00";
 }
+
+//2025-04-01 식으로 된 문자열을 넣으면, 월만 반환하는 함수(04면 문자열 4 반환, 12면 문자열 12 반환)
+export const extractMonth = (date: string) => {
+   //04처럼 앞에 0이 붙어있는 경우, 0을 제거
+   if (date[5] === "0") {
+      return date[6];
+   }
+   //10, 11, 12인 경우, 그대로 반환
+   if (date[5] === "1") {
+      return date.slice(5, 7);
+   }
+}
+
+//2025-04 식으로 된 문자열을 넣으면, 4를 반환하는 함수
+export const extractMonthOnly = (date: string) => {
+   //04처럼 앞에 0이 붙어있는 경우, 0을 제거
+   if (date[5] === "0") {
+      return date[6];
+   }
+   //10, 11, 12인 경우, 그대로 반환
+   if (date[5] === "1") {
+      return date.slice(5, 7);
+   }
+}
+
+//전화번호 사이에 - 추가하는 함수
+export const addHyphenToPhoneNumber = (phone: string) => {
+   return phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+}

@@ -7,7 +7,7 @@ interface ModalProps {
    isOpen: boolean;
    onClose: () => void;
 
-   timeTableId: number;
+   timeTableId: number | null;
    courseTitle: string;
    courseTime: string;
 }
@@ -45,8 +45,19 @@ const AddStudentModal = ({ isOpen, onClose, timeTableId, courseTitle, courseTime
             alert("결제금액과 결제일을 입력해주세요.");
             return;
          }
+         //결제수단 입력 안했을 때
+         if (!paymentMethod) {
+            alert("결제수단을 입력해주세요.");
+            return;
+         }
+         //확인창 띄우기
+         
 
          if (confirm("선택한 학생을 분반에 등록하시겠습니까?")) {
+            if(!timeTableId) {
+               alert("분반을 선택해주세요.");
+               return;
+            }
             // 학생 수동 등록 api 호출
             addStudentToCourse(timeTableId, selectedStudentId, selectedCourseType, parseInt(paymentAmount), paymentMethod, paymentDate);
             // 선택된 값들 초기화
@@ -129,7 +140,7 @@ const AddStudentModal = ({ isOpen, onClose, timeTableId, courseTitle, courseTime
                <InfoRow>
                   <InfoTitle>강의유형</InfoTitle>
                   <InfoDropDown value={selectedCourseType} onChange={handleCourseTypeChange}>
-                     <option value="">강의 선택</option>
+                     <option value="">선택</option>
                      <option value="LIVE">현장강의</option>
                      <option value="ONLINE">온라인</option>
                      <option value="RECORDED">동영상</option>

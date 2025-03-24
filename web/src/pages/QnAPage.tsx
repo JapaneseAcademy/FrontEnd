@@ -13,7 +13,7 @@ const QnAPage = () => {
   return (
     <>
       <Helmet
-        title="예리한 일본어 - FAQ"
+        title="FAQ - 예리한 일본어"
         meta={[
             {
               name: "description",

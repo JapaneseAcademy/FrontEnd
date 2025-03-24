@@ -31,6 +31,7 @@ import PaymentPage from './pages/payment/PaymentPage';
 import PaymentSuccess from './pages/payment/PaymentSuccess';
 import PaymentFailure from './pages/payment/PaymentFailure';
 import PaymentLoading from './pages/payment/PaymentLoading';
+import Out_ChangeCalendar from './components/adminComponents/Out_ChangeCalendar';
 
 function App() {
   const location = useLocation();
@@ -56,6 +57,7 @@ function App() {
             <Route path="timetables" element={<Out_TimeTables />} />
             <Route path="mainReviews" element={<Out_MainBestReviews />} />
             <Route path="youtube" element={<Out_ChangeYoutube />} />
+            <Route path="calendar" element={<Out_ChangeCalendar />} />
           </Route>
           <Route path="*" element={<div>Not Found</div>} />
           <Route path="/admin/login" element={<AdminLoginPage />} />

@@ -6,7 +6,7 @@ import { writeReview } from "../apis/reviewAPI";
 
 const MAX_PHOTOS = 3;
 const MAX_TITLE_LENGTH = 30;
-const MAX_TEXT_LENGTH = 500;
+const MAX_TEXT_LENGTH = 1000;
 
 const WriteReviewPage = () => {
    const [photos, setPhotos] = useState<File[]>([]);
@@ -48,6 +48,7 @@ const WriteReviewPage = () => {
             return;
          }
 
+         if(confirm('후기를 등록하시겠습니까?') === false) return;
          // review 작성 api
          writeReview(enrollmentId, reviewTitle, reviewText, isAnonymous, photos, navigate, courseInfoId);
          
@@ -126,7 +127,7 @@ const WriteReviewPage = () => {
             <Title>후기 작성</Title>
             <TitleInput placeholder="후기 제목을 작성해주세요(최대 30자)" value={reviewTitle} onChange={handleTitleChange}/>
             <ReviewInput
-               placeholder="후기를 작성해주세요(최대 500자)"
+               placeholder="후기를 작성해주세요(최대 1000자)"
                value={reviewText}
                onChange={handleTextChange} 
             />

@@ -64,7 +64,7 @@ const ReviewsPage = () => {
    return (
       <>
          <Helmet
-            title="예리한 일본어 - 수강생 후기"
+            title="수강생 후기 - 예리한 일본어"
             meta={[
                {
                   name: "description",

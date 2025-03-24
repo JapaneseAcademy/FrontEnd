@@ -18,6 +18,7 @@ const DownCourses = () => {
             baseCost: course.baseCost,
             saleCost: course.saleCost,
             level: course.level,
+            date: course.date,
          }));
          setCourses(formattedCourses);
       });

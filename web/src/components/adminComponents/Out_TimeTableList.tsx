@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { useEffect, useState } from "react"
 // import { FiPlus } from "react-icons/fi"
 import CourseFilter from "./filters/CourseFilter.tsx"
-import { getAdminCoursesByMonth, getStudentsByTimetableId } from "../../apis/adminAPI/adminTimeTableAPI.ts"
+import { changeCoursePrice, deleteTimetable, getAdminCoursesByMonth, getStudentsByTimetableId } from "../../apis/adminAPI/adminTimeTableAPI.ts"
 import { convertTime, convertWeekday } from "../../utils/utils.ts"
 import { useNavigate } from "react-router-dom"
 import StudentsTable from "./etc/StudentsTable.tsx"
@@ -27,21 +27,28 @@ type timeTable = {
   startDate: string;
   title: string;
   studentCount: number;
+  baseCost: number;
+  saleCost: number;
 }
 
 type student = {
-  studentId: number;
+  enrollmentId: number;
   name: string;
   phone: string;
   paymentDate: string;
+  category: string;
 }
 
 const Out_TimeTables = () => {
+  //현재 수강료 편집 상태
+  const [isEditSaleCost, setIsEditSaleCost] = useState<boolean>(false);
+  const [editedSaleCost, setEditedSaleCost] = useState<string>("");
+
   //모달 상태
   const [isAddStudentModalOpen, setIsAddStudentModalOpen] = useState<boolean>(false);
   const [isAddTimeTableModalOpen, setIsAddTimeTableModalOpen] = useState<boolean>(false);
 
-  const [selectedTimeTableId, setSelectedTimeTableId] = useState<number>(1);
+  const [selectedTimeTableId, setSelectedTimeTableId] = useState<number|null>(null);
   const [timeTables, setTimeTables] = useState<timeTable[]>([]);
 
   const [selectedYear, setSelectedYear] = useState<string>("2025");
@@ -68,6 +75,7 @@ const Out_TimeTables = () => {
   const handleTitmeTableClick = (timeTableId: number) => {
     setSelectedTimeTableId(timeTableId);
     getStudentsByTimetableId(timeTableId).then((data) => {
+      console.log(data);
       setStudents(data);
     }
     );
@@ -75,8 +83,51 @@ const Out_TimeTables = () => {
 
   //학생 수동 등록하는 함수
   const handleAddStudent = () => {
+    if(selectedTimeTableId === null) {
+      alert("학생을 등록할 분반을 선택해주세요.");
+      return;
+    }
     //수동 등록 모달 열기
     setIsAddStudentModalOpen(true);
+  }
+
+  //분반 삭제
+  const handleDeleteTimeTable = () => {
+    if(selectedTimeTableId === null) {
+      alert("삭제할 분반을 선택해주세요.");
+      return;
+    }
+    if (confirm("삭제된 분반은 되돌릴 수 없습니다. 분반을 삭제하시겠습니까?")) {
+      deleteTimetable(selectedTimeTableId);
+    }
+  }
+
+  // 현재 수강료 변경하는 함수
+  const handleSaleCostChange = () => {
+    //수정 모드가 아니면, 수정 모드로 변경
+    if(!isEditSaleCost) {
+      setIsEditSaleCost(true);
+      setEditedSaleCost(selectedTimeTable?.saleCost.toString() || "");
+    }
+    // 수정모드였으면, 가격 수정 api 호출
+    else {
+      if(selectedTimeTableId === null) {
+        alert("수정할 분반을 선택해주세요.");
+        return;
+      }
+      if (confirm("수강료를 변경하시겠습니까?")) {
+        changeCoursePrice(selectedTimeTableId, parseInt(editedSaleCost)).then(() => {
+          setIsEditSaleCost(false);
+          //수정된 수강료로 업데이트
+          setTimeTables(timeTables.map((table) => {
+            if(table.timeTableId === selectedTimeTableId) {
+              return {...table, saleCost: parseInt(editedSaleCost)};
+            }
+            return table;
+          }));
+        });
+      }
+    }
   }
 
 
@@ -91,13 +142,14 @@ const Out_TimeTables = () => {
         startDate: timeTable.startDate,
         title: timeTable.title,
         studentCount: timeTable.studentCount,
+        baseCost: timeTable.baseCost,
+        saleCost: timeTable.saleCost
       }));
       setTimeTables(formattedTimeTables);
     }
     );
 
   }, [selectedYear, selectedMonth]);
-
 
   return (
     <Wrapper>
@@ -132,17 +184,34 @@ const Out_TimeTables = () => {
         </CoursesTable>
       </CourseListContainer>
 
-      <CourseDetailContainer id="course-detail-container">
+      <CourseDetailContainer id="timetable-detail-container">
         <TimeTableContent>
           <DetailRow className='course-title'>
             <DetailTitle>강의명</DetailTitle>
-            <DetailContent>{selectedTimeTable?.title || "강의 없음"}</DetailContent>
+            <DetailContent>{selectedTimeTable?.title || ""}</DetailContent>
           </DetailRow>
-          <DetailRow className='course-timetables'>
+          <DetailRow className='timetables'>
             <DetailTitle>분반</DetailTitle>
-            <DetailContent>{selectedTimeTable ? converTimeTable(selectedTimeTable) : "분반 정보 없음"}</DetailContent>
+            <DetailContent>{selectedTimeTable ? converTimeTable(selectedTimeTable) : ""}</DetailContent>
           </DetailRow>
-          <DetailRow className="course-students">
+          <DetailRow className='base-cost'>
+            <DetailTitle>기본 수강료</DetailTitle>
+            <DetailContent>{selectedTimeTable?.baseCost || 0} 원</DetailContent>
+          </DetailRow>
+          <DetailRow className='sale-cost'>
+            <DetailTitle>현재 수강료</DetailTitle>
+            {isEditSaleCost ? (
+              <DetailContentInput 
+                type="number" 
+                value={editedSaleCost} 
+                onChange={(e) => setEditedSaleCost(e.target.value)} 
+                style={{width: "69%"}}
+              />
+            ) : (
+              <DetailContent style={{width: "69%"}}>{selectedTimeTable?.saleCost || 0} 원</DetailContent>
+            )}            <AddStudentBtn onClick={handleSaleCostChange}>변경</AddStudentBtn>
+          </DetailRow>
+          <DetailRow className="students-num">
             <DetailTitle>학생 수</DetailTitle>
             <DetailContent>{selectedTimeTable?.studentCount || 0} 명</DetailContent>
           </DetailRow>
@@ -152,13 +221,14 @@ const Out_TimeTables = () => {
           <AddStudentBtn onClick={handleAddStudent}><FaPlus size={10} color='white'/>학생 수동 등록</AddStudentBtn>
         </ButtonRow>
         <StudentsTable students={students} />
+        <DeleteTimeTableBtn onClick={handleDeleteTimeTable}>분반 삭제</DeleteTimeTableBtn>
       </CourseDetailContainer>
 
 
       {/* 강의 추가 모달 */}
       <AddTimeTableModal isOpen={isAddTimeTableModalOpen} onClose={() => setIsAddTimeTableModalOpen(false)}/>
       {/* 학생 수동 등록 모달 */}
-      <AddStudentModal isOpen={isAddStudentModalOpen} onClose={() => setIsAddStudentModalOpen(false)} timeTableId={selectedTimeTableId} courseTitle={selectedTimeTable?.title || "강의 없음"} courseTime={selectedTimeTable ? converTimeTable(selectedTimeTable) : "분반 정보 없음"}/>
+      <AddStudentModal isOpen={isAddStudentModalOpen} onClose={() => setIsAddStudentModalOpen(false)} timeTableId={selectedTimeTableId} courseTitle={selectedTimeTable?.title || ""} courseTime={selectedTimeTable ? converTimeTable(selectedTimeTable) : ""}/>
 
     </Wrapper>
   )
@@ -185,7 +255,7 @@ const CourseListContainer = styled.div`
   align-items: center;
   justify-content: flex-start;
   background-color: #ffffff;
-  width: 50%;
+  width: 40%;
   height: 100%;
   border-right: 1px solid #e1e1e1;
 `
@@ -305,7 +375,7 @@ const CourseDetailContainer = styled.div`
   align-items: center;
   justify-content: flex-start;
   background-color: #ffffff;
-  width: 50%;
+  width: 60%;
   height: 100%;
   border-right: 1px solid #e1e1e1;
   padding-top: 30px;
@@ -317,7 +387,7 @@ const CourseDetailContainer = styled.div`
 
 const TimeTableContent = styled.div`
   width: 90%;
-  min-height: 40%;
+  /* min-height: 35%; */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -326,7 +396,7 @@ const TimeTableContent = styled.div`
 `
 
 const DetailRow = styled.div`
-  width: 85%;
+  width: 90%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -345,6 +415,7 @@ const DetailTitle = styled.div`
 const DetailContent = styled.div`
   font-size: 0.9rem;
   border: 1px solid #e1e1e1;
+  background-color: #f9f9f9;
   padding: 10px;
   width: 80%;
   border-radius: 5px;
@@ -357,6 +428,16 @@ const DetailContent = styled.div`
   //텍스트 줄바꿈 처리
   white-space: pre-line;
 `
+const DetailContentInput = styled.input`
+  font-size: 0.9rem;
+  border: 1px solid #e1e1e1;
+  background-color: #ffffff;
+  padding: 10px;
+  width: 80%;
+  border-radius: 5px;
+  outline: none;
+` 
+
 
 const ButtonRow = styled.div` 
   width: 90%;
@@ -382,6 +463,24 @@ const AddStudentBtn = styled.button`
   
   &:hover {
     background-color: #201a00;
+  }
+`
+
+const DeleteTimeTableBtn = styled.button`
+  width: 90%;
+  padding: 10px;
+  background-color: #ff5e5e;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: #ffffff; 
+
+  &:hover {
+    background-color: #ff0000;
   }
 `
 

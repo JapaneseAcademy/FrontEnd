@@ -10,7 +10,7 @@ import { loadingAtom } from "../recoil/loadingAtom";
 
 const AdminPage = () => {
    const location = useLocation();
-   const [selectedItem, setSelectedItem] = useState<string>('student');
+   const [selectedItem, setSelectedItem] = useState<string>('');
    const setIsLoading = useSetRecoilState(loadingAtom);
 
    const navigate = useNavigate();
@@ -18,6 +18,11 @@ const AdminPage = () => {
    const handleItemClick = (path: string) => {
       navigate(path);
       setSelectedItem(path);
+   }
+
+   const handleCompanyClick = () => {
+      //새 창 열기
+      window.open('https://www.yeri-jp.com');
    }
 
    useEffect(() => {
@@ -43,6 +48,8 @@ const AdminPage = () => {
          setSelectedItem('courseReviews');
       } else if (location.pathname === '/admin/youtube') {
          setSelectedItem('youtube');
+      } else if (location.pathname === '/admin/calendar') {
+         setSelectedItem('calendar');
       }
    }, [location.pathname])
    
@@ -55,7 +62,7 @@ const AdminPage = () => {
             <Company onClick={() => navigate('/admin')}>
                <CompanyLogo/>
                <CompanyTitle>
-                  <span style={{fontSize:'1.2rem', fontWeight:'bold'}}>예리한 일본어</span>
+                  <span style={{fontSize:'1.2rem', fontWeight:'bold'}} onClick={handleCompanyClick}>예리한 일본어</span>
                   <span style={{fontSize:'0.8rem', color:'#5d5d5d'}}>관리자용</span>
                </CompanyTitle>
             </Company>
@@ -85,6 +92,7 @@ const AdminPage = () => {
                   <CategoryTitle><MdOutlineDesktopWindows/>홈페이지 관리</CategoryTitle>
                   <Items>
                      <CategoryItem $isselected={selectedItem === 'youtube'} onClick={() => handleItemClick('youtube')}>- 대표 유튜브 영상 변경</CategoryItem>
+                     <CategoryItem $isselected={selectedItem === 'calendar'} onClick={() => handleItemClick('calendar')}>- 강의 일정 캘린더 변경</CategoryItem>
                   </Items>
                </Category>
                <div style={{fontSize:'10px', color:'#b3b3b3'}}>문의 : burittodance@naver.com</div>

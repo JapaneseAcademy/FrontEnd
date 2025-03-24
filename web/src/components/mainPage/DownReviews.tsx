@@ -36,10 +36,13 @@ const DownReviews = () => {
             <CourseTitle>{review.courseTitle}</CourseTitle>
             <ReviewTitle>{review.reviewTitle}</ReviewTitle>
             <ReviewImages>
-               {/* 4개 이상이면 4개까지만, 이하면 그대로 표시 */}
-               {review.imageUrls.slice(0, 4).map((url, index) => (
-                  <ReviewImage key={index} src={url} alt='review-image' />
-               ))}
+               {/* 리뷰 이미지 없으면 no-image.png 표시 */}
+               {review.imageUrls[0] == null 
+                  ? <ReviewImage src='/images/no-image.png' alt='no-image' />
+                  : review.imageUrls.slice(0, 4).map((url, index) => (
+                     <ReviewImage key={index} src={url} alt='review-image' />
+                  ))
+               }
             </ReviewImages>
             <ReviewText>{review.review}</ReviewText>
             <div style={{display: 'flex', justifyContent: 'space-between'}}>

@@ -2,7 +2,7 @@ import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 //년/월로 해당하는 timeTable 불러오는 api
-export const getAdminCoursesByMonth = async (date: string | '2025-04', navigate: (path: string) => void) => {
+export const getAdminCoursesByMonth = async (date: string, navigate: (path: string) => void) => {
    //토큰 없으면 로그인 페이지로 이동
    if (!localStorage.getItem("accessToken")) {
       alert("관리자 로그인이 필요합니다.");
@@ -95,5 +95,58 @@ export const createTimetable = async (courseInfoId: number, date: string, timeBl
       console.error(error);
       alert("분반 생성에 실패했습니다. 다시 시도해주세요.");
       return false;
+   }
+}
+
+// 분반 삭제하는 api
+export const deleteTimetable = async (timeTableId: number) => {
+   try {
+      const response = await axios.delete(`${BASE_URL}/api/v1/admin/time-tables/${timeTableId}`, {
+         headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+         },
+      });
+      alert("분반이 삭제되었습니다.");
+      window.location.reload();
+      return response.data;
+   } catch (error: any) {
+      console.error(error);
+      alert("분반 삭제에 실패했습니다. 다시 시도해주세요.");
+   }
+}
+
+// 수강생 삭제하는 api
+export const deleteStudent = async (enrollmentId: number) => {
+   try {
+      const response = await axios.delete(`${BASE_URL}/api/v1/admin/enrollments/${enrollmentId}`, {
+         headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+         },
+      });
+      alert("수강생이 삭제되었습니다.");
+      window.location.reload();
+      return response.data;
+   } catch (error: any) {
+      console.error(error);
+      alert("수강생 삭제에 실패했습니다.");
+   }
+}
+
+//강의 가격 수정하는 api
+export const changeCoursePrice = async (timeTableId: number|null, cost: number) => {
+   try {
+      const response = await axios.put(`${BASE_URL}/api/v1/admin/time-tables/${timeTableId}`, {
+         cost
+      }, {
+         headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+         },
+      });
+      alert("수강료가 변경되었습니다.");
+      // window.location.reload();
+      return response.data;
+   } catch (error: any) {
+      console.error(error);
+      alert("수강료 변경에 실패했습니다.");
    }
 }

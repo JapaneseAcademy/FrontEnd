@@ -4,7 +4,8 @@ import styled from "styled-components";
 // import { HiOutlinePencilSquare } from "react-icons/hi2";
 import { getCourseReviewsByPage } from "../apis/reviewAPI";
 import { getCourseDetail } from "../apis/courseAPI";
-import { convertTags, convertTime, convertWeekday, numberWithCommas } from "../utils/utils";
+import { convertTags, convertTime, convertWeekday, extractMonth, numberWithCommas } from "../utils/utils";
+import { getCalendar } from "../apis/adminAPI/adminCalendarAPI";
 
 type Review = {
   reviewId: number;
@@ -48,6 +49,8 @@ const CourseDetailPage = () => {
   const [courseDetailImages, setCourseDetailImages] = useState<string[]>([]);
   const [courseTypes, setCourseTypes] = useState<string[]>([]);
   const [courseLevel, setCourseLevel] = useState<string>("");
+  const [courseDate, setCourseDate] = useState<string>("00월");
+  const [calendarImage, setCalendarImage] = useState<string>("");
   //후기 정보들
   const [currentReviews, setCurrentReviews] = useState<Review[]>([]);
   const [totalPages, setTotalPages] = useState(1); // 총 페이지 수 상태 추가
@@ -88,19 +91,20 @@ const CourseDetailPage = () => {
     setSelectedCourseType(e.target.value);
   };
 
-  ////중요!!! 신청하기 버튼 클릭 시 ///// 결제~~~!!
-  const handleBuyClick = () => {
+  //timeTableId 넣으면 timeTable을 반환
+  const findTimeTable = (timeTableId: number) => {
+    return convertedTimeTables.find((timeTable) => timeTable.timeTableId === timeTableId);
+  }
 
-    
+
+  const handleBuyClick = () => {
     // 로그인 안되어있으면 alert
     if (!localStorage.getItem('accessToken')) {
       alert('로그인이 필요한 서비스입니다.');
       return;
     }
 
-    alert("이동할 결제 페이지는 테스트 페이지입니다. 기능 테스트 중이니 실제 결제는 절대로 하지 마세요.");
-
-    navigate(`/payment?courseInfoId=${courseInfoId}&timeTableId=${selectedTimeTableId}&category=${selectedCourseType}&courseTitle=${courseTitle}&coursePrice=${courseSaleCost}`);
+    navigate(`/payment?courseInfoId=${courseInfoId}&timeTableId=${selectedTimeTableId}&category=${selectedCourseType}&courseTitle=${courseTitle}&coursePrice=${courseSaleCost}&timeTables=${findTimeTable(selectedTimeTableId)?.timeTable}`);
   }
 
   //timeTables를 한 분반(timeTable)당 하나의 문자열로 바꾸는 함수
@@ -114,10 +118,11 @@ const CourseDetailPage = () => {
 
   useEffect(() => {
     // 페이지 로드 시 상단으로 이동
-    // window.scrollTo(0, 0); // 완성 시에 활성화. 개발할때는 불편해서 {todo}
+    window.scrollTo(0, 0); // 완성 시에 활성화. 개발할때는 불편해서 {todo}
 
     //1) 강의 상세정보 API 호출
     getCourseDetail(courseInfoId).then((data) => {
+      console.log("강의상세정보:", data);
       setCourseTypes(convertTags(data.live, data.online, data.recorded));
       setCourseTitle(data.title);
       setCourseSaleCost(data.course.saleCost);
@@ -125,6 +130,7 @@ const CourseDetailPage = () => {
       setCourseMainImage(data.mainImageUrl);
       setCourseDetailImages(data.descriptions);
       setCourseLevel(data.level);
+      setCourseDate(`${extractMonth(data.course.startDate)}월`);
 
       //분반 정보 세팅
       const convertedTimeTables = convertTimeTables(data.course.timeTables);
@@ -133,6 +139,12 @@ const CourseDetailPage = () => {
       //분반, 유형의 가장 첫번째 값으로 초기화
       setSelectedCourseType(convertTags(data.live, data.online, data.recorded)[0]);
       setSelectedTimeTableId(data.course.timeTables[0].timeTableId);
+
+      //2) 캘린더 이미지 불러오기
+      getCalendar().then((data) => {
+        setCalendarImage(data.calendar);
+      }
+      );
     });
     
   }, [courseInfoId]);
@@ -163,7 +175,7 @@ const CourseDetailPage = () => {
     <>
       <Wrapper>
         <CourseImage src={courseMainImage} alt="Course Image" />
-        <CourseTitle>{courseTitle}</CourseTitle>
+        <CourseTitle>[ {courseTitle} ] - {courseDate}반</CourseTitle>
         {/* baseCost와 saleCost가 다를 때 */}
         {courseBaseCost !== courseSaleCost ? 
           <CoursePrice><span>{numberWithCommas(courseBaseCost)}</span>{numberWithCommas(courseSaleCost)}원</CoursePrice>
@@ -211,8 +223,9 @@ const CourseDetailPage = () => {
 
         <CourseDetailContainer id='course_detail_container'>
           <CourseDetailContent selected={selectedOption === "detail"}>
+            <CourseDetailImage src={calendarImage} alt="calendar-image" />
             {courseDetailImages.map((image, index) => (
-              <CourseDetailImage key={index} src={image} alt="Course Detail Image" />
+              <CourseDetailImage key={index} src={image} alt="Course-Detail-Image" />
             ))}
           </CourseDetailContent>
 
@@ -259,8 +272,7 @@ const CourseDetailPage = () => {
 
               {/* 하단 고정 버튼 */}
       <FixedButtonContainer>
-        {/* <CartButton id="cart_btn">장바구니</CartButton> */}
-        <BuyButton id="buy_btn" onClick={handleBuyClick}>신청하기</BuyButton>
+        <BuyButton id="buy_btn" onClick={handleBuyClick}>결제하기</BuyButton>
       </FixedButtonContainer>
       </Wrapper>
 
@@ -451,10 +463,8 @@ const Reviewcard = styled.div`
 `;
 
 const ReviewImage = styled.img`
-  width: 100px;
-  height: 100px;
-  min-width: 100px;
-  min-height: 100px;
+  width: 120px;
+  height: 120px;
   aspect-ratio: 1/1;
   margin-right: 10px;
   object-fit: cover;
