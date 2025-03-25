@@ -49,6 +49,13 @@ const WriteReviewPage = () => {
          }
 
          if(confirm('후기를 등록하시겠습니까?') === false) return;
+         
+         //parameter들 다 있는지 검사
+         if (!enrollmentId || !courseInfoId) {
+            alert('잘못된 접근입니다.');
+            navigate('/');
+            return;
+         }
          // review 작성 api
          writeReview(enrollmentId, reviewTitle, reviewText, isAnonymous, photos, navigate, courseInfoId);
          
