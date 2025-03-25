@@ -86,7 +86,7 @@ export const writeReview = async (
       navigate(`/courses/${courseInfoId}`);
    } catch (error: any) {
       console.error("Error creating review:", error.response ? error.response.data : error.message);
-      alert("후기 등록에 실패했습니다. 다시 시도해주세요.");
+      alert("후기 등록에 실패했습니다. 문제가 지속될 경우 로그아웃 후 재로그인 해주세요.");
       throw error;
    }
 };
