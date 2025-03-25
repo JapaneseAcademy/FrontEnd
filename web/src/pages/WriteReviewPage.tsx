@@ -61,7 +61,7 @@ const WriteReviewPage = () => {
    
       } catch (error) {
          console.error("후기 등록 중 오류 발생:", error);
-         alert("후기 등록에 실패했습니다. 다시 시도해주세요.");
+         alert("후기 등록에 실패했습니다. 문제가 지속될 경우 로그아웃 후 재로그인 해주세요.");
       }
    };
 
