@@ -118,7 +118,7 @@ const CourseDetailPage = () => {
 
   useEffect(() => {
     // 페이지 로드 시 상단으로 이동
-    window.scrollTo(0, 0); // 완성 시에 활성화. 개발할때는 불편해서 {todo}
+    window.scrollTo(0, 0); 
 
     //1) 강의 상세정보 API 호출
     getCourseDetail(courseInfoId).then((data) => {

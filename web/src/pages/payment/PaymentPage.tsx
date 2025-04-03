@@ -106,7 +106,7 @@ const PaymentPage = () => {
          <Wrapper>
             <div style={{width: "90%", textAlign: "center", padding: "1rem", backgroundColor: "#f8d7da", color: "#721c24", fontSize: "1rem", fontWeight: "bold"}}>
                *현재 카드사 심사로 인하여 <br />
-               [ BC, 하나, 현대 ] 카드 결제가 불가능합니다.<br />(간편결제를 통한 해당 카드사 결제도 불가) <br />
+               [ 하나 ] 카드 결제가 불가능합니다.<br />(간편결제를 통한 해당 카드사 결제도 불가) <br />
                이용에 불편을 드려 죄송합니다. <br />
             </div>
             <OrderInfoContainer userInfo={userInfo} courseDate="2025년 4월" courseTitle={courseTitle} coursePrice={coursePrice} courseType={courseType} timeTables={timeTables}/>

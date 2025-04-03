@@ -35,8 +35,7 @@ const WriteReviewPage = () => {
    };
    
    const handleSubmit = () => {
-      try {
-   
+
          // reviewTitle과 reviewText가 비어있을 경우 alert
          if (reviewTitle === '' || reviewText === '') {
             alert('후기 제목과 내용을 모두 입력해주세요.');
@@ -49,6 +48,13 @@ const WriteReviewPage = () => {
          }
 
          if(confirm('후기를 등록하시겠습니까?') === false) return;
+         
+         //parameter들 다 있는지 검사
+         if (!enrollmentId || !courseInfoId) {
+            alert('잘못된 접근입니다.');
+            navigate('/');
+            return;
+         }
          // review 작성 api
          writeReview(enrollmentId, reviewTitle, reviewText, isAnonymous, photos, navigate, courseInfoId);
          
@@ -58,11 +64,6 @@ const WriteReviewPage = () => {
          setReviewTitle("");
          setReviewText("");
          setIsAnonymous(false); // ✅ 익명 상태 초기화
-   
-      } catch (error) {
-         console.error("후기 등록 중 오류 발생:", error);
-         alert("후기 등록에 실패했습니다. 다시 시도해주세요.");
-      }
    };
 
 
