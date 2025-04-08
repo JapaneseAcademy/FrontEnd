@@ -1,19 +1,19 @@
-import styled, { keyframes } from "styled-components"
+import styled, { keyframes } from "styled-components";
 import ReviewCard from "../components/ReviewCard";
 import { useCallback, useEffect, useState } from "react";
 import { getAllReviews } from "../apis/reviewAPI";
 import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
 
 type Review = {
    reviewId: number;
-
    imageUrls: string[];
    review: string;
    writer: string;
    createdDate: string;
    reviewTitle: string;
    best: boolean;
-}
+};
 
 const ReviewsPage = () => {
    const [currentReviews, setCurrentReviews] = useState<Review[]>([]);
@@ -22,44 +22,41 @@ const ReviewsPage = () => {
    const [itemsPerPage, setItemsPerPage] = useState<number>(5);
    const [totalReviewsNum, setTotalReviewsNum] = useState<number>(0);
 
-   const totalGroups = Math.ceil(totalPage / itemsPerPage); // 전체 그룹 개수
-   const currentGroup = Math.ceil(currentPage / itemsPerPage); // 현재 그룹
+   const navigate = useNavigate();
+
+   const totalGroups = Math.ceil(totalPage / itemsPerPage);
+   const currentGroup = Math.ceil(currentPage / itemsPerPage);
    const startPage = (currentGroup - 1) * itemsPerPage + 1;
    const endPage = Math.min(startPage + itemsPerPage - 1, totalPage);
 
+   useEffect(() => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const pageParam = urlParams.get("page");
+      const page = pageParam ? parseInt(pageParam, 10) : 1;
+      if (!isNaN(page) && page > 0) {
+         setCurrentPage(page);
+         fetchReviews(page);
+      }
+   }, []);
 
-   const handlePageChange = (page: number) => {
-      setCurrentPage(page);
-      getAllReviews(page).then((data) => {
-         setCurrentReviews(data.reviews);
-      });
-      //맨 위로 스크롤
-      window.scrollTo({ top: 0, behavior: "smooth" });
-   };
-
-     /////////후기관련////////
    const fetchReviews = useCallback(async (page: number) => {
       try {
-         const response = await getAllReviews(page); // 페이지 번호에 해당하는 후기 데이터 요청
-         setCurrentReviews(response.reviews); // 받아온 후기 데이터 업데이트
-         setTotalPage(response.totalPage); // 총 페이지 수 업데이트 (백엔드에서 제공)
-         setItemsPerPage(response.listSize); // 페이지 당 아이템 수 업데이트 (백엔드에서 제공)
-         setTotalReviewsNum(response.totalElements); // 총 후기 수 업데이트 (백엔드에서 제공)
+         const response = await getAllReviews(page);
+         setCurrentReviews(response.reviews);
+         setTotalPage(response.totalPage);
+         setItemsPerPage(response.listSize);
+         setTotalReviewsNum(response.totalElements);
       } catch (error) {
          console.error("후기 데이터를 불러오는 중 오류 발생:", error);
       }
-   }, []); // ✅ courseInfoId가 변경될 때만 새로운 fetchReviews 함수가 생성됨
+   }, []);
 
-
-   useEffect(() => {
-      window.scrollTo(0, 0); // 페이지 로드 시 맨 위로 스크롤
-   }, []); // ✅ 페이지 로드 시 한 번만 실행
-   
-     // ✅ 페이지 로드 시 초기 데이터 가져오기
-   useEffect(() => {
-      fetchReviews(1); // 첫 페이지의 후기 데이터 요청 {TODO: 이거 제대로 바꾸기(잘 도됨...)}
-   }, [fetchReviews]); 
-
+   const handlePageChange = (page: number) => {
+      setCurrentPage(page);
+      navigate(`?page=${page}`);
+      fetchReviews(page);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+   };
 
    return (
       <>
@@ -74,7 +71,11 @@ const ReviewsPage = () => {
             link={[{ rel: "canonical", href: "https://www.yeri-jp.com/reviews" }]}
          />
          <Wrapper>
-            <Title>예리 센세와 함께 공부한 수강생들의 <br/> <span style={{fontWeight:'550'}}>생생한 후기</span>를 확인하세요! <span style={{color:'#535353'}}>({totalReviewsNum}건) </span></Title>
+            <Title>
+               예리 센세와 함께 공부한 수강생들의 <br />{" "}
+               <span style={{ fontWeight: "550" }}>생생한 후기</span>를 확인하세요!{" "}
+               <span style={{ color: "#535353" }}>({totalReviewsNum}건) </span>
+            </Title>
             <ReviewsContainer id="reviews-container">
                {currentReviews.map((review) => (
                   <ReviewCard
@@ -90,12 +91,9 @@ const ReviewsPage = () => {
                ))}
             </ReviewsContainer>
             <Pagination>
-               {/* 이전 그룹 버튼 */}
                {currentGroup > 1 && (
                   <NextButton onClick={() => handlePageChange(startPage - 1)}>〈</NextButton>
                )}
-
-               {/* 현재 그룹의 페이지 버튼 */}
                {Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index).map(
                   (number) => (
                      <PageButton
@@ -107,18 +105,18 @@ const ReviewsPage = () => {
                      </PageButton>
                   )
                )}
-
-               {/* 다음 그룹 버튼 */}
                {currentGroup < totalGroups && (
                   <NextButton onClick={() => handlePageChange(endPage + 1)}>〉</NextButton>
                )}
             </Pagination>
          </Wrapper>
       </>
-   )
-}
+   );
+};
 
-export default ReviewsPage
+export default ReviewsPage;
+
+// Styled components...
 
 /* 아래에서 위로 올라오는 애니메이션 정의(재사용 가능) */
 const fadeInUp = keyframes`

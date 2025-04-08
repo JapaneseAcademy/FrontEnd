@@ -59,7 +59,7 @@ const HomePage = () => {
         <ReviewsContainer>
           <UpReview>
             <Title>수강 후기</Title>
-            <MoreButton onClick={ () => navigate(`/reviews`)}>더보기 &gt;</MoreButton>
+            <MoreButton onClick={ () => navigate(`/reviews?page=1`)}>더보기 &gt;</MoreButton>
           </UpReview>
           <DownReviews />
         </ReviewsContainer>
