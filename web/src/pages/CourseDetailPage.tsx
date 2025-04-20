@@ -104,7 +104,7 @@ const CourseDetailPage = () => {
       return;
     }
 
-    navigate(`/payment?courseInfoId=${courseInfoId}&timeTableId=${selectedTimeTableId}&category=${selectedCourseType}&courseTitle=${courseTitle}&coursePrice=${courseSaleCost}&timeTables=${findTimeTable(selectedTimeTableId)?.timeTable}`);
+    navigate(`/payment?courseMonth=${courseDate}&courseInfoId=${courseInfoId}&timeTableId=${selectedTimeTableId}&category=${selectedCourseType}&courseTitle=${courseTitle}&coursePrice=${courseSaleCost}&timeTables=${findTimeTable(selectedTimeTableId)?.timeTable}`);
   }
 
   //timeTables를 한 분반(timeTable)당 하나의 문자열로 바꾸는 함수
@@ -130,7 +130,7 @@ const CourseDetailPage = () => {
       setCourseMainImage(data.mainImageUrl);
       setCourseDetailImages(data.descriptions);
       setCourseLevel(data.level);
-      setCourseDate(`${extractMonth(data.course.startDate)}월`);
+      setCourseDate(`${extractMonth(data.course.startDate)}`);
 
       //분반 정보 세팅
       const convertedTimeTables = convertTimeTables(data.course.timeTables);
@@ -175,7 +175,7 @@ const CourseDetailPage = () => {
     <>
       <Wrapper>
         <CourseImage src={courseMainImage} alt="Course Image" />
-        <CourseTitle>[ {courseTitle} ] - {courseDate}반</CourseTitle>
+        <CourseTitle>[ {courseTitle} ] - {courseDate}월반</CourseTitle>
         {/* baseCost와 saleCost가 다를 때 */}
         {courseBaseCost !== courseSaleCost ? 
           <CoursePrice><span>{numberWithCommas(courseBaseCost)}</span>{numberWithCommas(courseSaleCost)}원</CoursePrice>
