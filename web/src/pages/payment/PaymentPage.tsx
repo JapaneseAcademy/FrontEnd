@@ -104,7 +104,7 @@ const PaymentPage = () => {
 
    return (
          <Wrapper>
-            <OrderInfoContainer userInfo={userInfo} courseDate="2025년 4월" courseTitle={courseTitle} coursePrice={coursePrice} courseType={courseType} timeTables={timeTables}/>
+            <OrderInfoContainer userInfo={userInfo} courseDate="2025년 5월" courseTitle={courseTitle} coursePrice={coursePrice} courseType={courseType} timeTables={timeTables}/>
 
          <Container>
             <PaymentMethod id="payment-method" />
