@@ -32,15 +32,30 @@ import PaymentSuccess from './pages/payment/PaymentSuccess';
 import PaymentFailure from './pages/payment/PaymentFailure';
 import PaymentLoading from './pages/payment/PaymentLoading';
 import Out_ChangeCalendar from './components/adminComponents/Out_ChangeCalendar';
+import FixPage from './pages/FixPage';
 
 function App() {
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith('/admin');
   const [isLoading] = useRecoilState(loadingAtom);
 
-  // ✅ 로딩 중이면 전체 앱 대신 로딩 화면을 렌더링
+  const IS_MAINTENANCE = false; // 점검 중 여부
+
+  // 로딩 중이면 전체 앱 대신 로딩 화면을 렌더링
   if (isLoading) {
     return <Loading />;
+  }
+  // 점검 중이면 FixPage를 렌더링
+  if (IS_MAINTENANCE) {
+    return (
+      <>
+        <Header />
+        <AppWrapper>
+          <FixPage />
+          <Footer />
+        </AppWrapper>
+      </>
+    )
   }
 
   return (
@@ -82,6 +97,8 @@ function App() {
             <Route path="/payment/success" element={<PaymentSuccess />} />
             <Route path="/payment/failure" element={<PaymentFailure />} />
             <Route path="/payment/loading" element={<PaymentLoading />} />
+
+            <Route path="/fix" element={<FixPage/>} />
           </Routes>
           {/* ✅ Footer와 FloatingKakaoBtn을 AppWrapper 내부에 배치하여 크기 조정 */}
           <Footer />
@@ -99,7 +116,6 @@ const AppWrapper = styled.div`
   width: 100%;
   max-width: 480px; /* 모바일 크기 고정 */
   margin: 0 auto; /* 가운데 정렬 */
-  min-height: 100vh; /* 최소 높이 설정 */
   background-color: #ffffff; /* 필요하면 배경색 설정 */
   
   @media (max-width: 480px) {
