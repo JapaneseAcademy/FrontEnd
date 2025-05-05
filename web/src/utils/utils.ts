@@ -87,7 +87,7 @@ export const convertCategoryToEng = (category: string|null) => {
          return "ONLINE";
       case "동영상":
          return "RECORDED";
-      case "현장+온라인(병행)":
+      case "현장온라인병행":
          return "LIVEONLINE";
       default:
          return "";
@@ -128,10 +128,16 @@ export const addHyphenToPhoneNumber = (phone: string) => {
    return phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
 }
 
-//"현장+온라인(병행)"을 url에서의 파싱을 위해 "현장%2B온라인%28병행%29"로 바꿔주는 함수"
+//"현장+온라인(병행)"을 url에서의 파싱을 위해 "현장온라인병행"로 바꿔주는 함수"
 export const parseCourseType = (courseType: string) => {
    if(courseType == "현장+온라인(병행)")
-      return "현장%2B온라인%28병행%29";
+      return "현장온라인병행";
+   else
+      return courseType;
+}
+export const reverseCourseType = (courseType: string|null) => {
+   if(courseType == "현장온라인병행")
+      return "현장+온라인(병행)";
    else
       return courseType;
 }

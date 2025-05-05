@@ -67,6 +67,7 @@ const MyPage = () => {
     //강의 수강 내역 세팅
     getEnrollments().then((data) => {
       setEnrollments(data);
+      console.log(data);
     })
     //나의 후기 세팅
     getMyReviews().then((data) => {
