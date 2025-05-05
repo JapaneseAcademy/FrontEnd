@@ -39,7 +39,7 @@ function App() {
   const isAdminPage = location.pathname.startsWith('/admin');
   const [isLoading] = useRecoilState(loadingAtom);
 
-  const IS_MAINTENANCE = false; // 점검 중 여부
+  const IS_MAINTENANCE = true; // 점검 중 여부
 
   // 로딩 중이면 전체 앱 대신 로딩 화면을 렌더링
   if (isLoading) {
