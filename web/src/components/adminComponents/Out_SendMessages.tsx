@@ -33,9 +33,12 @@ const Out_SendMessages = () => {
   // ✅ 선택된 TimeTable ID 상태 추가
   const [selectedTimeTableId, setSelectedTimeTableId] = useState<number | null>(null);
   
-  // ✅ 기존 상태들 유지
-  const [selectedYear, setSelectedYear] = useState("2025");
-  const [selectedMonth, setSelectedMonth] = useState("03");
+  // 현재 년도와 월을 기본값으로 설정
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear().toString();
+  const currentMonth = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 +1 해줌
+  const [selectedYear, setSelectedYear] = useState(currentYear);
+  const [selectedMonth, setSelectedMonth] = useState(currentMonth);
   const [timeTables, setTimeTables] = useState<TimeTable[]>([]);
   const [students, setStudents] = useState<Student[]>([]);
   const [searchTerm, setSearchTerm] = useState("");

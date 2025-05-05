@@ -51,8 +51,11 @@ const Out_TimeTables = () => {
   const [selectedTimeTableId, setSelectedTimeTableId] = useState<number|null>(null);
   const [timeTables, setTimeTables] = useState<timeTable[]>([]);
 
-  const [selectedYear, setSelectedYear] = useState<string>("2025");
-  const [selectedMonth, setSelectedMonth] = useState<string>("03");
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear().toString();
+  const currentMonth = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 +1 해줌
+  const [selectedYear, setSelectedYear] = useState<string>(currentYear);
+  const [selectedMonth, setSelectedMonth] = useState<string>(currentMonth);
 
   //수강 중인 학생 정보들
   const [students, setStudents] = useState<student[]>([]);

@@ -25,11 +25,11 @@ const CoursesPage = () => {
     const fetchCourses = async () => {
       try {
         const data = await getCourseInfos();
-        console.log(data);  
+        // console.log(data);  
         const formattedCourses = data.map((course: any) => ({
           courseInfoId: course.courseInfoId,
           courseImage: course.mainImageUrl,
-          tags: convertTags(course.live, course.online, course.recorded),
+          tags: convertTags(course.live, course.online, course.recorded, course.liveOnline),
           courseTitle: course.title,
           baseCost: course.baseCost,
           saleCost: course.saleCost,

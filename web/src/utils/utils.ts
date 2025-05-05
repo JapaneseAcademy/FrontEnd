@@ -1,9 +1,10 @@
-//boolean 값으로오는 isLive, isOnline, isRecorded 필드를 tags[] 형태로 변경(true면 Live, Online, Recorded 추가하기)
-export const convertTags = (live: boolean, online: boolean, recorded: boolean) => {
+//boolean 값으로오는 isLive, isOnline, isRecorded, liveOnline 필드를 tags[] 형태로 변경(true면 Live, Online, Recorded 추가하기)
+export const convertTags = (live: boolean, online: boolean, recorded: boolean, liveOnline: boolean) => {
    const tags = [];
    if (live) tags.push("현장강의");
    if (online) tags.push("온라인");
    if (recorded) tags.push("동영상");
+   if (liveOnline) tags.push("현장+온라인(병행)")
    return tags;
 };
 
@@ -69,6 +70,8 @@ export const convertCategory = (category: string) => {
          return "온라인";
       case "RECORDED":
          return "동영상";
+      case "LIVEONLINE":
+         return "현장+온라인(병행)";
       default:
          return "";
    }
@@ -84,6 +87,8 @@ export const convertCategoryToEng = (category: string|null) => {
          return "ONLINE";
       case "동영상":
          return "RECORDED";
+      case "현장+온라인(병행)":
+         return "LIVEONLINE";
       default:
          return "";
    }
@@ -121,4 +126,12 @@ export const extractMonthOnly = (date: string) => {
 //전화번호 사이에 - 추가하는 함수
 export const addHyphenToPhoneNumber = (phone: string) => {
    return phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+}
+
+//"현장+온라인(병행)"을 url에서의 파싱을 위해 "현장%2B온라인%28병행%29"로 바꿔주는 함수"
+export const parseCourseType = (courseType: string) => {
+   if(courseType == "현장+온라인(병행)")
+      return "현장%2B온라인%28병행%29";
+   else
+      return courseType;
 }

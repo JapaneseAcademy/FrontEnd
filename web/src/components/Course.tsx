@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import {  numberWithCommas } from "../utils/utils";
+import {  extractMonthOnly, numberWithCommas } from "../utils/utils";
 
 interface CourseProps {
    courseInfoId: number;
@@ -20,8 +20,7 @@ const Course = ({ courseInfoId, courseImage, courseTitle, baseCost, saleCost, ta
       navigate(`/courses/${courseInfoId}`); // 해당 Course의 ID로 이동
    };
 
-   //가격에 1000원 단위로 콤마 추가
-   console.log(date);
+   const month = extractMonthOnly(date);
 
    return (
       <Wrapper onClick={handleCourseClick}>
@@ -32,7 +31,7 @@ const Course = ({ courseInfoId, courseImage, courseTitle, baseCost, saleCost, ta
             ))}
             <CourseTag style={{backgroundColor:'#61b58d'}}>{level}</CourseTag>
          </CourseTagContainer>
-         <CourseTitle>[ {courseTitle} ] - 4월반</CourseTitle>
+         <CourseTitle>[ {courseTitle} ] - {month}월반</CourseTitle>
          {/* saleCost와 baseCost가 다를 때 */}
          { saleCost !== baseCost 
          ? <CoursePrice><span>{numberWithCommas(baseCost)}</span>{numberWithCommas(saleCost)}원</CoursePrice>

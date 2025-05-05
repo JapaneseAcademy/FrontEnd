@@ -4,7 +4,7 @@ import styled from "styled-components";
 // import { HiOutlinePencilSquare } from "react-icons/hi2";
 import { getCourseReviewsByPage } from "../apis/reviewAPI";
 import { getCourseDetail } from "../apis/courseAPI";
-import { convertTags, convertTime, convertWeekday, extractMonth, numberWithCommas } from "../utils/utils";
+import { convertTags, convertTime, convertWeekday, extractMonth, numberWithCommas, parseCourseType } from "../utils/utils";
 import { getCalendar } from "../apis/adminAPI/adminCalendarAPI";
 
 type Review = {
@@ -104,7 +104,7 @@ const CourseDetailPage = () => {
       return;
     }
 
-    navigate(`/payment?courseInfoId=${courseInfoId}&timeTableId=${selectedTimeTableId}&category=${selectedCourseType}&courseTitle=${courseTitle}&coursePrice=${courseSaleCost}&timeTables=${findTimeTable(selectedTimeTableId)?.timeTable}`);
+    navigate(`/payment?courseMonth=${courseDate}&courseInfoId=${courseInfoId}&timeTableId=${selectedTimeTableId}&category=${parseCourseType(selectedCourseType)}&courseTitle=${courseTitle}&coursePrice=${courseSaleCost}&timeTables=${findTimeTable(selectedTimeTableId)?.timeTable}`);
   }
 
   //timeTables를 한 분반(timeTable)당 하나의 문자열로 바꾸는 함수
@@ -123,21 +123,21 @@ const CourseDetailPage = () => {
     //1) 강의 상세정보 API 호출
     getCourseDetail(courseInfoId).then((data) => {
       console.log("강의상세정보:", data);
-      setCourseTypes(convertTags(data.live, data.online, data.recorded));
+      setCourseTypes(convertTags(data.live, data.online, data.recorded, data.liveOnline));
       setCourseTitle(data.title);
       setCourseSaleCost(data.course.saleCost);
       setCourseBaseCost(data.course.baseCost);
       setCourseMainImage(data.mainImageUrl);
       setCourseDetailImages(data.descriptions);
       setCourseLevel(data.level);
-      setCourseDate(`${extractMonth(data.course.startDate)}월`);
+      setCourseDate(`${extractMonth(data.course.startDate)}`);
 
       //분반 정보 세팅
       const convertedTimeTables = convertTimeTables(data.course.timeTables);
       setConvertedTimeTables(convertedTimeTables.map((timeTable, index) => ({timeTableId: data.course.timeTables[index].timeTableId, timeTable})));
 
       //분반, 유형의 가장 첫번째 값으로 초기화
-      setSelectedCourseType(convertTags(data.live, data.online, data.recorded)[0]);
+      setSelectedCourseType(convertTags(data.live, data.online, data.recorded, data.liveOnline)[0]);
       setSelectedTimeTableId(data.course.timeTables[0].timeTableId);
 
       //2) 캘린더 이미지 불러오기
@@ -175,7 +175,7 @@ const CourseDetailPage = () => {
     <>
       <Wrapper>
         <CourseImage src={courseMainImage} alt="Course Image" />
-        <CourseTitle>[ {courseTitle} ] - {courseDate}반</CourseTitle>
+        <CourseTitle>[ {courseTitle} ] - {courseDate}월반</CourseTitle>
         {/* baseCost와 saleCost가 다를 때 */}
         {courseBaseCost !== courseSaleCost ? 
           <CoursePrice><span>{numberWithCommas(courseBaseCost)}</span>{numberWithCommas(courseSaleCost)}원</CoursePrice>
