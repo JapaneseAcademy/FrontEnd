@@ -97,7 +97,6 @@ const PaymentPage = () => {
          ]);
 
          setReady(true);
-         console.log(ready); //TODO: 이거 어디에 쓰이는ㅣㅣㅈ..?
       }
 
       renderPaymentWidgets();
