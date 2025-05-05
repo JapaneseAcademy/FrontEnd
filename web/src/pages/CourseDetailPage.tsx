@@ -123,7 +123,7 @@ const CourseDetailPage = () => {
     //1) 강의 상세정보 API 호출
     getCourseDetail(courseInfoId).then((data) => {
       console.log("강의상세정보:", data);
-      setCourseTypes(convertTags(data.live, data.online, data.recorded));
+      setCourseTypes(convertTags(data.live, data.online, data.recorded, data.liveOnline));
       setCourseTitle(data.title);
       setCourseSaleCost(data.course.saleCost);
       setCourseBaseCost(data.course.baseCost);
@@ -137,7 +137,7 @@ const CourseDetailPage = () => {
       setConvertedTimeTables(convertedTimeTables.map((timeTable, index) => ({timeTableId: data.course.timeTables[index].timeTableId, timeTable})));
 
       //분반, 유형의 가장 첫번째 값으로 초기화
-      setSelectedCourseType(convertTags(data.live, data.online, data.recorded)[0]);
+      setSelectedCourseType(convertTags(data.live, data.online, data.recorded, data.liveOnline)[0]);
       setSelectedTimeTableId(data.course.timeTables[0].timeTableId);
 
       //2) 캘린더 이미지 불러오기

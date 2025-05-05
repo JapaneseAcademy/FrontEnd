@@ -16,6 +16,7 @@ type courseInfo = {
   live: boolean;
   online: boolean;
   recorded: boolean;
+  liveOnline: boolean;
 }
 
 const Out_CourseInfoList = () => {
@@ -26,7 +27,7 @@ const Out_CourseInfoList = () => {
 
   const selectedCourseInfo = courseInfos.find((courseInfo) => courseInfo.courseInfoId === selectedCourseInfoId);
   //live, online, recorded를 tags[] 형태로 변경
-  const tags = convertTags(selectedCourseInfo?.live ?? false, selectedCourseInfo?.online ?? false, selectedCourseInfo?.recorded ?? false);
+  const tags = convertTags(selectedCourseInfo?.live ?? false, selectedCourseInfo?.online ?? false, selectedCourseInfo?.recorded ?? false, selectedCourseInfo?.liveOnline ?? false);
 
   const handleCourseInfoClick = (courseInfoId: number) => {
     setSelectedCourseInfoId(courseInfoId);

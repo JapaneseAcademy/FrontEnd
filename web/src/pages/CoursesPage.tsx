@@ -25,7 +25,7 @@ const CoursesPage = () => {
     const fetchCourses = async () => {
       try {
         const data = await getCourseInfos();
-        console.log(data);  
+        // console.log(data);  
         const formattedCourses = data.map((course: any) => ({
           courseInfoId: course.courseInfoId,
           courseImage: course.mainImageUrl,
