@@ -116,7 +116,7 @@ const PaymentPage = () => {
                   try {
                         await widgets?.requestPayment({
                         orderId: orderId,
-                        orderName: `${courseTitle}(${timeTables}, ${courseType})`,
+                        orderName: `[${courseMonth}월] ${courseTitle}(${timeTables}, ${courseType})`,
                         customerName: userInfo?.name,
                         customerMobilePhone: userInfo?.phone,
 

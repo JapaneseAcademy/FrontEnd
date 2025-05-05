@@ -4,7 +4,7 @@ import styled from "styled-components";
 // import { HiOutlinePencilSquare } from "react-icons/hi2";
 import { getCourseReviewsByPage } from "../apis/reviewAPI";
 import { getCourseDetail } from "../apis/courseAPI";
-import { convertTags, convertTime, convertWeekday, extractMonth, numberWithCommas } from "../utils/utils";
+import { convertTags, convertTime, convertWeekday, extractMonth, numberWithCommas, parseCourseType } from "../utils/utils";
 import { getCalendar } from "../apis/adminAPI/adminCalendarAPI";
 
 type Review = {
@@ -104,7 +104,7 @@ const CourseDetailPage = () => {
       return;
     }
 
-    navigate(`/payment?courseMonth=${courseDate}&courseInfoId=${courseInfoId}&timeTableId=${selectedTimeTableId}&category=${selectedCourseType}&courseTitle=${courseTitle}&coursePrice=${courseSaleCost}&timeTables=${findTimeTable(selectedTimeTableId)?.timeTable}`);
+    navigate(`/payment?courseMonth=${courseDate}&courseInfoId=${courseInfoId}&timeTableId=${selectedTimeTableId}&category=${parseCourseType(selectedCourseType)}&courseTitle=${courseTitle}&coursePrice=${courseSaleCost}&timeTables=${findTimeTable(selectedTimeTableId)?.timeTable}`);
   }
 
   //timeTables를 한 분반(timeTable)당 하나의 문자열로 바꾸는 함수
