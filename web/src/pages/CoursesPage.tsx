@@ -29,7 +29,7 @@ const CoursesPage = () => {
         const formattedCourses = data.map((course: any) => ({
           courseInfoId: course.courseInfoId,
           courseImage: course.mainImageUrl,
-          tags: convertTags(course.live, course.online, course.recorded),
+          tags: convertTags(course.live, course.online, course.recorded, course.liveOnline),
           courseTitle: course.title,
           baseCost: course.baseCost,
           saleCost: course.saleCost,
