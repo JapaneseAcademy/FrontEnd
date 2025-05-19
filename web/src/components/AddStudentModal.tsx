@@ -144,6 +144,7 @@ const AddStudentModal = ({ isOpen, onClose, timeTableId, courseTitle, courseTime
                      <option value="LIVE">현장강의</option>
                      <option value="ONLINE">온라인</option>
                      <option value="RECORDED">동영상</option>
+                     <option value="LIVEONLINE">현장온라인(병행)</option>
                   </InfoDropDown>
                </InfoRow>
                <InfoRow>
