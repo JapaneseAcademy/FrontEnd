@@ -120,8 +120,8 @@ const PaymentPage = () => {
                         customerName: userInfo?.name,
                         customerMobilePhone: userInfo?.phone,
 
-                        successUrl: window.location.origin + "/payment/loading" + window.location.search, //TODO: 바꾸기 (성공 URL)
-                        failUrl: window.location.origin + "/payment/failure" + window.location.search, //TODO: 바꾸기 (실패 URL)
+                        successUrl: window.location.origin + "/payment/loading" + window.location.search, 
+                        failUrl: window.location.origin + "/payment/failure" + window.location.search, 
                         });
                   } catch (error) {
                         console.error(error);

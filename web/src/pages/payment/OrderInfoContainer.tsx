@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { numberWithCommas } from "../../utils/utils";
+import { numberWithCommas, reverseCourseType } from "../../utils/utils";
 
 interface OrderInfoContainerProps {
    courseTitle: string|null;
@@ -40,7 +40,7 @@ const OrderInfoContainer = ({courseTitle, courseDate, timeTables, courseType, co
             </InfoRow>
             <InfoRow>
                <InfoTitle>강의유형</InfoTitle>
-               <InfoContent>{courseType}</InfoContent>
+               <InfoContent>{reverseCourseType(courseType)}</InfoContent>
             </InfoRow>
             <InfoRow>
                <InfoTitle>주문금액</InfoTitle>

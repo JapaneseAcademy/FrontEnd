@@ -11,6 +11,7 @@ const PaymentLoading = () => {
    const orderId = url.searchParams.get("orderId");
    const timeTableId = parseInt(String(url.searchParams.get("timeTableId")));
    const category = convertCategoryToEng(url.searchParams.get("category"));
+   console.log("기존: ", url.searchParams.get("category"), "변환: ", category);
    const amount = parseInt(String(url.searchParams.get("amount")));
    const courseInfoId = Number(url.searchParams.get("courseInfoId"));
 

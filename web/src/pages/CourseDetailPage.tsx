@@ -122,7 +122,6 @@ const CourseDetailPage = () => {
 
     //1) 강의 상세정보 API 호출
     getCourseDetail(courseInfoId).then((data) => {
-      console.log("강의상세정보:", data);
       setCourseTypes(convertTags(data.live, data.online, data.recorded, data.liveOnline));
       setCourseTitle(data.title);
       setCourseSaleCost(data.course.saleCost);
