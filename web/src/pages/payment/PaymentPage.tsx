@@ -25,7 +25,7 @@ const PaymentPage = () => {
    const [widgets, setWidgets] = useState<any>(null);
    const [amount, setAmount] = useState<Amount>({
       currency: "KRW",
-      value: 0, //TODO: 바꾸기 (결제 금액)
+      value: 0, 
    });
    const [orderId, setOrderId] = useState<string | null>(null);
    const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
