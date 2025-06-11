@@ -45,7 +45,7 @@ export const login = async (code: string, navigate: (path: string) => void, setI
       if (axios.isAxiosError(error)) {
          // AxiosError 타입인 경우에만 response를 안전하게 접근
          console.log(error);
-         console.log(`login error: ${error.response?.data}`);
+         console.log(`[main] login error: ${error.response?.data}`);
       } else {
             // AxiosError가 아닌 다른 에러 처리
             console.error("Unexpected error:", error);
