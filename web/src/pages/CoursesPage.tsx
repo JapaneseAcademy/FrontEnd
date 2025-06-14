@@ -94,11 +94,12 @@ const CoursesPage = () => {
             <Title>국내파 고수들과 함께 일본어 세계로 넘어와보세요!</Title>
             <LevelDropdown onChange={handleLevelChange}>
               <option value="all">전체</option>
-              <option value="기초">기초</option>
-              <option value="초급">초급</option>
-              <option value="중급">중급</option>
-              <option value="고급">고급</option>
-              <option value="프리">프리</option>
+              <option value="기초문법회화">기초문법회화</option>
+              <option value="기초탈출회화">기초탈출회화</option>
+              <option value="초보탈출회화">초보탈출회화</option>
+              <option value="라이트">라이트</option>
+              <option value="JLPT">JLPT</option>
+              <option value="단기간컷">단기간컷</option>
             </LevelDropdown>
             <CoursesContainer>
               {currentCourses.map((course: course) => (
@@ -187,7 +188,7 @@ const PageButton = styled.button<{ $isActive: boolean }>`
 `;
 
 const LevelDropdown = styled.select`
-  width: 70px;
+  width: 100px;
   height: 30px;
   margin-bottom: 10px;
   border: 1px solid #402900;
