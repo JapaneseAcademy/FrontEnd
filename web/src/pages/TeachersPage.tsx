@@ -17,7 +17,7 @@ const TeachersPage = () => {
   return (
     <>
       <Helmet
-        title="선생님 소개 - 예리한 일본어"
+        title="선생님들 소개 - 예리한 일본어"
         meta={[
           {
             name: "description",
@@ -29,8 +29,8 @@ const TeachersPage = () => {
       <Main>
       <TeacherBanner src="/images/teacherBanner/teacher-banner1.png" alt="Teacher Banner1" />
       <TeacherBanner src="/images/teacherBanner/teacher-banner2.png" alt="Teacher Banner2" />
-      <TeacherBanner src="/images/teacherBanner/teacher-banner3.png" alt="Teacher Banner2" />
-      <TeacherBanner src="/images/teacherBanner/teacher-banner4.png" alt="Teacher Banner2" />
+      <TeacherBanner src="/images/teacherBanner/teacher-banner3.png" alt="Teacher Banner3" />
+      <TeacherBanner src="/images/teacherBanner/teacher-banner4.png" alt="Teacher Banner4" />
 
 
       <Title>
@@ -73,7 +73,6 @@ const TeacherBanner = styled.img`
 const Title = styled.div`
   font-size: 23px;
   font-weight: 500;
-  margin-top: 20px;
   margin-bottom: 10px;
 `;
 

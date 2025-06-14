@@ -43,6 +43,7 @@ const QnAPage = () => {
                 <option value="apply">수강신청</option>
                 <option value="payment">결제 및 교재 구매</option>
                 <option value="consult">방문 및 상담</option>
+                <option value="homepage">사이트 이용 안내</option>
               </CategoryDropdown>
               <AnswerContainer id="course" style={{display: selectedCategory === 'course' ? 'flex' : 'none'}}>
                 <Question>Q. [수강일정] 개강일과 종강일이 언제인가요?</Question>
@@ -134,7 +135,17 @@ const QnAPage = () => {
                 <Answer>A. 카카오톡 yells77 혹은 홈페이지 우측 하단에 있는 카카오 버튼을 눌러주시면 언제든 문의를 남겨두실 수 있습니다!</Answer>
                 <Question>[오프라인 문의 및 상담]</Question>
                 <Answer>A. 월~토 근무 중이며 매달 시간표에 따라 상이합니다. 방문 시 사전 연락 주시면 감사하겠습니다! </Answer>
-
+              </AnswerContainer>
+              <AnswerContainer id="homepage" style={{display: selectedCategory === 'homepage' ? 'flex' : 'none'}}>
+                <Question>Q. 이용 중에 계속해서 오류가 발생해요.</Question>
+                <Answer>A. 로그아웃 및 재로그인 후 다시 시도해주세요.
+                  <br/>
+                  이후에도 오류가 지속해서 발생한다면 아래의 카카오톡 채널로 문의 주시면 홈페이지 개발자와 연결됩니다.
+                  <br/>
+                  현재 발생한 오류와 상황 등을 자세히 남겨주시면 빠른 해결이 가능합니다.
+                  <br/><br/>
+                  <a href="http://pf.kakao.com/_zkxdxfn/chat" target="_blank" rel="noopener noreferrer" style={{color: 'black', fontWeight: 'bold', fontSize: '18px'}}>&gt;&gt; 예리한 일본어-헬프데스크</a>
+                </Answer>
               </AnswerContainer>
             </ContentText>
         </Content>

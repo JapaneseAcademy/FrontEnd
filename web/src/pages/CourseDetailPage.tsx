@@ -138,15 +138,21 @@ const CourseDetailPage = () => {
       //분반, 유형의 가장 첫번째 값으로 초기화
       setSelectedCourseType(convertTags(data.live, data.online, data.recorded, data.liveOnline)[0]);
       setSelectedTimeTableId(data.course.timeTables[0].timeTableId);
-
-      //2) 캘린더 이미지 불러오기
-      getCalendar().then((data) => {
-        setCalendarImage(data.calendar);
-      }
-      );
     });
-    
   }, [courseInfoId]);
+
+  useEffect(() => {
+    //2) 캘린더 이미지 불러오기
+    getCalendar().then((data) => {
+      //courseLevel이 'JLPT'이면 두 번째 캘린더 이미지로 설정, 그 외에는 첫 번째 캘린더 이미지로 설정
+      if(courseLevel === 'JLPT') {
+        setCalendarImage(data[1]);
+      } else {
+        setCalendarImage(data[0]);
+      }
+    });
+  }
+  , [courseLevel]); // ✅ courseLevel이 변경될 때마다 캘린더 이미지 업데이트
 
   /////////후기 관련////////
   const fetchReviews = useCallback(async (page: number) => {
@@ -183,7 +189,7 @@ const CourseDetailPage = () => {
         }
         <DropDownContainer>
           <Dropdown>
-            <DropDownTitle>난이도</DropDownTitle>
+            <DropDownTitle>타입</DropDownTitle>
             <Tag>{courseLevel}</Tag>
           </Dropdown>
           <Dropdown>
@@ -309,9 +315,10 @@ const Tag = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 12px;
-  width: 40px;
+  /* width: 70px; */
+  padding: 0px 7px;
   height: 25px;
-  font-weight: 300;
+  font-weight: 500;
   color: white;
   background-color: #61b58d;
   border-radius: 5px;
@@ -599,13 +606,14 @@ const DropDownTitle = styled.div`
 `;
 
 const DropDownContent = styled.select`
-  width: 220px;
+  width: 300px;
   height: 30px;
   text-align: center;
   font-size: 12px;
   border: 1px solid #e1e1e1;
   border-radius: 20px;
   padding: 5px;
+  text-align: center;
 
   &:hover {
     background-color: #f1f1f1;
