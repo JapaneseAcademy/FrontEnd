@@ -10,7 +10,7 @@ export const getCalendar = async () => {
 
    try {
       const response = await axios.get(`${BASE_URL}/api/v1/main/calendar`);
-      return response.data;
+      return response.data.calendar;
    }
    catch (error) {
       console.error(error);

@@ -138,15 +138,21 @@ const CourseDetailPage = () => {
       //분반, 유형의 가장 첫번째 값으로 초기화
       setSelectedCourseType(convertTags(data.live, data.online, data.recorded, data.liveOnline)[0]);
       setSelectedTimeTableId(data.course.timeTables[0].timeTableId);
-
-      //2) 캘린더 이미지 불러오기
-      getCalendar().then((data) => {
-        setCalendarImage(data.calendar);
-      }
-      );
     });
-    
   }, [courseInfoId]);
+
+  useEffect(() => {
+    //2) 캘린더 이미지 불러오기
+    getCalendar().then((data) => {
+      //courseLevel이 'JLPT'이면 두 번째 캘린더 이미지로 설정, 그 외에는 첫 번째 캘린더 이미지로 설정
+      if(courseLevel === 'JLPT') {
+        setCalendarImage(data[1]);
+      } else {
+        setCalendarImage(data[0]);
+      }
+    });
+  }
+  , [courseLevel]); // ✅ courseLevel이 변경될 때마다 캘린더 이미지 업데이트
 
   /////////후기 관련////////
   const fetchReviews = useCallback(async (page: number) => {
