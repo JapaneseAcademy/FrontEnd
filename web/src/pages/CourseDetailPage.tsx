@@ -600,13 +600,14 @@ const DropDownTitle = styled.div`
 `;
 
 const DropDownContent = styled.select`
-  width: 220px;
+  width: 300px;
   height: 30px;
   text-align: center;
   font-size: 12px;
   border: 1px solid #e1e1e1;
   border-radius: 20px;
   padding: 5px;
+  text-align: center;
 
   &:hover {
     background-color: #f1f1f1;
