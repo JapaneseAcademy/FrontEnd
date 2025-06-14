@@ -183,7 +183,7 @@ const CourseDetailPage = () => {
         }
         <DropDownContainer>
           <Dropdown>
-            <DropDownTitle>난이도</DropDownTitle>
+            <DropDownTitle>타입</DropDownTitle>
             <Tag>{courseLevel}</Tag>
           </Dropdown>
           <Dropdown>

@@ -99,7 +99,7 @@ const Out_CourseInfoList = () => {
           </DetailContent>
         </DetailRow>
         <DetailRow className='course-level'>
-          <DetailTitle>난이도</DetailTitle>
+          <DetailTitle>타입</DetailTitle>
           <DetailContent>
             <CourseTag style={{backgroundColor:'#61b58d'}}>{selectedCourseInfo?.level}</CourseTag>
           </DetailContent>
