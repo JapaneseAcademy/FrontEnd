@@ -91,7 +91,7 @@ const CoursesPage = () => {
           { isLoading ? (<Loading />)
           : (
           <>
-            <Title>예리 센세와 함께 일본어를 배워보세요!</Title>
+            <Title>국내파 고수들과 함께 일본어 세계로 넘어와보세요!</Title>
             <LevelDropdown onChange={handleLevelChange}>
               <option value="all">전체</option>
               <option value="기초">기초</option>
