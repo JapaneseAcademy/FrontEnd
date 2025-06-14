@@ -309,9 +309,10 @@ const Tag = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 12px;
-  width: 40px;
+  /* width: 70px; */
+  padding: 0px 7px;
   height: 25px;
-  font-weight: 300;
+  font-weight: 500;
   color: white;
   background-color: #61b58d;
   border-radius: 5px;
