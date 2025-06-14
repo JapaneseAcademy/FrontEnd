@@ -594,7 +594,7 @@ const Dropdown = styled.div`
   align-items: center;
   margin-bottom: 10px;
   width: 100%;
-  gap: 30px;
+  gap: 20px;
 `;
 
 const DropDownTitle = styled.div`
@@ -607,7 +607,7 @@ const DropDownTitle = styled.div`
 `;
 
 const DropDownContent = styled.select`
-  width: 80%;
+  width: 290px;
   height: 30px;
   text-align: center;
   font-size: 12px;
