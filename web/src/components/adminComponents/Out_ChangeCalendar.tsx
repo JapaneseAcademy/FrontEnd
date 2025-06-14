@@ -28,7 +28,7 @@ const Out_ChangeCalendar = () => {
    useEffect(() => {
       // 캘린더 이미지 가져오기
       getCalendar().then((data) => {     
-         setCalendarImage(data.calendar);
+         setCalendarImage(data[0]);
       });
    }, []);
 
