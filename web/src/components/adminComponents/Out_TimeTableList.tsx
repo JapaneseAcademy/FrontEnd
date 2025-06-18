@@ -157,7 +157,7 @@ const Out_TimeTables = () => {
   return (
     <Wrapper>
       <CourseListContainer id="course-list-container"> 
-        <Title>분반 목록 <AddStudentBtn onClick={()=>setIsAddTimeTableModalOpen(true)}><FaPlus size={10} color='white'/></AddStudentBtn></Title>
+        <Title>분반 관리 <AddStudentBtn onClick={()=>setIsAddTimeTableModalOpen(true)}><FaPlus size={10} color='white'/></AddStudentBtn></Title>
         <CourseFilter 
           handleYearChange={setSelectedYear} 
           handleMonthChange={setSelectedMonth} 
