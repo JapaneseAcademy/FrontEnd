@@ -195,10 +195,10 @@ const CourseDetailPage = () => {
           <Dropdown>
             <DropDownTitle>분반</DropDownTitle>
             <DropDownContent onChange={handleTimeTableChange}>
-              {/* {convertedTimeTables.map((timeTable) => (
+              {convertedTimeTables.map((timeTable) => (
                 <option key={timeTable.timeTableId}>{timeTable.timeTable}</option>
-              ))} */}
-              <option>월 20:00-22:00 / 금 20:00-22:00 / 목 20:00-22:00</option>
+              ))}
+              {/* <option>월 20:00-22:00 / 금 20:00-22:00 / 목 20:00-22:00</option> */}
           </DropDownContent>
         </Dropdown>
         <Dropdown>
