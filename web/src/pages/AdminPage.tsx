@@ -121,12 +121,12 @@ const Sidebar = styled.div`
    align-items: center;
    justify-content: flex-start;
    background-color: #ffffff;
-   width: 250px;
    height: 100%;
    border-right: 1px solid #e1e1e1;
-   flex-shrink: 0; /* 사이드바 크기가 줄어들지 않도록 설정 */
+   flex-shrink: 0;
+   min-width: 200px; /* 글씨가 두 줄로 넘어가지 않을 최소 너비 */
+   width: max-content; /* 내용에 따라 자동으로 너비 조정 */
 `
-
 
 const Company = styled.div`
    width: 85%;
