@@ -122,6 +122,7 @@ const CourseDetailPage = () => {
 
     //1) 강의 상세정보 API 호출
     getCourseDetail(courseInfoId).then((data) => {
+      console.log("강의 상세정보:", data);
       setCourseTypes(convertTags(data.live, data.online, data.recorded, data.liveOnline));
       setCourseTitle(data.title);
       setCourseSaleCost(data.course.saleCost);
@@ -130,6 +131,7 @@ const CourseDetailPage = () => {
       setCourseDetailImages(data.descriptions);
       setCourseLevel(data.level);
       setCourseDate(`${extractMonth(data.course.startDate)}`);
+      setCalendarImage(data.calendarUrl);
 
       //분반 정보 세팅
       const convertedTimeTables = convertTimeTables(data.course.timeTables);
@@ -140,19 +142,6 @@ const CourseDetailPage = () => {
       setSelectedTimeTableId(data.course.timeTables[0].timeTableId);
     });
   }, [courseInfoId]);
-
-  useEffect(() => {
-    //2) 캘린더 이미지 불러오기
-    getCalendar().then((data) => {
-      //courseLevel이 'JLPT'이면 두 번째 캘린더 이미지로 설정, 그 외에는 첫 번째 캘린더 이미지로 설정
-      if(courseLevel === 'JLPT') {
-        setCalendarImage(data[1]);
-      } else {
-        setCalendarImage(data[0]);
-      }
-    });
-  }
-  , [courseLevel]); // ✅ courseLevel이 변경될 때마다 캘린더 이미지 업데이트
 
   /////////후기 관련////////
   const fetchReviews = useCallback(async (page: number) => {
