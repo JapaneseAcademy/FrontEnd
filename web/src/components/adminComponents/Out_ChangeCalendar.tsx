@@ -53,21 +53,31 @@ const Out_ChangeCalendar = () => {
                      src={calendar.calendarUrl}
                      alt={`캘린더 이미지 ${calendar.instructorId}`}
                   />
-                  <PhotoUploadButton htmlFor="photoInput" style={{display:'flex', gap:'5px'}}>
-                     사진 변경
-                     <input
-                        id="photoInput"
+                    <PhotoUploadButton htmlFor={`photoInput-${calendar.instructorId}`} style={{display:'flex', gap:'5px'}}>
+                      사진 변경
+                      <input
+                        id={`photoInput-${calendar.instructorId}`}
                         type="file"
                         accept="image/*"
-                        multiple
                         style={{ display: "none" }}
                         onChange={(e) => {
                            if (!e.target.files) return;
-                           setUploadImage(e.target.files[0]);
-                           handlePhotoChange(e); // Uncomment if you implement handlePhotoChange
+                           const file = e.target.files[0];
+                           const reader = new FileReader();
+                           reader.readAsDataURL(file);
+                           reader.onload = () => {
+                             setCalendars((prev) =>
+                               prev.map((c) =>
+                                 c.instructorId === calendar.instructorId
+                                    ? { ...c, calendarUrl: reader.result as string }
+                                    : c
+                               )
+                             );
+                           };
+                           setUploadImage(file);
                         }}
-                     />
-                  </PhotoUploadButton>
+                      />
+                    </PhotoUploadButton>
                </Canlendar>
             ))}
          </CalendarsContainer>
