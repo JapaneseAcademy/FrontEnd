@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { getCourseReviewsByPage } from "../apis/reviewAPI";
 import { getCourseDetail } from "../apis/courseAPI";
 import { convertTags, convertTime, convertWeekday, extractMonth, numberWithCommas, parseCourseType } from "../utils/utils";
-import { getCalendar } from "../apis/adminAPI/adminCalendarAPI";
 
 type Review = {
   reviewId: number;
