@@ -33,24 +33,19 @@ const AdminPage = () => {
          adminLogin(code, navigate, setIsLoading);
       }
 
-      //selectedItem에 따라서 해당 페이지로 이동
-      if (location.pathname === '/admin/student') {
-         setSelectedItem('student');
-      } else if (location.pathname === '/admin/message') {
-         setSelectedItem('message');
-      } else if (location.pathname === '/admin/courseInfo') {
-         setSelectedItem('courseInfo');
-      } else if (location.pathname === '/admin/timetables') {
-         setSelectedItem('timetables');
-      } else if (location.pathname === '/admin/mainReviews') {
-         setSelectedItem('mainReviews');
-      } else if (location.pathname === '/admin/courseReviews') {
-         setSelectedItem('courseReviews');
-      } else if (location.pathname === '/admin/youtube') {
-         setSelectedItem('youtube');
-      } else if (location.pathname === '/admin/calendar') {
-         setSelectedItem('calendar');
-      }
+      // selectedItem에 따라서 해당 페이지로 이동 (간단히)
+      const pathToItem: Record<string, string> = {
+         '/admin/student': 'student',
+         '/admin/message': 'message',
+         '/admin/courseInfo': 'courseInfo',
+         '/admin/timetables': 'timetables',
+         '/admin/mainReviews': 'mainReviews',
+         '/admin/courseReviews': 'courseReviews',
+         '/admin/youtube': 'youtube',
+         '/admin/calendar': 'calendar',
+      };
+      const selected = pathToItem[location.pathname];
+      if (selected) setSelectedItem(selected);
    }, [location.pathname])
    
 
