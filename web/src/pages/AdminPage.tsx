@@ -78,8 +78,8 @@ const AdminPage = () => {
                <Category>
                   <CategoryTitle><FaRegFileVideo/>강의 관리</CategoryTitle>
                   <Items>
-                     <CategoryItem $isselected={selectedItem === 'courseInfo'} onClick={() => handleItemClick('courseInfo')}>- 강의 관리</CategoryItem>
-                     <CategoryItem $isselected={selectedItem === 'timetables'} onClick={() => handleItemClick('timetables')}>- 분반 목록</CategoryItem>
+                     <CategoryItem $isselected={selectedItem === 'courseInfo'} onClick={() => handleItemClick('courseInfo')}>- 강의 목록</CategoryItem>
+                     <CategoryItem $isselected={selectedItem === 'timetables'} onClick={() => handleItemClick('timetables')}>- 분반 관리</CategoryItem>
                   </Items>
                </Category>
                <Category>
@@ -224,7 +224,7 @@ const Content = styled.div`
    justify-content: center;
    width: 100%;
    height: 100%;
-   padding: 20px;
+   /* padding: 20px; */
 `
 
 ////

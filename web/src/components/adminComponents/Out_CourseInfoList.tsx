@@ -44,7 +44,7 @@ const Out_CourseInfoList = () => {
   return (
     <Wrapper>
       <CourseListContainer id="course-list-container"> 
-        <Title>강의 관리</Title>
+        <Title>강의 목록</Title>
         <CoursesTable id='courses-table'>
           <TableHeader>
             <TableHeaderItem id='courseName'>강의명</TableHeaderItem>

@@ -1,21 +1,26 @@
 import styled from "styled-components"
 import { useEffect, useState } from "react"
-import { changeAdminCalendar, getCalendar } from "../../apis/adminAPI/adminCalendarAPI";
+import { changeAdminCalendar, getCalendars } from "../../apis/adminAPI/adminCalendarAPI";
+
+type calendar = {
+   instructorId: number;
+   calendarUrl: string;
+};
 
 const Out_ChangeCalendar = () => {
-   const [calendarImage, setCalendarImage] = useState<string>('/images/no-image.png');
+   const [calendars, setCalendars] = useState<calendar[]>([]);
    //업로드용 상태
    const [uploadImage, setUploadImage] = useState<File>();
 
-   //미리보기로 이미지 보여주기
-   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files![0];
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-         setCalendarImage(reader.result as string);
-      }
-   }
+   // //미리보기로 이미지 보여주기
+   // const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+   //    const file = e.target.files![0];
+   //    const reader = new FileReader();
+   //    reader.readAsDataURL(file);
+   //    reader.onload = () => {
+   //       setCalendarImage(reader.result as string);
+   //    }
+   // }
    //진짜로 이미지 업로드
    const handlePhotoUpload = () => {
       
@@ -27,35 +32,55 @@ const Out_ChangeCalendar = () => {
 
    useEffect(() => {
       // 캘린더 이미지 가져오기
-      getCalendar().then((data) => {     
-         setCalendarImage(data[0]);
+      getCalendars().then((data) => {     
+         console.log("캘린더 이미지 데이터:", data);
+         if (data) {
+            setCalendars(data);
+         } else {
+            console.error("캘린더 이미지 데이터를 가져오지 못했습니다.");
+         }
       });
    }, []);
 
 
    return (
       <Wrapper>
-         <CalendarImageContainer>
-               <CalendarImage src={typeof calendarImage === 'string' ? calendarImage : ''}/>
-               <PhotoUploadButton>
-               <label htmlFor="photoInput" style={{display:'flex', gap:'5px'}}>
-                  사진 변경
-               </label>
-               <input
-                  id="photoInput"
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  style={{ display: "none" }}
-                  onChange={(e) => {
-                     if (!e.target.files) return;
-                     setUploadImage(e.target.files[0]);
-                     handlePhotoChange(e);
-                  }
-                  }
-               />
-            </PhotoUploadButton>
-         </CalendarImageContainer>
+         <CalendarsContainer>
+            {calendars.map((calendar) => (
+               <Canlendar>
+                  <CalendarImage
+                     key={calendar.instructorId}
+                     src={calendar.calendarUrl}
+                     alt={`캘린더 이미지 ${calendar.instructorId}`}
+                  />
+                    <PhotoUploadButton htmlFor={`photoInput-${calendar.instructorId}`} style={{display:'flex', gap:'5px'}}>
+                      사진 변경
+                      <input
+                        id={`photoInput-${calendar.instructorId}`}
+                        type="file"
+                        accept="image/*"
+                        style={{ display: "none" }}
+                        onChange={(e) => {
+                           if (!e.target.files) return;
+                           const file = e.target.files[0];
+                           const reader = new FileReader();
+                           reader.readAsDataURL(file);
+                           reader.onload = () => {
+                             setCalendars((prev) =>
+                               prev.map((c) =>
+                                 c.instructorId === calendar.instructorId
+                                    ? { ...c, calendarUrl: reader.result as string }
+                                    : c
+                               )
+                             );
+                           };
+                           setUploadImage(file);
+                        }}
+                      />
+                    </PhotoUploadButton>
+               </Canlendar>
+            ))}
+         </CalendarsContainer>
          <CalendarFormContainer>
             <ChangeBtn onClick={handlePhotoUpload}>변경하기</ChangeBtn>
          </CalendarFormContainer>
@@ -74,19 +99,27 @@ const Wrapper = styled.div`
    gap: 10px;
 `
 
-const CalendarImageContainer = styled.div`
-   width: 70%;
+const CalendarsContainer = styled.div`
+   width: 80%;
    height: 100%;
    display: flex;
-   flex-direction: column;
+   flex-direction: row;
    justify-content: center;
    align-items: center;
+   gap: 10px;
+`
+const Canlendar = styled.div`
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
    gap: 10px;
 `
 
 const CalendarFormContainer = styled.div`
    height: 100%;
-   width: 30%;
+   width: 20%;
    display: flex;
    flex-direction: column;
    align-items: center;
@@ -98,7 +131,7 @@ const CalendarFormContainer = styled.div`
 
 
 const CalendarImage = styled.img`
-   width: 50%;
+   width: 85%;
    aspect-ratio: 1/1;
    object-fit: cover;
    
