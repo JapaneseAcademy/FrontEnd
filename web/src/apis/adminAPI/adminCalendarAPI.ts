@@ -1,7 +1,7 @@
 import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-export const getCalendar = async () => {
+export const getCalendars = async () => {
    // //토큰 없으면 리턴
    // if (!localStorage.getItem("accessToken")) {
    //    alert("로그인 후 이용해주세요.");
@@ -9,8 +9,8 @@ export const getCalendar = async () => {
    // }
 
    try {
-      const response = await axios.get(`${BASE_URL}/api/v1/main/calendar`);
-      return response.data.calendar;
+      const response = await axios.get(`${BASE_URL}/api/v1/main/calendars`);
+      return response.data;
    }
    catch (error) {
       console.error(error);
