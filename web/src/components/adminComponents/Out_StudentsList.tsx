@@ -89,16 +89,32 @@ const Out_StudentsList = () => {
             <TableHeaderItem>생년월일</TableHeaderItem>
             <TableHeaderItem>전화번호</TableHeaderItem>
           </TableHeader>
-          <TableBody>
+          <TableBody
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (filteredStudents.length === 0) return;
+              const currentIdx = filteredStudents.findIndex(s => s.id === selectedStudentId);
+              if (e.key === "ArrowDown") {
+          const nextIdx = currentIdx < filteredStudents.length - 1 ? currentIdx + 1 : currentIdx;
+          setSelectedStudentId(filteredStudents[nextIdx].id);
+              }
+              if (e.key === "ArrowUp") {
+          const prevIdx = currentIdx > 0 ? currentIdx - 1 : currentIdx;
+          setSelectedStudentId(filteredStudents[prevIdx].id);
+              }
+            }}
+            style={{ outline: "none" }}
+          >
             {filteredStudents.map((student) => (
               <TableRow
-                key={student.id}
-                $isselected={student.id === selectedStudentId}
-                onClick={() => setSelectedStudentId(student.id)}
+          key={student.id}
+          $isselected={student.id === selectedStudentId}
+          onClick={() => setSelectedStudentId(student.id)}
+          tabIndex={-1}
               >
-                <TableItem>{student.name}</TableItem>
-                <TableItem>{student.birth}</TableItem>
-                <TableItem>{student.phone}</TableItem>
+          <TableItem>{student.name}</TableItem>
+          <TableItem>{student.birth}</TableItem>
+          <TableItem>{student.phone}</TableItem>
               </TableRow>
             ))}
           </TableBody>
