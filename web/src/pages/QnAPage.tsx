@@ -45,7 +45,7 @@ const QnAPage = () => {
                 <option value="consult">방문 및 상담</option>
                 <option value="homepage">사이트 이용 안내</option>
               </CategoryDropdown>
-              <AnswerContainer id="course" style={{display: selectedCategory === 'course' ? 'flex' : 'none'}}>요
+              <AnswerContainer id="course" style={{display: selectedCategory === 'course' ? 'flex' : 'none'}}>
                 <Question>Q. [수강일정] 개강일과 종강일이 언제인가요?</Question>
                 <Answer>A. 매월 다릅니다! 다음달 수강신청 기간에 날짜가 함께 공지됩니다. </Answer>
                 <Question>Q. 출석확인증 발급은 어떻게 하나요?</Question>
