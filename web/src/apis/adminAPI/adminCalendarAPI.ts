@@ -18,12 +18,12 @@ export const getCalendars = async () => {
 };
 
 //캘린더 이미지 변경
-export const changeAdminCalendar = async (calendar: File) => {
+export const changeAdminCalendar = async (calendar: File, instructorId: number) => {
    const formData = new FormData();
    formData.append("calendar", calendar);
 
    try {
-      await axios.put(`${BASE_URL}/api/v1/main/calendar`, formData, {
+      await axios.put(`${BASE_URL}/api/v1/main/instructor/${instructorId}/calendar`, formData, {
          headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
          },

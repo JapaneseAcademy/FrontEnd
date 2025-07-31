@@ -33,24 +33,19 @@ const AdminPage = () => {
          adminLogin(code, navigate, setIsLoading);
       }
 
-      //selectedItem에 따라서 해당 페이지로 이동
-      if (location.pathname === '/admin/student') {
-         setSelectedItem('student');
-      } else if (location.pathname === '/admin/message') {
-         setSelectedItem('message');
-      } else if (location.pathname === '/admin/courseInfo') {
-         setSelectedItem('courseInfo');
-      } else if (location.pathname === '/admin/timetables') {
-         setSelectedItem('timetables');
-      } else if (location.pathname === '/admin/mainReviews') {
-         setSelectedItem('mainReviews');
-      } else if (location.pathname === '/admin/courseReviews') {
-         setSelectedItem('courseReviews');
-      } else if (location.pathname === '/admin/youtube') {
-         setSelectedItem('youtube');
-      } else if (location.pathname === '/admin/calendar') {
-         setSelectedItem('calendar');
-      }
+      // selectedItem에 따라서 해당 페이지로 이동 (간단히)
+      const pathToItem: Record<string, string> = {
+         '/admin/student': 'student',
+         '/admin/message': 'message',
+         '/admin/courseInfo': 'courseInfo',
+         '/admin/timetables': 'timetables',
+         '/admin/mainReviews': 'mainReviews',
+         '/admin/courseReviews': 'courseReviews',
+         '/admin/youtube': 'youtube',
+         '/admin/calendar': 'calendar',
+      };
+      const selected = pathToItem[location.pathname];
+      if (selected) setSelectedItem(selected);
    }, [location.pathname])
    
 
@@ -126,12 +121,12 @@ const Sidebar = styled.div`
    align-items: center;
    justify-content: flex-start;
    background-color: #ffffff;
-   width: 250px;
    height: 100%;
    border-right: 1px solid #e1e1e1;
-   flex-shrink: 0; /* 사이드바 크기가 줄어들지 않도록 설정 */
+   flex-shrink: 0;
+   min-width: 200px; /* 글씨가 두 줄로 넘어가지 않을 최소 너비 */
+   width: max-content; /* 내용에 따라 자동으로 너비 조정 */
 `
-
 
 const Company = styled.div`
    width: 85%;

@@ -48,12 +48,6 @@ const QnAPage = () => {
               <AnswerContainer id="course" style={{display: selectedCategory === 'course' ? 'flex' : 'none'}}>
                 <Question>Q. [수강일정] 개강일과 종강일이 언제인가요?</Question>
                 <Answer>A. 매월 다릅니다! 다음달 수강신청 기간에 날짜가 함께 공지됩니다. </Answer>
-                <Question>Q. [강의유형] 실시간 온라인이나 녹화본 수업이 무엇인가요? </Question>
-                <Answer>
-                  A. 두 가지 모두 시공간적인 제약에서 벗어났으나, 일반 인터넷강의보다 훨씬 현장감 있는 강의 유형입니다. <br/><br/>
-                  <span>실시간 온라인</span> <br/> 현장강의 수강생들과 함께 정해진 시간에 온라인으로 들어와 수강. 똑같이 발표 및 듣기 참여 가능. 줌링크는 매월 첫 수업일 전달드립니다. <br/><br/>
-                  <span>VOD녹화본 수업</span> <br/> 현장강의를 그대로 녹화해서 보내드리는 수업. 당일 수업 후 보내드리며 보내드린 7일 간 무제한 수강 가능한 강의! 개강일을 놓쳤어도 당연히 등록 가능합니다.
-                </Answer>
                 <Question>Q. 출석확인증 발급은 어떻게 하나요?</Question>
                 <Answer>A. 필요하신 분은 카카오 문의, 혹은 직접 말씀해주시면 환불 가능 기간이 지난 후 발급해드리겠습니다.</Answer>
               </AnswerContainer>

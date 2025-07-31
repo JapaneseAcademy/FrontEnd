@@ -17,11 +17,11 @@ const IntroductionPage = () => {
   return (
     <>
       <Helmet
-        title="학원 안내 - 예리한 일본어"
+        title="위치 안내 - 예리한 일본어"
         meta={[
             {
               name: "description",
-              content: "예리한 일본어 학원 위치 및 오시는 길 안내",
+              content: "예리한 일본어 위치 및 오시는 길 안내",
             },
         ]}
         link={[{ rel: "canonical", href: "https://www.yeri-jp.com/introduction" }]}
@@ -29,9 +29,9 @@ const IntroductionPage = () => {
       
       {/* <Header /> */}
       <Main>
-        <Banner>학원 안내</Banner>
+        <Banner>위치 안내</Banner>
         <Content>
-          <Title>학원 위치 안내</Title>
+          <Title>위치 안내</Title>
 
           <LocationContainer id='locationContainer'>
 
