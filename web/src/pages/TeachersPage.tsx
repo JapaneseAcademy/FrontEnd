@@ -1,18 +1,18 @@
 import Main from "../components/Main"
 import styled, { keyframes } from "styled-components"
-import { RiInstagramLine, RiKakaoTalkFill } from "react-icons/ri";
+// import { RiInstagramLine, RiKakaoTalkFill } from "react-icons/ri";
 import { Helmet } from "react-helmet-async";
 
 const TeachersPage = () => {
-  const KAKAO_CHANNEL_URL = import.meta.env.VITE_KAKAO_CHANNEL_URL;
+  // const KAKAO_CHANNEL_URL = import.meta.env.VITE_KAKAO_CHANNEL_URL;
 
-  const handleSnsClick = (sns: string) => {
-    if (sns === 'kakao') {
-      window.open(KAKAO_CHANNEL_URL, "_blank");
-    } else if (sns === 'instagram') {
-      window.open('https://www.instagram.com/yeri_japanese/');
-    }
-  }
+  // const handleSnsClick = (sns: string) => {
+  //   if (sns === 'kakao') {
+  //     window.open(KAKAO_CHANNEL_URL, "_blank");
+  //   } else if (sns === 'instagram') {
+  //     window.open('https://www.instagram.com/yeri_japanese/');
+  //   }
+  // }
 
   return (
     <>
