@@ -217,7 +217,10 @@ const CourseDetailPage = () => {
 
         <CourseDetailContainer id='course_detail_container'>
           <CourseDetailContent selected={selectedOption === "detail"}>
-            <CourseDetailImage src={calendarImage} alt="calendar-image" />
+            {/* calendarImage가 'None'이면 이미지 렌더링 안 함 */}
+            {calendarImage !== 'None' && (
+              <CourseDetailImage src={calendarImage} alt="calendar-image" />
+            )}
             {courseDetailImages.map((image, index) => (
               <CourseDetailImage key={index} src={image} alt="Course-Detail-Image" />
             ))}
