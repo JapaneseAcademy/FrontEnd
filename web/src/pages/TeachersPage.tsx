@@ -1,23 +1,23 @@
 import Main from "../components/Main"
 import styled, { keyframes } from "styled-components"
-import { RiInstagramLine, RiKakaoTalkFill } from "react-icons/ri";
+// import { RiInstagramLine, RiKakaoTalkFill } from "react-icons/ri";
 import { Helmet } from "react-helmet-async";
 
 const TeachersPage = () => {
-  const KAKAO_CHANNEL_URL = import.meta.env.VITE_KAKAO_CHANNEL_URL;
+  // const KAKAO_CHANNEL_URL = import.meta.env.VITE_KAKAO_CHANNEL_URL;
 
-  const handleSnsClick = (sns: string) => {
-    if (sns === 'kakao') {
-      window.open(KAKAO_CHANNEL_URL, "_blank");
-    } else if (sns === 'instagram') {
-      window.open('https://www.instagram.com/yeri_japanese/');
-    }
-  }
+  // const handleSnsClick = (sns: string) => {
+  //   if (sns === 'kakao') {
+  //     window.open(KAKAO_CHANNEL_URL, "_blank");
+  //   } else if (sns === 'instagram') {
+  //     window.open('https://www.instagram.com/yeri_japanese/');
+  //   }
+  // }
 
   return (
     <>
       <Helmet
-        title="선생님들 소개 - 예리한 일본어"
+        title="커리큘럼 안내 - 예리한 일본어"
         meta={[
           {
             name: "description",
@@ -27,22 +27,21 @@ const TeachersPage = () => {
         link={[{ rel: "canonical", href: "https://www.yeri-jp.com/teachers" }]}
       />
       <Main>
-      <TeacherBanner src="/images/teacherBanner/teacher-banner1.png" alt="Teacher Banner1" />
-      <TeacherBanner src="/images/teacherBanner/teacher-banner2.png" alt="Teacher Banner2" />
-      <TeacherBanner src="/images/teacherBanner/teacher-banner3.png" alt="Teacher Banner3" />
-      <TeacherBanner src="/images/teacherBanner/teacher-banner4.png" alt="Teacher Banner4" />
+        <Title>커리큘럼 안내</Title>
+        <CurriculumImage src="/images/curriculums/curriculum_1.png" alt="Curriculum 1" />
+        <CurriculumImage src="/images/curriculums/curriculum_2.png" alt="Curriculum 2" />
+        <CurriculumImage src="/images/curriculums/curriculum_3.png" alt="Curriculum 3" />
+        <CurriculumImage src="/images/curriculums/curriculum_4.png" alt="Curriculum 4" />
+        <CurriculumImage src="/images/curriculums/curriculum_5.png" alt="Curriculum 5" />
 
-
-      <Title>
+      {/* <Title>
         예리 센세와 소통하고 싶다면?
       </Title>
       <SubTitle>아래를 클릭하세요!</SubTitle>
       <SNSButtons>
-        {/* <SNSButton src="/images/snsButtons/kakaotalk1.png" alt="Kakao-Logo" />
-        <SNSButton src="/images/snsButtons/instagram.png" alt="Instagram-Logo" /> */}
         <RiKakaoTalkFill  style={{cursor:'pointer'}} onClick={()=>handleSnsClick("kakao")}/>
         <RiInstagramLine  style={{cursor:'pointer'}} onClick={()=>handleSnsClick("instagram")}/>
-      </SNSButtons>
+      </SNSButtons> */}
       </Main>
     </>
   )
@@ -62,7 +61,7 @@ const fadeInUp = keyframes`
   }
 `;
 
-const TeacherBanner = styled.img`
+const CurriculumImage = styled.img`
   width: 100%;
   object-fit: cover;
   object-position: center;
@@ -71,34 +70,35 @@ const TeacherBanner = styled.img`
 `;
 
 const Title = styled.div`
-  font-size: 23px;
+  font-size: 28px;
   font-weight: 500;
-  margin-bottom: 10px;
-`;
-
-const SubTitle = styled.div`
-  font-size: 14px;
-  font-weight: 400;
   margin-bottom: 20px;
-  color: #333;
+  margin-top: 30px;
 `;
 
-const SNSButtons = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  gap: 30px;
-  margin-bottom: 20px;
+// const SubTitle = styled.div`
+//   font-size: 14px;
+//   font-weight: 400;
+//   margin-bottom: 20px;
+//   color: #333;
+// `;
 
-  //모든 자식들에 대해 적용
-  & > * {
-    border: 1px solid #e1e1e1;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    padding: 10px;
-    //그림자
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-  } 
-`;
+// const SNSButtons = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   width: 100%;
+//   gap: 30px;
+//   margin-bottom: 20px;
+
+//   //모든 자식들에 대해 적용
+//   & > * {
+//     border: 1px solid #e1e1e1;
+//     width: 60px;
+//     height: 60px;
+//     border-radius: 50%;
+//     padding: 10px;
+//     //그림자
+//     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+//   } 
+// `;
 
