@@ -235,10 +235,10 @@ const TableBody = styled.div`
   //넘어가면 스크롤 가능하도록
   overflow-y: scroll;
   height: 100%;
-  //스크롤바 숨기기
+  /* //스크롤바 숨기기
   &::-webkit-scrollbar {
     display: none;
-  }
+  } */
 
 ` 
 const TableRow = styled.div<{ $isselected: boolean }>`
