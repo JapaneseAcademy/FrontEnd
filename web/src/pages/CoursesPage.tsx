@@ -76,11 +76,11 @@ const CoursesPage = () => {
   return (
     <>
       <Helmet
-        title="강의 목록 - 예리한 일본어"
+        title="강의 목록 - 예리한 어학원"
         meta={[
             {
               name: "description",
-              content: "예리한 일본어의 강의 목록을 확인해보세요. 예리 센세와 함께 일본어를 배워보세요!",
+              content: "예리한 어학원의 강의 목록을 확인해보세요. 예리 센세와 함께 일본어를 배워보세요!",
             },
         ]}
         link={[{ rel: "canonical", href: "https://www.yeri-jp.com/courses" }]}

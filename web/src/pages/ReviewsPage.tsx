@@ -61,11 +61,11 @@ const ReviewsPage = () => {
    return (
       <>
          <Helmet
-            title="수강생 후기 - 예리한 일본어"
+            title="수강생 후기 - 예리한 어학원"
             meta={[
                {
                   name: "description",
-                  content: "예리한 일본어 수강생들의 생생한 후기를 확인하세요!",
+                  content: "예리한 어학원 수강생들의 생생한 후기를 확인하세요!",
                },
             ]}
             link={[{ rel: "canonical", href: "https://www.yeri-jp.com/reviews" }]}

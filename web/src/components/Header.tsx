@@ -55,7 +55,7 @@ const Header = () => {
           <IoMenu size={30} onClick={toggleSidebar}/>
           {/* <SidebarToggleButton onClick={toggleSidebar}>☰</SidebarToggleButton> */}
         </Left>
-        <Title onClick={() => navigate('/')}>예리한 일본어</Title>
+        <Title onClick={() => navigate('/')}>예리한 어학원</Title>
         <Right> 
           <GrHomeRounded size={20} onClick={ () => navigate(`/`)}/>
         </Right>

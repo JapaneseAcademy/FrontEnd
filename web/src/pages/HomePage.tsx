@@ -32,9 +32,9 @@ const HomePage = () => {
   return (
   <>
       <Helmet>
-        <title>예리한 일본어</title>
+        <title>예리한 어학원</title>
         <link rel="canonical" href="https://www.yeri-jp.com/" />
-        <meta name="description" content="예리한 일본어에서는 유학 없이도 원어민처럼 일본어를 배울 수 있습니다. 대화로 배우는 살아있는 일본어, 예리한 일본어에서 온·오프라인 전세계 어디서든 시작하세요!" />
+        <meta name="description" content="예리한 어학원에서는 유학 없이도 원어민처럼 일본어를 배울 수 있습니다. 대화로 배우는 살아있는 일본어, 예리한 어학원에서 온·오프라인 전세계 어디서든 시작하세요!" />
       </Helmet>
 
       {/* 이미지 로드가 완료될 때까지 로딩 화면 표시 */}
@@ -50,7 +50,7 @@ const HomePage = () => {
             유학 없이도 원어민처럼!</span>
           <span style={{fontSize:'18px'}}>
             대화로 배우는 살아있는 일본어,<br/>
-            <span style={{fontSize:'20px', textDecoration:'underline', fontWeight: 'bold'}}>예리한 일본어</span>에서 온·오프라인 전세계 어디서든 시작하세요!
+            <span style={{fontSize:'20px', textDecoration:'underline', fontWeight: 'bold'}}>예리한 어학원</span>에서 온·오프라인 전세계 어디서든 시작하세요!
           </span>
         </Ment>
 

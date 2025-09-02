@@ -26,7 +26,7 @@ const SendMessageContainer = ({ students }: SendMessageContainerProps) => {
       console.log("보낼 학생 id 리스트: ", students.map((student) => student.id));
 
       if (confirm("메시지를 전송하시겠습니까?")) {
-         const titleAddedMessage = `[예리한 일본어] ${message}`;
+         const titleAddedMessage = `[예리한 어학원] ${message}`;
          sendAdminMessage(titleAddedMessage, students.map((student) => student.id));
       }
    }

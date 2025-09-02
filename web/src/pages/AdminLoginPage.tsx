@@ -10,7 +10,7 @@ const AdminLoginPage = () => {
    return (
       <Wrapper>
          <LoginContainer>
-            <span>예리한 일본어</span>
+            <span>예리한 어학원</span>
             <LoginTitle>관리자 로그인</LoginTitle>
             <KakaoLoginButton onClick={handleLogin}>카카오 로그인</KakaoLoginButton>
          </LoginContainer>

@@ -57,7 +57,7 @@ const AdminPage = () => {
             <Company onClick={() => navigate('/admin')}>
                <CompanyLogo/>
                <CompanyTitle>
-                  <span style={{fontSize:'1.2rem', fontWeight:'bold'}} onClick={handleCompanyClick}>예리한 일본어</span>
+                  <span style={{fontSize:'1.2rem', fontWeight:'bold'}} onClick={handleCompanyClick}>예리한 어학원</span>
                   <span style={{fontSize:'0.8rem', color:'#5d5d5d'}}>관리자용</span>
                </CompanyTitle>
             </Company>

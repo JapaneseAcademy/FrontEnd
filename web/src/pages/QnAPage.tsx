@@ -13,11 +13,11 @@ const QnAPage = () => {
   return (
     <>
       <Helmet
-        title="FAQ - 예리한 일본어"
+        title="FAQ - 예리한 어학원"
         meta={[
             {
               name: "description",
-              content: "예리한 일본어 수강생들이 자주 묻는 질문을 모아놨어요. 궁금한 점이 있으시다면 아래 내용을 참고해주세요.",
+              content: "예리한 어학원 수강생들이 자주 묻는 질문을 모아놨어요. 궁금한 점이 있으시다면 아래 내용을 참고해주세요.",
             },
         ]}
         link={[{ rel: "canonical", href: "https://www.yeri-jp.com/qna" }]}
@@ -53,7 +53,7 @@ const QnAPage = () => {
               </AnswerContainer>
               <AnswerContainer id="refund" style={{display: selectedCategory === 'refund' ? 'flex' : 'none'}}>
                 <Answer>
-                저희 ‘예리한 일본어’는, 기초문법+회화 원샷반의 경우 2인~10인 이하, <br/>
+                저희 ‘예리한 어학원’은, 기초문법+회화 원샷반의 경우 2인~10인 이하, <br/>
                 회화반의 경우 3인~10인 이하로 제한하여 운영하고 있습니다. <br/>
                 등록일 이후 결제순으로 마감이 진행되고 있기 때고 3인 미만인 경우 폐강이 됩니다. <br/><br/>
 
@@ -98,7 +98,7 @@ const QnAPage = () => {
                 </Answer>
                 <Question>Q. 강의 시간표를 확인하고 싶어요! </Question>
                 <Answer>
-                  A. ‘예리한 일본어’는 현장강의 베이스의 학원이기 때문에, 매월 시간표가 변경됩니다.  <br/>
+                  A. ‘예리한 어학원’은 현장강의 베이스의 학원이기 때문에, 매월 시간표가 변경됩니다.  <br/>
                   익월 수강시간표는 해당 홈페이지 수강과목 캘린더와, 등록기간에 학원 카카오 계정 프로필과 인스타그램에서 확인하실 수 있습니다.
                 </Answer>
               </AnswerContainer>
@@ -138,7 +138,7 @@ const QnAPage = () => {
                   <br/>
                   현재 발생한 오류와 상황 등을 자세히 남겨주시면 빠른 해결이 가능합니다.
                   <br/><br/>
-                  <a href="http://pf.kakao.com/_zkxdxfn/chat" target="_blank" rel="noopener noreferrer" style={{color: 'black', fontWeight: 'bold', fontSize: '18px'}}>&gt;&gt; 예리한 일본어-헬프데스크</a>
+                  <a href="http://pf.kakao.com/_zkxdxfn/chat" target="_blank" rel="noopener noreferrer" style={{color: 'black', fontWeight: 'bold', fontSize: '18px'}}>&gt;&gt; 예리한 어학원-헬프데스크</a>
                 </Answer>
               </AnswerContainer>
             </ContentText>
